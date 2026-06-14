@@ -1,3 +1,4 @@
 .vercel
 *.log
 deploy-*.cmd
+publish-*.cmd
