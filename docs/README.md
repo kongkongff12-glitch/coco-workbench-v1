@@ -1,6 +1,6 @@
 # COCO 客户工作台 v1
 
-打开 `index.html` 即可使用。
+打开 `app.html` 即可使用；`index.html` 保留为默认入口。
 
 - Vercel 固定生产网址建议使用：`https://coco-workbench-v1-aiwatch.vercel.app`
 - 不要把带随机码的网址当成固定地址，例如 `coco-workbench-v1-k6dpakctr-aiwatch.vercel.app`。这种是某一次部署的临时/快照地址，后面更新不会自动变成新版。
