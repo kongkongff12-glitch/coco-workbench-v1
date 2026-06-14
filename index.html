@@ -119,13 +119,114 @@
 </head>
 <body>
   <div class="app">
-    <aside class="side" id="side"></aside>
+    <aside class="side" id="side">
+  <div class="brand">
+    <h1>COCO 客户工作台</h1>
+    <p>v1.2-static · 2026-06-08 至 2026-06-14</p>
+  </div>
+  <div class="navgroup">
+    <div class="glabel">静态入口</div>
+    <a class="nav on" href="#static-board"><span>本周白板</span><span class="cnt">281</span></a>
+    <a class="nav" href="#static-actions"><span>Actions</span><span class="cnt">123</span></a>
+    <a class="nav" href="#static-seo"><span>SEO中心</span><span class="cnt">20</span></a>
+    <a class="nav" href="#static-files"><span>文件库</span><span class="cnt">453</span></a>
+  </div>
+</aside>
     <main class="main" id="main">
-      <div class="panel" style="margin:28px">
-        <h2>COCO 工作台加载中</h2>
-        <p class="desc">如果这里长时间不变，说明页面脚本没有正常启动。版本：v1.1-singlefile</p>
-        <noscript><p class="desc">当前浏览器没有开启 JavaScript，工作台无法运行。</p></noscript>
-      </div>
+      
+  <section class="top" id="static-board">
+    <div>
+      <div class="crumb">COCO / 本周工作台 / 静态兜底版 v1.2-static</div>
+      <h2>本周白板</h2>
+      <p class="desc">这是无需浏览器脚本也能显示的版本。脚本可用时，页面会自动切换成完整交互工作台。</p>
+    </div>
+    <div class="mode"><button class="on" type="button">团队视角</button><button type="button">客户视角</button></div>
+  </section>
+
+  <section class="kpis">
+    <div class="kpi good"><div class="v">2</div><div class="l">本周交付/发布</div></div>
+    <div class="kpi"><div class="v">281</div><div class="l">累计交付/发布</div></div>
+    <div class="kpi"><div class="v">123</div><div class="l">Action Items</div></div>
+    <div class="kpi warn"><div class="v">5/11</div><div class="l">SEO 问题完成</div></div>
+    <div class="kpi"><div class="v">453</div><div class="l">已索引资料</div></div>
+  </section>
+
+  <section class="sec">
+    <div class="panel conclusion">
+      <p>已导入 Notion 业务资料形成第一版工作台：281 条交付/发布、18 次会议、20 个 SEO 页面、11 个 SEO 技术问题。</p><p>6/11 最新会议显示：SuperAI 热点内容打法已验证，SEO 进入换域名后的重新索引和站内修复阶段，视频条线仍要盯 Demo / Tiger 素材与剪辑进度。</p><p>第一版系统已把白板、动态流、数据中心和录入演示闭环打通；下一步重点是接 GitHub 写回和补真实截图证据层。</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="shead"><h3>当前阻塞</h3><span class="hint">先处理影响交付的依赖</span></div>
+    <div class="grid three">
+      
+        <div class="card blocker client">
+          <h4>谷歌云案例软文需要 Charlie 补合作来龙去脉和可公开细节。</h4>
+          <p class="small">贵方提供背景素材</p>
+          <span class="tag blue">需要客户侧输入</span>
+        </div>
+      
+        <div class="card blocker client">
+          <h4>SEO 仍有若干 URL 未索引，换域名后需要持续重调。</h4>
+          <p class="small">Owen / SEO 侧配合站内修复并复查 GSC</p>
+          <span class="tag blue">需要客户侧输入</span>
+        </div>
+      
+        <div class="card blocker ">
+          <h4>Demo 英文版、中文版和 Tiger 视频仍处于剪辑/处理状态。</h4>
+          <p class="small">剪辑组继续按进度表推进，素材不合格时及时反馈</p>
+          <span class="tag amber">团队内部推进</span>
+        </div>
+      
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="shead"><h3>下周重点</h3><span class="hint">2026-06-08 至 2026-06-14</span></div>
+    <div class="panel"><div class="lineitem">完成谷歌云活动复盘软文初稿，并让 Charlie 补齐可公开素材。</div><div class="lineitem">把 SEO 未索引 URL 逐条纳入站内待办，按 GSC 复查结果更新数据中心。</div><div class="lineitem">完成 Demo / Tiger 视频关键版本，发布后登记为视频交付并复盘播放效果。</div><div class="lineitem">把 SuperAI / 大会热点打法沉淀成可复用模板，继续用个人号和公司号联动。</div><div class="lineitem">把录入页从本地演示提交接到 GitHub 写回，形成真正的日常更新闭环。</div></div>
+  </section>
+
+  <section class="sec" id="static-actions">
+    <div class="shead"><h3>Actions</h3><span class="hint">前 10 条高优先事项</span></div>
+    <table>
+      <thead><tr><th>日期</th><th>负责人</th><th>事项</th><th>状态</th><th>优先级</th></tr></thead>
+      <tbody><tr><td>2026-06-11</td><td>侯明真</td><td>Charlie 对外叙事采用正向定位</td><td><span class="tag amber">进行中</span></td><td><span class="tag red">高</span></td></tr><tr><td>2026-06-11</td><td>侯明真</td><td>YC互刷ARR的现象调研</td><td><span class="tag amber">进行中</span></td><td><span class="tag red">高</span></td></tr><tr><td>2026-06-11</td><td>侯明真</td><td>谷歌云活动复盘软文撰写</td><td><span class="tag amber">进行中</span></td><td><span class="tag red">高</span></td></tr><tr><td>2026-06-11</td><td>侯明真</td><td>Charlie 提供谷歌云合作的来龙去脉作为软文写作输入</td><td><span class="tag amber">进行中</span></td><td><span class="tag amber">中</span></td></tr><tr><td>2026-06-11</td><td>侯明真</td><td>Owen 跟进 SEO 站内待办</td><td><span class="tag amber">进行中</span></td><td><span class="tag amber">中</span></td></tr><tr><td>2026-06-11</td><td>侯明真</td><td>Charlie 跟进 Anthropic/FailSafe 算力折扣资源并评估做成卖点</td><td><span class="tag amber">进行中</span></td><td><span class="tag amber">中</span></td></tr><tr><td>2026-06-05</td><td>侯明真</td><td>持续剪辑产品介绍和demo case视频</td><td><span class="tag amber">进行中</span></td><td><span class="tag red">高</span></td></tr><tr><td>2026-06-05</td><td>侯明真</td><td>给新成员Alex开通Notion权限</td><td><span class="tag amber">进行中</span></td><td><span class="tag red">高</span></td></tr><tr><td>2026-06-05</td><td>侯明真</td><td>给Tiger写英文UGC拍摄指导文档</td><td><span class="tag amber">进行中</span></td><td><span class="tag red">高</span></td></tr><tr><td>2026-06-05</td><td>侯明真</td><td>将GSC收录链接发群供Charlie自查</td><td><span class="tag amber">进行中</span></td><td><span class="tag amber">中</span></td></tr></tbody>
+    </table>
+  </section>
+
+  <section class="sec">
+    <div class="shead"><h3>最近交付</h3><span class="hint">前 12 条</span></div>
+    <table>
+      <thead><tr><th>日期</th><th>条线</th><th>标题</th><th>状态</th></tr></thead>
+      <tbody><tr><td>2026-06-20</td><td>视频剪辑</td><td>安全与隐私说明</td><td><span class="tag red">待COCO团队提供案例语料</span></td></tr><tr><td>2026-06-20</td><td>视频剪辑</td><td>创始人/团队介绍</td><td><span class="tag red">待COCO团队提供案例语料</span></td></tr><tr><td>2026-06-20</td><td>视频剪辑</td><td>新场景/新玩法</td><td><span class="tag blue">未开始</span></td></tr><tr><td>2026-06-20</td><td>视频剪辑</td><td>AI员工日常</td><td><span class="tag blue">未开始</span></td></tr><tr><td>2026-06-15</td><td>视频剪辑</td><td>产品介绍片（2-3分钟）</td><td><span class="tag green">已完成</span></td></tr><tr><td>2026-06-15</td><td>视频剪辑</td><td>电商公司客户使用场景</td><td><span class="tag red">待COCO团队提供案例语料</span></td></tr><tr><td>2026-06-15</td><td>视频剪辑</td><td>快消客户使用场景</td><td><span class="tag red">待COCO团队提供案例语料</span></td></tr><tr><td>2026-06-15</td><td>视频剪辑</td><td>物流客户使用场景</td><td><span class="tag red">待COCO团队提供案例语料</span></td></tr><tr><td>2026-06-15</td><td>视频剪辑</td><td>制造业客户使用场景</td><td><span class="tag red">待COCO团队提供案例语料</span></td></tr><tr><td>2026-06-15</td><td>视频剪辑</td><td>mcn客户使用场景</td><td><span class="tag red">待COCO团队提供案例语料</span></td></tr><tr><td>2026-06-11</td><td>视频剪辑</td><td>和Paolo的直播视频切片</td><td><span class="tag green">部分完成</span></td></tr><tr><td>2026-06-10</td><td>视频剪辑</td><td>Tiger视频1</td><td><span class="tag green">已完成</span></td></tr></tbody>
+    </table>
+  </section>
+
+  <section class="sec" id="static-seo">
+    <div class="shead"><h3>SEO 中心</h3><span class="hint">20 个页面 · 11 个技术问题</span></div>
+    <table>
+      <thead><tr><th>页面</th><th>关键词</th><th>上线</th><th>索引状态</th></tr></thead>
+      <tbody><tr><td>Hire AI Employee in 2026: The Brutally Honest Competitor Analysis</td><td>Hire AI Employee</td><td>2026-06-03</td><td><span class="tag red">待确认</span></td></tr><tr><td>COCO Agent Teams: Zylos Runtime and Architecture | COCO AI</td><td>COCO Agent Teams</td><td>2026-06-03</td><td><span class="tag red">待确认</span></td></tr><tr><td>COCO AI FAQ: Plans, Pricing, and Platform Answers | COCO AI</td><td>COCO AI FAQ</td><td>2026-06-03</td><td><span class="tag red">待确认</span></td></tr><tr><td>COCO AI Pricing: Compare Plans for Every Team Size | COCO AI</td><td>COCO AI Pricing</td><td>2026-06-03</td><td><span class="tag red">待确认</span></td></tr><tr><td>COCO Enterprise Guide: Deploy AI Teams at Scale | COCO AI</td><td>COCO Enterprise Deployment</td><td>2026-06-03</td><td><span class="tag red">待确认</span></td></tr><tr><td>Deploy AI Employees Fast: COCO Getting Started | COCO AI</td><td>Deploy AI Employees</td><td>2026-06-03</td><td><span class="tag red">待确认</span></td></tr><tr><td>Build an AI Ticket Classifier: Open Source, Self-Hosted, Zero Vendor Lock-in</td><td>AI Ticket Classifier</td><td>2026-06-03</td><td><span class="tag red">待确认</span></td></tr><tr><td>AI Ad Copy Generation: 200 A/B Variants in 10 Minutes</td><td>AI Ad Copy Generation</td><td>2026-06-03</td><td><span class="tag red">待确认</span></td></tr></tbody>
+    </table>
+  </section>
+
+  <section class="sec">
+    <div class="shead"><h3>最近会议</h3><span class="hint">2026-06-11</span></div>
+    <div class="panel">
+      <h3 style="margin-top:0">COCO 周会 2026-06-11</h3>
+      <div class="lineitem">1、进度同步</div><div class="lineitem">2、SuperAI 活动流量复盘与&quot;流量密码&quot;</div><div class="lineitem">3、内容上的反共识原则（Will 与 Charlie 共识）</div><div class="lineitem">4、中美套利/互刷 ARR 的事</div><div class="lineitem">5、Anthropic 算力折扣资源（Charlie 探讨，作为潜在卖点）</div>
+    </div>
+  </section>
+
+  <section class="sec" id="static-files">
+    <div class="shead"><h3>文件库</h3><span class="hint">展示索引，不直接暴露原文</span></div>
+    <table>
+      <thead><tr><th>类型</th><th>标题</th><th>可见性</th><th>说明</th></tr></thead>
+      <tbody><tr><td>会议资料</td><td>AI总结</td><td><span class="tag blue">内部</span></td><td>已索引，不直接渲染原文。</td></tr><tr><td>会议资料</td><td>AI总结</td><td><span class="tag blue">内部</span></td><td>已索引，不直接渲染原文。</td></tr><tr><td>会议资料</td><td>Coco xyz团队同郎瀚威will会议记录</td><td><span class="tag blue">内部</span></td><td>已索引，不直接渲染原文。</td></tr><tr><td>会议资料</td><td>Coco xyz团队同郎瀚威will会议记录 319fc520994e81829064e0bd52bbcc2b_all</td><td><span class="tag blue">内部</span></td><td>已索引，不直接渲染原文。</td></tr><tr><td>会议资料</td><td>Untitled</td><td><span class="tag blue">内部</span></td><td>已索引，不直接渲染原文。</td></tr><tr><td>会议资料</td><td>Untitled</td><td><span class="tag blue">内部</span></td><td>已索引，不直接渲染原文。</td></tr><tr><td>会议资料</td><td>Untitled</td><td><span class="tag blue">内部</span></td><td>已索引，不直接渲染原文。</td></tr><tr><td>会议资料</td><td>Untitled</td><td><span class="tag blue">内部</span></td><td>已索引，不直接渲染原文。</td></tr></tbody>
+    </table>
+  </section>
+
     </main>
   </div>
   <script>
@@ -139,7 +240,7 @@ window.WORKBENCH_DATA = {
     "weekStart": "2026-06-08",
     "weekEnd": "2026-06-14",
     "weekRange": "2026-06-08 至 2026-06-14",
-    "generatedAt": "2026-06-14T08:21:54.520Z",
+    "generatedAt": "2026-06-14T08:38:50.477Z",
     "sourceNote": "来自 COCO Notion 导出 zip 的业务表格；人事/人格/客户原则类资料未读取、未导入、未渲染。"
   },
   "team": [
