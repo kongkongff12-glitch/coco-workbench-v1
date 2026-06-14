@@ -8,7 +8,7 @@ window.WORKBENCH_DATA = {
     "weekStart": "2026-06-08",
     "weekEnd": "2026-06-14",
     "weekRange": "2026-06-08 至 2026-06-14",
-    "generatedAt": "2026-06-14T08:38:50.477Z",
+    "generatedAt": "2026-06-14T09:23:18.591Z",
     "sourceNote": "来自 COCO Notion 导出 zip 的业务表格；人事/人格/客户原则类资料未读取、未导入、未渲染。"
   },
   "team": [
