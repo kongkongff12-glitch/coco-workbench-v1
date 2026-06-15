@@ -80,18 +80,22 @@ table.t tr:hover td{background:#FBF9F4}
 .q{font-family:var(--serif);font-size:13.5px;color:#3a352c}
 
 /* 白板：当前态 + 周时间线 + 选中周 */
-.boardlayout{display:grid;grid-template-columns:208px 1fr;gap:24px;align-items:start}
-.wktl{border-left:1px solid var(--line)}
-.wktl .wk{position:relative;padding:9px 10px 9px 16px;cursor:pointer;border-bottom:1px solid var(--line)}
+.boardlayout{display:grid;grid-template-columns:176px 1fr;gap:18px;align-items:start}
+.wktl{border-left:1px solid var(--line);position:sticky;top:18px;max-height:calc(100vh - 36px);overflow:auto;padding-right:4px}
+.wktl .wk{position:relative;padding:8px 8px 8px 14px;cursor:pointer;border-bottom:1px solid var(--line)}
 .wktl .wk:hover{background:#FBF9F4}
 .wktl .wk.on{background:var(--ink)}
 .wktl .wk.on .d,.wktl .wk.on .t,.wktl .wk.on .one{color:#F6F3EC}
 .wktl .wk::before{content:"";position:absolute;left:-5px;top:14px;width:9px;height:9px;border-radius:50%;background:var(--line-dark)}
 .wktl .wk.on::before{background:var(--red);box-shadow:0 0 0 3px var(--red-bg)}
-.wktl .wk .d{font-family:var(--serif);font-size:13px;font-weight:700}
-.wktl .wk .t{font-size:11px;color:var(--sub)}
-.wktl .wk .one{font-size:10.5px;color:var(--faint);margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.wktl .wk .d{font-family:var(--serif);font-size:15px;font-weight:700;line-height:1.2}
+.wktl .wk .t{font-size:12px;color:var(--sub);line-height:1.35;margin-top:2px}
+.wktl .wk .one{font-size:11px;color:var(--faint);margin-top:2px;display:none;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.wktl .wk.on .one{display:-webkit-box}
 .wktl .wk .reddot{color:var(--red);font-size:10px;margin-left:4px}
+.wktl .wk.draft::before{background:var(--amber);box-shadow:0 0 0 3px var(--amber-bg)}
+.wktl .wk.draft .d::after{content:"预生成";display:inline-block;margin-left:6px;font-family:var(--sans);font-size:10px;color:var(--amber);border:1px solid var(--amber);border-radius:99px;padding:0 5px;vertical-align:1px}
+.wktl .wk.draft.on .d::after{color:#F6F3EC;border-color:#F6F3EC}
 .wkpanel{min-width:0}
 .wkhead{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .wkhead .wd{font-family:var(--serif);font-size:24px;font-weight:700}
@@ -223,7 +227,7 @@ table.t tr:hover td{background:#FBF9F4}
    下方含 Coco.excalidraw 全量白板时间线；最新会议列为 2026-06-11。
 ================================================================ */
 const DB={
-meta:{ version:"Excalidraw 白板版 v2", updated:"2026-06-13", client:"COCO" },
+meta:{ version:"会前预生成版 v3", updated:"2026-06-15", client:"COCO" },
 team:{ 侯明真:"#2E5E4E",周星星:"#3E5A7E",李阳阳:"#9A6B1F",李家乐:"#B5432E",田长举:"#8A8276",吕教东:"#5b6b4e",孔维彤:"#211C15",代逸如:"#7A7163",查理:"#46506b" },
 
 /* 全客户总览（团队首页） */
@@ -240,12 +244,109 @@ clients:[
 
 /* COCO 当前态（白板顶部，跨周） */
 current:{
-  kpis:[ {l:"最新会议",v:"06/11",t:"good"},{l:"P0 待执行",v:"VIP深推",t:""},{l:"大会流量峰值",v:"6.9k",t:"good"},{l:"SEO 已索引",v:"1页",t:"good"},{l:"视频切片",v:"4条",t:"good"} ],
+  kpis:[ {l:"默认白板",v:"预生成",t:"good"},{l:"下次会议",v:"06/18",t:""},{l:"P0 待确认",v:"VIP深推",t:""},{l:"大会流量峰值",v:"6.9k",t:"good"},{l:"SEO 数据链路",v:"待闭环",t:""} ],
   stage:{ label:"SEO 页面铺设 → 数据验证阶段", steps:[ {n:"准备期",d:"模板·关键词",s:"done"},{n:"首批铺设",d:"20页+Sitemap",s:"done"},{n:"索引验证",d:"已索引1页·曝光提升",s:"now"},{n:"数据迭代",d:"按页面表现优化",s:""} ] }
 },
 
 /* 周时间线（最新在前）。每周一张白板。 */
 weeks:[
+ { date:"2026-06-18", title:"下次会议 · 会前预生成白板", badge:"自动草稿 · 会前确认",
+   draft:true,
+   sourceLogic:"生成依据：① 上次 2026-06-11 会议白板；② 6/11 会后到今天的微信群聊；③ 已发布链接、飞书社媒看板、Notion 视频/SEO 表；④ 未闭环红灯自动置顶。",
+   conclusion:"下次会的主线应该先过三件事：1）VIP dinner / SuperAI / Google Cloud 这波大会流量有没有沉淀成可复用 SOP；2）视频和案例不再按“做了几条”汇报，而要按“哪些已经可发、哪些需要客户确认、哪些能做成销售语料”闭环；3）SEO/GA/SimilarWeb 数据链路必须讲清楚当前接到哪一步，否则老板看不到持续增长证据。",
+   cards:[
+     {topic:"本次会议议程（系统预生成）",owner:"系统生成 · 侯明真确认",type:"agenda",items:[
+       {n:"本周重点结论：大会流量、视频案例、SEO 数据链路",t:"5min"},
+       {n:"P0 卡点：VIP dinner 深推与 SuperAI 深度总结是否已发布/待发布",t:"10min"},
+       {n:"社媒与发布复盘：哪些内容已发、哪些链接已挂、哪些要二次转推",t:"8min"},
+       {n:"视频/案例条线：Paolo、Tiger、AXRAH、知外文化/MCN 案例闭环",t:"12min"},
+       {n:"SEO / GA / SimilarWeb：当前接入状态、数据何时可见、谁负责",t:"10min"},
+       {n:"下周计划与必须问客户确认的问题",t:"10min"}]},
+
+     {topic:"【1】P0 · 大会流量沉淀成 SOP，而不是一次性热闹",owner:"侯明真",
+       summary:"上次白板已经判断“要把大会算法流量牢牢攥在手里”。会后聊天继续围绕 SuperAI、Google Singapore、AGI Villa、非凡产研、VIP dinner 发图/发文/转推推进。下次会议应该汇报的不是散点发布，而是：哪些已发布、哪些带来了互动、哪些能沉淀成重要活动发布 SOP。",
+       sub:[
+         {h:"已发生/已推进",summary:"SuperAI 一周亲历手记已多轮迭代到 v4；VIP dinner / The Signal 相关视频与推文已形成多版素材；Google Singapore 和 AGI Villa 图片/资料已陆续补齐。"},
+         {h:"待确认",summary:"VIP dinner 深推是否已发；SuperAI 大会深度总结是否已定稿；Google / AGI Villa 官方高清照片是否补齐；各平台是否都已挂链接。"}],
+       groups:[{h:"源链接 / 外部看板",items:[
+         {label:"社媒飞书看板 ↗",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5"},
+         {label:"COCO 官方推特 ↗",url:"https://x.com/CocoAIxyz"},
+         {label:"Charlie 个人推特 ↗",url:"https://x.com/CharliehuAI"}]}],
+       note:"系统判断：此项继续 P0，会议里必须先讲。"},
+
+     {topic:"【2】发布闭环 · 已发内容必须带平台链接，不再只说“发了”",owner:"侯明真",
+       summary:"聊天记录里已经出现多条“已转发/已发布/下午再发/明天发”的动作。下次白板要把这些变成可检查的发布闭环：发布平台、链接、数据、下一步是否二次转推。",
+       table:{cols:["内容/事件","平台","当前状态","需要会前补齐"],rows:[
+         ["VIP dinner / The Signal 深推","X / LinkedIn / 公众号","待确认是否已发布","补链接 + 阅读/浏览数据"],
+         ["SuperAI 一周亲历手记","公众号 / X / LinkedIn","已多轮迭代","确认最终版 + 发布链接"],
+         ["Google Singapore 活动","X / LinkedIn / 公众号","照片与录音资料已补","确认官方高清照片与推文"],
+         ["AGI Villa / GO Summit","X / LinkedIn / 公众号","资料、照片、逐字稿已补","确认是否已发长文/推特 thread"],
+         ["AXRAH x COCO Video 3","Twitter / LinkedIn","已给链接，已转推","补官方号/个人号链接与播放数据"]]},
+       note:"规则：没有链接就显示“待发布/待补链接”，不能在会里口头带过。"},
+
+     {topic:"【3】视频 / 案例条线 · 从“产出条数”改成“销售语料闭环”",owner:"周星星 / 李阳阳 / 侯明真",
+       summary:"最近聊天里视频素材很多：Paolo 直播切片、Tiger v3、AXRAH x COCO、中文/英文产品介绍片、知外文化使用案例脚本。下次会要按“可直接对外发 / 需客户确认 / 可做销售语料 / 待素材”四类汇报，避免变成素材流水账。",
+       table:{cols:["素材/案例","当前判断","下一步"],rows:[
+         ["Paolo 直播切片","已连续发布到视频号/小红书，形成日更节奏","补每条链接与播放数据"],
+         ["Tiger 视频 v3","已按客户意见去掉对方 logo、加 icoco.ai、调整字幕位置","确认最终是否可发"],
+         ["AXRAH x COCO Video 3","有视频与 transcript，Twitter/LinkedIn 链接已给","确认是否二次转推与沉淀案例页"],
+         ["知外文化 / MCN 案例","客户明确要做成知外文化客户使用案例视频","梳理 UGC 资料、MCN 痛点与案例脚本"],
+         ["中文/英文产品介绍片","客户持续看稿并反馈文案，不只是 marketing team","会前确认最终口径与卖点"]]},
+       note:"系统判断：会里不要报“本周做了几条视频”，要报“哪条能帮客户销售”。"},
+
+     {topic:"【4】SEO / GA / SimilarWeb · 数据链路必须闭环",owner:"李家乐 / Owen / Tyler",
+       summary:"会后聊天里反复问到 SEO 到哪一步、GA 怎么接、SimilarWeb 为什么没数据。下一次会议必须把数据链路讲明白：Tyler 接入了什么、Owen 跟到哪里、GA 是否已经跑满、SimilarWeb 是否还没收录、预计多久能看到数据。",
+       problems:{solved:[
+          {s:"已推进",name:"SEO 页面部署/提交",desc:"上次白板显示已有 1 个页面被 Google 索引，曝光与点击在提升。"},
+          {s:"已对接",name:"Tyler 账号/数据管理",desc:"聊天中已明确 GA、PostHog、日常数据管理在 Tyler 侧。"}
+        ],
+        todo:[
+          {s:"待确认",name:"GA 接入状态",desc:"是否已经登录、是否开始积累有效数据。",pri:"P0"},
+          {s:"待确认",name:"SimilarWeb 收录",desc:"当前 SimilarWeb 还没有收录 icoco/coco 数据，需说明原因和预期时间。",pri:"P1"},
+          {s:"待确认",name:"SEO 本周数据",desc:"曝光、点击、索引页面数必须给上期→本期对比。",pri:"P0"}]},
+       links:[{label:"GSC ↗",url:"https://search.google.com/search-console?utm_source=about-page&resource_id=sc-domain:icoco.ai"}]},
+
+     {topic:"【5】客户开口的事 · 会前必须补齐的问题",owner:"侯明真",
+       summary:"这些不是普通待办，而是客户已经在群里明确问过或点过的事情，下次会前必须能回答。",
+       table:{cols:["客户问题/要求","当前状态","会前答案要准备什么"],rows:[
+         ["SEO 到哪一步了？","待更新","GA / GSC / SimilarWeb 当前状态 + 两天后数据预期"],
+         ["Google / AGI Villa 照片有没有？","进行中","官方高清照片、Google Photos 链接、可发布图集"],
+         ["知外文化客户案例怎么做？","进行中","MCN 痛点、UGC 资料、脚本结构、是否需要客户补素材"],
+         ["6.30 崔牛会新加坡怎么发？","待排期","活动推文节奏、tag 对象、公众号长文是否做"],
+         ["军火库内容体系怎么补？","待拆解","百问百答、行业名词、回访话术、转化逻辑、课程现场片段等模块"]]}},
+
+     {topic:"【6】下周计划（系统建议）",owner:"",
+       summary:"下周计划不显示负责人姓名，给客户看时也能保留。它应该从未闭环事项自动生成，而不是组长重新写。",
+       table:{cols:["优先级","计划","判断依据"],rows:[
+         ["P0","完成并发布 VIP dinner / The Signal 深推","上次白板 P0 + 会后多轮素材确认"],
+         ["P0","补齐 SEO 数据链路：GA、GSC、SimilarWeb 当前状态","客户连续追问 SEO 进展"],
+         ["P1","把视频条线整理成“可发/待确认/销售语料/待素材”四象限","视频素材太多，会议需要抓重点"],
+         ["P1","沉淀重要活动发布 SOP","SuperAI / Google Cloud 流量证明此路径有效"],
+         ["P2","整理知外文化/MCN 案例包","客户明确要求继续做客户案例内容"]]} }
+   ],
+   blockers:[
+     {item:"SEO / GA / SimilarWeb 数据链路还没讲成闭环", need:"会前给出当前状态、负责人、预计看到数据的时间", client:false, owner:"李家乐"},
+     {item:"发布内容有动作但链接和数据没有统一挂回白板", need:"所有已发内容补平台链接和浏览/阅读数据", client:false, owner:"侯明真"},
+     {item:"视频素材多但缺少销售语料分类", need:"按可发、待确认、销售语料、待素材四类整理", client:false, owner:"周星星"}
+   ],
+   requests:[
+     {date:"会前",source:"系统",quote:"根据聊天记录自动生成下一次会议白板，组长只做确认。",status:"处理中",owner:"侯明真",resp:"会前补链接、数据和最终口径。"}
+   ],
+   psych:"客户现在不是单纯要“看到团队做了很多”，而是要看到一套能持续产出增长证据的客户工作系统：活动流量能复用、内容能转销售、SEO 数据能证明长期增长。",
+   deliveries:{
+     内容:[ {title:"VIP dinner / SuperAI / Google Cloud / AGI Villa 传播链路待会前补链接",owner:"侯明真",date:"会前",pub:{plat:"待补链接",url:""}} ],
+     视频剪辑:[ {title:"Paolo、Tiger、AXRAH、知外文化案例视频待按状态归类",owner:"周星星",date:"会前"} ],
+     SEO:[ {title:"GA / SimilarWeb / GSC 当前状态待形成一页说明",owner:"李家乐",date:"会前"} ]
+   },
+   metrics:[
+     {name:"大会流量峰值",prev:6000,cur:6900,series:[1000,1700,5000,6000,6900],src:"https://x.com/CharliehuAI/status/2063568159144354285?s=20",srclabel:"推特 ↗"},
+     {name:"SEO 已索引页面",prev:0,cur:1,series:[0,0,0,1],src:"https://search.google.com/search-console?utm_source=about-page&resource_id=sc-domain:icoco.ai",srclabel:"GSC ↗"}
+   ],
+   mustAsk:["VIP dinner 深推是否已经发？链接和数据是多少？","GA 是否已经接入并开始积累数据？SimilarWeb 预计何时有数据？","Google Singapore / AGI Villa 官方照片是否补齐？","知外文化/MCN 案例还缺哪些 UGC 资料？"],
+   nextWeek:["发布 VIP dinner 深推","补齐 SEO 数据链路说明","把视频素材改成销售语料清单","沉淀重要活动发布 SOP"],
+   agenda:["系统预生成重点","发布闭环","视频与案例闭环","SEO/GA 数据链路","客户开口的事","下周计划"],
+   shots:["最近微信群聊摘要","6/11 白板","飞书社媒看板","Notion 视频看板","SEO/GSC 截图"] },
+
  { date:"2026-06-11", title:"周会 · SuperAI / Google Cloud 复盘", badge:"Coco.excalidraw 原白板",
    conclusion:"6/11 白板重点：P0 是 VIP dinner 活动深度推文；社媒靠 SuperAI / Google Cloud 大会算法出现流量突破，下一步要把活动流量沉淀成 SOP；视频条线从机械交付升级为 COCO 对外展示的语料/案例；SEO 已有 1 页被 Google 索引，曝光和点击都在提升。",
    cards:[
@@ -594,12 +695,12 @@ function boardView(){
  const stg=`<div class="stagebar">${c.stage.steps.map(s=>`<div class="stg ${s.s}">${esc(s.n)}<span class="d">${esc(s.d)}</span></div>`).join("")}</div>`;
  const tl=DB.weeks.map((x,i)=>{
    const red=x.blockers?x.blockers.filter(b=>b.client||!client).length:0;
-   return `<div class="wk ${i===selWeek?"on":""}" data-wk="${i}"><div class="d">${esc(x.date.slice(5))}${red?`<span class="reddot">● ${red}</span>`:""}</div><div class="t">${esc(x.title)}</div><div class="one">${esc(x.conclusion||"")}</div></div>`;
+   return `<div class="wk ${i===selWeek?"on":""} ${x.draft?"draft":""}" data-wk="${i}"><div class="d">${esc(x.date.slice(5))}${red?`<span class="reddot">● ${red}</span>`:""}</div><div class="t">${esc(x.title)}</div><div class="one">${esc(x.conclusion||"")}</div></div>`;
  }).join("");
  const panel = w.stub ? `<div class="wkhead"><span class="wd">${esc(w.date)}</span><span class="tag lo">${esc(w.title)}</span></div><div class="oneliner empty">${esc(w.conclusion)}</div><div class="small muted">这一周的白板会由该次会议分析 + 当周登记数据自动生成，目前为占位。</div>` : weekPanel(w,client);
  return topbar(`<b>COCO</b> · 白板`)+`
   <h2 class="pagetitle">COCO 白板</h2>
-  <div class="pagedesc">按周时间线：左边选周，右边看那一周的白板。每周由会议分析 + 当周登记数据自动生成，负责人只改最上面的判断——不用再手搭白板。新人和老板从最早往下翻，就能熟悉这个客户怎么走到今天。</div>
+  <div class="pagedesc">默认打开的是“下次会议预生成白板”：系统用上次会议白板 + 最近微信群聊 + 已发布链接/数据看板综合判断，先把会前要过的重点、卡点和待问事项排好。组长只需要确认，不需要再从零熬夜搭白板；历史会议仍然保留在左侧时间线里。</div>
   <div class="kpis">${kpis}</div>
   <div class="sec" style="margin-bottom:18px"><div class="shead"><h3>${esc(c.stage.label)}</h3><span class="hint"><span class="linkchip" data-go="gantt">看完整甘特 →</span></span></div>${stg}</div>
   <div class="boardlayout"><div class="wktl">${tl}</div><div class="wkpanel">${panel}</div></div>`;
@@ -609,8 +710,9 @@ function weekPanel(w,client){
  if(w.cards){
    const head=`<div class="wkhead"><span class="wd">${esc(w.date)}</span><span class="tag lo">${esc(w.title)}</span>${w.badge?`<span class="tag auto">${esc(w.badge)}</span>`:""}</div>`;
    const concl=`<div class="oneliner">${esc(w.conclusion)}<div class="who">本周重点 · 会前判断</div></div>`;
+   const src=w.sourceLogic?`<div class="small" style="margin:-10px 0 16px;padding:8px 12px;background:var(--amber-bg);border:1px solid #EADFC2;color:var(--amber)">${esc(w.sourceLogic)}</div>`:"";
    const cards=w.cards.filter(c=>!(client&&c.internal)).map(wcard).join("");
-   return head+concl+cards;
+   return head+concl+src+cards;
  }
  const blk=(w.blockers||[]).filter(x=>client?x.client:true);
  const blkH=blk.length?blk.map(x=>`<div class="blocker ${x.client?"client":""}"><div class="bi">${esc(x.item)}</div><div class="need">${x.client?"待贵方配合":"需"}：${esc(x.need)}</div>${x.owner?`<div class="small" style="margin-top:3px">跟进：${who(x.owner)}</div>`:""}</div>`).join(""):`<div class="small muted">本周无待配合事项</div>`;
