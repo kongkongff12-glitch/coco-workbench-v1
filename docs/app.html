@@ -1,219 +1,708 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>COCO 客户白板</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>客户工作台 · 郎瀚威团队</title>
 <style>
+/* 设计系统与 BD 工作台一致（姊妹站）。Codex 只改最下方 DB，不动渲染。 */
 :root{
-  --bg:#f6f1e8;--paper:#fffdf8;--paper2:#fbf6ec;--ink:#211c15;--sub:#655c51;--muted:#9a9084;
-  --line:#dfd5c6;--line2:#eee4d5;--red:#b43b2f;--redbg:#fff0ec;--green:#2d704f;--greenbg:#eaf6ee;
-  --blue:#345f8f;--bluebg:#edf4fb;--gold:#8c681a;--goldbg:#fff5d8;--gray:#b3aa9e;--graybg:#f1ede5;
+  --bg:#F6F3EC; --panel:#FFFFFF; --ink:#211C15; --sub:#7A7163; --faint:#A89E8E;
+  --line:#E6DFD0; --line-dark:#D5CCB9;
+  --green:#2E5E4E; --green-bg:#EAF1ED; --amber:#9A6B1F; --amber-bg:#F6EEDC;
+  --gray:#8A8276; --gray-bg:#EFEBE2; --red:#B5432E; --red-bg:#F8E9E5;
+  --blue:#3E5A7E; --blue-bg:#E8EEF5;
+  --serif:"Noto Serif SC","Songti SC",serif;
+  --sans:-apple-system,"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;font-size:16px;line-height:1.58}
-a{color:var(--blue);text-decoration:none}
-button,input,select,textarea{font:inherit}
-.app{display:grid;grid-template-columns:236px minmax(0,1fr);min-height:100vh}
-.side{background:#efe8dc;border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow:auto}
-.brand{border-bottom:1px solid var(--line);padding:2px 8px 18px;margin-bottom:12px}
-.brand h1,.pagetitle,.board-title,.wtopic{font-family:Georgia,"Times New Roman","Songti SC","SimSun",serif}
-.brand h1{font-size:22px;line-height:1.15;margin:0 0 7px;font-weight:800}
-.tagline,.ver{font-size:12px;color:var(--sub)}
-.ver{color:var(--muted);margin-top:7px}
-.glabel{font-size:11px;letter-spacing:1.5px;color:var(--muted);padding:12px 9px 6px}
-.nav-item{display:flex;align-items:center;gap:8px;min-height:36px;padding:8px 10px;border-radius:6px;color:var(--sub);cursor:pointer}
-.nav-item:hover{background:#e8dfd2}.nav-item.on{background:var(--ink);color:#fffaf1}
-.nav-item .cnt{margin-left:auto;font-size:12px;color:var(--muted)}.nav-item.on .cnt{color:#d7cdbd}
-.main{padding:24px 30px 44px;min-width:0}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px}
-.crumb{font-size:13px;color:var(--sub)}
-.toggle{display:flex;background:#ebe1d4;border:1px solid var(--line);border-radius:8px;padding:3px}
-.toggle button{border:0;background:transparent;color:var(--sub);border-radius:6px;padding:6px 10px;cursor:pointer}
-.toggle button.on{background:var(--ink);color:#fffaf1}
-.pagetitle{font-size:34px;line-height:1.1;margin:0 0 8px;font-weight:800}
-.pagedesc{max-width:980px;color:var(--sub);margin:0 0 18px;font-size:16px}
-.strip-label{font-size:13px;color:var(--sub);font-weight:800;margin:12px 0 7px}
-.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
-.kpi{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:14px 15px;min-height:92px}
-.kpi .v{font-size:25px;font-weight:800;line-height:1.08;margin-bottom:7px}.kpi .l{font-size:13px;color:var(--sub)}
-.kpi.good .v{color:var(--green)}.kpi.bad .v{color:var(--red)}.kpi.warn .v{color:var(--gold)}
-.sec{background:var(--paper);border:1px solid var(--line);border-radius:8px;margin:14px 0;overflow:hidden}
-.shead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line2)}
-.shead h3{font-size:17px;margin:0;font-weight:800}.hint{font-size:12px;color:var(--muted);white-space:nowrap}.sbody{padding:14px 16px}
-.stagebar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-.stg{border:1px solid var(--line);background:var(--paper2);border-radius:7px;padding:11px 12px;font-weight:800}
-.stg .d{display:block;font-size:12px;color:var(--sub);font-weight:500;margin-top:4px}.stg.done{background:var(--greenbg);border-color:#c4dfce;color:var(--green)}
-.stg.now{background:var(--redbg);border-color:#edc5be;color:var(--red)}.stg.plan{background:var(--bluebg);border-color:#cbdcec;color:var(--blue)}
-.linkchip{display:inline-flex;align-items:center;min-height:29px;border:1px solid #cbdcec;background:var(--bluebg);border-radius:6px;padding:4px 9px;font-size:13px;color:var(--blue)}
-.linkrow{display:flex;gap:8px;flex-wrap:wrap}
-.board-layout{display:grid;grid-template-columns:322px minmax(0,1fr);gap:16px;align-items:start}
-.week-list{background:var(--paper);border:1px solid var(--line);border-radius:8px;overflow:hidden;position:sticky;top:18px}
-.week{padding:13px 14px;border-bottom:1px solid var(--line2);cursor:pointer}.week:last-child{border-bottom:0}
-.week:hover{background:#fbf3e7}.week.on{background:var(--ink);color:#fffaf1}
-.week .d{font-weight:800;font-size:18px}.week .t{font-weight:700;margin-top:2px}.week .one{font-size:13px;color:var(--sub);margin-top:6px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.week.on .one{color:#d7cebf}.reddot{color:var(--red);margin-left:6px;font-size:13px}.week.on .reddot{color:#ffb3a6}
-.board-head{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:17px 18px}
-.board-date{font-size:18px;font-weight:800;color:var(--red)}.board-title{font-size:28px;font-weight:800;line-height:1.18;margin-top:4px}
-.badge{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:2px 8px;font-size:12px;color:var(--sub);background:#fffaf1}
-.b-red{border-color:#efc4bd;background:var(--redbg);color:var(--red)}.b-green{border-color:#c4dfce;background:var(--greenbg);color:var(--green)}
-.b-yellow{border-color:#ead58d;background:var(--goldbg);color:var(--gold)}.b-gray{border-color:#d7d0c6;background:var(--graybg);color:#777066}
-.conclusion{background:#fff8e4;border:1px solid #e7ce8e;border-radius:8px;padding:17px 18px;font-size:22px;line-height:1.5;font-weight:800;margin:14px 0}
-.wcard{background:var(--paper);border:1px solid var(--line);border-radius:8px;margin:13px 0;overflow:hidden}
-.wcard-h{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:13px 16px;border-bottom:1px solid var(--line2);background:#fffaf1}
-.wtopic{font-size:22px;line-height:1.22;font-weight:800;color:var(--red)}.owner{font-size:13px;color:var(--sub);white-space:nowrap}.owner b{color:var(--ink)}
-.summary{padding:13px 16px;color:var(--ink);font-size:17px}.object{padding:0 16px 16px}
-.agenda{list-style:none;padding:0;margin:0;display:grid;gap:7px}.agenda li{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line2);padding:8px 0}
-.anum{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--ink);color:#fffaf1;font-size:12px;font-weight:800;margin-right:8px}.atime{color:var(--sub);font-size:13px;white-space:nowrap}
-.tbl{width:100%;border-collapse:collapse;background:var(--paper)}.tbl th,.tbl td{border-bottom:1px solid var(--line2);padding:9px 10px;text-align:left;vertical-align:top}.tbl th{font-size:13px;color:var(--sub);background:var(--paper2)}.tbl tr:last-child td{border-bottom:0}.hl{font-weight:800;color:var(--red)}
-.glegend{display:flex;gap:13px;flex-wrap:wrap;font-size:12px;color:var(--sub);margin-bottom:10px}.glegend i{display:inline-block;width:18px;height:8px;border-radius:999px;margin-right:5px}
-.gantt{border:1px solid var(--line);background:var(--paper2);overflow:auto}.grow{display:grid;align-items:stretch}.gcell{border-bottom:1px solid var(--line2);border-right:1px solid var(--line2);padding:7px 8px;font-size:12px}.glabel{min-width:210px;font-weight:700;color:var(--ink)}
-.track{position:relative;height:34px}.bar{position:absolute;top:8px;height:18px;border-radius:999px;text-align:center;font-size:11px;color:#fffaf1;overflow:hidden;white-space:nowrap}.bar.done{background:var(--ink)}.bar.doing{background:var(--red)}.bar.plan{background:var(--bluebg);border:1px dashed var(--blue);color:var(--blue)}
-.today{position:absolute;top:0;bottom:0;width:2px;background:#d8a91d;z-index:2}.ptag{display:inline-flex;border-radius:5px;padding:1px 5px;margin-right:6px;font-size:11px;font-weight:800}.P0{background:var(--redbg);color:var(--red)}.P1{background:var(--greenbg);color:var(--green)}.P2{background:var(--bluebg);color:var(--blue)}
-.problems{display:grid;gap:12px}.sg{font-weight:800}.si{display:grid;grid-template-columns:auto minmax(140px,1fr) minmax(0,2fr) auto;gap:8px;align-items:start;border-bottom:1px solid var(--line2);padding:8px 0}.desc{color:var(--sub)}
-.linkgroup{margin:8px 0 12px}.lgh{font-weight:800;margin-bottom:7px;color:var(--sub)}
-.metricgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.metric{border:1px solid var(--line);background:var(--paper2);border-radius:8px;padding:12px}.metric.stale{opacity:.55}.mname{font-weight:800}.mval{font-size:24px;font-weight:800}.delta.up{color:var(--green)}.delta.dn{color:var(--red)}.prev{font-size:12px;color:var(--sub)}
-.spark{width:128px;height:30px}.status-red{color:var(--red)}.status-green{color:var(--green)}.status-yellow{color:var(--gold)}
-.delivery{display:flex;gap:8px;align-items:flex-start;justify-content:space-between;border-bottom:1px solid var(--line2);padding:8px 0}.empty-red{border:1px dashed #edbdb4;background:var(--redbg);color:var(--red);border-radius:6px;padding:8px;margin:7px 0;font-weight:800}
-details.evidence{border-top:1px solid var(--line2);background:#fffbf4}details.evidence summary{cursor:pointer;padding:10px 16px;color:var(--blue);font-weight:800;list-style:none}details.evidence summary::-webkit-details-marker{display:none}.evbody{padding:0 16px 14px;display:grid;gap:8px}.quote{border-left:3px solid var(--line);background:#fff;padding:8px 10px;color:var(--sub);white-space:pre-wrap}
-.client-grid,.deliver-grid,.status-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.client-card,.deliver,.statusbox{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:14px}.client-card{cursor:pointer}.client-card.dim{opacity:.55;cursor:default}.ctop{display:flex;justify-content:space-between;gap:8px;margin-bottom:8px}.cname{font-size:20px;font-weight:800}.small{font-size:13px;color:var(--sub)}.cmeta{display:flex;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line2);margin-top:12px;padding-top:10px;font-size:13px;color:var(--sub)}
-.timeline{display:grid;gap:0;border-left:2px solid var(--line);margin-left:12px}.event{display:grid;grid-template-columns:86px minmax(0,1fr);gap:14px;position:relative;padding:0 0 16px 18px}.event:before{content:"";position:absolute;left:-7px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--ink);border:2px solid var(--bg)}.ecard{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:12px}.etitle{font-weight:800;margin:6px 0 3px}
-.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:grid;gap:5px}.field label{font-size:13px;color:var(--sub)}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:6px;background:#fff;padding:9px 10px}.field textarea{min-height:120px;resize:vertical}.btn{border:1px solid var(--ink);background:var(--ink);color:#fffaf1;border-radius:6px;padding:8px 12px;cursor:pointer}
-@media(max-width:1100px){.app{grid-template-columns:1fr}.side{height:auto;position:relative}.kpis,.board-layout,.client-grid,.deliver-grid,.status-grid,.metricgrid,.formgrid{grid-template-columns:1fr}.week-list{position:relative;top:auto}.main{padding:18px 16px}.pagetitle{font-size:30px}.conclusion{font-size:20px}.wtopic{font-size:21px}.si{grid-template-columns:1fr}.stagebar{grid-template-columns:1fr}.wcard-h{display:block}.owner{display:block;margin-top:6px}.glabel{min-width:160px}}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.65}
+a{color:inherit}
+.app{display:flex;min-height:100vh}
+.side{width:236px;flex-shrink:0;border-right:1px solid var(--line-dark);padding:26px 0 40px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.side .brand{padding:0 22px 16px;border-bottom:1px solid var(--line)}
+.side .brand h1{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.5px}
+.side .brand .tagline{font-size:12px;color:var(--sub);margin-top:2px}
+.side .brand .ver{font-size:11px;color:var(--faint);margin-top:7px}
+.navgroup{padding:15px 12px 0}
+.navgroup .glabel{font-size:11px;color:var(--faint);letter-spacing:2px;padding:0 10px 6px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;cursor:pointer;color:var(--sub);font-size:13.5px}
+.nav-item:hover{background:#EFEAE0}
+.nav-item.on{background:var(--ink);color:#F6F3EC}
+.nav-item .cnt{margin-left:auto;font-size:11px;color:var(--faint)}
+.nav-item.on .cnt{color:#CFC8B8}
+.main{flex:1;min-width:0;padding:28px 36px 80px;max-width:1480px}
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:4px}
+.crumb{font-size:12px;color:var(--faint)}
+.crumb b{color:var(--sub);font-weight:500}
+.modetoggle{display:inline-flex;border:1px solid var(--line-dark);border-radius:6px;overflow:hidden;flex-shrink:0}
+.modetoggle button{padding:6px 15px;font-size:12.5px;background:var(--panel);border:none;cursor:pointer;color:var(--sub);font-family:var(--sans)}
+.modetoggle button.on{background:var(--ink);color:#F6F3EC}
+h2.pagetitle{font-family:var(--serif);font-size:34px;font-weight:700;letter-spacing:0;margin:6px 0 4px}
+.pagedesc{color:var(--sub);font-size:16px;margin-bottom:20px;max-width:980px}
+
+.kpis{display:flex;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.kpi{background:var(--panel);border:1px solid var(--line);padding:13px 18px;min-width:120px;flex:1}
+.kpi .v{font-family:var(--serif);font-size:25px;font-weight:700;line-height:1}
+.kpi .l{font-size:11px;color:var(--sub);letter-spacing:.5px;margin-top:5px}
+.kpi.good .v{color:var(--green)}
+
+.stagebar{display:flex;border:1px solid var(--line);background:var(--panel);margin-bottom:8px}
+.stg{flex:1;text-align:center;padding:10px 6px;font-size:12.5px;color:var(--faint);border-right:1px solid var(--line)}
+.stg:last-child{border-right:none}.stg.done{background:var(--green-bg);color:var(--green)}
+.stg.now{background:var(--ink);color:#F6F3EC;font-weight:600}.stg .d{display:block;font-size:10px;opacity:.82;margin-top:2px}
+
+.oneliner{border-left:4px solid var(--ink);background:var(--panel);padding:16px 20px;margin-bottom:20px;font-family:var(--serif);font-size:22px;line-height:1.65}
+.oneliner.empty{border-left-color:var(--faint);color:var(--faint);font-family:var(--sans);font-size:13.5px}
+.oneliner .who{font-family:var(--sans);font-size:11px;color:var(--faint);margin-top:6px}
+
+.tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:99px;font-weight:500;white-space:nowrap}
+.tag.hi{background:var(--green-bg);color:var(--green)}.tag.mid{background:var(--amber-bg);color:var(--amber)}
+.tag.lo{background:var(--gray-bg);color:var(--gray)}.tag.soft{background:var(--red-bg);color:var(--red)}
+.tag.fresh{background:var(--blue-bg);color:var(--blue)}.tag.tbd{background:transparent;border:1px dashed var(--line-dark);color:var(--faint)}
+.tag.auto{background:var(--blue-bg);color:var(--blue)}.tag.ok{background:var(--green-bg);color:var(--green)}
+.av{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600;flex-shrink:0;vertical-align:middle}
+.who-inline{display:inline-flex;align-items:center;gap:6px}
+.small{font-size:12px;color:var(--sub)} .muted{color:var(--faint)}
+.linkchip{display:inline-flex;align-items:center;gap:3px;font-size:11px;padding:2px 9px;border-radius:4px;background:var(--blue-bg);color:var(--blue);text-decoration:none;cursor:pointer}
+.linkchip:hover{text-decoration:underline}
+
+.sec{margin-bottom:26px}
+.sec>.shead{display:flex;align-items:baseline;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:7px;margin-bottom:13px}
+.sec>.shead .num{font-family:var(--serif);font-size:14px;color:var(--faint);font-weight:700}
+.sec>.shead h3{font-family:var(--serif);font-size:16px;font-weight:700}
+.sec>.shead .hint{margin-left:auto;font-size:12px;color:var(--faint)}
+
+table.t{width:100%;border-collapse:collapse;background:var(--panel)}
+table.t th{font-size:11px;color:var(--faint);font-weight:500;text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);letter-spacing:1px;white-space:nowrap}
+table.t td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:13px}
+table.t tr:hover td{background:#FBF9F4}
+.q{font-family:var(--serif);font-size:13.5px;color:#3a352c}
+
+/* 白板：当前态 + 周时间线 + 选中周 */
+.boardlayout{display:grid;grid-template-columns:208px 1fr;gap:24px;align-items:start}
+.wktl{border-left:1px solid var(--line)}
+.wktl .wk{position:relative;padding:9px 10px 9px 16px;cursor:pointer;border-bottom:1px solid var(--line)}
+.wktl .wk:hover{background:#FBF9F4}
+.wktl .wk.on{background:var(--ink)}
+.wktl .wk.on .d,.wktl .wk.on .t,.wktl .wk.on .one{color:#F6F3EC}
+.wktl .wk::before{content:"";position:absolute;left:-5px;top:14px;width:9px;height:9px;border-radius:50%;background:var(--line-dark)}
+.wktl .wk.on::before{background:var(--red);box-shadow:0 0 0 3px var(--red-bg)}
+.wktl .wk .d{font-family:var(--serif);font-size:13px;font-weight:700}
+.wktl .wk .t{font-size:11px;color:var(--sub)}
+.wktl .wk .one{font-size:10.5px;color:var(--faint);margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.wktl .wk .reddot{color:var(--red);font-size:10px;margin-left:4px}
+.wkpanel{min-width:0}
+.wkhead{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.wkhead .wd{font-family:var(--serif);font-size:24px;font-weight:700}
+
+.blocker{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:11px 15px;margin-bottom:7px}
+.blocker.client{border-left-color:var(--blue)}
+.blocker .bi{font-size:13.5px;margin-bottom:4px}
+.blocker .need{font-size:12px;font-weight:600;color:var(--amber)}.blocker.client .need{color:var(--blue)}
+.psych{background:var(--amber-bg);border:1px solid #EADFC2;padding:11px 15px;font-size:13.5px;border-radius:4px}
+.linegroup{margin-bottom:14px}
+.linegroup .lh{font-family:var(--serif);font-size:13.5px;font-weight:700;padding:5px 0;display:flex;gap:8px;align-items:center}
+.linegroup .lh .pri{font-size:11px;color:var(--faint);font-weight:400}
+.delivery{background:var(--panel);border:1px solid var(--line);padding:9px 13px;margin-bottom:5px;display:flex;align-items:center;gap:10px}
+.delivery .grow{flex:1} .delivery .dt{font-size:11px;color:var(--faint)}
+.emptyline{font-size:12px;color:var(--red);background:var(--red-bg);padding:7px 13px;border-radius:4px}
+.metricgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.metric{background:var(--panel);border:1px solid var(--line);padding:13px 15px}
+.metric .ml{font-size:11px;color:var(--sub);margin-bottom:6px;display:flex;justify-content:space-between;gap:6px}
+.metric .rowm{display:flex;align-items:flex-end;justify-content:space-between;gap:8px}
+.metric .v{font-family:var(--serif);font-size:24px;font-weight:700;line-height:1}
+.metric .delta{font-size:12px;font-weight:600}.metric .delta.up{color:var(--green)}.metric .delta.dn{color:var(--red)}
+.metric .prev{font-size:11px;color:var(--faint);margin-top:5px} .metric .foot{margin-top:8px}
+.metric.stale{opacity:.7}.metric.stale .v{color:var(--faint)}
+.plan{list-style:none}.plan li{background:var(--panel);border:1px solid var(--line);padding:9px 13px;margin-bottom:5px;font-size:13.5px}
+.ask{list-style:none}.ask li{padding:6px 0;border-bottom:1px dashed var(--line);font-size:13.5px}.ask li::before{content:"？ ";color:var(--red);font-weight:700}
+.archive{border:1px solid var(--line);background:var(--panel);padding:13px 15px}
+.shotwall{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:9px}
+.shot{background:var(--gray-bg);border:1px solid var(--line);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;text-align:center;font-size:10.5px;color:var(--sub);padding:7px}
+
+/* 全客户总览 */
+.cgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.ccard{background:var(--panel);border:1px solid var(--line);padding:16px 18px;cursor:pointer}
+.ccard:hover{border-color:var(--ink)}
+.ccard.dim{opacity:.55;cursor:default}
+.ccard .ct{display:flex;align-items:baseline;justify-content:space-between}
+.ccard .cn{font-family:var(--serif);font-size:18px;font-weight:700}
+.ccard .cf{font-size:12px;color:var(--sub)}
+.ccard .cone{font-size:12.5px;color:var(--sub);margin:8px 0;min-height:34px}
+.ccard .cmeta{display:flex;gap:12px;font-size:11px;color:var(--faint);align-items:center}
+.ccard .rf{color:var(--red);font-weight:600}
+
+/* 社媒看板 */
+.platgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.platcard{background:var(--panel);border:1px solid var(--line);padding:13px 15px}
+.platcard .pn{font-family:var(--serif);font-size:14px;font-weight:700;margin-bottom:7px}
+.platcard .pstats{display:flex;gap:16px;margin-bottom:7px}
+.platcard .num{font-family:var(--serif);font-size:18px;font-weight:700}.platcard .lab{font-size:10px;color:var(--faint)}
+.platlinks{display:flex;gap:6px;margin-top:7px}
+
+/* 甘特 */
+.gantt{border:1px solid var(--line);background:var(--panel);overflow-x:auto}
+.gantt .gridrow{display:grid}.gantt .lab{padding:8px 12px}
+.g-month{font-family:var(--serif);font-weight:700;font-size:11px;color:var(--sub);text-align:center;border-left:1px solid var(--line);padding:6px 0}
+.g-wk{font-size:10px;color:var(--faint);text-align:center;border-left:1px solid var(--line);padding:4px 0}
+.g-phase .pl{grid-column:1 / -1;background:var(--gray-bg);padding:7px 12px;font-family:var(--serif);font-size:13px;font-weight:700;border-top:1px solid var(--line)}
+.g-phase .pl .pnote{font-family:var(--sans);font-size:11px;color:var(--sub);font-weight:400;margin-left:8px}
+.g-task{display:grid;border-top:1px solid var(--line)}
+.g-task .lab{font-size:12.5px;border-right:1px solid var(--line)}.g-task .lab .meta{display:block;font-size:11px;color:var(--faint);margin-top:2px}
+.track{position:relative;min-height:36px;background:repeating-linear-gradient(to right,transparent 0,transparent calc(100%/var(--c) - 1px),var(--line) calc(100%/var(--c) - 1px),var(--line) calc(100%/var(--c)))}
+.bar{position:absolute;top:7px;height:22px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;white-space:nowrap;overflow:hidden}
+.bar.done{background:var(--ink);color:#F6F3EC}.bar.doing{background:var(--red);color:#fff}.bar.plan{background:var(--blue-bg);color:var(--blue);border:1px dashed var(--blue)}
+.todayline{position:absolute;top:0;bottom:0;width:2px;background:var(--amber);opacity:.75}
+.ptag{font-size:9px;padding:0 5px;border-radius:99px;border:1px solid var(--line-dark);color:var(--faint);margin-right:5px;font-weight:600}
+.ptag.P0{background:var(--red-bg);color:var(--red);border-color:transparent}.ptag.P1{background:var(--amber-bg);color:var(--amber);border-color:transparent}.ptag.P2{background:var(--gray-bg);color:var(--gray);border-color:transparent}
+.glegend{display:flex;gap:16px;font-size:11px;color:var(--sub);margin-bottom:10px}.glegend i{display:inline-block;width:16px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle}
+
+/* 时间线/动态流 */
+.tline .ev{display:flex;gap:12px}
+.tline .dt{width:58px;flex-shrink:0;font-size:11px;color:var(--faint);padding-top:14px;text-align:right}
+.tline .rail{width:12px;flex-shrink:0;display:flex;flex-direction:column;align-items:center}
+.tline .dot{width:9px;height:9px;border-radius:50%;background:var(--line-dark);margin-top:18px}.tline .ev.key .dot{background:var(--red);box-shadow:0 0 0 3px var(--red-bg)}
+.tline .bar2{width:1.5px;flex:1;background:var(--line)}
+.tline .body{flex:1;background:var(--panel);border:1px solid var(--line);padding:10px 13px;margin:8px 0}
+.tline .meta{display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
+.evt{font-size:10px;padding:1px 7px;border-radius:3px}.evt.deliver{background:var(--green-bg);color:var(--green)}.evt.req{background:var(--amber-bg);color:var(--amber)}.evt.metric{background:var(--blue-bg);color:var(--blue)}.evt.file{background:var(--gray-bg);color:var(--sub)}
+
+/* 录入 */
+.form{background:var(--panel);border:1px solid var(--line);padding:20px 22px;max-width:600px}
+.form .fr{margin-bottom:13px}.form label{display:block;font-size:12px;color:var(--sub);margin-bottom:5px}
+.form select,.form input,.form textarea{width:100%;border:1px solid var(--line-dark);background:var(--bg);padding:9px 11px;font-family:var(--sans);font-size:13px;border-radius:5px;color:var(--ink)}
+.form textarea{min-height:64px;resize:vertical}.form .row2{display:flex;gap:12px}.form .row2>*{flex:1}
+.submitbtn{padding:9px 22px;background:var(--ink);color:#F6F3EC;border:none;border-radius:5px;font-size:13.5px;cursor:pointer;font-family:var(--sans)}
+.quickbox{background:var(--panel);border:1px solid var(--line);padding:18px;max-width:600px;margin-bottom:16px}
+.quickbox textarea{width:100%;border:1px solid var(--line-dark);background:var(--bg);padding:11px;font-family:var(--sans);font-size:14px;border-radius:6px;min-height:70px;resize:vertical}
+.aihint{font-size:12px;color:var(--blue);margin-top:8px}
+
+/* 白板话题卡（照真实白板：红标题 + 负责人 + 总结 + 实物） */
+.wcard{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin-bottom:14px}
+.wcard-h{display:flex;align-items:baseline;gap:10px;margin-bottom:11px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.wcard-h .ct{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--red)}
+.wcard-h .co{margin-left:auto;font-size:12px;color:var(--sub);white-space:nowrap}
+.wcard-h .co b{color:var(--ink)}
+.wsum{font-size:16px;margin-bottom:10px;line-height:1.75}
+.wsub{font-family:var(--serif);font-size:13.5px;font-weight:700;color:var(--red);margin:12px 0 6px}
+.agd{list-style:none}
+.agd li{padding:8px 0;font-size:16px;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:10px}
+.agd li .anum{font-family:var(--serif);font-weight:700;color:var(--faint);margin-right:8px}
+.agd li .at{color:var(--faint);font-size:11px;white-space:nowrap}
+.smatrix{width:100%;border-collapse:collapse;font-size:12px;overflow-x:auto;display:block}
+.smatrix table{width:100%;border-collapse:collapse}
+.smatrix th{background:var(--gray-bg);color:var(--sub);font-weight:500;padding:6px 8px;border:1px solid var(--line);text-align:center;font-size:11px;white-space:nowrap}
+.smatrix td{padding:5px 8px;border:1px solid var(--line);text-align:center;white-space:nowrap}
+.smatrix td.pl{text-align:left;font-weight:600;background:#FBF9F4}
+.smatrix td.pl .po{display:block;font-size:10px;color:var(--faint);font-weight:400}
+.smatrix td.hl{font-family:var(--serif);font-weight:700}
+.statuslist{margin-top:4px}
+.statuslist .sg{font-size:12px;color:var(--sub);margin:8px 0 4px;font-weight:600}
+.statuslist .si{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px dashed var(--line);font-size:13px}
+.statuslist .si .nm{font-weight:600;min-width:150px}
+.statuslist .si .desc{flex:1;color:var(--sub);font-size:12px}
+.linkgroup{margin-bottom:10px}
+.linkgroup .lgh{font-size:12.5px;font-weight:600;margin-bottom:5px}
+.linkrow{display:flex;flex-wrap:wrap;gap:6px}
+.cfg{margin-top:8px}
+
+@media(max-width:900px){
+  .side{display:none}.main{padding:18px 14px}
+  .boardlayout{grid-template-columns:1fr}.metricgrid,.platgrid,.cgrid{grid-template-columns:1fr}.shotwall{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
 <body>
 <div class="app"><nav class="side" id="sidebar"></nav><main class="main" id="main"></main></div>
 <script>
+/* ================================================================
+   DB —— Codex 只改此对象，不碰渲染。真实数据来源见开发文档。
+   weeks 倒序（最新在前）；每周 = 一次会议 = 一张可独立查看的白板。
+   白板由会议分析 + 当周登记数据自动生成，负责人只改 conclusion 几句。
+   下方含 Coco.excalidraw 全量白板时间线；最新会议列为 2026-06-11。
+================================================================ */
 const DB={
- meta:{version:"白板规格 v2",updated:"2026-06-15",client:"COCO"},
- team:{侯明真:"#211c15",周星星:"#345f8f",李阳阳:"#8c681a",李家乐:"#2d704f",Owen:"#8a8276",Charlie:"#46506b",Will:"#2f5f45",Alex:"#6b4b7a",Zac:"#7a7163",孔维彤:"#b43b2f"},
- clients:[
-  {name:"COCO",fee:"$8,000",lead:"侯明真",one:"最新白板主线：SuperAI 活动资产沉淀 + 数据闭环；红灯是 GA/Similarweb/PostHog、公开素材边界、案例资料补齐。",red:3,next:"下次会待确认"},
-  {name:"天际",fee:"$4,000",lead:"代逸如",one:"COCO 试点跑通后接入同一套白板。",red:0,next:"待接入",dim:true},
-  {name:"InfiniSynapse",fee:"$4,000",lead:"程果",one:"COCO 试点跑通后接入同一套白板。",red:0,next:"待接入",dim:true}
- ],
- current:{
-  kpis:[{l:"本周主线",v:"活动资产",t:"good"},{l:"红灯卡点",v:3,t:"bad"},{l:"可汇报资产",v:"7+",t:"good"},{l:"数据闭环",v:"待接入",t:"warn"}],
-  stage:{label:"SEO / 数据阶段",link:"看完整甘特 →",steps:[
-   {n:"准备期",d:"模板 / 关键词 / 基建",s:"done"},{n:"验证期",d:"首批页面 + 收录验证",s:"done"},{n:"数据期",d:"GA / GSC / Similarweb",s:"now"},{n:"规模期",d:"内容资产 + 增长链路",s:"plan"}
-  ]}
- },
- weeks:[
-  {date:"2026-06-15",title:"SuperAI 活动资产与数据闭环",summary:"从发素材转向沉淀活动资产；最大红灯是数据闭环和公开素材边界。",red:3,
-   conclusion:"本周重点：COCO 已经拿到 SuperAI 活动周的外部背书和内容资产，会议要把主线从“发了多少素材”切到“活动资产如何变成出海 GTM 链路”；最关键卡点是 GA / Similarweb / PostHog 数据闭环、公开素材边界、案例资料补齐。",
-   agenda:[{n:"本周主线：SuperAI 活动资产怎么讲",t:"10min"},{n:"P0 卡点：GA / Similarweb / PostHog 数据闭环",t:"10min"},{n:"The Signal / Google / AGI Villa / 非凡产研资产复盘",t:"15min"},{n:"视频日更与脚本模板",t:"8min"},{n:"知外文化 / MCN 案例是否作为下周重点",t:"8min"},{n:"下周计划与客户需配合事项",t:"5min"}],
+meta:{ version:"Excalidraw 白板版 v2", updated:"2026-06-13", client:"COCO" },
+team:{ 侯明真:"#2E5E4E",周星星:"#3E5A7E",李阳阳:"#9A6B1F",李家乐:"#B5432E",田长举:"#8A8276",吕教东:"#5b6b4e",孔维彤:"#211C15",代逸如:"#7A7163",查理:"#46506b" },
+
+/* 全客户总览（团队首页） */
+clients:[
+ { name:"COCO", fee:"$8,000", lead:"侯明真", active:true,
+   one:"最新白板 6/11：P0 推进 VIP dinner 深推；SuperAI/Google Cloud 流量突破；视频转为对外语料；SEO 已索引 1 页。", red:2 },
+ { name:"天际", fee:"$4,000", lead:"代逸如", active:false, one:"试点跑通后接入", red:0 },
+ { name:"InfiniSynapse", fee:"$4,000", lead:"程果", active:false, one:"试点跑通后接入", red:0 },
+ { name:"Qveris", fee:"$4,000", lead:"孔月", active:false, one:"试点跑通后接入", red:0 },
+ { name:"IOSG", fee:"$4,000", lead:"孔月", active:false, one:"试点跑通后接入", red:0 },
+ { name:"Buda", fee:"$5,000", lead:"吴志远", active:false, one:"试点跑通后接入", red:0 },
+ { name:"无界方舟", fee:"$5,000", lead:"田长举", active:false, one:"试点跑通后接入", red:0 }
+],
+
+/* COCO 当前态（白板顶部，跨周） */
+current:{
+  kpis:[ {l:"最新会议",v:"06/11",t:"good"},{l:"P0 待执行",v:"VIP深推",t:""},{l:"大会流量峰值",v:"6.9k",t:"good"},{l:"SEO 已索引",v:"1页",t:"good"},{l:"视频切片",v:"4条",t:"good"} ],
+  stage:{ label:"SEO 页面铺设 → 数据验证阶段", steps:[ {n:"准备期",d:"模板·关键词",s:"done"},{n:"首批铺设",d:"20页+Sitemap",s:"done"},{n:"索引验证",d:"已索引1页·曝光提升",s:"now"},{n:"数据迭代",d:"按页面表现优化",s:""} ] }
+},
+
+/* 周时间线（最新在前）。每周一张白板。 */
+weeks:[
+ { date:"2026-06-11", title:"周会 · SuperAI / Google Cloud 复盘", badge:"Coco.excalidraw 原白板",
+   conclusion:"6/11 白板重点：P0 是 VIP dinner 活动深度推文；社媒靠 SuperAI / Google Cloud 大会算法出现流量突破，下一步要把活动流量沉淀成 SOP；视频条线从机械交付升级为 COCO 对外展示的语料/案例；SEO 已有 1 页被 Google 索引，曝光和点击都在提升。",
    cards:[
-    {topic:"待讨论 · SuperAI 活动资产主线",owner:"侯明真 / Will",summary:"这次会要先确认：汇报不再按素材数量，而按活动资产组织。The Signal、Google Cloud、AGI Villa、非凡产研、Peter / Token2049 / Monica 等节点，要合并成 COCO 帮中国 AI 公司出海的 GTM 叙事。",groups:[
-      {h:"已形成的外部资产",items:[{label:"COCO 官方 X 转发 ↗",url:"https://x.com/CocoAIxyz/status/2065983729051333058?s=20"},{label:"Conviction 活动官宣 ↗",url:"https://x.com/Convictionvn/status/2065781230902067216?s=20"},{label:"Google Photos ↗",url:"https://photos.app.goo.gl/oU4L48ARGQTEXKBb9"}]},
-      {h:"待确认源材料",items:[{label:"AGI Villa / Monica 资料",url:""},{label:"Google Cloud 录音",url:""},{label:"Leslie Teo 资料",url:""}]}
-     ],evidence:[{label:"Charlie",text:"别人只能写点小作文，我们直接来个深度长文，让错过了 SuperAI 的人看完了也愿意转发的那种。"}]},
-    {topic:"P0 · GA / Similarweb / PostHog 数据闭环",owner:"Owen / Zac / 李家乐",summary:"客户开始问 COCO 进展，不是要页面数，而是要真实增长数据。当前 GSC 有基础，GA / PostHog 权限和 Similarweb 收录还没闭环，必须红色摆在会前。",problems:{
-      solved:[{s:"已解决",name:"SEO 页面与 GSC 基础",desc:"Owen 反馈已部署 SEO 相关页面，并在 Google Search Console 建账号和收录域名。",pri:"P1"}],
-      todo:[{s:"待对齐",name:"GA4 权限",desc:"需要登录接入并跑周期，否则没有真实访问数据。",pri:"P0"},{s:"待对齐",name:"Similarweb 收录",desc:"icoco.ai 当前未被 Similarweb 收录，需要明确域名/数据策略。",pri:"P0"},{s:"待对齐",name:"PostHog 日常同步",desc:"产品数据权限和自动同步到 Lark 的方式未定。",pri:"P1"}]
-     },metrics:[{name:"GSC 页面基础",prev:0,cur:1,series:[0,0,1,1],src:"",label:"GSC",stale:false},{name:"GA4",prev:0,cur:0,series:[0,0,0,0],stale:true},{name:"Similarweb",prev:0,cur:0,series:[0,0,0,0],stale:true}],
-     evidence:[{label:"Charlie",text:"这个 similarweb 收入的事情我们要尽快对齐下。这个模块的工作分工应该是域名收录这边只 Owen 在跟进。"}]},
-    {topic:"会上可展示的交付证据",owner:"侯明真 / 周星星 / 李阳阳",summary:"这张卡只放能在会上说清楚的证据：已经发布或已收集的挂链接，没有交付的条线必须显式标红。",deliveries:{
-      内容:[{title:"SuperAI 活动周长文主线整理",owner:"侯明真",status:"处理中",link:""},{title:"The Signal VIP Dinner thread",owner:"侯明真",status:"已发布",link:"https://x.com/CocoAIxyz/status/2065029317550350645?s=20",plat:"推特"}],
-      视频:[{title:"AXRAH x COCO Video 3",owner:"周星星",status:"已发布",link:"https://x.com/meanmanapua/status/2066110364815864253?s=46",plat:"推特"},{title:"Paolo / 视频号切片 1-5",owner:"李阳阳",status:"已发布",link:"",plat:"视频号"}],
-      SEO:[],
-      客户案例:[{title:"知外文化 / MCN 案例方向整理",owner:"Alex",status:"待素材",link:""}]
-     }},
-    {topic:"活动资产库 · The Signal / Google / AGI Villa / 非凡产研",owner:"Charlie / 侯明真",summary:"这张卡用于把活动资料变成白板里的实物证据。外部数据和素材只做镜像，源头仍挂 Google Drive / Photos / Notion / 飞书。",table:{cols:["资产","状态","用途","源链接"],rows:[
-      ["The Signal VIP Dinner","已发布","COCO 早期客户与 WIDITH 场景案例","X ↗"],
-      ["Google Cloud Singapore","已收集","Google 合作关系与 Cloud Agent 背书","Photos ↗"],
-      ["AGI Villa / Monica","已收集","AGI Villa 创始人与出海 GTM 背景","文字稿 ↗"],
-      ["非凡产研 Panel","已收集","企业级 AI 落地与 Charlie moderator 视角","文字稿 ↗"]
-     ]},groups:[{h:"源材料",items:[{label:"Google Photos ↗",url:"https://photos.app.goo.gl/oU4L48ARGQTEXKBb9"},{label:"Google Drive ↗",url:"https://drive.google.com/drive/folders/17yn04ki1DFGkq2Mf9HioyNnluUjIYuke?usp=sharing"}]}]},
-    {topic:"视频条线 · 日更持续，但要模板化",owner:"周星星 / 李阳阳 / 侯明真",summary:"客户认可每天 1-2 条视频继续发，但反馈节奏、字幕、包装仍可优化。下一步要从人肉理解变成四类脚本模板：产品解释、活动背书、客户案例、创始人观点。",gantt:{months:[{m:"6月",w:4,labels:["6/10","6/12","6/14","6/16"]}],today:2,tasks:[
-      {name:"Paolo 切片 1-5",pri:"P1",start:0,span:2,state:"done",meta:"已发布"},
-      {name:"AXRAH / Tiger 视频",pri:"P1",start:1,span:2,state:"doing",meta:"V3 处理中"},
-      {name:"四类视频脚本模板",pri:"P0",start:2,span:2,state:"plan",meta:"本周定稿"}
-     ]},evidence:[{label:"客户反馈",text:"嗯，这个继续保持，每天1-2个视频。节奏上感觉还可以优化。"}]},
-    {topic:"社媒矩阵 · 外部看板镜像",owner:"侯明真",summary:"系统只镜像飞书看板，不在网页里手改。浏览/播放/阅读量高亮，源链接挂在底部。",social:{weeks:["6/9-6/15","6/2-6/8","5/26-6/1"],url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5",rows:[
-      {plat:"X 官方 COCO",metrics:{发文:[5,4,3],浏览量:["待同步","5,722","2,509"],点赞:["待同步",33,7]}},
-      {plat:"X 个人号 Charlie",metrics:{发文:[4,6,5],浏览量:["待同步","5,902","3,128"],点赞:["待同步",39,19]}},
-      {plat:"视频号",metrics:{发布:[5,7,6],播放量:["待同步","2,508","2,503"]}},
-      {plat:"公众号",metrics:{发文:[1,3,1],阅读量:["待同步","1,202",394]}}
-     ]}}
+     {topic:"本次会议议程",owner:"侯明真",type:"agenda",items:[
+       {n:"待执行",t:"15min"},
+       {n:"社媒数据看板：SuperAI & Google Cloud 数据复盘",t:"5min"},
+       {n:"demo 演示视频 + 客户案例视频 + 常规视频（录制剪辑中）",t:""},
+       {n:"SEO 进展",t:"10min"},
+       {n:"COCO Talk EP6 推荐名单（已提供）",t:"5min"},
+       {n:"关于 Dan Martell 的深度报告（已撰写，优先级低先放放）",t:"5min"},
+       {n:"其他问题解疑",t:"10min"}]},
+
+     {topic:"【1】待执行 · VIP dinner 活动深度推文",owner:"侯明真",
+       summary:"这不是普通发布事项，是本次白板最顶上的 P0。需要把 The Signal / VIP dinner 的现场、嘉宾、COCO 角色和大会算法势能组织成一篇深度推文，作为会后重点传播内容。",
+       note:"P0 超重要！"},
+
+     {topic:"【2】社媒数据看板 · SuperAI & Google Cloud 复盘",owner:"侯明真",
+       summary:"本周前几日重点在 SuperAI 和 Google Cloud 活动上，其他语料较少、发布内容较少；但在大会算法加持下，推特流量出现小突破。后续要把大会算法流量攥在手里，持续包装 PR COCO、紧追时事热点、蹭热度、抓住能利用的机会，提高 COCO 品牌知名度并打造创始人 IP。",
+       matrix:{weeks:["本次白板数据","说明"],link:"飞书社媒看板 ↗",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5",rows:[
+         {plat:"Google Cloud 活动 Thread",metrics:{官方号:["1k views","CocoAIxyz"],Charlie个人号:["1k views","CharliehuAI"]}},
+         {plat:"SuperAI 预热 · 官方号",metrics:{推特帖子1:["5k views","活动算法"],推特帖子2:["1.7k views","活动算法"]}},
+         {plat:"SuperAI 预热 · Charlie 个人号",metrics:{推特帖子1:["6k views","个人IP"],推特帖子2:["6.9k views","个人IP"],推特帖子3:["891 views","个人IP"]}},
+         {plat:"公众号",metrics:{阅读量:["1104 views","深度内容"]}}]},
+       groups:[
+         {h:"Google Cloud 活动 Thread",items:[
+           {label:"官方号 1k views ↗",url:"https://x.com/CocoAIxyz/status/2064569582065688664?s=20"},
+           {label:"Charlie 个人号 1k views ↗",url:"https://x.com/CharliehuAI/status/2064572667282485395?s=20"}]},
+         {h:"SuperAI 大会预热",items:[
+           {label:"官方号帖子 1 · 5k views ↗",url:"https://x.com/CocoAIxyz/status/2063566919379362045?s=20"},
+           {label:"官方号帖子 2 · 1.7k views ↗",url:"https://x.com/CocoAIxyz/status/2063813721248723258?s=20"},
+           {label:"Charlie 帖子 1 · 6k views ↗",url:"https://x.com/CharliehuAI/status/2063169487017259085?s=20"},
+           {label:"Charlie 帖子 2 · 6.9k views ↗",url:"https://x.com/CharliehuAI/status/2063568159144354285?s=20"},
+           {label:"Charlie 帖子 3 · 891 views ↗",url:"https://x.com/CharliehuAI/status/2063828386527821930?s=20"}]},
+         {h:"公众号",items:[{label:"公众号 1104 views ↗",url:"https://mp.weixin.qq.com/s/jAochs008bXs49UPHZm5Xg"}]}]},
+
+     {topic:"【3】demo / usecase / 基础视频（录制剪辑中）",owner:"周星星 / 李阳阳 / 侯明真",
+       summary:"视频不是机械交付和宣发，而是提供给 COCO 团队对外展示的语料和案例。本周客户案例视频拆成两条线：Tiger 已有素材继续加工；我们自录素材等 COCO 团队提供案例语料后立刻跑脚本安排录制剪辑。基础视频方面，与 Paolo 的直播切片已切出 4 条，预计当天完成全部切片。",
+       sub:[
+         {h:"客户案例视频两条线",summary:"（1）Tiger 录制剪辑：对视频再加工，去掉对方公司所有品牌 logo，只保留 COCO 品牌，同时配字幕做中文、英文两个版本，发布至不同平台。（2）我们录制剪辑：待 COCO 团队提供案例语料后，立刻跑脚本安排录制剪辑。"},
+         {h:"基础视频",summary:"与 Paolo 的直播切片视频已切出 4 条，预计 6/11 当天完成所有切片；后续会加大产出，持续形成可对外展示的语料/案例。"}],
+       links:[{label:"视频 Notion ↗",url:"https://app.notion.com/p/36dfc520994e80f499bcf1286bc63181?v=36dfc520994e805aab6c000cf2a6fe3b"}]},
+
+     {topic:"【4】SEO 进展 · 问题汇总与页面数据",owner:"李家乐",
+       summary:"截止 6/10，SEO 页面工期正常。上周交付 10 页待部署，目前 Google 已索引 1 个页面，曝光持续增长；数据看板显示 SEO 页面曝光量有序提升，点击量相比上周也有提升。下一步继续每天手动提交 Google 索引，并根据已收录数据对原有页面做优化迭代，提高曝光率和点击率。",
+       problems:{solved:[
+          {s:"已推进",name:"首批页面部署",desc:"上周交付 10 页待部署，本周进入索引验证。"},
+          {s:"已收录",name:"Google 索引",desc:"目前已有 1 个页面被 Google 索引。"}
+        ],
+        todo:[
+          {s:"待持续",name:"每日提交索引",desc:"继续手动提交 Google 索引，加速页面收录。",pri:"P1"},
+          {s:"待持续",name:"按数据优化",desc:"根据已收录页面的曝光、点击数据迭代标题、描述和页面内容。",pri:"P1"}]},
+       links:[
+         {label:"Google Search Console ↗",url:"https://search.google.com/search-console?utm_source=about-page&resource_id=sc-domain:icoco.ai"},
+         {label:"SEO 问题跟进表 Notion ↗",url:"https://app.notion.com/p/375fc520994e80ec905ec2ce89720938?v=f79fc520994e8229ab7008d2b911b7ee&source=copy_link"},
+         {label:"SEO 页面看板 Notion ↗",url:"https://app.notion.com/p/373fc520994e80c69886c61145ab7103?v=373fc520994e80fbbf6d000cead57d50&source=copy_link"}]},
+
+     {topic:"【5】COCO Talk EP6 推荐名单",owner:"侯明真",
+       summary:"推荐名单已提供。本次会议只需快速确认是否继续沿用这批名单，以及是否需要补充新的候选人画像。"},
+
+     {topic:"【6】Dan Martell 深度报告",owner:"侯明真",
+       summary:"深度报告已撰写，但优先级低，先放放。目前联系不到 Dan Martell；即使对接到了，也无法真正马上开始合作，收费方式也不清楚。",
+       note:"优先级低，先放放。"}
    ],
-   supplements:{
-    requests:[
-      {date:"06-15",source:"Charlie",quote:"我们 SEO 到哪一步进展了？",status:"待对齐",owner:"李家乐 / Owen",resp:"会上确认 GA / Similarweb / PostHog 分工。"},
-      {date:"06-14",source:"Charlie",quote:"Google、非凡产研、AGI Villa 也写英文 thread。",status:"处理中",owner:"侯明真",resp:"先整理源材料和 tag 清单。"},
-      {date:"06-14",source:"Charlie",quote:"飞瓜、爱企查、企查查这些工具你们了解吗？",status:"处理中",owner:"孔维彤",resp:"作为新议题抛出，不混进本次已有交付。"}
-    ],
-    psych:"客户关注点从“素材是否持续发布”升级到“活动资产、自然流量、外部背书、客户案例和数据闭环”。本周汇报不能报数量，要报资产如何沉淀为增长链路。",
-    mustAsk:["GA / PostHog / Similarweb 权限分别谁给？什么时候能在白板里展示趋势？","SuperAI 活动周长文是否主打「大会算法 + 出海 GTM 链路」？","Google / AGI Villa / Monica / Leslie Teo 哪些素材可公开引用？","知外文化 / MCN 案例是否作为下周重点？"],
-    nextWeek:["SuperAI 活动周长文 + 英文 thread 定稿。","四类视频脚本模板沉淀。","GA / Similarweb / PostHog 数据源接入。","知外文化 / MCN 客户案例资料补齐。"]
-   }},
-  {date:"2026-06-11",title:"Will × COCO MKT 周会后执行",summary:"客户把重点转向 SuperAI 抢窗口，要求 Google/SuperAI/新加坡好话尽快出。",red:2,
-   conclusion:"本周重点：SuperAI 活动窗口正在发生，客户要求“越早越好”，所以白板要突出 Google、SuperAI、新加坡与 VIP dinner 的公开传播资产；卡点是视频素材标准和 SEO 后续待办。",
-   agenda:[{n:"Google / SuperAI / 新加坡内容方向",t:"10min"},{n:"VIP Dinner 视频与照片",t:"10min"},{n:"产品介绍片与 Paolo 切片",t:"8min"},{n:"SEO 待办",t:"8min"}],
+   blockers:[
+     {item:"VIP dinner 活动深度推文必须作为 P0 推进", need:"形成深推主线、素材选择和发布时间", client:false, owner:"侯明真"},
+     {item:"SEO 仍需持续观察索引与点击数据", need:"每日提交 Google 索引，并按已收录数据优化页面", client:false, owner:"李家乐"}
+   ],
+   requests:[
+     {date:"06-11",source:"白板",quote:"以后要把大会算法流量牢牢攥在手里，尽可能包装 PR COCO。",status:"处理中",owner:"侯明真",resp:"沉淀重要活动发布 SOP，并优先推进 VIP dinner 深推。"},
+     {date:"06-11",source:"白板",quote:"视频不是机械交付，而是提供给 COCO 对外展示的语料/案例。",status:"已回应",owner:"周星星",resp:"客户案例视频分 Tiger 加工与团队自录两条线推进。"}
+   ],
+   psych:"客户关注点从“有没有做内容”升级为“能不能抓住大会算法、沉淀 SOP、把 COCO 包装成可传播的品牌与创始人 IP”。会议要先讲主线，再讲证据。",
+   deliveries:{
+     内容:[ {title:"SuperAI / Google Cloud 活动数据复盘与传播 SOP 判断",owner:"侯明真",date:"06-11",pub:{plat:"飞书",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5"}},
+            {title:"VIP dinner 活动深度推文列为 P0",owner:"侯明真",date:"06-11",pub:{plat:"待发布",url:""}} ],
+     视频剪辑:[ {title:"与 Paolo 直播切片已切出 4 条，预计当日完成全部切片",owner:"周星星",date:"06-11"},
+                {title:"Tiger 客户案例视频进入去 logo、双语字幕、跨平台版本加工",owner:"李阳阳",date:"06-11"} ],
+     SEO:[ {title:"SEO 已有 1 个页面被 Google 索引，曝光与点击相较上周提升",owner:"李家乐",date:"06-11",pub:{plat:"GSC",url:"https://search.google.com/search-console?utm_source=about-page&resource_id=sc-domain:icoco.ai"}} ]
+   },
+   metrics:[
+     {name:"Charlie 个人号 SuperAI 帖峰值",prev:6000,cur:6900,series:[1000,1700,5000,6000,6900],src:"https://x.com/CharliehuAI/status/2063568159144354285?s=20",srclabel:"推特 ↗"},
+     {name:"公众号阅读量",prev:0,cur:1104,series:[0,200,540,860,1104],src:"https://mp.weixin.qq.com/s/jAochs008bXs49UPHZm5Xg",srclabel:"公众号 ↗"},
+     {name:"Google 已索引页面",prev:0,cur:1,series:[0,0,0,1],src:"https://search.google.com/search-console?utm_source=about-page&resource_id=sc-domain:icoco.ai",srclabel:"GSC ↗"}
+   ],
+   mustAsk:["VIP dinner 深推最终用哪组现场素材和哪条主叙事？","COCO Talk EP6 推荐名单是否继续沿用，是否要补新画像？","SEO 已索引页面的标题和内容是否需要按点击数据调整？"],
+   nextWeek:["P0：完成 VIP dinner 活动深度推文并发布","把 SuperAI / Google Cloud 活动发布动作沉淀成 SOP","继续完成 Paolo 直播切片与 Tiger 案例双语版本","每天提交 Google 索引并根据数据优化页面"],
+   agenda:["待执行：VIP dinner 深度推文","社媒数据看板：SuperAI & Google Cloud 复盘","demo/usecase/基础视频","SEO 进展","COCO Talk EP6 推荐名单","Dan Martell 深度报告"],
+   shots:["Coco.excalidraw 6/11 会议列","SuperAI 推特数据截图","Google Cloud Thread 数据截图","SEO 问题汇总截图","GSC 数据看板","视频 Notion 看板"] },
+
+ { date:"2026-06-05", title:"Will × COCO MKT 周会", badge:"自动生成 · 待确认",
+   conclusion:"上周三大 SEO 问题（指向 / 渲染 / 换域名）已全部解决并建立每周进展同步，已交付 20+ 页面；本周两个重点是视频条线和 SuperAI 大会蹭流量；最大卡点仍是 demo case 录屏素材未到位。",
    cards:[
-    {topic:"待讨论 · 活动结束后报告要尽快出",owner:"侯明真",summary:"客户明确要求 Google、SuperAI、新加坡相关内容活动结束后尽快发布，核心是 name drop 和外部背书。",groups:[{h:"客户给出的方向",items:[{label:"Google 好话",url:""},{label:"SuperAI 好话",url:""},{label:"新加坡好话",url:""}]}],evidence:[{label:"Charlie",text:"google 这个活动明天结束之后还是要后续报告。舔 google，说 google 好话；舔 SuperAI，说 SuperAI 好话；舔新加坡，说新加坡好话。"}]},
-    {topic:"VIP Dinner 视频与照片",owner:"周星星 / 侯明真",summary:"The Signal VIP Dinner 的横版、竖版视频和照片已多轮确认，客户偏好商务高管风格，不要太朋克。",groups:[{h:"素材",items:[{label:"WIDITH 素材盘 ↗",url:"https://drive.google.com/drive/folders/1hWuWgzxbUDQS35ZMCw5Fe6VdI4seoMfd?usp=sharing"}]}]},
-    {topic:"SEO 待办",owner:"Owen / 李家乐",summary:"客户要求总结 SEO 和其他 todo，后续演变成数据闭环问题。",problems:{solved:[],todo:[{s:"待对齐",name:"SEO 后续 todo",desc:"需要给 Owen 汇总站内待办。",pri:"P1"}]}}
+     {topic:"本次会议议程",owner:"侯明真",type:"agenda",items:[
+       {n:"待讨论（SuperAI 大会推特 Thread 爆款内容 + 网红合作？）",t:"15min"},
+       {n:"demo 演示视频和客户案例视频（录制剪辑中）",t:"5min"},
+       {n:"SEO 进展",t:"10min"},{n:"社媒数据看板",t:"5min"},
+       {n:"文本发布",t:"5min"},{n:"视频发布",t:"5min"},{n:"其他问题解疑",t:"10min"}]},
+
+     {topic:"待讨论 · SuperAI Thread 爆款 + 网红合作",owner:"侯明真 / 孔维彤",
+       summary:"如何根据 SuperAI 大会算法打造爆款内容：核心 = SuperAI 指南 + COCO 内部 VIP dinner + COCO 软介绍；形态做 playbook / thread / 地图 / Excel 活动列表，找 6/9–13 每日活动与对标账号。",
+       groups:[{h:"执行方案 & Thread",items:[{label:"SuperAI_Action_Plan.pdf ↗",url:"#"},{label:"COCO_SuperAI_Thread_EN.pdf ↗",url:"#"}]}],
+       note:"网红：TikTok 候选 12 位待对接（Alex 跟进合同与素材使用权）。"},
+
+     {topic:"demo / usecase 视频（录制剪辑中）",owner:"周星星 李阳阳 代逸如",
+       summary:"本周完成 2 条中英版 demo 视频；usecase（白人 Triger）录制中。已完成 3 条、录制中 6 条、未开始 2 条。待贵方配合：尽快给合格录制原素材或升级账号，我们团队自录。",
+       gantt:{months:[{m:"日期",w:7,labels:["5/25","5/30","6/2","6/5","6/10","6/15","6/20"]}],today:3,phases:[{name:"",tasks:[
+         {name:"coco 界面展示",pri:"P1",start:1,span:1,state:"done",meta:"5/30 交付"},
+         {name:"coco 对 lark 操作",pri:"P2",start:1,span:1,state:"done",meta:"5/30 交付"},
+         {name:"Josh 亲身讲述 COCO",pri:"P2",start:0,span:1,state:"done",meta:"5/29 交付"},
+         {name:"产品介绍片（2–3 分钟）",pri:"P1",start:3,span:2,state:"doing",meta:"预交付 6/15"},
+         {name:"电商/物流/快消/制造/mcn 客户场景",pri:"P2",start:3,span:2,state:"doing",meta:"预交付 6/15"},
+         {name:"创始人/团队介绍 · 安全与隐私",pri:"P3",start:5,span:2,state:"plan",meta:"6/20"},
+         {name:"AI 员工日常 · 新场景新玩法",pri:"P3",start:5,span:2,state:"plan",meta:"6/20 持续"}]}]}},
+
+     {topic:"SEO 进展",owner:"李家乐",sub:[
+       {h:"(1) 页面对接落地与编写",summary:"本周交付 20 个 SEO 页面 + 对应 sitemap.xml，首批部署完成、已提交站点文件，等谷歌索引验证；本周已完成 10 页待交付。",
+         table:{cols:["页面标题","主关键词","类型","上线","TDK","Canonical"],rows:[
+           ["Hire AI Employee","Hire AI Employee","竞品对比","06-03","已检查/完整","一致"],
+           ["COCO Agent Teams: Zylos","COCO Agent Teams","guides","06-03","已检查/完整","一致"],
+           ["COCO AI FAQ","COCO AI FAQ","guides","06-03","已检查/完整","一致"],
+           ["AI Ad Copy Generation","AI Ad Copy Generation","use case","06-03","已检查/完整","一致"],
+           ["AI Code Reviewer","AI Code Reviewer","use case","06-03","已检查/完整","一致"]]},
+         links:[{label:"页面追踪 Notion ↗",url:"#"}]},
+       {h:"(2) 新增工具页筹备（本周合计 10 页）",summary:"在原有页面类型基础上新增工具页：HTML/Markdown Preview、URL Encoder、Base64、Timestamp、CSV/JSON Converter（Free Developer Tools）。下一步每天提交 Google 索引、观察后台数据迭代优化。"},
+       {h:"进度甘特",gantt:{months:[{m:"6月",w:4},{m:"7月",w:4},{m:"8月",w:4}],today:1,phases:[
+         {name:"阶段一 · 验证期",note:"首批50页·收录>80%",tasks:[
+           {name:"已发布矩阵页（竞品6+指南5+UseCase9）",pri:"P0",start:0,span:2,state:"done",meta:"20/20·100%"},
+           {name:"CTA·GSC 收录监控·Index 追踪",pri:"P1",start:1,span:2,state:"doing",meta:"30%"}]},
+         {name:"阶段二 · 扩展期",note:"200–300页",tasks:[
+           {name:"工具矩阵 / 行业页 / 支柱页",pri:"P0",start:2,span:3,state:"plan",meta:"目标 175+"},
+           {name:"外链 Product Hunt/G2/Capterra",pri:"P1",start:4,span:3,state:"plan",meta:"目标 5+"}]},
+         {name:"阶段三 · 规模期",note:"500–1780页",tasks:[
+           {name:"UseCases 规模扩充 / 行业×场景",pri:"P0",start:8,span:4,state:"plan",meta:"目标 1200+"}]}]}},
+       {h:"问题汇总（截止 6.5）",problems:{
+         solved:[{s:"已修复",name:"canonical 指向",desc:"改为指向 icoco.ai 自身"},{s:"已修复",name:"Sitemap URL",desc:"全部替换为 icoco.ai 域名"},{s:"已修复",name:"语言元数据",desc:"lang/title/description 统一为英文"}],
+         todo:[{s:"待修复",name:"首页 HTML 零可读文本",desc:"纯 RSC 渲染，Google 看不到 H1/正文/链接，整站权重入口失效",pri:"P0 严重"},{s:"待修复",name:"coco.xyz 未 301 跳转",desc:"两域名内容重复、权重互相稀释",pri:"P0 严重"},{s:"待修复",name:"/about canonical 指向首页",desc:"/about 不被独立索引，品牌页白做",pri:"P1 较重"},{s:"待修复",name:"/about 与首页 title 重复",desc:"搜索引擎无法区分",pri:"P1 较重"},{s:"待修复",name:"中英双语缺 hreflang",desc:"中文内容仅 JS 切换，丢失中文搜索流量",pri:"P1 较重"}]},
+         links:[{label:"问题跟进表 Notion ↗",url:"#"},{label:"GSC ↗",url:"#"}]}]},
+
+     {topic:"社媒数据看板",owner:"侯明真",
+       matrix:{weeks:["5/28–6/3","5/22–27","5/15–21"],link:"飞书看板 ↗",url:"#",rows:[
+         {plat:"X 个人号 Charlie",metrics:{发文:[25,15,12],浏览量:["5,902","3,128","1,634"],点赞:[39,19,15]}},
+         {plat:"X 企业号 COCO",metrics:{发文:[16,7,6],浏览量:["5,722","2,509","1,737"],点赞:[33,7,10]}},
+         {plat:"LinkedIn 企业号 coco",po:"田长举 / 复盘 侯明真",metrics:{发文:[10,6,7],点赞:[7,13,4]}},
+         {plat:"YouTube 官方号",metrics:{发布:[7,6,6],浏览量:[646,293,"1,030"]}},
+         {plat:"Charlie 视频号",metrics:{发布:[7,6,5],播放量:["2,508","2,503","1,490"],完播率:["10%","7%","6%"]}},
+         {plat:"公众号官方号",metrics:{发文:[3,1,1],阅读量:["1,202",394,136]}},
+         {plat:"小红书官方",metrics:{发布:[6,5,11],浏览量:[136,479,924]}}]}},
+
+     {topic:"文本发布详情",owner:"侯明真",summary:"围绕个人 IP + 活动传播 + 社群互动，构建多渠道内容矩阵。",
+       groups:[
+         {h:"① 深度长文打造个人 IP（公众号 ×3）",items:[{label:"Agent 不是 prompt 出来的 ↗",url:"#"},{label:"在美国一个月 ↗",url:"#"},{label:"80 人砍到 40 人 ↗",url:"#"}]},
+         {h:"② SuperAI 大会 & VIP dinner（推特）",items:[{label:"报名邀请帖 ↗",url:"#"},{label:"The Signal VIP dinner ↗",url:"#"}]},
+         {h:"③ 东京活动回顾 Thread（推特 1.8k views）",items:[{label:"Thread 1 ↗",url:"#"},{label:"Thread 2 ↗",url:"#"}]}]},
+
+     {topic:"视频发布情况",owner:"侯明真",
+       summary:"5.28–6.3 在视频号 / 小红书 / YouTube / 推特官方号 / 领英五平台各发 6 条切片（一天 1 条）；小宇宙发布 COCO Talk 两期完整长视频。严格中文平台发中文、英文平台发英文。",
+       links:[{label:"视频发布 Notion ↗",url:"#"}]}
    ],
-   supplements:{requests:[{date:"06-11",source:"Charlie",quote:"SEO 还有其他方面的 todo，需要我们做啥，总结一下吧。",status:"处理中",owner:"侯明真",resp:"整理后给 Owen 跟进。"}],psych:"客户从看单条视频质量，转向催促活动窗口，担心错过 SuperAI 流量。",mustAsk:["活动后报告的交付时间？","VIP Dinner 用横版还是竖版做主发？"],nextWeek:["SuperAI 活动短内容先发。","VIP Dinner 资产整理成案例。"]}},
-  {date:"2026-06-05",title:"SEO 页面铺设与视频卡点",summary:"三大 SEO 问题已解决，视频录屏素材和账号额度仍是红灯。",red:2,
-   conclusion:"本周重点：SEO 基础问题已经修复并进入收录验证；视频条线最大卡点仍是客户录屏素材质量和账号额度，不能再用低质量素材反复剪。",
-   agenda:[{n:"SEO 三大问题修复结果",t:"10min"},{n:"视频录屏素材标准",t:"10min"},{n:"SuperAI 预热内容",t:"8min"}],
-   cards:[
-    {topic:"SEO 进展",owner:"李家乐",summary:"canonical、sitemap、语言元数据完成修复，首批页面进入收录监测。",problems:{solved:[{s:"已解决",name:"canonical 指向",desc:"统一指向 icoco.ai。",pri:"P0"},{s:"已解决",name:"Sitemap URL",desc:"全部替换为 icoco.ai 域名。",pri:"P0"},{s:"已解决",name:"语言元数据",desc:"lang/title/description 统一。",pri:"P1"}],todo:[{s:"待修复",name:"首页 HTML 可读文本",desc:"需要补 H1/正文/链接。",pri:"P0"}]}},
-    {topic:"Demo / Use Case 视频",owner:"周星星 / 李阳阳",summary:"已完成部分 demo 视频，但客户提供素材标准不稳定，平板拍摄不适合剪辑。",gantt:{months:[{m:"6月",w:4,labels:["6/3","6/5","6/10","6/15"]}],today:1,tasks:[{name:"COCO 界面展示",pri:"P1",start:0,span:1,state:"done",meta:"已交付"},{name:"产品介绍片",pri:"P1",start:1,span:2,state:"doing",meta:"剪辑中"},{name:"行业客户场景",pri:"P2",start:2,span:2,state:"plan",meta:"待素材"}]}}
+   blockers:[
+     {item:"demo case 录屏素材未到位（最大卡点）——前两版用平板拍、不合剪辑要求", need:"贵方提供合格录屏：电脑拍、高清、干净桌面（先 Amy）", client:true},
+     {item:"录屏产能不足，Will 团队账号额度小（99 刀的两下就没）", need:"贵方开高额度账号 / 同时自产，Charlie 跟 Eric 对", client:true},
+     {item:"MCN/Agency 第一波视频质量差、1 万美金报价不接", need:"会后 Charlie × Will 单独对齐 TikTok 白号方案", client:false}
    ],
-   supplements:{requests:[{date:"06-05",source:"Charlie",quote:"YouTube 老外看到中文字幕会不适，能不能隐藏纯中文？",status:"已回应",owner:"侯明真",resp:"分栏目 + 隐藏纯中文。"}],psych:"客户从“SEO 是否修好”上移到“增长数据能否闭环”。",mustAsk:["合格录屏素材谁出？","账号额度谁开？"],nextWeek:["SuperAI 大会蹭流量 thread。","继续追 SEO 收录率。"]}},
-  {date:"2026-05-29",title:"ICP 验证与销售视频",summary:"Jesse 币圈散户画像不成立，方向转向电商出海和小 B。",red:1,
-   conclusion:"本周重点：币圈散户不是 COCO 核心 ICP，销售视频和案例要转向电商出海、中等数字化品牌、MCN/小 B 等更可转化场景。",
-   agenda:[{n:"ICP 验证复盘",t:"12min"},{n:"销售 Demo 视频流程",t:"10min"},{n:"SEO 域名切换",t:"8min"}],
-   cards:[
-    {topic:"ICP 调整",owner:"侯明真",summary:"Jesse 视频评论集中嫌贵，证明纯币圈小 C 不适合作为主客户。方向转向电商出海、ISP、SMB、MCN 小 B。",evidence:[{label:"Charlie",text:"这个 ICP 验证结论就是花重心少一点，往电商出海切。"}]},
-    {topic:"销售 Demo 视频",owner:"周星星",summary:"销售端 Demo 视频优先级高于企业宣传片，需要客户一次性打包素材。",deliveries:{视频:[{title:"销售视频脚本对接会",owner:"周星星",status:"已回应",link:""}],内容:[],SEO:[{title:"coco.xyz → icoco.ai 切换",owner:"李家乐",status:"已发布",link:"",plat:"页面"}]}}
+   requests:[
+     {date:"06-05",source:"查理",quote:"你给我写几个关键词，我让他（Tiger）再改一下",status:"处理中",owner:"侯明真",resp:"写英文 UGC 方向文档，会后开始"},
+     {date:"06-05",source:"CK / Steve Nouri",quote:"COCO 发内容不带 hashtag，跟没有内容团队一样",status:"已回应",owner:"侯明真",resp:"同意补 hashtag"},
+     {date:"06-05",source:"查理",quote:"YouTube 老外看到中文字幕会不适，能不能隐藏纯中文",status:"已回应",owner:"侯明真",resp:"分栏目 + 隐藏纯中文，已同意"}
    ],
-   supplements:{requests:[{date:"05-29",source:"Charlie",quote:"重心往电商出海切。",status:"已回应",owner:"侯明真",resp:"ICP 画像更新。"}],psych:"客户从广撒小 C 转向更精准、更可成交的 ICP。",mustAsk:["电商出海先打哪个细分？","销售 Demo 素材何时给？"],nextWeek:["追热点 SOP。","SEO 收录率监测。"]}}
- ]
+   psych:"客户期待从'做了多少素材'升级到'客户工作 OS + 增长漏斗 + 出海 GTM 叙事'；对内容专业度（hashtag、YouTube 分栏）变敏感。",
+   deliveries:{
+     内容:[ {title:"VC 文章抓取页 + 本周 6 篇阅读列表（A16z / YC / 红杉）",owner:"侯明真",date:"06-05",pub:{plat:"页面",url:"#"}},
+            {title:"模仿 A16z 风格的推特数据图",owner:"田长举",date:"06-05",pub:{plat:"推特",url:"#"}},
+            {title:"SuperAI 大会蹭流量 thread（playbook / 地图 / Excel 多形态）",owner:"侯明真",date:"06-06",pub:{plat:"推特",url:""}} ],
+     视频剪辑:[],
+     SEO:[ {title:"三大问题修复（指向/渲染/换域名）+ 建立每周进展同步",owner:"李家乐",date:"06-05"},
+           {title:"已交付 20+ 矩阵页（竞品 / 指南 / UseCase）",owner:"李家乐",date:"06-05",pub:{plat:"页面",url:"#"}},
+           {title:"工具类页面性价比参考表",owner:"吕教东",date:"06-05"} ]
+   },
+   metrics:[
+     {name:"已部署 SEO 页面数",prev:18,cur:24,series:[0,0,5,12,18,24],src:"#",srclabel:"GSC ↗"},
+     {name:"SuperAI 文章浏览（美国篇）",prev:0,cur:1700,series:[0,0,0,200,600,1700],src:"#",srclabel:"推特 ↗"},
+     {name:"视频号粉丝数",prev:610,cur:680,series:[400,470,520,560,610,680],src:"#",srclabel:"主页 ↗"}
+   ],
+   mustAsk:["录屏素材谁来出、什么时候给（Amy 还是内部）？","高额度账号 Charlie 跟 Eric 对的结果？","MCN 白号方案走不走？"],
+   nextWeek:["SuperAI 大会蹭流量 thread（本周重点）","给 Tiger 写英文 UGC 拍摄指导文档","用个人号回复 COCO 每篇 + VC 文章互动","research 符合画像的 TikTok KOL 名单"],
+   agenda:["NYC 后本周交付与方向","视频条线与 KOL 试错","SEO + GEO 进度","SuperAI 大会蹭流量","Alex（王荣鉴）加入"],
+   shots:["SEO 甘特路线图","社媒数据矩阵","GSC 收录截图","已发推特：产品发版帖","VC 抓取页","A16z 风格数据图","Tiger 视频截帧","SuperAI 文章"] },
+
+ { date:"2026-05-29", title:"周会 · ICP 验证与销售视频", badge:"已确认",
+   conclusion:"ICP 验证有结论——Jesse 的币圈散户画像不是 COCO 目标客户（41 条评论集中嫌贵），重心转向电商出海，与核心 CP（中等数字化品牌 / ISP / SMB）对齐。",
+   blockers:[
+     {item:"Demo 录屏需按一周 5 个一次性打包提供（不要单条催）", need:"贵方一次性打包录屏", client:true},
+     {item:"销售端 Demo 视频生产流程待跑通（销售视频优先级高于企业宣传片）", need:"Amy 整理销售视频需求清单", client:true}
+   ],
+   requests:[ {date:"05-29",source:"查理",quote:"这个 ICP 验证结论就是花重心少一点，往电商出海切",status:"已回应",owner:"侯明真",resp:"重心转电商出海，Jesse 保持关系做音量"} ],
+   psych:"客户从'验证币圈 ICP'转向'电商出海 + KA'，关注点上移到目标客户精准度。",
+   deliveries:{
+     内容:[ {title:"导出 Anthropic Team Radar 推特列表给 Charlie",owner:"侯明真",date:"05-29"} ],
+     视频剪辑:[ {title:"拉销售视频脚本对接会，跑通销售 Demo 流程",owner:"周星星",date:"05-29"},{title:"COCO Talk 视频切片标准化",owner:"李阳阳",date:"05-29"} ],
+     SEO:[ {title:"老页面 coco.xyz → icoco.ai 切换 + 部署上线",owner:"李家乐",date:"05-29",pub:{plat:"页面",url:"#"}} ]
+   },
+   metrics:[ {name:"已部署 SEO 页面数",prev:12,cur:18,series:[0,0,5,12,18],src:"#",srclabel:"GSC ↗"},{name:"视频号粉丝数",prev:560,cur:610,series:[400,470,520,560,610],src:"#",srclabel:"主页 ↗"} ],
+   mustAsk:["电商出海方向先打哪个细分？","销售端 Demo 视频清单何时给？"],
+   nextWeek:["建爆款追热点 SOP（Opus4.8 / GPT5.5 launch 第一时间出 available 海报+thread+demo）","SEO 收录率监测，形成关键词-页面-数据循环"],
+   agenda:["ICP 验证复盘（Jesse）","销售视频生产流程","SEO 域名切换与部署","追热点 SOP"],
+   shots:["Jesse 视频评论区","SEO 收录监测"] },
+
+ { date:"2026-05-22", title:"周会 · KA 进展与画像收敛", badge:"已确认",
+   conclusion:"KA 效应显著——杜蕾斯大中华区下单几十个、知外文化带来 50+ 客户买 100+ agent；ICP 微调：纯小 C 不做，转向有粉丝运营 IP 的大 C + 游戏/电商/MCN 小 B；亚太是真进展市场。",
+   blockers:[
+     {item:"LinkedIn Ads 方案很水、对新品牌曝光太贵", need:"先 pass，改 10 月 Hawke Media 活动直接触达", client:false},
+     {item:"Salesforce / Slack 推自家 agent 对 COCO 有冲击", need:"差异化叙事待对齐", client:false}
+   ],
+   requests:[ {date:"05-22",source:"查理",quote:"纯小 C 不做了，转向有粉丝的大 C 和游戏/电商/MCN 小 B",status:"已回应",owner:"侯明真",resp:"ICP 画像已更新，内容与案例按新画像调整"} ],
+   psych:"拿到 KA 战果后信心上升，画像从'广撒小 C'收敛到'大 C + 小 B'，更看重案例质量。",
+   deliveries:{
+     内容:[ {title:"TOB 打法分析网站（定位/路线/内容系统/工具推荐）",owner:"田长举",date:"05-22",pub:{plat:"页面",url:"#"}},{title:"田长举一篇分析长文",owner:"田长举",date:"05-22",pub:{plat:"推特",url:"#"}} ],
+     视频剪辑:[ {title:"把客户 PPT/文章语料洗成视频（知外 / the9bit / Josh，出口转内销）",owner:"周星星",date:"05-22"} ],
+     SEO:[ {title:"icoco.ai 新域名上线，启动 SEO 部署（4 名全职待命）",owner:"李家乐",date:"05-22"} ]
+   },
+   metrics:[ {name:"已部署 SEO 页面数",prev:0,cur:12,series:[0,0,12],src:"#",srclabel:"GSC ↗"} ],
+   mustAsk:["the9bit Laura 新加坡活动语料能否补？","小红书账号定位怎么调？"],
+   nextWeek:["1:1 复刻美国 TOB 短视频 pattern（露脸+录屏+字幕动效）","case study 精致化（SEO 重中之重）","小红书账号重装修"],
+   agenda:["KA 客户进展与 ICP 调整","LinkedIn Ads 评估","TOB 打法分析","case study 精致化"],
+   shots:["KA 客户进展","TOB 打法分析网站","case study 页面"] },
+
+ { date:"2026-05-15", title:"周会 · KA 与内容系统", stub:true, conclusion:"真实白板列已存在，含 15 篇 KA 客户深度报告、内容发布、短视频、COCO 社媒数据看板、SEO/GEO 分析等内容；待补成完整卡片。" },
+ { date:"2026-05-08", title:"周会 · SEO/GEO 与社媒数据", stub:true, conclusion:"真实白板列已存在，含 SEO+GEO 议程、COCO 社媒数据看板、SEO 页面落地与关键词数据；待补成完整卡片。" },
+ { date:"2026-04-29", title:"周会（未开）· 资料沉淀", stub:true, conclusion:"真实白板列标注为未开会，含社媒数据看板、活动资料与阶段性整理；待补成完整卡片。" },
+ { date:"2026-04-20", title:"周会 · NYC 活动", stub:true, conclusion:"真实白板列已存在，围绕 NYC 活动、内容发布、社媒数据与后续跟进；待补成完整卡片。" },
+ { date:"2026-04-15", title:"周会 · 社媒与内容推进", stub:true, conclusion:"真实白板列已存在，含 4/7-4/14 社媒数据更新、发布内容与后续执行；待补成完整卡片。" },
+ { date:"2026-04-06", title:"周会 · 社媒数据更新", stub:true, conclusion:"真实白板列已存在，含 3/30-4/6 社媒数据更新与当周执行内容；待补成完整卡片。" },
+ { date:"2026-03-30", title:"周会 · 社媒数据看板", stub:true, conclusion:"真实白板列已存在，含 3/9-3/29 社媒数据看板搭建与更新；待补成完整卡片。" },
+ { date:"2026-03-23", title:"周会 · 内容与社媒基础建设", stub:true, conclusion:"真实白板列已存在，含社媒数据、发布内容、账号与内容基础建设；待补成完整卡片。" },
+ { date:"2026-03-16", title:"周会 · KOL 真伪验证", stub:true, conclusion:"真实白板列已存在，围绕 KOL 真伪、Twitter 账号清洗与早期传播基础；待补成完整卡片。" },
+ { date:"2026-03-09", title:"周会 · Twitter 账号清洗", stub:true, conclusion:"真实白板列已存在，早期账号清洗与传播基础工作；待补成完整卡片。" },
+ { date:"2026-03-04", title:"启动会议 · 网站 SEO + 内容站", stub:true, conclusion:"项目启动：网站 SEO 和内容站建设方向确立；待补成完整卡片。" },
+ { date:"2026-03-03", title:"会议总结 · 启动前整理", stub:true, conclusion:"真实白板第一列，作为 COCO 项目启动前的会议总结与资料入口；待补成完整卡片。" }
+],
+
+social:[
+ {name:"X · @CocoAIxyz",fans:"48",inter:"SuperAI文 1.7k",series:[30,33,38,41,44,48],link:"#",board:"#"},
+ {name:"LinkedIn · COCO AI",fans:"—",inter:"稳步增长",series:[],link:"#",board:"#"},
+ {name:"视频号 · COCO",fans:"680",inter:"完播 2.4%",series:[400,470,520,560,610,680],link:"#",board:"#"},
+ {name:"公众号 · COCO",fans:"—",inter:"近 10 万阅读",series:[],link:"#",board:"#"},
+ {name:"小红书 · COCO",fans:"—",inter:"重装修中",series:[],link:"",board:""},
+ {name:"X 个人号 · Charlie",fans:"3 万",inter:"IP 内容",series:[],link:"#",board:"#"}
+],
+data:{ lines:[
+ {key:"SEO",label:"SEO",primary:"李家乐",metrics:[{name:"已部署 SEO 页面数",series:[0,0,5,12,18,24],top:24,src:"#",srclabel:"GSC ↗"},{name:"GSC 曝光量",series:[300,500,640,820,1100,1740],top:1740,src:"#",srclabel:"GSC ↗"}],weeks:[0,0,3,4,5,4,3,4]},
+ {key:"内容",label:"内容类",primary:"田长举（侯明真主导产出）",metrics:[{name:"推特粉丝数",series:[30,33,38,41,44,48],top:48,src:"#",srclabel:"主页 ↗"},{name:"视频号粉丝数",series:[400,470,520,560,610,680],top:680,src:"#",srclabel:"主页 ↗"}],weeks:[3,4,5,4,6,5,4,5]},
+ {key:"视频剪辑",label:"视频剪辑",primary:"周星星",metrics:[{name:"本周发布视频数",series:[2,3,5,4,4,0],top:5}],weeks:[2,3,5,4,4,3,2,0]}
+]},
+gantt:[ {title:"SEO 页面铺设路线图",months:[{m:"5月",w:4},{m:"6月",w:4},{m:"7月",w:4},{m:"8月",w:4}],today:4,
+  phases:[
+   {name:"阶段零 · 准备期",note:"模板设计 · 关键词研究 · 基础设施",tasks:[{name:"模板 / 关键词 / 基建",pri:"",start:0,span:2,state:"done",meta:"完成"}]},
+   {name:"阶段一 · 验证期",note:"首批 50 页 · 目标 收录率>80%",tasks:[
+     {name:"已发布矩阵页（竞品6+指南5+UseCase9）",pri:"P0",start:0,span:4,state:"done",meta:"20 / 20 · 100%"},
+     {name:"待建矩阵页 UseCases = 200 页",pri:"P0",start:2,span:2,state:"done",meta:"200 / 200 · 100%"},
+     {name:"CTA 埋点 · GSC 收录监控 · Index 追踪",pri:"P1",start:3,span:3,state:"doing",meta:"配置中 · 30%"}]},
+   {name:"阶段二 · 扩展期",note:"200–300 页 · 目标 20–50 关键词进 Google 前 20",tasks:[
+     {name:"工具矩阵",pri:"P0",start:5,span:3,state:"plan",meta:"目标 150"},
+     {name:"行业页上线（20+ 行业）",pri:"P0",start:6,span:3,state:"plan",meta:"目标 20+"},
+     {name:"支柱页 Pillar + Topic Cluster",pri:"P0",start:6,span:2,state:"plan",meta:"目标 5"},
+     {name:"外链：Product Hunt / G2 / Capterra",pri:"P1",start:8,span:4,state:"plan",meta:"目标 5+"}]},
+   {name:"阶段三 · 规模期",note:"500–1780 页 · 目标 品类搜索高频品牌",tasks:[
+     {name:"UseCases 规模扩充",pri:"P0",start:12,span:3,state:"plan",meta:"目标 1000"},
+     {name:"行业 × 场景矩阵（全覆盖）",pri:"P0",start:12,span:4,state:"plan",meta:"目标 200+"},
+     {name:"多语言 hreflang",pri:"P2",start:13,span:3,state:"plan",meta:"目标 100+"},
+     {name:"Tool Marketplace + 对比矩阵",pri:"P2",start:13,span:3,state:"plan",meta:"目标 80+"}]}
+  ]} ],
+feed:[
+ {date:"06-05 16:20",type:"deliver",who:"李家乐",text:"已交付 20+ 矩阵页 + 三大问题修复",line:"SEO"},
+ {date:"06-05 11:05",type:"deliver",who:"侯明真",text:"VC 文章抓取页 + 本周 6 篇阅读列表",line:"内容"},
+ {date:"06-05 10:40",type:"metric",who:"李家乐",text:"已部署 SEO 页面 18 → 24",line:"SEO"},
+ {date:"06-05 09:30",type:"req",who:"侯明真",text:"查理：YouTube 隐藏纯中文（已同意）",line:"内容"},
+ {date:"05-29 14:00",type:"deliver",who:"周星星",text:"销售视频脚本对接会，跑通生产流程",line:"视频剪辑"},
+ {date:"05-29 10:00",type:"req",who:"侯明真",text:"ICP 验证：币圈非目标客户，转电商出海",line:"内容"},
+ {date:"05-22 15:00",type:"deliver",who:"李家乐",text:"icoco.ai 新域名上线，启动 SEO 部署",line:"SEO"}
+],
+roster:{ lead:"侯明真", reviewer:"孔维彤",
+ members:[
+  {name:"侯明真",role:"主负责人 · 内容 · 视频剪辑",group:"BD/剪辑组"},
+  {name:"田长举",role:"内容（条线主负责）",group:"运维组"},
+  {name:"吕教东",role:"内容",group:"SEO组"},
+  {name:"周星星",role:"视频剪辑（条线主负责）",group:"剪辑社媒组"},
+  {name:"李阳阳",role:"视频剪辑",group:"剪辑社媒组"},
+  {name:"李家乐",role:"SEO（条线主负责）",group:"SEO组"},
+  {name:"孔维彤",role:"把关 · 工具牵头",group:"BD组"} ],
+ helpers:[{name:"代逸如",note:"天际主负责，空了帮 COCO 剪辑"}], left:[{name:"刘玉晗",note:"已离职，历史署名保留"}] },
+files:[
+ {date:"06-05",kind:"会议转录",title:"Will × COCO MKT 6/5 转录",vis:"内部"},
+ {date:"06-05",kind:"聊天记录",title:"COCO 群 6/5 聊天记录（抽出 3 条事项）",vis:"内部"},
+ {date:"06-05",kind:"文档",title:"VC 文章抓取阅读列表.pdf",vis:"客户可见"}
+]
 };
-let route=location.hash.replace("#","")||"board",mode="team",selWeek=0;
-const NAV={team:{核心:["overview","board"],过程:["feed","requests","deliverables","data"],操作:["submit"]},client:{COCO:["board","data","deliverables"]}};
-const VIEWS={overview:"全客户总览",board:"白板",feed:"工作动态",requests:"客户开口的事",deliverables:"交付与内容库",data:"数据中心",submit:"录入"};
+
+/* ================= 渲染（Codex 不改） ================= */
 const $=s=>document.querySelector(s);
+let route="overview", mode="team", selWeek=0;
+const NAV={
+ team:{ 概览:["overview"], "客户 · COCO":["board","gantt","data"], 过程:["feed","requests","deliverables","meetings","files"], 操作:["submit","roster"] },
+ client:{ "COCO 进展":["board","gantt","data"], 过程:["feed","requests","deliverables","meetings"] }
+};
+const VIEWS={ overview:"全客户总览",board:"白板",gantt:"项目路线图",data:"数据中心",feed:"工作动态流",requests:"客户事项",deliverables:"交付时间线",meetings:"会议",files:"物料",submit:"录入",roster:"团队名单" };
+
 function esc(s){return String(s??"").replace(/[<>&"]/g,m=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[m]))}
-function badge(s){const m={"待对齐":"b-red","待贵方提供":"b-red","待素材":"b-red","逾期":"b-red","未更新":"b-gray","已回应":"b-green","已发布":"b-green","已解决":"b-green","处理中":"b-yellow","进行中":"b-yellow"};return `<span class="badge ${m[s]||""}">${esc(s)}</span>`}
-function link(u,l){return u?`<a class="linkchip" href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`:`<span class="badge b-gray">${esc(l||"待发布")}</span>`}
-function owner(o){return mode==="client"||!o?"":`<span class="owner">负责人：<b>${esc(o)}</b></span>`}
-function topbar(c){return `<div class="topbar"><div class="crumb">${c}</div><div class="toggle"><button class="${mode==="team"?"on":""}" data-mode="team">团队视图</button><button class="${mode==="client"?"on":""}" data-mode="client">客户视图</button></div></div>`}
-function go(v){route=v;if(mode==="client"&&!Object.values(NAV.client).flat().includes(route))route="board";location.hash=route;render();scrollTo(0,0)}
+function color(n){return DB.team[n]||"#8A8276"}
+function av(n){return `<span class="av" style="background:${color(n)}">${esc((n||"?")[0])}</span>`}
+function who(n){return `<span class="who-inline">${av(n)}<span>${esc(n)}</span></span>`}
+function statusTag(s){const m={"处理中":"mid","已回应":"hi","待回应":"tbd","待对齐":"soft","待贵方提供":"fresh"};return `<span class="tag ${m[s]||"lo"}">${esc(s)}</span>`}
+function link(u,l){return u?`<a class="linkchip" href="${esc(u)}" target="_blank">${esc(l)}</a>`:`<span class="tag tbd">${esc(l)}待补</span>`}
+function pct(p,c){if(!p)return c?"新增":"—";const d=Math.round((c-p)/p*100);return (d>=0?"+":"")+d+"%"}
+function spark(s){if(!s||s.length<2)return `<span class="small muted">趋势待补</span>`;const w=128,h=28,p=3,mx=Math.max(...s),mn=Math.min(...s),r=(mx-mn)||1;const pts=s.map((v,i)=>`${(p+i*(w-2*p)/(s.length-1)).toFixed(1)},${(h-p-(v-mn)/r*(h-2*p)).toFixed(1)}`).join(" ");const lst=pts.split(" ").pop().split(",");return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><polyline points="${pts}" fill="none" stroke="var(--green)" stroke-width="1.5" stroke-linejoin="round"/><circle cx="${lst[0]}" cy="${lst[1]}" r="2.2" fill="var(--green)"/></svg>`}
+
+function go(v){route=v;render();window.scrollTo(0,0)}
 function setMode(m){mode=m;if(!Object.values(NAV[mode]).flat().includes(route))route="board";render()}
 function pickWeek(i){selWeek=i;render()}
-function renderSide(){const cnt={requests:DB.weeks[0].red};const item=k=>`<div class="nav-item ${route===k?"on":""}" data-go="${k}">${VIEWS[k]}${cnt[k]?`<span class="cnt">${cnt[k]}</span>`:""}</div>`;const nav=Object.entries(NAV[mode]).map(([g,ks])=>`<div class="navgroup"><div class="glabel">${g}</div>${ks.map(item).join("")}</div>`).join("");$("#sidebar").innerHTML=`<div class="brand"><h1>COCO 客户白板</h1><div class="tagline">周时间线 · 独立白板 · 会议可直接过</div><div class="ver">${DB.meta.version} · ${DB.meta.updated}</div></div>${nav}`}
-function render(){renderSide();const fn={overview:overviewView,board:boardView,feed:feedView,requests:requestsView,deliverables:deliverablesView,data:dataView,submit:submitView,gantt:ganttView}[route]||boardView;$("#main").innerHTML=fn();bind()}
-function bind(){document.querySelectorAll("[data-go]").forEach(e=>e.onclick=()=>go(e.dataset.go));document.querySelectorAll("[data-mode]").forEach(e=>e.onclick=()=>setMode(e.dataset.mode));document.querySelectorAll("[data-wk]").forEach(e=>e.onclick=()=>pickWeek(+e.dataset.wk));const f=$("#entry-form");if(f)f.onsubmit=saveDraft}
-function overviewView(){const cards=DB.clients.map(c=>`<div class="client-card ${c.dim?"dim":""}" ${c.dim?"":'data-go="board"'}><div class="ctop"><div><div class="cname">${esc(c.name)}</div><div class="small">${esc(c.lead)} · ${esc(c.next)}</div></div><div class="small">${esc(c.fee)}/月</div></div><div>${esc(c.one)}</div><div class="cmeta">${c.red?`<span class="status-red">● ${c.red} 红灯</span>`:"<span>无红灯</span>"}</div></div>`).join("");return topbar("全客户总览")+`<h2 class="pagetitle">全客户总览</h2><p class="pagedesc">团队视图用来扫所有客户；客户视图隐藏这个入口。</p><div class="client-grid">${cards}</div>`}
-function currentBar(){const k=DB.current.kpis.map(x=>`<div class="kpi ${x.t}"><div class="v">${esc(x.v)}</div><div class="l">${esc(x.l)}</div></div>`).join("");const st=DB.current.stage.steps.map(s=>`<div class="stg ${s.s}">${esc(s.n)}<span class="d">${esc(s.d)}</span></div>`).join("");return `<div class="strip-label">KPI 概览条</div><div class="kpis">${k}</div><div class="sec"><div class="shead"><h3>SEO 阶段进度条</h3><span class="hint"><span class="linkchip" data-go="gantt">${esc(DB.current.stage.link)}</span></span></div><div class="sbody"><div class="small">${esc(DB.current.stage.label)}</div><div class="stagebar">${st}</div></div></div>`}
-function boardView(){const weeks=DB.weeks.map((w,i)=>`<div class="week ${i===selWeek?"on":""}" data-wk="${i}"><div class="d">${esc(w.date.slice(5))}${w.red?`<span class="reddot">● ${w.red}</span>`:""}</div><div class="t">${esc(w.title)}</div><div class="one">${esc(w.summary)}</div></div>`).join("");return topbar("COCO · 白板")+`<h2 class="pagetitle">白板</h2><p class="pagedesc">顶部当前态跨周不变；左边选周，右边每周独立白板。默认最新在最上。</p>${currentBar()}<div class="board-layout"><div class="week-list">${weeks}</div><div>${weekPanel(DB.weeks[selWeek])}</div></div>`}
-function weekPanel(w){const agenda=wcard({topic:"会议议程",owner:"侯明真",summary:"这张卡固定打头，用来控制会议顺序和时间。",agenda:w.agenda});const cards=w.cards.filter(c=>!(mode==="client"&&c.internal)).map(wcard).join("");return `<div class="board-head"><div class="board-date">${esc(w.date)}</div><div class="board-title">${esc(w.title)}</div></div><div class="conclusion">${esc(w.conclusion)}</div>${agenda}${cards}${suppCards(w.supplements)}`}
-function wcard(c){return `<div class="wcard"><div class="wcard-h"><div class="wtopic">${esc(c.topic)}</div>${owner(c.owner)}</div>${c.summary?`<div class="summary">${esc(c.summary)}</div>`:""}<div class="object">${object(c)}</div>${mode==="client"?"":evidence(c.evidence)}</div>`}
-function object(c){let h="";if(c.agenda)h+=agenda(c.agenda);if(c.table)h+=table(c.table);if(c.gantt)h+=gantt(c.gantt);if(c.problems)h+=problems(c.problems);if(c.social)h+=social(c.social);if(c.groups)h+=groups(c.groups);if(c.metrics)h+=metrics(c.metrics);if(c.deliveries)h+=deliveries(c.deliveries);return h||""}
-function agenda(a){return `<ol class="agenda">${a.map((x,i)=>`<li><span><span class="anum">${i+1}</span>${esc(x.n)}</span><span class="atime">${esc(x.t||"")}</span></li>`).join("")}</ol>`}
-function table(t){return `<div style="overflow:auto"><table class="tbl"><thead><tr>${t.cols.map(c=>`<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map(v=>`<td>${esc(v)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`}
-function gantt(g){const cols=g.months.reduce((a,m)=>a+m.w,0),tmpl=`grid-template-columns:220px repeat(${cols},minmax(42px,1fr))`;let months="",labels="";g.months.forEach(m=>{months+=`<div class="gcell" style="grid-column:span ${m.w};text-align:center">${esc(m.m)}</div>`;for(let i=0;i<m.w;i++)labels+=`<div class="gcell">${esc(m.labels?m.labels[i]:"W"+(i+1))}</div>`});const today=((g.today||0)+.5)/cols*100;const rows=g.tasks.map(t=>{const l=t.start/cols*100,w=t.span/cols*100;return `<div class="grow" style="${tmpl}"><div class="gcell glabel"><span class="ptag ${t.pri}">${esc(t.pri)}</span>${esc(t.name)}<div class="small">${esc(t.meta||"")}</div></div><div class="gcell track" style="grid-column:span ${cols}"><div class="today" style="left:${today}%"></div><div class="bar ${t.state}" style="left:${l}%;width:${w}%">${t.state==="done"?"已完成":t.state==="doing"?"进行中":"计划"}</div></div></div>`}).join("");return `<div class="glegend"><span><i style="background:var(--ink)"></i>已完成</span><span><i style="background:var(--red)"></i>进行中</span><span><i style="background:var(--bluebg);border:1px dashed var(--blue)"></i>计划</span><span>黄线=今天</span></div><div class="gantt"><div class="grow" style="${tmpl}"><div class="gcell"></div>${months}</div><div class="grow" style="${tmpl}"><div class="gcell small">任务</div>${labels}</div>${rows}</div>`}
-function problems(p){const sec=(title,arr)=>arr&&arr.length?`<div class="sg">${title}</div>${arr.map(x=>`<div class="si">${badge(x.s)}<b>${esc(x.name)}</b><span class="desc">${esc(x.desc)}</span><span class="ptag ${x.pri}">${esc(x.pri)}</span></div>`).join("")}`:"";return `<div class="problems">${sec("已解决（绿）",p.solved)}${sec("待修复 / 待对齐（红）",p.todo)}</div>`}
-function social(s){const head=`<tr><th>平台</th><th>指标</th>${s.weeks.map(w=>`<th>${esc(w)}</th>`).join("")}</tr>`;const body=s.rows.map(r=>Object.entries(r.metrics).map((m,i)=>`<tr>${i===0?`<td rowspan="${Object.keys(r.metrics).length}"><b>${esc(r.plat)}</b></td>`:""}<td>${esc(m[0])}</td>${m[1].map(v=>`<td class="${/浏览|播放|阅读/.test(m[0])?"hl":""}">${esc(v)}</td>`).join("")}</tr>`).join("")).join("");return `<div style="overflow:auto"><table class="tbl"><thead>${head}</thead><tbody>${body}</tbody></table></div><div class="linkrow" style="margin-top:10px">${link(s.url,"看飞书源链接 ↗")}</div>`}
-function groups(gs){return gs.map(g=>`<div class="linkgroup"><div class="lgh">${esc(g.h)}</div><div class="linkrow">${g.items.map(it=>link(it.url,it.label)).join("")}</div></div>`).join("")}
-function metrics(ms){return `<div class="metricgrid">${ms.map(m=>{const d=m.prev?Math.round((m.cur-m.prev)/m.prev*100):m.cur?"新增":0;return `<div class="metric ${m.stale?"stale":""}"><div class="mname">${esc(m.name)}</div><div class="mval">${esc(m.cur)}</div><div class="prev">上期 ${esc(m.prev)} → 本期 ${esc(m.cur)} <span class="delta ${d>=0?"up":"dn"}">${d?((d>0?"+":"")+d+"%"):"—"}</span></div>${spark(m.series)}</div>`}).join("")}</div>`}
-function spark(s){if(!s||s.length<2)return "";const w=128,h=30,p=3,mx=Math.max(...s),mn=Math.min(...s),r=(mx-mn)||1,pts=s.map((v,i)=>`${p+i*(w-2*p)/(s.length-1)},${h-p-(v-mn)/r*(h-2*p)}`).join(" ");return `<svg class="spark" viewBox="0 0 ${w} ${h}"><polyline points="${pts}" fill="none" stroke="var(--green)" stroke-width="1.8"/></svg>`}
-function deliveries(ds){return Object.entries(ds).map(([k,arr])=>`<div class="linkgroup"><div class="lgh">${esc(k)}</div>${arr.length?arr.map(d=>`<div class="delivery"><span>${esc(d.title)} ${mode==="client"?"":`<span class="small">· ${esc(d.owner)}</span>`}</span><span>${d.link?link(d.link,(d.plat||"平台")+"↗"):badge(d.status||"待发布")}</span></div>`).join(""):`<div class="empty-red">本周无交付</div>`}</div>`).join("")}
-function evidence(ev){return ev&&ev.length?`<details class="evidence"><summary>展开依据 / 源文档</summary><div class="evbody">${ev.map(e=>`<div><div class="small">${esc(e.label)}</div><div class="quote">${esc(e.text)}</div></div>`).join("")}</div></details>`:""}
-function suppCards(s){if(!s)return"";return `${wcard({topic:"客户开口的事",owner:"侯明真",summary:"只放未闭环或本次会必须处理的客户原话。",table:{cols:["日期","来源","客户原话","状态","负责人","我们的回应"],rows:s.requests.map(r=>[r.date,r.source,r.quote,r.status,mode==="client"?"":r.owner,r.resp])}})}${wcard({topic:"客户动向",summary:s.psych})}${wcard({topic:"下次会必须问清楚",summary:"这些问题不问清楚，下周执行会继续反复。",agenda:s.mustAsk.map(x=>({n:x,t:""}))})}${wcard({topic:"下周计划",summary:"下周计划不显示负责人，避免把执行分工放到客户视图里。",agenda:s.nextWeek.map(x=>({n:x,t:""}))})}`}
-function feedView(){const ev=DB.weeks.flatMap(w=>(w.supplements?.requests||[]).map(r=>({date:r.date,type:"客户",title:r.quote,text:r.resp,who:r.owner}))).map(e=>`<div class="event"><div class="small">${esc(e.date)}</div><div class="ecard">${badge(e.type)}<div class="etitle">${esc(e.title)}</div><div>${esc(e.text)}</div>${mode==="client"?"":`<div class="small">${esc(e.who)}</div>`}</div></div>`).join("");return topbar("工作动态")+`<h2 class="pagetitle">工作动态</h2><p class="pagedesc">动态流只做追踪，不覆盖每周白板。</p><div class="timeline">${ev}</div>`}
-function requestsView(){const rows=DB.weeks.flatMap(w=>(w.supplements?.requests||[])).map(r=>`<tr><td>${esc(r.date)}</td><td>${esc(r.source)}</td><td>${esc(r.quote)}</td><td>${badge(r.status)}</td>${mode==="client"?"":`<td>${esc(r.owner)}</td>`}<td>${esc(r.resp)}</td></tr>`).join("");return topbar("客户开口的事")+`<h2 class="pagetitle">客户开口的事</h2><p class="pagedesc">这是系统补充卡的来源，不和白板主卡混在一起。</p><div class="sec"><table class="tbl"><thead><tr><th>日期</th><th>来源</th><th>客户原话</th><th>状态</th>${mode==="client"?"":"<th>负责人</th>"}<th>回应</th></tr></thead><tbody>${rows}</tbody></table></div>`}
-function deliverablesView(){const all=[];DB.weeks.forEach(w=>w.cards.forEach(c=>{if(c.deliveries)Object.entries(c.deliveries).forEach(([k,arr])=>arr.forEach(d=>all.push({...d,kind:k,date:w.date})))}));const cards=all.map(d=>`<div class="deliver"><div class="small">${esc(d.date)} · ${esc(d.kind)}</div><h3>${esc(d.title)}</h3>${mode==="client"?"":`<div class="small">${esc(d.owner)}</div>`}<div class="linkrow">${d.link?link(d.link,(d.plat||"平台")+"↗"):badge(d.status||"待发布")}</div></div>`).join("");return topbar("交付与内容库")+`<h2 class="pagetitle">交付与内容库</h2><p class="pagedesc">只收录能汇报、能复用、能追溯的交付。</p><div class="deliver-grid">${cards}</div>`}
-function dataView(){const boxes=DB.weeks[0].cards.filter(c=>c.social||c.metrics||c.problems).map(c=>`<div class="statusbox"><h3>${esc(c.topic)}</h3><div>${esc(c.summary)}</div></div>`).join("");return topbar("数据中心")+`<h2 class="pagetitle">数据中心</h2><p class="pagedesc">外部数据做镜像，源链接保留，不在系统里手改。</p><div class="status-grid">${boxes}</div>`}
-function ganttView(){const gs=DB.weeks.flatMap(w=>w.cards.filter(c=>c.gantt).map(c=>`<div class="sec"><div class="shead"><h3>${esc(c.topic)}</h3><span class="hint">黄线=今天</span></div><div class="sbody">${gantt(c.gantt)}</div></div>`)).join("");return topbar("完整甘特")+`<h2 class="pagetitle">完整甘特</h2><p class="pagedesc">所有进度甘特汇总。</p>${gs}`}
-function submitView(){return topbar("录入")+`<h2 class="pagetitle">录入</h2><p class="pagedesc">成员录入交付、客户要求、数据点；系统在下一次白板自动归类为话题卡或补充卡。</p><div class="sec"><div class="sbody"><form id="entry-form"><div class="formgrid"><div class="field"><label>类型</label><select><option>交付</option><option>客户开口</option><option>数据点</option><option>文件链接</option></select></div><div class="field"><label>是否进入白板</label><select><option>进入本周补充卡</option><option>进入话题卡</option><option>只做证据</option></select></div></div><div class="field" style="margin-top:12px"><label>一句话说明</label><textarea></textarea></div><button class="btn" style="margin-top:12px">保存草稿</button></form></div></div>`}
-function saveDraft(e){e.preventDefault();alert("已保存为本机草稿，后续接飞书后自动同步。")}
-window.addEventListener("hashchange",()=>{route=location.hash.replace("#","")||"board";render()});
+function bind(){document.querySelectorAll("[data-go]").forEach(e=>e.onclick=()=>go(e.dataset.go));document.querySelectorAll("[data-mode]").forEach(e=>e.onclick=()=>setMode(e.dataset.mode));document.querySelectorAll("[data-wk]").forEach(e=>e.onclick=()=>pickWeek(+e.dataset.wk))}
+function render(){renderSide();const fn={overview:overviewView,board:boardView,gantt:ganttView,data:dataView,feed:feedView,requests:requestsView,deliverables:deliverablesView,meetings:meetingsView,files:filesView,submit:submitView,roster:rosterView}[route];$("#main").innerHTML=fn();bind()}
+
+function renderSide(){
+ const cnt={requests:DB.weeks[0].requests?DB.weeks[0].requests.length:0,feed:DB.feed.length};
+ const item=k=>`<div class="nav-item ${route===k?"on":""}" data-go="${k}">${VIEWS[k]}${cnt[k]?`<span class="cnt">${cnt[k]}</span>`:""}</div>`;
+ const nav=Object.entries(NAV[mode]).map(([g,ks])=>`<div class="navgroup"><div class="glabel">${g}</div>${ks.map(item).join("")}</div>`).join("");
+ $("#sidebar").innerHTML=`<div class="brand"><h1>客户工作台</h1><div class="tagline">郎瀚威团队 · 多客户作战室</div><div class="ver">${esc(DB.meta.version)} · 更新 ${esc(DB.meta.updated)}</div></div>${nav}`;
+}
+function topbar(c){return `<div class="topbar"><div class="crumb">${c}</div><div class="modetoggle"><button class="${mode==="team"?"on":""}" data-mode="team">团队视图</button><button class="${mode==="client"?"on":""}" data-mode="client">客户视图</button></div></div>`}
+
+/* 全客户总览 */
+function overviewView(){
+ const cards=DB.clients.map(c=>`<div class="ccard ${c.active?"":"dim"}" ${c.active?'data-go="board"':""}>
+   <div class="ct"><span class="cn">${esc(c.name)}</span><span class="cf">${esc(c.fee)}/月</span></div>
+   <div class="cone">${esc(c.one)}</div>
+   <div class="cmeta">${who(c.lead)}<span>负责人</span>${c.red?`<span class="rf">● ${c.red} 项待处理</span>`:'<span class="muted">—</span>'}</div></div>`).join("");
+ return topbar(`郎瀚威团队 · 全客户总览`)+`
+  <h2 class="pagetitle">全客户总览</h2>
+  <div class="pagedesc">一屏看到每个客户的本周一句话和红灯数，点进 COCO 看完整白板。第一期只跑通 COCO，其余试点后接入。</div>
+  <div class="cgrid">${cards}</div>`;
+}
+
+/* 白板：当前态 + 周时间线 + 选中周 */
+function boardView(){
+ const c=DB.current, w=DB.weeks[selWeek], client=mode==="client";
+ const kpis=c.kpis.map(k=>`<div class="kpi ${k.t}"><div class="v">${esc(k.v)}</div><div class="l">${esc(k.l)}</div></div>`).join("");
+ const stg=`<div class="stagebar">${c.stage.steps.map(s=>`<div class="stg ${s.s}">${esc(s.n)}<span class="d">${esc(s.d)}</span></div>`).join("")}</div>`;
+ const tl=DB.weeks.map((x,i)=>{
+   const red=x.blockers?x.blockers.filter(b=>b.client||!client).length:0;
+   return `<div class="wk ${i===selWeek?"on":""}" data-wk="${i}"><div class="d">${esc(x.date.slice(5))}${red?`<span class="reddot">● ${red}</span>`:""}</div><div class="t">${esc(x.title)}</div><div class="one">${esc(x.conclusion||"")}</div></div>`;
+ }).join("");
+ const panel = w.stub ? `<div class="wkhead"><span class="wd">${esc(w.date)}</span><span class="tag lo">${esc(w.title)}</span></div><div class="oneliner empty">${esc(w.conclusion)}</div><div class="small muted">这一周的白板会由该次会议分析 + 当周登记数据自动生成，目前为占位。</div>` : weekPanel(w,client);
+ return topbar(`<b>COCO</b> · 白板`)+`
+  <h2 class="pagetitle">COCO 白板</h2>
+  <div class="pagedesc">按周时间线：左边选周，右边看那一周的白板。每周由会议分析 + 当周登记数据自动生成，负责人只改最上面的判断——不用再手搭白板。新人和老板从最早往下翻，就能熟悉这个客户怎么走到今天。</div>
+  <div class="kpis">${kpis}</div>
+  <div class="sec" style="margin-bottom:18px"><div class="shead"><h3>${esc(c.stage.label)}</h3><span class="hint"><span class="linkchip" data-go="gantt">看完整甘特 →</span></span></div>${stg}</div>
+  <div class="boardlayout"><div class="wktl">${tl}</div><div class="wkpanel">${panel}</div></div>`;
+}
+function weekPanel(w,client){
+ // 真实白板格式：本周重点 + 会议议程 + 一张张话题卡（带负责人 + 总结 + 实物）
+ if(w.cards){
+   const head=`<div class="wkhead"><span class="wd">${esc(w.date)}</span><span class="tag lo">${esc(w.title)}</span>${w.badge?`<span class="tag auto">${esc(w.badge)}</span>`:""}</div>`;
+   const concl=`<div class="oneliner">${esc(w.conclusion)}<div class="who">本周重点 · 会前判断</div></div>`;
+   const cards=w.cards.filter(c=>!(client&&c.internal)).map(wcard).join("");
+   return head+concl+cards;
+ }
+ const blk=(w.blockers||[]).filter(x=>client?x.client:true);
+ const blkH=blk.length?blk.map(x=>`<div class="blocker ${x.client?"client":""}"><div class="bi">${esc(x.item)}</div><div class="need">${x.client?"待贵方配合":"需"}：${esc(x.need)}</div>${x.owner?`<div class="small" style="margin-top:3px">跟进：${who(x.owner)}</div>`:""}</div>`).join(""):`<div class="small muted">本周无待配合事项</div>`;
+ const reqH=(w.requests||[]).map(r=>`<tr><td class="small">${esc(r.date)}</td><td>${statusTag(r.status)}</td><td><div class="q">${esc(r.source)}：${esc(r.quote)}</div></td>${client?"":`<td>${who(r.owner)}</td>`}<td class="small">${esc(r.resp)}</td></tr>`).join("");
+ const order=["内容","视频剪辑","SEO"], pri={内容:"田长举",视频剪辑:"周星星",SEO:"李家乐"};
+ const deliv=order.map(L=>{const rows=(w.deliveries&&w.deliveries[L])||[];const body=rows.length?rows.map(d=>{const pub=d.pub?(d.pub.url?link(d.pub.url,d.pub.plat+" ↗"):`<span class="tag tbd">待发布</span>`):"";return `<div class="delivery"><div class="grow">${esc(d.title)}</div>${pub}${client?"":who(d.owner)}<span class="dt">${esc(d.date)}</span></div>`;}).join(""):`<div class="emptyline">本周无交付</div>`;return `<div class="linegroup"><div class="lh">${esc(L)} <span class="pri">· 主负责 ${esc(pri[L])}</span></div>${body}</div>`;}).join("");
+ const mets=(w.metrics||[]).map(m=>{if(m.stale)return "";const up=m.cur>=m.prev;return `<div class="metric"><div class="ml"><span>${esc(m.name)}</span>${m.src?link(m.src,m.srclabel):""}</div><div class="rowm"><div class="v">${m.cur}</div><span class="delta ${up?"up":"dn"}">${pct(m.prev,m.cur)}</span></div><div class="prev">上期 ${m.prev} → 本期 ${m.cur}</div><div class="foot" style="display:flex;align-items:center;justify-content:space-between;gap:8px">${spark(m.series)}${m.owner?`<span class="small">${who(m.owner)}</span>`:""}</div></div>`;}).join("");
+ const ask=(w.mustAsk||[]).map(x=>`<li>${esc(x)}</li>`).join("");
+ const plan=(w.nextWeek||[]).map(x=>{const t=typeof x==="string"?x:x.t;return `<li>${esc(t)}</li>`;}).join("");
+ const arch=client?"":`<div class="sec"><div class="shead"><h3>会议归档</h3><span class="hint">议程 + 截图，内部</span></div><div class="archive"><div class="small" style="margin-bottom:8px">议程：${(w.agenda||[]).map(esc).join(" · ")}</div><div class="shotwall">${(w.shots||[]).map(s=>`<div class="shot">${esc(s)}</div>`).join("")}</div></div></div>`;
+ return `<div class="wkhead"><span class="wd">${esc(w.date)}</span><span class="tag lo">${esc(w.title)}</span>${w.badge?`<span class="tag auto">${esc(w.badge)}</span>`:""}</div>
+  <div class="oneliner">${esc(w.conclusion)}<div class="who">本周重点 · 自动生成后由负责人确认</div></div>
+  <div class="sec"><div class="shead"><h3>卡点 / 待对齐 / 待贵方配合</h3></div>${blkH}</div>
+  ${reqH?`<div class="sec"><div class="shead"><h3>客户开口的事</h3><span class="hint">只记未闭环</span></div><table class="t"><thead><tr><th>日期</th><th>状态</th><th>事项</th>${client?"":"<th>负责人</th>"}<th>我们的回应</th></tr></thead><tbody>${reqH}</tbody></table></div>`:""}
+  ${w.psych?`<div class="sec"><div class="shead"><h3>客户动向</h3><span class="hint">关注点变化，不是复述聊天</span></div><div class="psych">${esc(w.psych)}</div></div>`:""}
+  <div class="sec"><div class="shead"><h3>本周交付</h3><span class="hint">已发布挂平台链接，零交付标红</span></div>${deliv}</div>
+  ${mets?`<div class="sec"><div class="shead"><h3>本周数据</h3><span class="hint">带对比，可点开来源</span></div><div class="metricgrid">${mets}</div></div>`:""}
+  ${ask?`<div class="sec"><div class="shead"><h3>下次会必须问清楚</h3></div><ul class="ask">${ask}</ul></div>`:""}
+  ${plan?`<div class="sec"><div class="shead"><h3>下周计划</h3></div><ul class="plan">${plan}</ul></div>`:""}
+  ${arch}`;
+}
+
+/* 甘特 */
+function ganttChart(g,compact){
+ const cols=g.months.reduce((a,m)=>a+m.w,0);const tmpl=`grid-template-columns:${compact?180:300}px repeat(${cols},minmax(${compact?22:28}px,1fr))`;
+ const months=g.months.map(m=>`<div class="g-month" style="grid-column:span ${m.w}">${esc(m.m)}</div>`).join("");
+ let wks="";g.months.forEach(m=>{for(let i=1;i<=m.w;i++)wks+=`<div class="g-wk">${esc(m.labels?m.labels[i-1]:"W"+i)}</div>`});
+ const today=g.today!=null?((g.today)+0.5)/cols*100:-1;const lbl=s=>s==="done"?"已完成":s==="doing"?"进行中":"";
+ const ph=g.phases.map(p=>{const ts=p.tasks.map(t=>{const left=t.start/cols*100,wd=t.span/cols*100;return `<div class="g-task" style="grid-template-columns:${compact?180:300}px 1fr"><div class="lab">${t.pri?`<span class="ptag ${t.pri}">${t.pri}</span>`:""}${esc(t.name)}<span class="meta">${esc(t.meta||"")}</span></div><div class="track" style="--c:${cols}">${today>=0?`<div class="todayline" style="left:${today}%"></div>`:""}<div class="bar ${t.state}" style="left:${left}%;width:${wd}%">${lbl(t.state)}</div></div></div>`}).join("");return (p.name?`<div class="gridrow g-phase" style="${tmpl}"><div class="pl">${esc(p.name)}<span class="pnote">${esc(p.note||"")}</span></div></div>`:"")+ts}).join("");
+ return `<div class="glegend"><span><i style="background:var(--ink)"></i>已完成</span><span><i style="background:var(--red)"></i>进行中</span><span><i style="background:var(--blue-bg);border:1px dashed var(--blue)"></i>计划中</span></div><div class="gantt"><div class="gridrow" style="${tmpl}"><div class="lab"></div>${months}</div><div class="gridrow" style="${tmpl}"><div class="lab small" style="color:var(--faint)">任务 / 目标</div>${wks}</div>${ph}</div>`;
+}
+function cardTable(t){return `<div class="smatrix"><table><thead><tr>${t.cols.map(c=>`<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map((cell,i)=>`<td class="${i===0?"pl":""}">${esc(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`}
+function socialMatrix(m){
+ const head=`<tr><th>平台 / 负责人</th><th>指标</th>${m.weeks.map(w=>`<th>${esc(w)}</th>`).join("")}</tr>`;
+ const body=m.rows.map(r=>{const ms=Object.entries(r.metrics);return ms.map((mm,i)=>`<tr>${i===0?`<td class="pl" rowspan="${ms.length}">${esc(r.plat)}${r.po?`<span class="po">${esc(r.po)}</span>`:""}</td>`:""}<td style="text-align:left;color:var(--sub)">${esc(mm[0])}</td>${mm[1].map(v=>`<td class="${mm[0].match(/浏览|播放|阅读/)?"hl":""}">${esc(v)}</td>`).join("")}</tr>`).join("")}).join("");
+ return `<div class="smatrix"><table><thead>${head}</thead><tbody>${body}</tbody></table></div>${m.link?`<div class="linkrow cfg">${link(m.url,m.link)}</div>`:""}`;
+}
+function problemList(p){
+ const sec=(title,arr,cls)=>`<div class="sg" style="color:var(--${cls})">${title}</div>`+arr.map(x=>`<div class="si"><span class="tag ${cls==="green"?"hi":"soft"}">${esc(x.s)}</span><span class="nm">${esc(x.name)}</span><span class="desc">${esc(x.desc||"")}</span>${x.pri?`<span class="ptag ${x.pri.startsWith("P0")?"P0":"P1"}">${esc(x.pri)}</span>`:""}</div>`).join("");
+ return `<div class="statuslist">${p.solved?sec("● 已解决",p.solved,"green"):""}${p.todo?sec("● 待修复",p.todo,"red"):""}</div>`;
+}
+function linkGroups(gs){return gs.map(g=>`<div class="linkgroup"><div class="lgh">${esc(g.h)}</div><div class="linkrow">${g.items.map(it=>link(it.url,it.label)).join("")}</div></div>`).join("")}
+function wcard(c){
+ const head=`<div class="wcard-h"><span class="ct">${esc(c.topic)}</span>${c.owner?`<span class="co">负责人：<b>${esc(c.owner)}</b></span>`:""}</div>`;
+ let body="";
+ if(c.type==="agenda"){body=`<ul class="agd">${c.items.map((a,i)=>`<li><span><span class="anum">${i+1}</span>${esc(a.n)}</span><span class="at">${esc(a.t||"")}</span></li>`).join("")}</ul>`;}
+ else{
+   if(c.summary)body+=`<div class="wsum">${esc(c.summary)}</div>`;
+   if(c.gantt)body+=`<div class="cfg">${ganttChart(c.gantt,true)}</div>`;
+   if(c.sub)c.sub.forEach(s=>{body+=`<div class="wsub">${esc(s.h)}</div>`;if(s.summary)body+=`<div class="wsum">${esc(s.summary)}</div>`;if(s.table)body+=cardTable(s.table);if(s.problems)body+=problemList(s.problems);if(s.gantt)body+=`<div class="cfg">${ganttChart(s.gantt,true)}</div>`;if(s.links)body+=`<div class="linkrow cfg">${s.links.map(l=>link(l.url,l.label)).join("")}</div>`;});
+   if(c.table)body+=cardTable(c.table);
+   if(c.matrix)body+=socialMatrix(c.matrix);
+   if(c.problems)body+=problemList(c.problems);
+   if(c.groups)body+=linkGroups(c.groups);
+   if(c.links)body+=`<div class="linkrow cfg">${c.links.map(l=>link(l.url,l.label)).join("")}</div>`;
+   if(c.note)body+=`<div class="small cfg" style="color:var(--blue)">${esc(c.note)}</div>`;
+ }
+ return `<div class="wcard">${head}${body}</div>`;
+}
+function ganttView(){
+ const charts=DB.gantt.map(g=>`<div class="sec"><div class="shead"><h3>${esc(g.title)}</h3><span class="hint">黄线为本周</span></div>${ganttChart(g)}</div>`).join("");
+ return topbar(`<b>COCO</b> · 项目路线图`)+`<h2 class="pagetitle">项目路线图</h2><div class="pagedesc">阶段、任务、目标与进度的甘特视图——一眼看到现在铺到哪、下一步做什么。</div>${charts}`;
+}
+
+/* 数据中心 + 社媒看板 */
+function dataView(){
+ const blocks=DB.data.lines.map(L=>{const mets=L.metrics.map(m=>{const last=m.series[m.series.length-1],prev=m.series[m.series.length-2];return `<div class="metric"><div class="ml"><span>${esc(m.name)}</span>${m.src?link(m.src,m.srclabel):""}</div><div class="rowm"><div class="v">${last}</div><span class="delta ${last>=prev?"up":"dn"}">${pct(prev,last)}</span></div><div class="prev">历史最高 ${m.top}</div><div class="foot">${spark(m.series)}</div></div>`}).join("");const mw=Math.max(...L.weeks);const bars=L.weeks.map(cc=>{const h=Math.round(cc/mw*40)+4;return `<div style="flex:1;text-align:center"><div style="height:${h}px;background:${cc===0?"var(--red)":"var(--ink)"};margin:0 auto"></div><div style="font-size:10px;color:var(--faint);margin-top:3px">${cc}</div></div>`}).join("");return `<div class="sec"><div class="shead"><h3>${esc(L.label)}</h3><span class="hint">主负责 ${esc(L.primary)}</span></div><div class="metricgrid" style="margin-bottom:14px">${mets}</div><div class="small" style="margin-bottom:6px">近 8 周交付节奏（断更周标红）</div><div style="display:flex;gap:6px;align-items:flex-end;background:var(--panel);border:1px solid var(--line);padding:12px 14px">${bars}</div></div>`}).join("");
+ const plat=DB.social.map(s=>`<div class="platcard"><div class="pn">${esc(s.name)}</div><div class="pstats"><div><div class="num">${esc(s.fans)}</div><div class="lab">粉丝</div></div><div><div class="num" style="font-size:13px;padding-top:4px">${esc(s.inter)}</div><div class="lab">近况</div></div></div>${s.series&&s.series.length>1?spark(s.series):""}<div class="platlinks">${link(s.board,"数据看板 ↗")}${link(s.link,"主页 ↗")}</div></div>`).join("");
+ return topbar(`<b>COCO</b> · 数据中心`)+`<h2 class="pagetitle">数据中心</h2><div class="pagedesc">按条线积累的趋势、交付节奏，加各平台社媒看板（点开看实时数据）。</div>${blocks}<div class="sec"><div class="shead"><h3>社媒看板</h3><span class="hint">点开看各平台实时数据</span></div><div class="platgrid">${plat}</div></div>`;
+}
+
+function feedView(){const lab={deliver:"交付",req:"沟通",metric:"数据",file:"文件"};let h="";DB.feed.forEach((e,i)=>{h+=`<div class="ev ${e.type==="req"?"key":""}"><div class="dt">${esc(e.date.split(" ")[1]||"")}<br>${esc(e.date.split(" ")[0])}</div><div class="rail"><div class="dot"></div>${i<DB.feed.length-1?'<div class="bar2"></div>':""}</div><div class="body"><div class="meta"><span class="evt ${e.type}">${lab[e.type]}</span><span class="tag lo">${esc(e.line)}</span>${mode==="team"?who(e.who):""}</div>${esc(e.text)}</div></div>`});return topbar(`<b>COCO</b> · 工作动态流`)+`<h2 class="pagetitle">工作动态流</h2><div class="pagedesc">项目每天的进展流水，随时掌握、无需等周会同步。</div><div class="tline">${h}</div>`}
+
+function requestsView(){const all=[];DB.weeks.forEach(w=>(w.requests||[]).forEach(r=>all.push(r)));const rows=all.map(r=>`<tr><td class="small">${esc(r.date)}</td><td>${esc(r.source)}</td><td><div class="q">${esc(r.quote)}</div></td><td>${statusTag(r.status)}</td>${mode==="team"?`<td>${who(r.owner)}</td>`:""}<td class="small">${esc(r.resp)}</td></tr>`).join("");return topbar(`<b>COCO</b> · 客户事项`)+`<h2 class="pagetitle">客户事项（只记未闭环）</h2><div class="pagedesc">客户开口、需要跟到闭环的事才登记；已回应过一周自动收口。白板"客户开口的事"的来源。</div><table class="t"><thead><tr><th>日期</th><th>来源</th><th>事项</th><th>状态</th>${mode==="team"?"<th>负责人</th>":""}<th>我们的回应</th></tr></thead><tbody>${rows}</tbody></table>`}
+
+function deliverablesView(){const all=[];DB.weeks.forEach(w=>{if(w.deliveries)Object.entries(w.deliveries).forEach(([L,arr])=>arr.forEach(d=>all.push({...d,line:L})))});all.sort((a,b)=>b.date.localeCompare(a.date));const rows=all.map(d=>{const pub=d.pub?(d.pub.url?link(d.pub.url,d.pub.plat+" ↗"):`<span class="tag tbd">待发布</span>`):"";return `<tr><td class="small">${esc(d.date)}</td><td><span class="tag lo">${esc(d.line)}</span></td><td>${esc(d.title)}</td>${mode==="team"?`<td>${who(d.owner)}</td>`:""}<td>${pub}</td></tr>`}).join("");return topbar(`<b>COCO</b> · 交付时间线`)+`<h2 class="pagetitle">交付时间线</h2><div class="pagedesc">全部交付按时间倒序，已发布挂平台链接。</div><table class="t"><thead><tr><th>日期</th><th>条线</th><th>交付</th>${mode==="team"?"<th>负责人</th>":""}<th>链接</th></tr></thead><tbody>${rows}</tbody></table>`}
+
+function meetingsView(){const rows=DB.weeks.map(w=>`<tr><td class="small">${esc(w.date)}</td><td>${esc(w.title)}</td><td class="small">${w.stub?'<span class="tag tbd">回填中</span>':esc((w.conclusion||"").slice(0,40)+"…")}</td><td><span class="linkchip" data-go="board">看白板 →</span></td></tr>`).join("");return topbar(`<b>COCO</b> · 会议`)+`<h2 class="pagetitle">会议归档</h2><div class="pagedesc">每次会议 = 时间线上的一周。外层只看日期/会议名，点"看白板"进那一周；原文默认折叠、内部可见。</div><table class="t"><thead><tr><th>日期</th><th>会议</th><th>一句话</th><th></th></tr></thead><tbody>${rows}</tbody></table>`}
+
+function filesView(){const rows=DB.files.map(f=>`<tr><td class="small">${esc(f.date)}</td><td><span class="tag lo">${esc(f.kind)}</span></td><td>${esc(f.title)}</td><td>${f.vis==="内部"?'<span class="tag soft">内部</span>':'<span class="tag ok">客户可见</span>'}</td></tr>`).join("");return topbar(`<b>COCO</b> · 物料`)+`<h2 class="pagetitle">物料</h2><div class="pagedesc">上传的原文件 + 分析：会议转录、聊天记录（内部语料）、文档。视频只存链接。聊天记录/转录默认内部、不上客户视图。</div><table class="t"><thead><tr><th>日期</th><th>类型</th><th>标题</th><th>可见性</th></tr></thead><tbody>${rows}</tbody></table>`}
+
+function submitView(){return topbar(`<b>COCO</b> · 录入`)+`<h2 class="pagetitle">录入</h2><div class="pagedesc">两种方式：①「随手记」一句话丢进去，AI 自动归类；② 丢一段会议转录 / 群聊，AI 抽出本周的交付/事项/数据。手动表单只是补充。</div>
+ <div class="quickbox"><div class="small" style="margin-bottom:6px">随手记（推荐）</div><textarea placeholder="例：今天交付了 VC 文章抓取页，给 COCO 6 篇本周阅读列表 —— 或者直接粘一段群聊/会议片段"></textarea><div class="aihint">↳ AI 会判断这是交付 / 客户事项 / 数据点，自动归类填好，你确认即可。</div><div style="margin-top:10px"><button class="submitbtn">AI 归类并预填</button></div></div>
+ <div class="form"><div class="small" style="margin-bottom:10px">或手动登记一条交付</div>
+  <div class="fr"><label>类型</label><select><option>社媒发布</option><option>视频</option><option>SEO页面</option><option>深度报告</option><option>个人IP内容</option><option>活动支持</option><option>方案文档</option></select></div>
+  <div class="row2"><div class="fr"><label>负责人（本客户核心，可展开选全员）</label><select><option>侯明真</option><option>田长举</option><option>周星星</option><option>李阳阳</option><option>李家乐</option><option>吕教东</option><option>代逸如（帮忙）</option></select></div><div class="fr"><label>日期</label><input value="2026-06-05"></div></div>
+  <div class="fr"><label>一句话说明（必填）</label><input placeholder="例：ICP 案例页第二批上线"></div>
+  <div class="fr"><label>已发布链接（选填，自动显示平台 ↗）</label><input placeholder="https://"></div>
+  <button class="submitbtn">提交</button></div>`}
+
+function rosterView(){const rows=DB.roster.members.map(m=>`<tr><td>${who(m.name)}</td><td>${esc(m.role)}</td><td class="small">${esc(m.group)}</td></tr>`).join("");const hp=DB.roster.helpers.map(h=>`<tr><td>${who(h.name)}</td><td><span class="tag fresh">帮忙</span></td><td class="small">${esc(h.note)}</td></tr>`).join("");const lf=DB.roster.left.map(l=>`<tr><td>${who(l.name)}</td><td><span class="tag lo">已离职</span></td><td class="small">${esc(l.note)}</td></tr>`).join("");return topbar(`<b>COCO</b> · 团队名单`)+`<h2 class="pagetitle">团队名单</h2><div class="pagedesc">本客户核心成员引用全公司全员名单（/team.yaml）。负责人 ${esc(DB.roster.lead)} · 把关 ${esc(DB.roster.reviewer)}。增删人改一处、全站联动。</div><table class="t"><thead><tr><th>成员</th><th>本客户角色</th><th>所属组</th></tr></thead><tbody>${rows}${hp}${lf}</tbody></table>`}
+
 render();
 </script>
 </body>
