@@ -35,9 +35,6 @@ a{color:inherit}
 .topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:4px}
 .crumb{font-size:12px;color:var(--faint)}
 .crumb b{color:var(--sub);font-weight:500}
-.modetoggle{display:inline-flex;border:1px solid var(--line-dark);border-radius:6px;overflow:hidden;flex-shrink:0}
-.modetoggle button{padding:6px 15px;font-size:12.5px;background:var(--panel);border:none;cursor:pointer;color:var(--sub);font-family:var(--sans)}
-.modetoggle button.on{background:var(--ink);color:#F6F3EC}
 h2.pagetitle{font-family:var(--serif);font-size:34px;font-weight:700;letter-spacing:0;margin:6px 0 4px}
 .pagedesc{color:var(--sub);font-size:16px;margin-bottom:20px;max-width:980px}
 
@@ -94,7 +91,7 @@ table.t tr:hover td{background:#FBF9F4}
 .wktl .wk.on .one{display:-webkit-box}
 .wktl .wk .reddot{color:var(--red);font-size:10px;margin-left:4px}
 .wktl .wk.draft::before{background:var(--amber);box-shadow:0 0 0 3px var(--amber-bg)}
-.wktl .wk.draft .d::after{content:"预生成";display:inline-block;margin-left:6px;font-family:var(--sans);font-size:10px;color:var(--amber);border:1px solid var(--amber);border-radius:99px;padding:0 5px;vertical-align:1px}
+.wktl .wk.draft .d::after{content:"待确认";display:inline-block;margin-left:6px;font-family:var(--sans);font-size:10px;color:var(--amber);border:1px solid var(--amber);border-radius:99px;padding:0 5px;vertical-align:1px}
 .wktl .wk.draft.on .d::after{color:#F6F3EC;border-color:#F6F3EC}
 .wkpanel{min-width:0}
 .wkhead{display:flex;align-items:center;gap:10px;margin-bottom:14px}
@@ -227,7 +224,7 @@ table.t tr:hover td{background:#FBF9F4}
    下方含 Coco.excalidraw 全量白板时间线；最新会议列为 2026-06-11。
 ================================================================ */
 const DB={
-meta:{ version:"会前预生成版 v3", updated:"2026-06-15", client:"COCO" },
+meta:{ version:"会议白板生成版 v4", updated:"2026-06-16", client:"COCO" },
 team:{ 侯明真:"#2E5E4E",周星星:"#3E5A7E",李阳阳:"#9A6B1F",李家乐:"#B5432E",田长举:"#8A8276",吕教东:"#5b6b4e",孔维彤:"#211C15",代逸如:"#7A7163",查理:"#46506b" },
 
 /* 全客户总览（团队首页） */
@@ -244,24 +241,24 @@ clients:[
 
 /* COCO 当前态（白板顶部，跨周） */
 current:{
-  kpis:[ {l:"默认白板",v:"预生成",t:"good"},{l:"下次会议",v:"06/18",t:""},{l:"P0 待确认",v:"VIP深推",t:""},{l:"大会流量峰值",v:"6.9k",t:"good"},{l:"SEO 数据链路",v:"待闭环",t:""} ],
+  kpis:[ {l:"默认白板",v:"下次会",t:"good"},{l:"下次会议",v:"06/18",t:""},{l:"P0 待确认",v:"VIP深推",t:""},{l:"大会流量峰值",v:"6.9k",t:"good"},{l:"SEO 数据链路",v:"待闭环",t:""} ],
   stage:{ label:"SEO 页面铺设 → 数据验证阶段", steps:[ {n:"准备期",d:"模板·关键词",s:"done"},{n:"首批铺设",d:"20页+Sitemap",s:"done"},{n:"索引验证",d:"已索引1页·曝光提升",s:"now"},{n:"数据迭代",d:"按页面表现优化",s:""} ] }
 },
 
 /* 周时间线（最新在前）。每周一张白板。 */
 weeks:[
- { date:"2026-06-18", title:"下次会议 · 会前预生成白板", badge:"自动草稿 · 会前确认",
+ { date:"2026-06-18", title:"下次会议 · COCO 周会白板", badge:"自动生成 · 负责人确认",
    draft:true,
-   sourceLogic:"生成依据：① 上次 2026-06-11 会议白板；② 6/11 会后到今天的微信群聊；③ 已发布链接、飞书社媒看板、Notion 视频/SEO 表；④ 未闭环红灯自动置顶。",
-   conclusion:"下次会的主线应该先过三件事：1）VIP dinner / SuperAI / Google Cloud 这波大会流量有没有沉淀成可复用 SOP；2）视频和案例不再按“做了几条”汇报，而要按“哪些已经可发、哪些需要客户确认、哪些能做成销售语料”闭环；3）SEO/GA/SimilarWeb 数据链路必须讲清楚当前接到哪一步，否则老板看不到持续增长证据。",
+   sourceLogic:"生成依据：上次会议白板、会后微信群聊、飞书社媒看板、Notion 视频/SEO 表、已发布链接与未闭环事项。",
+   conclusion:"本次会议主线先过三件事：1）VIP dinner / SuperAI / Google Cloud 这波大会流量是否已经沉淀成可复用 SOP；2）视频和案例不再按“做了几条”汇报，而按“哪些已经可发、哪些需要客户确认、哪些能做成销售语料”闭环；3）SEO/GA/SimilarWeb 数据链路必须讲清楚当前接到哪一步，否则老板看不到持续增长证据。",
    cards:[
-     {topic:"本次会议议程（系统预生成）",owner:"系统生成 · 侯明真确认",type:"agenda",items:[
+     {topic:"本次会议议程",owner:"侯明真",type:"agenda",items:[
        {n:"本周重点结论：大会流量、视频案例、SEO 数据链路",t:"5min"},
        {n:"P0 卡点：VIP dinner 深推与 SuperAI 深度总结是否已发布/待发布",t:"10min"},
        {n:"社媒与发布复盘：哪些内容已发、哪些链接已挂、哪些要二次转推",t:"8min"},
        {n:"视频/案例条线：Paolo、Tiger、AXRAH、知外文化/MCN 案例闭环",t:"12min"},
        {n:"SEO / GA / SimilarWeb：当前接入状态、数据何时可见、谁负责",t:"10min"},
-       {n:"下周计划与必须问客户确认的问题",t:"10min"}]},
+       {n:"下周计划与客户确认事项",t:"10min"}]},
 
      {topic:"【1】P0 · 大会流量沉淀成 SOP，而不是一次性热闹",owner:"侯明真",
        summary:"上次白板已经判断“要把大会算法流量牢牢攥在手里”。会后聊天继续围绕 SuperAI、Google Singapore、AGI Villa、非凡产研、VIP dinner 发图/发文/转推推进。下次会议应该汇报的不是散点发布，而是：哪些已发布、哪些带来了互动、哪些能沉淀成重要活动发布 SOP。",
@@ -276,7 +273,7 @@ weeks:[
 
      {topic:"【2】发布闭环 · 已发内容必须带平台链接，不再只说“发了”",owner:"侯明真",
        summary:"聊天记录里已经出现多条“已转发/已发布/下午再发/明天发”的动作。下次白板要把这些变成可检查的发布闭环：发布平台、链接、数据、下一步是否二次转推。",
-       table:{cols:["内容/事件","平台","当前状态","需要会前补齐"],rows:[
+       table:{cols:["内容/事件","平台","当前状态","会议中需确认"],rows:[
          ["VIP dinner / The Signal 深推","X / LinkedIn / 公众号","待确认是否已发布","补链接 + 阅读/浏览数据"],
          ["SuperAI 一周亲历手记","公众号 / X / LinkedIn","已多轮迭代","确认最终版 + 发布链接"],
          ["Google Singapore 活动","X / LinkedIn / 公众号","照片与录音资料已补","确认官方高清照片与推文"],
@@ -291,8 +288,8 @@ weeks:[
          ["Tiger 视频 v3","已按客户意见去掉对方 logo、加 icoco.ai、调整字幕位置","确认最终是否可发"],
          ["AXRAH x COCO Video 3","有视频与 transcript，Twitter/LinkedIn 链接已给","确认是否二次转推与沉淀案例页"],
          ["知外文化 / MCN 案例","客户明确要做成知外文化客户使用案例视频","梳理 UGC 资料、MCN 痛点与案例脚本"],
-         ["中文/英文产品介绍片","客户持续看稿并反馈文案，不只是 marketing team","会前确认最终口径与卖点"]]},
-       note:"系统判断：会里不要报“本周做了几条视频”，要报“哪条能帮客户销售”。"},
+         ["中文/英文产品介绍片","客户持续看稿并反馈文案，不只是 marketing team","确认最终口径与卖点"]]},
+       note:"会议口径：不要报“本周做了几条视频”，要报“哪条能帮客户销售”。"},
 
      {topic:"【4】SEO / GA / SimilarWeb · 数据链路必须闭环",owner:"李家乐 / Owen / Tyler",
        summary:"会后聊天里反复问到 SEO 到哪一步、GA 怎么接、SimilarWeb 为什么没数据。下一次会议必须把数据链路讲明白：Tyler 接入了什么、Owen 跟到哪里、GA 是否已经跑满、SimilarWeb 是否还没收录、预计多久能看到数据。",
@@ -306,17 +303,17 @@ weeks:[
           {s:"待确认",name:"SEO 本周数据",desc:"曝光、点击、索引页面数必须给上期→本期对比。",pri:"P0"}]},
        links:[{label:"GSC ↗",url:"https://search.google.com/search-console?utm_source=about-page&resource_id=sc-domain:icoco.ai"}]},
 
-     {topic:"【5】客户开口的事 · 会前必须补齐的问题",owner:"侯明真",
-       summary:"这些不是普通待办，而是客户已经在群里明确问过或点过的事情，下次会前必须能回答。",
-       table:{cols:["客户问题/要求","当前状态","会前答案要准备什么"],rows:[
+     {topic:"【5】关键确认事项",owner:"侯明真",
+       summary:"本节只放会议中需要直接确认的问题，避免会后再反复追问。",
+       table:{cols:["问题/要求","当前状态","会议中需给出的答案"],rows:[
          ["SEO 到哪一步了？","待更新","GA / GSC / SimilarWeb 当前状态 + 两天后数据预期"],
          ["Google / AGI Villa 照片有没有？","进行中","官方高清照片、Google Photos 链接、可发布图集"],
          ["知外文化客户案例怎么做？","进行中","MCN 痛点、UGC 资料、脚本结构、是否需要客户补素材"],
          ["6.30 崔牛会新加坡怎么发？","待排期","活动推文节奏、tag 对象、公众号长文是否做"],
          ["军火库内容体系怎么补？","待拆解","百问百答、行业名词、回访话术、转化逻辑、课程现场片段等模块"]]}},
 
-     {topic:"【6】下周计划（系统建议）",owner:"",
-       summary:"下周计划不显示负责人姓名，给客户看时也能保留。它应该从未闭环事项自动生成，而不是组长重新写。",
+     {topic:"【6】下周计划",owner:"",
+       summary:"下周计划由本次会议确认事项和未闭环红灯生成，会议中确认后进入执行。",
        table:{cols:["优先级","计划","判断依据"],rows:[
          ["P0","完成并发布 VIP dinner / The Signal 深推","上次白板 P0 + 会后多轮素材确认"],
          ["P0","补齐 SEO 数据链路：GA、GSC、SimilarWeb 当前状态","客户连续追问 SEO 进展"],
@@ -325,18 +322,18 @@ weeks:[
          ["P2","整理知外文化/MCN 案例包","客户明确要求继续做客户案例内容"]]} }
    ],
    blockers:[
-     {item:"SEO / GA / SimilarWeb 数据链路还没讲成闭环", need:"会前给出当前状态、负责人、预计看到数据的时间", client:false, owner:"李家乐"},
+     {item:"SEO / GA / SimilarWeb 数据链路还没讲成闭环", need:"会议中给出当前状态、负责人、预计看到数据的时间", client:false, owner:"李家乐"},
      {item:"发布内容有动作但链接和数据没有统一挂回白板", need:"所有已发内容补平台链接和浏览/阅读数据", client:false, owner:"侯明真"},
      {item:"视频素材多但缺少销售语料分类", need:"按可发、待确认、销售语料、待素材四类整理", client:false, owner:"周星星"}
    ],
    requests:[
-     {date:"会前",source:"系统",quote:"根据聊天记录自动生成下一次会议白板，组长只做确认。",status:"处理中",owner:"侯明真",resp:"会前补链接、数据和最终口径。"}
+     {date:"06-18",source:"会议白板",quote:"根据上次会议和会后群聊生成本次会议需要过的事项。",status:"处理中",owner:"侯明真",resp:"补齐链接、数据和最终口径。"}
    ],
    psych:"客户现在不是单纯要“看到团队做了很多”，而是要看到一套能持续产出增长证据的客户工作系统：活动流量能复用、内容能转销售、SEO 数据能证明长期增长。",
    deliveries:{
-     内容:[ {title:"VIP dinner / SuperAI / Google Cloud / AGI Villa 传播链路待会前补链接",owner:"侯明真",date:"会前",pub:{plat:"待补链接",url:""}} ],
-     视频剪辑:[ {title:"Paolo、Tiger、AXRAH、知外文化案例视频待按状态归类",owner:"周星星",date:"会前"} ],
-     SEO:[ {title:"GA / SimilarWeb / GSC 当前状态待形成一页说明",owner:"李家乐",date:"会前"} ]
+     内容:[ {title:"VIP dinner / SuperAI / Google Cloud / AGI Villa 传播链路待补链接",owner:"侯明真",date:"06-18",pub:{plat:"待补链接",url:""}} ],
+     视频剪辑:[ {title:"Paolo、Tiger、AXRAH、知外文化案例视频待按状态归类",owner:"周星星",date:"06-18"} ],
+     SEO:[ {title:"GA / SimilarWeb / GSC 当前状态待形成一页说明",owner:"李家乐",date:"06-18"} ]
    },
    metrics:[
      {name:"大会流量峰值",prev:6000,cur:6900,series:[1000,1700,5000,6000,6900],src:"https://x.com/CharliehuAI/status/2063568159144354285?s=20",srclabel:"推特 ↗"},
@@ -344,7 +341,7 @@ weeks:[
    ],
    mustAsk:["VIP dinner 深推是否已经发？链接和数据是多少？","GA 是否已经接入并开始积累数据？SimilarWeb 预计何时有数据？","Google Singapore / AGI Villa 官方照片是否补齐？","知外文化/MCN 案例还缺哪些 UGC 资料？"],
    nextWeek:["发布 VIP dinner 深推","补齐 SEO 数据链路说明","把视频素材改成销售语料清单","沉淀重要活动发布 SOP"],
-   agenda:["系统预生成重点","发布闭环","视频与案例闭环","SEO/GA 数据链路","客户开口的事","下周计划"],
+   agenda:["本周重点","发布闭环","视频与案例闭环","SEO/GA 数据链路","关键确认事项","下周计划"],
    shots:["最近微信群聊摘要","6/11 白板","飞书社媒看板","Notion 视频看板","SEO/GSC 截图"] },
 
  { date:"2026-06-11", title:"周会 · SuperAI / Google Cloud 复盘", badge:"Coco.excalidraw 原白板",
@@ -617,6 +614,21 @@ gantt:[ {title:"SEO 页面铺设路线图",months:[{m:"5月",w:4},{m:"6月",w:4}
      {name:"行业 × 场景矩阵（全覆盖）",pri:"P0",start:12,span:4,state:"plan",meta:"目标 200+"},
      {name:"多语言 hreflang",pri:"P2",start:13,span:3,state:"plan",meta:"目标 100+"},
      {name:"Tool Marketplace + 对比矩阵",pri:"P2",start:13,span:3,state:"plan",meta:"目标 80+"}]}
+  ]},
+ {title:"视频与案例资产路线图",months:[{m:"6月",w:4},{m:"7月",w:4},{m:"8月",w:4}],today:1,
+  phases:[
+   {name:"阶段一 · 素材清理与可发布资产",note:"先把已有素材变成可发、可挂链接的资产",tasks:[
+     {name:"Paolo 直播切片",pri:"P0",start:0,span:1,state:"done",meta:"已切出 4 条 · 继续发布"},
+     {name:"Tiger 客户案例视频",pri:"P0",start:0,span:2,state:"doing",meta:"去 logo · 双语字幕 · 待确认"},
+     {name:"AXRAH x COCO Video 3",pri:"P1",start:0,span:1,state:"done",meta:"Twitter / LinkedIn 已发"}]},
+   {name:"阶段二 · 销售语料化",note:"从“发视频”转成“销售能复用的案例语料”",tasks:[
+     {name:"知外文化 / MCN 客户案例",pri:"P0",start:1,span:3,state:"doing",meta:"脚本 · UGC 资料 · 痛点归类"},
+     {name:"产品介绍片中英双版本",pri:"P1",start:1,span:2,state:"doing",meta:"卖点口径确认"},
+     {name:"案例页 / 销售页挂载视频",pri:"P1",start:2,span:3,state:"plan",meta:"链接回收 · 可复用"}]},
+   {name:"阶段三 · 常规发布节奏",note:"形成日更与大会活动发布 SOP",tasks:[
+     {name:"视频号 / 小红书日更",pri:"P1",start:0,span:4,state:"doing",meta:"Paolo / Tiger / 基础视频"},
+     {name:"YouTube / LinkedIn / X 英文版",pri:"P1",start:2,span:4,state:"plan",meta:"英文素材池"},
+     {name:"重要活动视频 SOP",pri:"P2",start:4,span:4,state:"plan",meta:"SuperAI / Google / AGI Villa"}]}
   ]} ],
 feed:[
  {date:"06-05 16:20",type:"deliver",who:"李家乐",text:"已交付 20+ 矩阵页 + 三大问题修复",line:"SEO"},
@@ -640,18 +652,15 @@ roster:{ lead:"侯明真", reviewer:"孔维彤",
 files:[
  {date:"06-05",kind:"会议转录",title:"Will × COCO MKT 6/5 转录",vis:"内部"},
  {date:"06-05",kind:"聊天记录",title:"COCO 群 6/5 聊天记录（抽出 3 条事项）",vis:"内部"},
- {date:"06-05",kind:"文档",title:"VC 文章抓取阅读列表.pdf",vis:"客户可见"}
+ {date:"06-05",kind:"文档",title:"VC 文章抓取阅读列表.pdf",vis:"可复用"}
 ]
 };
 
 /* ================= 渲染（Codex 不改） ================= */
 const $=s=>document.querySelector(s);
-let route="overview", mode="team", selWeek=0;
-const NAV={
- team:{ 概览:["overview"], "客户 · COCO":["board","gantt","data"], 过程:["feed","requests","deliverables","meetings","files"], 操作:["submit","roster"] },
- client:{ "COCO 进展":["board","gantt","data"], 过程:["feed","requests","deliverables","meetings"] }
-};
-const VIEWS={ overview:"全客户总览",board:"白板",gantt:"项目路线图",data:"数据中心",feed:"工作动态流",requests:"客户事项",deliverables:"交付时间线",meetings:"会议",files:"物料",submit:"录入",roster:"团队名单" };
+let route="overview", selWeek=0;
+const NAV={ 概览:["overview"], "客户 · COCO":["board","gantt","data"], 过程:["feed","requests","deliverables","meetings","files"], 操作:["submit","roster"] };
+const VIEWS={ overview:"全客户总览",board:"白板",gantt:"项目路线图",data:"数据中心",feed:"工作动态流",requests:"确认事项",deliverables:"交付时间线",meetings:"会议",files:"物料",submit:"录入",roster:"团队名单" };
 
 function esc(s){return String(s??"").replace(/[<>&"]/g,m=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[m]))}
 function color(n){return DB.team[n]||"#8A8276"}
@@ -663,18 +672,17 @@ function pct(p,c){if(!p)return c?"新增":"—";const d=Math.round((c-p)/p*100);
 function spark(s){if(!s||s.length<2)return `<span class="small muted">趋势待补</span>`;const w=128,h=28,p=3,mx=Math.max(...s),mn=Math.min(...s),r=(mx-mn)||1;const pts=s.map((v,i)=>`${(p+i*(w-2*p)/(s.length-1)).toFixed(1)},${(h-p-(v-mn)/r*(h-2*p)).toFixed(1)}`).join(" ");const lst=pts.split(" ").pop().split(",");return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><polyline points="${pts}" fill="none" stroke="var(--green)" stroke-width="1.5" stroke-linejoin="round"/><circle cx="${lst[0]}" cy="${lst[1]}" r="2.2" fill="var(--green)"/></svg>`}
 
 function go(v){route=v;render();window.scrollTo(0,0)}
-function setMode(m){mode=m;if(!Object.values(NAV[mode]).flat().includes(route))route="board";render()}
 function pickWeek(i){selWeek=i;render()}
-function bind(){document.querySelectorAll("[data-go]").forEach(e=>e.onclick=()=>go(e.dataset.go));document.querySelectorAll("[data-mode]").forEach(e=>e.onclick=()=>setMode(e.dataset.mode));document.querySelectorAll("[data-wk]").forEach(e=>e.onclick=()=>pickWeek(+e.dataset.wk))}
+function bind(){document.querySelectorAll("[data-go]").forEach(e=>e.onclick=()=>go(e.dataset.go));document.querySelectorAll("[data-wk]").forEach(e=>e.onclick=()=>pickWeek(+e.dataset.wk))}
 function render(){renderSide();const fn={overview:overviewView,board:boardView,gantt:ganttView,data:dataView,feed:feedView,requests:requestsView,deliverables:deliverablesView,meetings:meetingsView,files:filesView,submit:submitView,roster:rosterView}[route];$("#main").innerHTML=fn();bind()}
 
 function renderSide(){
  const cnt={requests:DB.weeks[0].requests?DB.weeks[0].requests.length:0,feed:DB.feed.length};
  const item=k=>`<div class="nav-item ${route===k?"on":""}" data-go="${k}">${VIEWS[k]}${cnt[k]?`<span class="cnt">${cnt[k]}</span>`:""}</div>`;
- const nav=Object.entries(NAV[mode]).map(([g,ks])=>`<div class="navgroup"><div class="glabel">${g}</div>${ks.map(item).join("")}</div>`).join("");
+ const nav=Object.entries(NAV).map(([g,ks])=>`<div class="navgroup"><div class="glabel">${g}</div>${ks.map(item).join("")}</div>`).join("");
  $("#sidebar").innerHTML=`<div class="brand"><h1>客户工作台</h1><div class="tagline">郎瀚威团队 · 多客户作战室</div><div class="ver">${esc(DB.meta.version)} · 更新 ${esc(DB.meta.updated)}</div></div>${nav}`;
 }
-function topbar(c){return `<div class="topbar"><div class="crumb">${c}</div><div class="modetoggle"><button class="${mode==="team"?"on":""}" data-mode="team">团队视图</button><button class="${mode==="client"?"on":""}" data-mode="client">客户视图</button></div></div>`}
+function topbar(c){return `<div class="topbar"><div class="crumb">${c}</div></div>`}
 
 /* 全客户总览 */
 function overviewView(){
@@ -690,43 +698,43 @@ function overviewView(){
 
 /* 白板：当前态 + 周时间线 + 选中周 */
 function boardView(){
- const c=DB.current, w=DB.weeks[selWeek], client=mode==="client";
+ const c=DB.current, w=DB.weeks[selWeek];
  const kpis=c.kpis.map(k=>`<div class="kpi ${k.t}"><div class="v">${esc(k.v)}</div><div class="l">${esc(k.l)}</div></div>`).join("");
  const stg=`<div class="stagebar">${c.stage.steps.map(s=>`<div class="stg ${s.s}">${esc(s.n)}<span class="d">${esc(s.d)}</span></div>`).join("")}</div>`;
  const tl=DB.weeks.map((x,i)=>{
-   const red=x.blockers?x.blockers.filter(b=>b.client||!client).length:0;
+   const red=x.blockers?x.blockers.length:0;
    return `<div class="wk ${i===selWeek?"on":""} ${x.draft?"draft":""}" data-wk="${i}"><div class="d">${esc(x.date.slice(5))}${red?`<span class="reddot">● ${red}</span>`:""}</div><div class="t">${esc(x.title)}</div><div class="one">${esc(x.conclusion||"")}</div></div>`;
  }).join("");
- const panel = w.stub ? `<div class="wkhead"><span class="wd">${esc(w.date)}</span><span class="tag lo">${esc(w.title)}</span></div><div class="oneliner empty">${esc(w.conclusion)}</div><div class="small muted">这一周的白板会由该次会议分析 + 当周登记数据自动生成，目前为占位。</div>` : weekPanel(w,client);
+ const panel = w.stub ? `<div class="wkhead"><span class="wd">${esc(w.date)}</span><span class="tag lo">${esc(w.title)}</span></div><div class="oneliner empty">${esc(w.conclusion)}</div><div class="small muted">这一周的白板会由该次会议分析 + 当周登记数据自动生成，目前为占位。</div>` : weekPanel(w);
  return topbar(`<b>COCO</b> · 白板`)+`
   <h2 class="pagetitle">COCO 白板</h2>
-  <div class="pagedesc">默认打开的是“下次会议预生成白板”：系统用上次会议白板 + 最近微信群聊 + 已发布链接/数据看板综合判断，先把会前要过的重点、卡点和待问事项排好。组长只需要确认，不需要再从零熬夜搭白板；历史会议仍然保留在左侧时间线里。</div>
+  <div class="pagedesc">默认打开下一次会议白板：系统根据上次会议、会后群聊、外部看板和已发布链接生成会议要过的重点、卡点、确认事项和下周计划。组长只需要校准内容，不需要从零搭白板；历史会议保留在左侧时间线。</div>
   <div class="kpis">${kpis}</div>
   <div class="sec" style="margin-bottom:18px"><div class="shead"><h3>${esc(c.stage.label)}</h3><span class="hint"><span class="linkchip" data-go="gantt">看完整甘特 →</span></span></div>${stg}</div>
   <div class="boardlayout"><div class="wktl">${tl}</div><div class="wkpanel">${panel}</div></div>`;
 }
-function weekPanel(w,client){
+function weekPanel(w){
  // 真实白板格式：本周重点 + 会议议程 + 一张张话题卡（带负责人 + 总结 + 实物）
  if(w.cards){
    const head=`<div class="wkhead"><span class="wd">${esc(w.date)}</span><span class="tag lo">${esc(w.title)}</span>${w.badge?`<span class="tag auto">${esc(w.badge)}</span>`:""}</div>`;
-   const concl=`<div class="oneliner">${esc(w.conclusion)}<div class="who">本周重点 · 会前判断</div></div>`;
+   const concl=`<div class="oneliner">${esc(w.conclusion)}<div class="who">本周重点 · 会议判断</div></div>`;
    const src=w.sourceLogic?`<div class="small" style="margin:-10px 0 16px;padding:8px 12px;background:var(--amber-bg);border:1px solid #EADFC2;color:var(--amber)">${esc(w.sourceLogic)}</div>`:"";
-   const cards=w.cards.filter(c=>!(client&&c.internal)).map(wcard).join("");
+   const cards=w.cards.map(wcard).join("");
    return head+concl+src+cards;
  }
- const blk=(w.blockers||[]).filter(x=>client?x.client:true);
+ const blk=w.blockers||[];
  const blkH=blk.length?blk.map(x=>`<div class="blocker ${x.client?"client":""}"><div class="bi">${esc(x.item)}</div><div class="need">${x.client?"待贵方配合":"需"}：${esc(x.need)}</div>${x.owner?`<div class="small" style="margin-top:3px">跟进：${who(x.owner)}</div>`:""}</div>`).join(""):`<div class="small muted">本周无待配合事项</div>`;
- const reqH=(w.requests||[]).map(r=>`<tr><td class="small">${esc(r.date)}</td><td>${statusTag(r.status)}</td><td><div class="q">${esc(r.source)}：${esc(r.quote)}</div></td>${client?"":`<td>${who(r.owner)}</td>`}<td class="small">${esc(r.resp)}</td></tr>`).join("");
+ const reqH=(w.requests||[]).map(r=>`<tr><td class="small">${esc(r.date)}</td><td>${statusTag(r.status)}</td><td><div class="q">${esc(r.source)}：${esc(r.quote)}</div></td><td>${who(r.owner)}</td><td class="small">${esc(r.resp)}</td></tr>`).join("");
  const order=["内容","视频剪辑","SEO"], pri={内容:"田长举",视频剪辑:"周星星",SEO:"李家乐"};
- const deliv=order.map(L=>{const rows=(w.deliveries&&w.deliveries[L])||[];const body=rows.length?rows.map(d=>{const pub=d.pub?(d.pub.url?link(d.pub.url,d.pub.plat+" ↗"):`<span class="tag tbd">待发布</span>`):"";return `<div class="delivery"><div class="grow">${esc(d.title)}</div>${pub}${client?"":who(d.owner)}<span class="dt">${esc(d.date)}</span></div>`;}).join(""):`<div class="emptyline">本周无交付</div>`;return `<div class="linegroup"><div class="lh">${esc(L)} <span class="pri">· 主负责 ${esc(pri[L])}</span></div>${body}</div>`;}).join("");
+ const deliv=order.map(L=>{const rows=(w.deliveries&&w.deliveries[L])||[];const body=rows.length?rows.map(d=>{const pub=d.pub?(d.pub.url?link(d.pub.url,d.pub.plat+" ↗"):`<span class="tag tbd">待发布</span>`):"";return `<div class="delivery"><div class="grow">${esc(d.title)}</div>${pub}${who(d.owner)}<span class="dt">${esc(d.date)}</span></div>`;}).join(""):`<div class="emptyline">本周无交付</div>`;return `<div class="linegroup"><div class="lh">${esc(L)} <span class="pri">· 主负责 ${esc(pri[L])}</span></div>${body}</div>`;}).join("");
  const mets=(w.metrics||[]).map(m=>{if(m.stale)return "";const up=m.cur>=m.prev;return `<div class="metric"><div class="ml"><span>${esc(m.name)}</span>${m.src?link(m.src,m.srclabel):""}</div><div class="rowm"><div class="v">${m.cur}</div><span class="delta ${up?"up":"dn"}">${pct(m.prev,m.cur)}</span></div><div class="prev">上期 ${m.prev} → 本期 ${m.cur}</div><div class="foot" style="display:flex;align-items:center;justify-content:space-between;gap:8px">${spark(m.series)}${m.owner?`<span class="small">${who(m.owner)}</span>`:""}</div></div>`;}).join("");
  const ask=(w.mustAsk||[]).map(x=>`<li>${esc(x)}</li>`).join("");
  const plan=(w.nextWeek||[]).map(x=>{const t=typeof x==="string"?x:x.t;return `<li>${esc(t)}</li>`;}).join("");
- const arch=client?"":`<div class="sec"><div class="shead"><h3>会议归档</h3><span class="hint">议程 + 截图，内部</span></div><div class="archive"><div class="small" style="margin-bottom:8px">议程：${(w.agenda||[]).map(esc).join(" · ")}</div><div class="shotwall">${(w.shots||[]).map(s=>`<div class="shot">${esc(s)}</div>`).join("")}</div></div></div>`;
+ const arch=`<div class="sec"><div class="shead"><h3>会议归档</h3><span class="hint">议程 + 截图</span></div><div class="archive"><div class="small" style="margin-bottom:8px">议程：${(w.agenda||[]).map(esc).join(" · ")}</div><div class="shotwall">${(w.shots||[]).map(s=>`<div class="shot">${esc(s)}</div>`).join("")}</div></div></div>`;
  return `<div class="wkhead"><span class="wd">${esc(w.date)}</span><span class="tag lo">${esc(w.title)}</span>${w.badge?`<span class="tag auto">${esc(w.badge)}</span>`:""}</div>
-  <div class="oneliner">${esc(w.conclusion)}<div class="who">本周重点 · 自动生成后由负责人确认</div></div>
+  <div class="oneliner">${esc(w.conclusion)}<div class="who">本周重点 · 负责人确认</div></div>
   <div class="sec"><div class="shead"><h3>卡点 / 待对齐 / 待贵方配合</h3></div>${blkH}</div>
-  ${reqH?`<div class="sec"><div class="shead"><h3>客户开口的事</h3><span class="hint">只记未闭环</span></div><table class="t"><thead><tr><th>日期</th><th>状态</th><th>事项</th>${client?"":"<th>负责人</th>"}<th>我们的回应</th></tr></thead><tbody>${reqH}</tbody></table></div>`:""}
+  ${reqH?`<div class="sec"><div class="shead"><h3>关键确认事项</h3><span class="hint">只记未闭环</span></div><table class="t"><thead><tr><th>日期</th><th>状态</th><th>事项</th><th>负责人</th><th>我们的回应</th></tr></thead><tbody>${reqH}</tbody></table></div>`:""}
   ${w.psych?`<div class="sec"><div class="shead"><h3>客户动向</h3><span class="hint">关注点变化，不是复述聊天</span></div><div class="psych">${esc(w.psych)}</div></div>`:""}
   <div class="sec"><div class="shead"><h3>本周交付</h3><span class="hint">已发布挂平台链接，零交付标红</span></div>${deliv}</div>
   ${mets?`<div class="sec"><div class="shead"><h3>本周数据</h3><span class="hint">带对比，可点开来源</span></div><div class="metricgrid">${mets}</div></div>`:""}
@@ -774,7 +782,7 @@ function wcard(c){
 }
 function ganttView(){
  const charts=DB.gantt.map(g=>`<div class="sec"><div class="shead"><h3>${esc(g.title)}</h3><span class="hint">黄线为本周</span></div>${ganttChart(g)}</div>`).join("");
- return topbar(`<b>COCO</b> · 项目路线图`)+`<h2 class="pagetitle">项目路线图</h2><div class="pagedesc">阶段、任务、目标与进度的甘特视图——一眼看到现在铺到哪、下一步做什么。</div>${charts}`;
+ return topbar(`<b>COCO</b> · 项目路线图`)+`<h2 class="pagetitle">项目路线图</h2><div class="pagedesc">SEO 与视频/案例两条主线并列展示：一眼看到现在铺到哪、哪些资产可发、下一步做什么。</div>${charts}`;
 }
 
 /* 数据中心 + 社媒看板 */
@@ -784,18 +792,18 @@ function dataView(){
  return topbar(`<b>COCO</b> · 数据中心`)+`<h2 class="pagetitle">数据中心</h2><div class="pagedesc">按条线积累的趋势、交付节奏，加各平台社媒看板（点开看实时数据）。</div>${blocks}<div class="sec"><div class="shead"><h3>社媒看板</h3><span class="hint">点开看各平台实时数据</span></div><div class="platgrid">${plat}</div></div>`;
 }
 
-function feedView(){const lab={deliver:"交付",req:"沟通",metric:"数据",file:"文件"};let h="";DB.feed.forEach((e,i)=>{h+=`<div class="ev ${e.type==="req"?"key":""}"><div class="dt">${esc(e.date.split(" ")[1]||"")}<br>${esc(e.date.split(" ")[0])}</div><div class="rail"><div class="dot"></div>${i<DB.feed.length-1?'<div class="bar2"></div>':""}</div><div class="body"><div class="meta"><span class="evt ${e.type}">${lab[e.type]}</span><span class="tag lo">${esc(e.line)}</span>${mode==="team"?who(e.who):""}</div>${esc(e.text)}</div></div>`});return topbar(`<b>COCO</b> · 工作动态流`)+`<h2 class="pagetitle">工作动态流</h2><div class="pagedesc">项目每天的进展流水，随时掌握、无需等周会同步。</div><div class="tline">${h}</div>`}
+function feedView(){const lab={deliver:"交付",req:"沟通",metric:"数据",file:"文件"};let h="";DB.feed.forEach((e,i)=>{h+=`<div class="ev ${e.type==="req"?"key":""}"><div class="dt">${esc(e.date.split(" ")[1]||"")}<br>${esc(e.date.split(" ")[0])}</div><div class="rail"><div class="dot"></div>${i<DB.feed.length-1?'<div class="bar2"></div>':""}</div><div class="body"><div class="meta"><span class="evt ${e.type}">${lab[e.type]}</span><span class="tag lo">${esc(e.line)}</span>${who(e.who)}</div>${esc(e.text)}</div></div>`});return topbar(`<b>COCO</b> · 工作动态流`)+`<h2 class="pagetitle">工作动态流</h2><div class="pagedesc">项目每天的进展流水，随时掌握、无需等周会同步。</div><div class="tline">${h}</div>`}
 
-function requestsView(){const all=[];DB.weeks.forEach(w=>(w.requests||[]).forEach(r=>all.push(r)));const rows=all.map(r=>`<tr><td class="small">${esc(r.date)}</td><td>${esc(r.source)}</td><td><div class="q">${esc(r.quote)}</div></td><td>${statusTag(r.status)}</td>${mode==="team"?`<td>${who(r.owner)}</td>`:""}<td class="small">${esc(r.resp)}</td></tr>`).join("");return topbar(`<b>COCO</b> · 客户事项`)+`<h2 class="pagetitle">客户事项（只记未闭环）</h2><div class="pagedesc">客户开口、需要跟到闭环的事才登记；已回应过一周自动收口。白板"客户开口的事"的来源。</div><table class="t"><thead><tr><th>日期</th><th>来源</th><th>事项</th><th>状态</th>${mode==="team"?"<th>负责人</th>":""}<th>我们的回应</th></tr></thead><tbody>${rows}</tbody></table>`}
+function requestsView(){const all=[];DB.weeks.forEach(w=>(w.requests||[]).forEach(r=>all.push(r)));const rows=all.map(r=>`<tr><td class="small">${esc(r.date)}</td><td>${esc(r.source)}</td><td><div class="q">${esc(r.quote)}</div></td><td>${statusTag(r.status)}</td><td>${who(r.owner)}</td><td class="small">${esc(r.resp)}</td></tr>`).join("");return topbar(`<b>COCO</b> · 确认事项`)+`<h2 class="pagetitle">确认事项（只记未闭环）</h2><div class="pagedesc">只登记会议中需要确认、需要跟到闭环的事项；已回应过一周自动收口。白板“关键确认事项”的来源。</div><table class="t"><thead><tr><th>日期</th><th>来源</th><th>事项</th><th>状态</th><th>负责人</th><th>我们的回应</th></tr></thead><tbody>${rows}</tbody></table>`}
 
-function deliverablesView(){const all=[];DB.weeks.forEach(w=>{if(w.deliveries)Object.entries(w.deliveries).forEach(([L,arr])=>arr.forEach(d=>all.push({...d,line:L})))});all.sort((a,b)=>b.date.localeCompare(a.date));const rows=all.map(d=>{const pub=d.pub?(d.pub.url?link(d.pub.url,d.pub.plat+" ↗"):`<span class="tag tbd">待发布</span>`):"";return `<tr><td class="small">${esc(d.date)}</td><td><span class="tag lo">${esc(d.line)}</span></td><td>${esc(d.title)}</td>${mode==="team"?`<td>${who(d.owner)}</td>`:""}<td>${pub}</td></tr>`}).join("");return topbar(`<b>COCO</b> · 交付时间线`)+`<h2 class="pagetitle">交付时间线</h2><div class="pagedesc">全部交付按时间倒序，已发布挂平台链接。</div><table class="t"><thead><tr><th>日期</th><th>条线</th><th>交付</th>${mode==="team"?"<th>负责人</th>":""}<th>链接</th></tr></thead><tbody>${rows}</tbody></table>`}
+function deliverablesView(){const all=[];DB.weeks.forEach(w=>{if(w.deliveries)Object.entries(w.deliveries).forEach(([L,arr])=>arr.forEach(d=>all.push({...d,line:L})))});all.sort((a,b)=>b.date.localeCompare(a.date));const rows=all.map(d=>{const pub=d.pub?(d.pub.url?link(d.pub.url,d.pub.plat+" ↗"):`<span class="tag tbd">待发布</span>`):"";return `<tr><td class="small">${esc(d.date)}</td><td><span class="tag lo">${esc(d.line)}</span></td><td>${esc(d.title)}</td><td>${who(d.owner)}</td><td>${pub}</td></tr>`}).join("");return topbar(`<b>COCO</b> · 交付时间线`)+`<h2 class="pagetitle">交付时间线</h2><div class="pagedesc">全部交付按时间倒序，已发布挂平台链接。</div><table class="t"><thead><tr><th>日期</th><th>条线</th><th>交付</th><th>负责人</th><th>链接</th></tr></thead><tbody>${rows}</tbody></table>`}
 
 function meetingsView(){const rows=DB.weeks.map(w=>`<tr><td class="small">${esc(w.date)}</td><td>${esc(w.title)}</td><td class="small">${w.stub?'<span class="tag tbd">回填中</span>':esc((w.conclusion||"").slice(0,40)+"…")}</td><td><span class="linkchip" data-go="board">看白板 →</span></td></tr>`).join("");return topbar(`<b>COCO</b> · 会议`)+`<h2 class="pagetitle">会议归档</h2><div class="pagedesc">每次会议 = 时间线上的一周。外层只看日期/会议名，点"看白板"进那一周；原文默认折叠、内部可见。</div><table class="t"><thead><tr><th>日期</th><th>会议</th><th>一句话</th><th></th></tr></thead><tbody>${rows}</tbody></table>`}
 
-function filesView(){const rows=DB.files.map(f=>`<tr><td class="small">${esc(f.date)}</td><td><span class="tag lo">${esc(f.kind)}</span></td><td>${esc(f.title)}</td><td>${f.vis==="内部"?'<span class="tag soft">内部</span>':'<span class="tag ok">客户可见</span>'}</td></tr>`).join("");return topbar(`<b>COCO</b> · 物料`)+`<h2 class="pagetitle">物料</h2><div class="pagedesc">上传的原文件 + 分析：会议转录、聊天记录（内部语料）、文档。视频只存链接。聊天记录/转录默认内部、不上客户视图。</div><table class="t"><thead><tr><th>日期</th><th>类型</th><th>标题</th><th>可见性</th></tr></thead><tbody>${rows}</tbody></table>`}
+function filesView(){const rows=DB.files.map(f=>`<tr><td class="small">${esc(f.date)}</td><td><span class="tag lo">${esc(f.kind)}</span></td><td>${esc(f.title)}</td><td>${f.vis==="内部"?'<span class="tag soft">内部</span>':'<span class="tag ok">可复用</span>'}</td></tr>`).join("");return topbar(`<b>COCO</b> · 物料`)+`<h2 class="pagetitle">物料</h2><div class="pagedesc">上传的原文件 + 分析：会议转录、聊天记录、文档和外部链接。视频只存链接，作为白板和会议判断的证据来源。</div><table class="t"><thead><tr><th>日期</th><th>类型</th><th>标题</th><th>属性</th></tr></thead><tbody>${rows}</tbody></table>`}
 
 function submitView(){return topbar(`<b>COCO</b> · 录入`)+`<h2 class="pagetitle">录入</h2><div class="pagedesc">两种方式：①「随手记」一句话丢进去，AI 自动归类；② 丢一段会议转录 / 群聊，AI 抽出本周的交付/事项/数据。手动表单只是补充。</div>
- <div class="quickbox"><div class="small" style="margin-bottom:6px">随手记（推荐）</div><textarea placeholder="例：今天交付了 VC 文章抓取页，给 COCO 6 篇本周阅读列表 —— 或者直接粘一段群聊/会议片段"></textarea><div class="aihint">↳ AI 会判断这是交付 / 客户事项 / 数据点，自动归类填好，你确认即可。</div><div style="margin-top:10px"><button class="submitbtn">AI 归类并预填</button></div></div>
+ <div class="quickbox"><div class="small" style="margin-bottom:6px">随手记（推荐）</div><textarea placeholder="例：今天交付了 VC 文章抓取页，给 COCO 6 篇本周阅读列表 —— 或者直接粘一段群聊/会议片段"></textarea><div class="aihint">↳ AI 会判断这是交付 / 确认事项 / 数据点，自动归类填好，你确认即可。</div><div style="margin-top:10px"><button class="submitbtn">AI 归类并预填</button></div></div>
  <div class="form"><div class="small" style="margin-bottom:10px">或手动登记一条交付</div>
   <div class="fr"><label>类型</label><select><option>社媒发布</option><option>视频</option><option>SEO页面</option><option>深度报告</option><option>个人IP内容</option><option>活动支持</option><option>方案文档</option></select></div>
   <div class="row2"><div class="fr"><label>负责人（本客户核心，可展开选全员）</label><select><option>侯明真</option><option>田长举</option><option>周星星</option><option>李阳阳</option><option>李家乐</option><option>吕教东</option><option>代逸如（帮忙）</option></select></div><div class="fr"><label>日期</label><input value="2026-06-05"></div></div>
