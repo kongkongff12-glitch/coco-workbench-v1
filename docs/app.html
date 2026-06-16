@@ -252,113 +252,138 @@ clients:[
 
 /* COCO 当前态（白板顶部，跨周） */
 current:{
-  kpis:[ {l:"默认白板",v:"下次会",t:"good"},{l:"下次会议",v:"06/18",t:""},{l:"P0 待确认",v:"VIP深推",t:""},{l:"大会流量峰值",v:"6.9k",t:"good"},{l:"SEO 数据链路",v:"待闭环",t:""} ],
-  stage:{ label:"SEO 页面铺设 → 数据验证阶段", steps:[ {n:"准备期",d:"模板·关键词",s:"done"},{n:"首批铺设",d:"20页+Sitemap",s:"done"},{n:"索引验证",d:"已索引1页·曝光提升",s:"now"},{n:"数据迭代",d:"按页面表现优化",s:""} ] }
+  kpis:[ {l:"默认白板",v:"下次会",t:"good"},{l:"下次会议",v:"06/18",t:""},{l:"P0",v:"SEO修复",t:""},{l:"发布闭环",v:"待补链接",t:""},{l:"内容主线",v:"女性创业者",t:"good"} ],
+  stage:{ label:"SEO 页面铺设 → 官网架构修复阶段", steps:[ {n:"首批铺设",d:"20页+Sitemap",s:"done"},{n:"索引验证",d:"已索引1页",s:"done"},{n:"架构诊断",d:"6/16已开会",s:"now"},{n:"修复验证",d:"About·Canonical·Docs",s:""} ] }
 },
 
 /* 周时间线（最新在前）。每周一张白板。 */
 weeks:[
  { date:"2026-06-18", title:"下次会议 · COCO 周会白板", badge:"待确认",
    draft:true,
-   sourceLogic:"上次会议白板、会后微信群聊、飞书社媒看板、Notion 视频/SEO 表、已发布链接与未闭环事项。",
-   conclusion:"本次会议主线先过三件事：1）VIP dinner / SuperAI / Google Cloud 这波大会流量是否已经沉淀成可复用 SOP；2）视频和案例不再按“做了几条”汇报，而按“哪些已经可发、哪些需要客户确认、哪些能做成销售语料”闭环；3）SEO/GA/SimilarWeb 数据链路必须讲清楚当前接到哪一步，否则老板看不到持续增长证据。",
+   sourceLogic:"6/11 原白板、6/16 Will×COCO SEO 讨论会逐字稿与 AI 分析、6/16 当天微信群聊、飞书社媒看板、Notion 视频/SEO 表、已发布链接与未闭环事项。",
+   conclusion:"本次会议主线先过三件事：1）SEO 已从“数据链路不清楚”推进到可执行修复清单：About 标题、Canonical、CSR/SSG、Docs PR、404/死链；2）发布闭环必须补链接和数据，Tiger、VIDEO 5/6、“昨日人才，今日废柴？”不能只说发了；3）内容方向出现新主线：女性企业家 / 非技术创业者 / 重运营人群，这是 COCO 下阶段更容易共鸣的客户心理切口。",
    cards:[
      {topic:"本次会议议程",owner:"侯明真",type:"agenda",items:[
-       {n:"本周重点结论：大会流量、视频案例、SEO 数据链路",t:"5min"},
-       {n:"P0 卡点：VIP dinner 深推与 SuperAI 深度总结是否已发布/待发布",t:"10min"},
-       {n:"社媒与发布复盘：哪些内容已发、哪些链接已挂、哪些要二次转推",t:"8min"},
-       {n:"视频/案例条线：Paolo、Tiger、AXRAH、知外文化/MCN 案例闭环",t:"12min"},
-       {n:"SEO / GA / SimilarWeb：当前接入状态、数据何时可见、谁负责",t:"10min"},
-       {n:"下周计划与客户确认事项",t:"10min"}]},
+       {n:"本周重点结论：SEO 修复清单、发布闭环、女性企业家内容主线",t:"5min"},
+       {n:"SEO 官网架构：About / Canonical / CSR-SSG / Docs PR / 404",t:"12min"},
+       {n:"发布闭环：Tiger、VIDEO 5/6、文章与平台链接",t:"10min"},
+       {n:"视频/案例条线：Paolo、AXRAH、知外文化/MCN、销售语料",t:"10min"},
+       {n:"内容新方向：女性企业家 / 非技术创业者爆款选题",t:"10min"},
+       {n:"下周计划与必须确认事项",t:"8min"}]},
 
      {topic:"【1】P0 · 大会流量沉淀成 SOP，而不是一次性热闹",owner:"侯明真",
-       summary:"上次白板已经判断“要把大会算法流量牢牢攥在手里”。会后聊天继续围绕 SuperAI、Google Singapore、AGI Villa、非凡产研、VIP dinner 发图/发文/转推推进。下次会议应该汇报的不是散点发布，而是：哪些已发布、哪些带来了互动、哪些能沉淀成重要活动发布 SOP。",
+       summary:"上次白板已经判断“要把大会算法流量牢牢攥在手里”。会后继续围绕 SuperAI、Google Singapore、AGI Villa、非凡产研、VIP dinner 发图/发文/转推推进。本次会议要看这些动作是否已经沉淀成重要活动发布 SOP，而不是继续散点汇报。",
        sub:[
-         {h:"已发生/已推进",summary:"SuperAI 一周亲历手记已多轮迭代到 v4；VIP dinner / The Signal 相关视频与推文已形成多版素材；Google Singapore 和 AGI Villa 图片/资料已陆续补齐。"},
-         {h:"待确认",summary:"VIP dinner 深推是否已发；SuperAI 大会深度总结是否已定稿；Google / AGI Villa 官方高清照片是否补齐；各平台是否都已挂链接。"}],
+         {h:"已发生/已推进",summary:"SuperAI 一周亲历手记已迭代到 v4；VIP dinner / The Signal 相关视频与推文形成多版素材；Google Singapore 和 AGI Villa 照片/资料已补齐一批；客户已经明确希望未来类似大会都不要放过。"},
+         {h:"待确认",summary:"VIP dinner 深推是否已发；SuperAI 大会深度总结是否最终定稿；Google / AGI Villa 官方高清照片是否补齐；各平台链接和数据是否挂回白板。"}],
        groups:[{h:"源链接 / 外部看板",items:[
          {label:"社媒飞书看板 ↗",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5"},
          {label:"COCO 官方推特 ↗",url:"https://x.com/CocoAIxyz"},
          {label:"Charlie 个人推特 ↗",url:"https://x.com/CharliehuAI"}]}],
-       note:"系统判断：此项继续 P0，会议里必须先讲。"},
+       note:"会议判断：此项仍是 P0，但汇报方式要从“做了什么”改成“哪些方法下次能复用”。"},
 
      {topic:"【2】发布闭环 · 已发内容必须带平台链接，不再只说“发了”",owner:"侯明真",
-       summary:"聊天记录里已经出现多条“已转发/已发布/下午再发/明天发”的动作。下次白板要把这些变成可检查的发布闭环：发布平台、链接、数据、下一步是否二次转推。",
+       summary:"今天聊天里已经出现“发出来了”“各平台都发了”“已转发”的动作。白板要把动作变成可检查闭环：平台、链接、数据、是否需要二次转推。",
        table:{cols:["内容/事件","平台","当前状态","会议中需确认"],rows:[
+         ["Tiger 视频 v3","视频号 / 小红书 / 朋友圈","已各平台发布","补链接 + 播放数据 + 朋友圈文案"],
+         ["VIDEO 5 / VIDEO 6 英文字幕句子","视频素材","客户已给修改句","确认是否已替换到成片"],
+         ["“昨日人才，今日废柴？”文章","公众号 / 微信生态","已发出","补链接 + 阅读数据"],
          ["VIP dinner / The Signal 深推","X / LinkedIn / 公众号","待确认是否已发布","补链接 + 阅读/浏览数据"],
          ["SuperAI 一周亲历手记","公众号 / X / LinkedIn","已多轮迭代","确认最终版 + 发布链接"],
-         ["Google Singapore 活动","X / LinkedIn / 公众号","照片与录音资料已补","确认官方高清照片与推文"],
-         ["AGI Villa / GO Summit","X / LinkedIn / 公众号","资料、照片、逐字稿已补","确认是否已发长文/推特 thread"],
          ["AXRAH x COCO Video 3","Twitter / LinkedIn","已给链接，已转推","补官方号/个人号链接与播放数据"]]},
-       note:"规则：没有链接就显示“待发布/待补链接”，不能在会里口头带过。"},
+       note:"规则：已发布必须挂链接和数据；没发就写“待发布”；没链接不要用口头状态替代。"},
 
      {topic:"【3】视频 / 案例条线 · 从“产出条数”改成“销售语料闭环”",owner:"周星星 / 李阳阳 / 侯明真",
-       summary:"最近聊天里视频素材很多：Paolo 直播切片、Tiger v3、AXRAH x COCO、中文/英文产品介绍片、知外文化使用案例脚本。下次会要按“可直接对外发 / 需客户确认 / 可做销售语料 / 待素材”四类汇报，避免变成素材流水账。",
+       summary:"视频素材很多，但会议里不能报流水账。本次要按“可直接对外发 / 需客户确认 / 可做销售语料 / 待素材”四类汇报，重点说明哪些视频已经能帮 COCO 对外讲清楚价值。",
        table:{cols:["素材/案例","当前判断","下一步"],rows:[
          ["Paolo 直播切片","已连续发布到视频号/小红书，形成日更节奏","补每条链接与播放数据"],
-         ["Tiger 视频 v3","已按客户意见去掉对方 logo、加 icoco.ai、调整字幕位置","确认最终是否可发"],
+         ["Tiger 视频 v3","已去对方 logo、加 icoco.ai、改字幕位置；今天已说各平台发布","补最终链接、播放数据和客户朋友圈文案"],
+         ["VIDEO 5 / VIDEO 6","客户指定补句：building on COCO / COCO makes possible","确认剪辑是否已替换并准备发布"],
          ["AXRAH x COCO Video 3","有视频与 transcript，Twitter/LinkedIn 链接已给","确认是否二次转推与沉淀案例页"],
          ["知外文化 / MCN 案例","客户明确要做成知外文化客户使用案例视频","梳理 UGC 资料、MCN 痛点与案例脚本"],
          ["中文/英文产品介绍片","客户持续看稿并反馈文案，不只是 marketing team","确认最终口径与卖点"]]},
        note:"会议口径：不要报“本周做了几条视频”，要报“哪条能帮客户销售”。"},
 
-     {topic:"【4】SEO / GA / SimilarWeb · 数据链路必须闭环",owner:"李家乐 / Owen / Tyler",
-       summary:"会后聊天里反复问到 SEO 到哪一步、GA 怎么接、SimilarWeb 为什么没数据。下一次会议必须把数据链路讲明白：Tyler 接入了什么、Owen 跟到哪里、GA 是否已经跑满、SimilarWeb 是否还没收录、预计多久能看到数据。",
+     {topic:"【4】内容机会 · 女性企业家 / 非技术创业者赛道",owner:"侯明真 / Charlie",
+       summary:"今天群聊里 Charlie 明确把 COCO 的客户画像往“女性企业家、重运营、midtech、非技术创业者”收拢。SuperAI 大会算法过去后，下一阶段不是继续等热点，而是回到阵地战，用女性成长、教育培训、流量、AI 赋能创业这些共鸣话题做爆款内容。",
+       table:{cols:["信号","客户原话或事实","白板判断"],rows:[
+         ["客户画像更清晰","过去聊了 20 个客户，18 个是女性","女性企业家赛道值得单独做内容池"],
+         ["需求不是懂技术","一行代码不写，自己搭一支 AI 团队","COCO 叙事应改为“非技术创业者也能搭 AI 团队”"],
+         ["能力放大","重运营、midtech，AI 成为她们能力放大的翅膀","从工具卖点转为创业者能力放大叙事"],
+         ["爆款话题方向","教育、培训、女性成长、流量、女性企业家关注的话题","形成下一批短视频/公众号/推文选题"],
+         ["素材需求","需要言书头像照或形象照用于录制","客户需要提供可授权素材，团队要列清单"]]},
+       note:"这是客户心理变化，不是普通内容点。下次会需要确认是否把它立为下一轮内容主线。"},
+
+     {topic:"【5】SEO / 官网架构 · 6/16 讨论会后的修复清单",owner:"李家乐 / 南雁 / Owen",
+       summary:"6/16 SEO 讨论会已经把问题从“SEO 到哪一步了”推进到具体技术清单：CSR 导致首次抓取信息不足，About 页标题与首页重复，Canonical 指向首页，Docs 子域内容模板化/低质量，404/死链影响抓取预算。下次会要过的是每项谁改、何时改、如何验证。",
        problems:{solved:[
-          {s:"已推进",name:"SEO 页面部署/提交",desc:"上次白板显示已有 1 个页面被 Google 索引，曝光与点击在提升。"},
-          {s:"已对接",name:"Tyler 账号/数据管理",desc:"聊天中已明确 GA、PostHog、日常数据管理在 Tyler 侧。"}
+          {s:"已完成",name:"SEO 讨论会已开",desc:"李家乐与南雁完成官网 SEO 架构问题对齐。"},
+          {s:"已拿到",name:"Docs 仓库地址",desc:"南雁提供 coco-materials 仓库，可按 PR 协助优化。"}
         ],
         todo:[
-          {s:"待确认",name:"GA 接入状态",desc:"是否已经登录、是否开始积累有效数据。",pri:"P0"},
-          {s:"待确认",name:"SimilarWeb 收录",desc:"当前 SimilarWeb 还没有收录 icoco/coco 数据，需说明原因和预期时间。",pri:"P1"},
-          {s:"待确认",name:"SEO 本周数据",desc:"曝光、点击、索引页面数必须给上期→本期对比。",pri:"P0"}]},
-       links:[{label:"GSC ↗",url:"https://search.google.com/search-console?utm_source=about-page&resource_id=sc-domain:icoco.ai"}]},
+          {s:"待修复",name:"About 标题与 Canonical",desc:"About 标题与首页区分，Canonical 指向当前 About URL。",pri:"P0"},
+          {s:"待评估",name:"CSR / SSG 静态输出",desc:"李家乐提供 MD 分析，南雁评估 Node.js / React 架构改造路径。",pri:"P0"},
+          {s:"待 PR",name:"Docs 子域内容质量提升",desc:"模板化、内容单薄页面由李家乐团队补内容并提 PR。",pri:"P1"},
+          {s:"待清理",name:"404 / 死链 / 异常索引",desc:"双方共同排查无效链接，减少抓取预算浪费。",pri:"P1"},
+          {s:"后续项",name:"中英文独立 URL",desc:"考虑 /en/about 与 /zh/about，避免 CSR 切换影响语言识别。",pri:"P2"}]},
+       links:[
+         {label:"Docs 仓库 ↗",url:"https://github.com/coco-xyz/coco-materials"},
+         {label:"SEO 会议录音 ↗",url:"https://meeting.tencent.com/crm/Nba5vD7Dff"},
+         {label:"GSC ↗",url:"https://search.google.com/search-console?utm_source=about-page&resource_id=sc-domain:icoco.ai"}]},
 
-     {topic:"【5】关键确认事项",owner:"侯明真",
+     {topic:"【6】关键确认事项",owner:"侯明真",
        summary:"本节只放会议中需要直接确认的问题，避免会后再反复追问。",
        table:{cols:["问题/要求","当前状态","会议中需给出的答案"],rows:[
-         ["SEO 到哪一步了？","待更新","GA / GSC / SimilarWeb 当前状态 + 两天后数据预期"],
-         ["Google / AGI Villa 照片有没有？","进行中","官方高清照片、Google Photos 链接、可发布图集"],
-         ["知外文化客户案例怎么做？","进行中","MCN 痛点、UGC 资料、脚本结构、是否需要客户补素材"],
-         ["6.30 崔牛会新加坡怎么发？","待排期","活动推文节奏、tag 对象、公众号长文是否做"],
-         ["军火库内容体系怎么补？","待拆解","百问百答、行业名词、回访话术、转化逻辑、课程现场片段等模块"]]}},
+         ["About 标题与 Canonical 何时修？","待修复","负责人、上线时间、验证方式"],
+         ["CSR / SSG 可行性谁评估？","待评估","南雁技术侧反馈时间 + 李家乐 MD 文档是否已给"],
+         ["Docs PR 先改哪些页面？","待 PR","仓库权限、第一批页面、谁提交 PR"],
+         ["Tiger、VIDEO 5/6、文章的链接和数据是否补齐？","待补链接","平台链接、播放/阅读数据、是否需要二次转推"],
+         ["女性企业家 / 非技术创业者是否作为下一轮内容主线？","待确认","是否立项、谁写选题、需要客户补哪些素材"],
+         ["知外文化客户案例怎么做？","进行中","MCN 痛点、UGC 资料、脚本结构、是否需要客户补素材"]]}},
 
-     {topic:"【6】下周计划",owner:"",
+     {topic:"【7】下周计划",owner:"",
        summary:"下周计划由本次会议确认事项和未闭环红灯生成，会议中确认后进入执行。",
        table:{cols:["优先级","计划","判断依据"],rows:[
-         ["P0","完成并发布 VIP dinner / The Signal 深推","上次白板 P0 + 会后多轮素材确认"],
-         ["P0","补齐 SEO 数据链路：GA、GSC、SimilarWeb 当前状态","客户连续追问 SEO 进展"],
-         ["P1","把视频条线整理成“可发/待确认/销售语料/待素材”四象限","视频素材太多，会议需要抓重点"],
-         ["P1","沉淀重要活动发布 SOP","SuperAI / Google Cloud 流量证明此路径有效"],
+         ["P0","修 About 标题与 Canonical，并给验证截图","6/16 SEO 会已确认这是最快可修项"],
+         ["P0","完成 CSR/SSG 静态输出可行性评估","首次抓取信息不足是当前 SEO 主卡点"],
+         ["P1","提交 Docs 仓库内容质量 PR","客户已给 GitHub 仓库，Docs 低质内容影响收录"],
+         ["P1","补齐 Tiger、VIDEO 5/6、文章的平台链接和数据","已发布动作必须回到白板闭环"],
+         ["P1","产出女性企业家/非技术创业者爆款选题池","客户心理变化已明确，适合作为下一轮内容主线"],
          ["P2","整理知外文化/MCN 案例包","客户明确要求继续做客户案例内容"]]} }
    ],
    blockers:[
-     {item:"SEO / GA / SimilarWeb 数据链路还没讲成闭环", need:"会议中给出当前状态、负责人、预计看到数据的时间", client:false, owner:"李家乐"},
-     {item:"发布内容有动作但链接和数据没有统一挂回白板", need:"所有已发内容补平台链接和浏览/阅读数据", client:false, owner:"侯明真"},
+     {item:"6/16 SEO 修复项还没有落到负责人和时间", need:"About/Canonical、CSR/SSG、Docs PR、404 每项给负责人和截止时间", client:false, owner:"李家乐"},
+     {item:"已发布内容缺链接和数据", need:"Tiger、VIDEO 5/6、“昨日人才，今日废柴？”补平台链接、播放/阅读数据", client:false, owner:"侯明真"},
+     {item:"女性企业家内容方向尚未正式立项", need:"确认是否作为下一轮爆款内容主线，并列出第一批选题", client:false, owner:"侯明真"},
      {item:"视频素材多但缺少销售语料分类", need:"按可发、待确认、销售语料、待素材四类整理", client:false, owner:"周星星"}
    ],
    requests:[
-     {date:"06-18",source:"会议白板",quote:"根据上次会议和会后群聊生成本次会议需要过的事项。",status:"处理中",owner:"侯明真",resp:"补齐链接、数据和最终口径。"}
+     {date:"06-18",source:"会议白板",quote:"根据 6/16 SEO 会议和当天群聊生成本次会议要过的事项。",status:"处理中",owner:"侯明真",resp:"补齐链接、数据、SEO 修复责任人和内容主线判断。"}
    ],
-   psych:"客户现在不是单纯要“看到团队做了很多”，而是要看到一套能持续产出增长证据的客户工作系统：活动流量能复用、内容能转销售、SEO 数据能证明长期增长。",
+   psych:"客户心理正在从“看团队做了多少”转到“能否形成可证明的增长系统”：SEO 要有可执行修复清单，发布要有链接和数据，内容要抓住女性企业家 / 非技术创业者这类更容易共鸣的人群。",
    psychStages:[
-     {t:"从“做了多少”转向“能否证明增长”",d:"发布动作要回到链接、浏览、阅读、转推和数据变化，不能只说完成了。"},
-     {t:"从“素材交付”转向“销售语料”",d:"视频、案例、推文要能被客户拿去对外讲，成为销售、融资、活动复用的话术。"},
-     {t:"从“单次活动热闹”转向“可复制 SOP”",d:"SuperAI、Google、AGI Villa、VIP dinner 要沉淀成下一次活动可照着跑的方法。"}
+     {t:"从“问 SEO 进展”转向“要技术闭环”",d:"客户不再满足于看到页面数量，而是要求 About、Canonical、CSR/SSG、Docs、404 这些问题逐项落地。"},
+     {t:"从“活动算法红利”转向“阵地战内容”",d:"SuperAI 的短期算法过去后，客户开始要稳定爆款内容与长期阵地。"},
+     {t:"从“AI 工具卖点”转向“非技术创业者能力放大”",d:"女性企业家、重运营、midtech、不写代码也能搭 AI 团队，成为更强的叙事入口。"},
+     {t:"从“视频发布”转向“故事与转发语料”",d:"Tiger、Paolo、AXRAH、产品介绍片都要能被客户拿去对外讲，而不是只算剪辑完成。"}
    ],
    deliveries:{
-     内容:[ {title:"VIP dinner / SuperAI / Google Cloud / AGI Villa 传播链路待补链接",owner:"侯明真",date:"06-18",pub:{plat:"待补链接",url:""}} ],
-     视频剪辑:[ {title:"Paolo、Tiger、AXRAH、知外文化案例视频待按状态归类",owner:"周星星",date:"06-18"} ],
-     SEO:[ {title:"GA / SimilarWeb / GSC 当前状态待形成一页说明",owner:"李家乐",date:"06-18"} ]
+     内容:[ {title:"“昨日人才，今日废柴？”文章已发出，待补链接和阅读数据",owner:"侯明真",date:"06-16",pub:{plat:"待补链接",url:""}},
+            {title:"女性企业家 / 非技术创业者爆款内容方向已从群聊中提炼",owner:"侯明真",date:"06-16"} ],
+     视频剪辑:[ {title:"Tiger 视频 v3 已各平台发布，待补链接和播放数据",owner:"侯明真 / 周星星",date:"06-16"},
+                {title:"VIDEO 5/6 英文字幕补句已确认，待替换到成片",owner:"侯明真",date:"06-16"} ],
+     SEO:[ {title:"6/16 SEO 讨论会完成，形成 About / Canonical / CSR-SSG / Docs / 404 修复清单",owner:"李家乐",date:"06-16",pub:{plat:"会议录音",url:"https://meeting.tencent.com/crm/Nba5vD7Dff"}},
+            {title:"Docs 仓库已拿到，可进入 PR 协作",owner:"南雁 / 李家乐",date:"06-16",pub:{plat:"GitHub",url:"https://github.com/coco-xyz/coco-materials"}} ]
    },
    metrics:[
      {name:"大会流量峰值",prev:6000,cur:6900,series:[1000,1700,5000,6000,6900],src:"https://x.com/CharliehuAI/status/2063568159144354285?s=20",srclabel:"推特 ↗"},
-     {name:"SEO 已索引页面",prev:0,cur:1,series:[0,0,0,1],src:"https://search.google.com/search-console?utm_source=about-page&resource_id=sc-domain:icoco.ai",srclabel:"GSC ↗"}
+     {name:"SEO 已索引页面",prev:0,cur:1,series:[0,0,0,1],src:"https://search.google.com/search-console?utm_source=about-page&resource_id=sc-domain:icoco.ai",srclabel:"GSC ↗"},
+     {name:"已明确 SEO 修复项",prev:3,cur:5,series:[1,2,3,5],src:"https://meeting.tencent.com/crm/Nba5vD7Dff",srclabel:"会议录音 ↗"}
    ],
-   mustAsk:["VIP dinner 深推是否已经发？链接和数据是多少？","GA 是否已经接入并开始积累数据？SimilarWeb 预计何时有数据？","Google Singapore / AGI Villa 官方照片是否补齐？","知外文化/MCN 案例还缺哪些 UGC 资料？"],
-   nextWeek:["发布 VIP dinner 深推","补齐 SEO 数据链路说明","把视频素材改成销售语料清单","沉淀重要活动发布 SOP"],
-   agenda:["本周重点","发布闭环","视频与案例闭环","SEO/GA 数据链路","关键确认事项","下周计划"],
-   shots:["最近微信群聊摘要","6/11 白板","飞书社媒看板","Notion 视频看板","SEO/GSC 截图"] },
+   mustAsk:["About 标题与 Canonical 预计哪天修？","CSR/SSG 静态输出可行性谁评估、何时反馈？","Docs 仓库 PR 由谁提，第一批先改哪些模板化页面？","女性企业家 / 非技术创业者赛道是否作为下一轮爆款内容主线？","Tiger、VIDEO 5/6、“昨日人才，今日废柴？”的链接和数据是否补齐？"],
+   nextWeek:["修 About 标题与 Canonical","完成 CSR/SSG 方案评估","提交 Docs 内容质量 PR","补齐 Tiger、VIDEO 5/6、文章的平台链接和数据","产出女性企业家 / 非技术创业者爆款选题池"],
+   agenda:["本周重点","SEO 官网架构修复","发布闭环","视频与案例闭环","女性企业家内容主线","关键确认事项","下周计划"],
+   shots:["6/16 SEO 讨论会逐字稿","6/16 AI 分析","当天微信群聊摘要","飞书社媒看板","Notion 视频看板","SEO/GSC 截图"] },
 
  { date:"2026-06-11", title:"周会 · SuperAI / Google Cloud 复盘", badge:"Coco.excalidraw 原白板",
    conclusion:"6/11 白板重点：P0 是 VIP dinner 活动深度推文；社媒靠 SuperAI / Google Cloud 大会算法出现流量突破，下一步要把活动流量沉淀成 SOP；视频条线从机械交付升级为 COCO 对外展示的语料/案例；SEO 已有 1 页被 Google 索引，曝光和点击都在提升。",
