@@ -77,7 +77,7 @@ table.t tr:hover td{background:#FBF9F4}
 .q{font-family:var(--serif);font-size:13.5px;color:#3a352c}
 
 /* 白板：当前态 + 周时间线 + 选中周 */
-.boardlayout{display:grid;grid-template-columns:176px 1fr;gap:18px;align-items:start}
+.boardlayout{display:grid;grid-template-columns:160px 1fr;gap:18px;align-items:start}
 .wktl{border-left:1px solid var(--line);position:sticky;top:18px;max-height:calc(100vh - 36px);overflow:auto;padding-right:4px}
 .wktl .wk{position:relative;padding:8px 8px 8px 14px;cursor:pointer;border-bottom:1px solid var(--line)}
 .wktl .wk:hover{background:#FBF9F4}
@@ -95,13 +95,24 @@ table.t tr:hover td{background:#FBF9F4}
 .wktl .wk.draft.on .d::after{color:#F6F3EC;border-color:#F6F3EC}
 .wkpanel{min-width:0}
 .wkhead{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.wkhead .wd{font-family:var(--serif);font-size:24px;font-weight:700}
+.wkhead .wd{font-family:var(--serif);font-size:22px;font-weight:700}
 
 .blocker{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:11px 15px;margin-bottom:7px}
 .blocker.client{border-left-color:var(--blue)}
 .blocker .bi{font-size:13.5px;margin-bottom:4px}
 .blocker .need{font-size:12px;font-weight:600;color:var(--amber)}.blocker.client .need{color:var(--blue)}
-.psych{background:var(--amber-bg);border:1px solid #EADFC2;padding:11px 15px;font-size:13.5px;border-radius:4px}
+.psychcard{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--red);border-radius:8px;padding:14px 16px;margin:0 0 16px}
+.psychhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:7px}
+.psychhead span{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--red)}
+.psychhead small{font-size:12px;color:var(--faint)}
+.psychsummary{font-size:15px;line-height:1.75;margin-bottom:10px}
+.psygrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.psyitem{background:#FBF9F4;border:1px solid var(--line);border-radius:6px;padding:9px 11px}
+.psyitem .pyt{font-weight:700;font-size:13.5px;line-height:1.45}
+.psyitem .pyd{font-size:12px;color:var(--sub);line-height:1.55;margin-top:4px}
+.source-note{margin:-4px 0 14px;border:1px solid var(--line);background:#FBF9F4;border-radius:6px;padding:8px 11px;font-size:12px;color:var(--sub)}
+.source-note summary{cursor:pointer;color:var(--amber);font-weight:600}
+.source-note div{margin-top:6px;line-height:1.6}
 .linegroup{margin-bottom:14px}
 .linegroup .lh{font-family:var(--serif);font-size:13.5px;font-weight:700;padding:5px 0;display:flex;gap:8px;align-items:center}
 .linegroup .lh .pri{font-size:11px;color:var(--faint);font-weight:400}
@@ -180,15 +191,15 @@ table.t tr:hover td{background:#FBF9F4}
 .aihint{font-size:12px;color:var(--blue);margin-top:8px}
 
 /* 白板话题卡（照真实白板：红标题 + 负责人 + 总结 + 实物） */
-.wcard{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin-bottom:14px}
-.wcard-h{display:flex;align-items:baseline;gap:10px;margin-bottom:11px;border-bottom:1px solid var(--line);padding-bottom:8px}
-.wcard-h .ct{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--red)}
+.wcard{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:12px}
+.wcard-h{display:flex;align-items:baseline;gap:10px;margin-bottom:9px;border-bottom:1px solid var(--line);padding-bottom:7px}
+.wcard-h .ct{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--red)}
 .wcard-h .co{margin-left:auto;font-size:12px;color:var(--sub);white-space:nowrap}
 .wcard-h .co b{color:var(--ink)}
-.wsum{font-size:16px;margin-bottom:10px;line-height:1.75}
+.wsum{font-size:15px;margin-bottom:9px;line-height:1.72}
 .wsub{font-family:var(--serif);font-size:13.5px;font-weight:700;color:var(--red);margin:12px 0 6px}
 .agd{list-style:none}
-.agd li{padding:8px 0;font-size:16px;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:10px}
+.agd li{padding:7px 0;font-size:15px;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:10px}
 .agd li .anum{font-family:var(--serif);font-weight:700;color:var(--faint);margin-right:8px}
 .agd li .at{color:var(--faint);font-size:11px;white-space:nowrap}
 .smatrix{width:100%;border-collapse:collapse;font-size:12px;overflow-x:auto;display:block}
@@ -210,7 +221,7 @@ table.t tr:hover td{background:#FBF9F4}
 
 @media(max-width:900px){
   .side{display:none}.main{padding:18px 14px}
-  .boardlayout{grid-template-columns:1fr}.metricgrid,.platgrid,.cgrid{grid-template-columns:1fr}.shotwall{grid-template-columns:repeat(2,1fr)}
+  .boardlayout{grid-template-columns:1fr}.metricgrid,.platgrid,.cgrid,.psygrid{grid-template-columns:1fr}.shotwall{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
@@ -220,7 +231,7 @@ table.t tr:hover td{background:#FBF9F4}
 /* ================================================================
    DB —— Codex 只改此对象，不碰渲染。真实数据来源见开发文档。
    weeks 倒序（最新在前）；每周 = 一次会议 = 一张可独立查看的白板。
-   白板由会议分析 + 当周登记数据自动生成，负责人只改 conclusion 几句。
+   白板由会议分析 + 当周登记数据生成，负责人只改 conclusion 几句。
    下方含 Coco.excalidraw 全量白板时间线；最新会议列为 2026-06-11。
 ================================================================ */
 const DB={
@@ -247,9 +258,9 @@ current:{
 
 /* 周时间线（最新在前）。每周一张白板。 */
 weeks:[
- { date:"2026-06-18", title:"下次会议 · COCO 周会白板", badge:"自动生成 · 负责人确认",
+ { date:"2026-06-18", title:"下次会议 · COCO 周会白板", badge:"待确认",
    draft:true,
-   sourceLogic:"生成依据：上次会议白板、会后微信群聊、飞书社媒看板、Notion 视频/SEO 表、已发布链接与未闭环事项。",
+   sourceLogic:"上次会议白板、会后微信群聊、飞书社媒看板、Notion 视频/SEO 表、已发布链接与未闭环事项。",
    conclusion:"本次会议主线先过三件事：1）VIP dinner / SuperAI / Google Cloud 这波大会流量是否已经沉淀成可复用 SOP；2）视频和案例不再按“做了几条”汇报，而按“哪些已经可发、哪些需要客户确认、哪些能做成销售语料”闭环；3）SEO/GA/SimilarWeb 数据链路必须讲清楚当前接到哪一步，否则老板看不到持续增长证据。",
    cards:[
      {topic:"本次会议议程",owner:"侯明真",type:"agenda",items:[
@@ -330,6 +341,11 @@ weeks:[
      {date:"06-18",source:"会议白板",quote:"根据上次会议和会后群聊生成本次会议需要过的事项。",status:"处理中",owner:"侯明真",resp:"补齐链接、数据和最终口径。"}
    ],
    psych:"客户现在不是单纯要“看到团队做了很多”，而是要看到一套能持续产出增长证据的客户工作系统：活动流量能复用、内容能转销售、SEO 数据能证明长期增长。",
+   psychStages:[
+     {t:"从“做了多少”转向“能否证明增长”",d:"发布动作要回到链接、浏览、阅读、转推和数据变化，不能只说完成了。"},
+     {t:"从“素材交付”转向“销售语料”",d:"视频、案例、推文要能被客户拿去对外讲，成为销售、融资、活动复用的话术。"},
+     {t:"从“单次活动热闹”转向“可复制 SOP”",d:"SuperAI、Google、AGI Villa、VIP dinner 要沉淀成下一次活动可照着跑的方法。"}
+   ],
    deliveries:{
      内容:[ {title:"VIP dinner / SuperAI / Google Cloud / AGI Villa 传播链路待补链接",owner:"侯明真",date:"06-18",pub:{plat:"待补链接",url:""}} ],
      视频剪辑:[ {title:"Paolo、Tiger、AXRAH、知外文化案例视频待按状态归类",owner:"周星星",date:"06-18"} ],
@@ -416,6 +432,11 @@ weeks:[
      {date:"06-11",source:"白板",quote:"视频不是机械交付，而是提供给 COCO 对外展示的语料/案例。",status:"已回应",owner:"周星星",resp:"客户案例视频分 Tiger 加工与团队自录两条线推进。"}
    ],
    psych:"客户关注点从“有没有做内容”升级为“能不能抓住大会算法、沉淀 SOP、把 COCO 包装成可传播的品牌与创始人 IP”。会议要先讲主线，再讲证据。",
+   psychStages:[
+     {t:"从“内容有没有发”转向“流量能不能复用”",d:"SuperAI / Google Cloud 的曝光证明大会算法有效，客户关心下一次能否复制。"},
+     {t:"从“视频完成度”转向“对外展示价值”",d:"客户不只看剪辑是否完成，而是看这条视频能不能代表 COCO 对外讲清楚案例。"},
+     {t:"从“SEO 有没有做”转向“数据是否跑起来”",d:"索引、曝光、点击必须能形成连续对比，才能支撑长期增长判断。"}
+   ],
    deliveries:{
      内容:[ {title:"SuperAI / Google Cloud 活动数据复盘与传播 SOP 判断",owner:"侯明真",date:"06-11",pub:{plat:"飞书",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5"}},
             {title:"VIP dinner 活动深度推文列为 P0",owner:"侯明真",date:"06-11",pub:{plat:"待发布",url:""}} ],
@@ -433,7 +454,7 @@ weeks:[
    agenda:["待执行：VIP dinner 深度推文","社媒数据看板：SuperAI & Google Cloud 复盘","demo/usecase/基础视频","SEO 进展","COCO Talk EP6 推荐名单","Dan Martell 深度报告"],
    shots:["Coco.excalidraw 6/11 会议列","SuperAI 推特数据截图","Google Cloud Thread 数据截图","SEO 问题汇总截图","GSC 数据看板","视频 Notion 看板"] },
 
- { date:"2026-06-05", title:"Will × COCO MKT 周会", badge:"自动生成 · 待确认",
+ { date:"2026-06-05", title:"Will × COCO MKT 周会", badge:"待确认",
    conclusion:"上周三大 SEO 问题（指向 / 渲染 / 换域名）已全部解决并建立每周进展同步，已交付 20+ 页面；本周两个重点是视频条线和 SuperAI 大会蹭流量；最大卡点仍是 demo case 录屏素材未到位。",
    cards:[
      {topic:"本次会议议程",owner:"侯明真",type:"agenda",items:[
@@ -705,22 +726,27 @@ function boardView(){
    const red=x.blockers?x.blockers.length:0;
    return `<div class="wk ${i===selWeek?"on":""} ${x.draft?"draft":""}" data-wk="${i}"><div class="d">${esc(x.date.slice(5))}${red?`<span class="reddot">● ${red}</span>`:""}</div><div class="t">${esc(x.title)}</div><div class="one">${esc(x.conclusion||"")}</div></div>`;
  }).join("");
- const panel = w.stub ? `<div class="wkhead"><span class="wd">${esc(w.date)}</span><span class="tag lo">${esc(w.title)}</span></div><div class="oneliner empty">${esc(w.conclusion)}</div><div class="small muted">这一周的白板会由该次会议分析 + 当周登记数据自动生成，目前为占位。</div>` : weekPanel(w);
+ const panel = w.stub ? `<div class="wkhead"><span class="wd">${esc(w.date)}</span><span class="tag lo">${esc(w.title)}</span></div><div class="oneliner empty">${esc(w.conclusion)}</div><div class="small muted">这一周的白板会由该次会议分析 + 当周登记数据生成，目前为占位。</div>` : weekPanel(w);
  return topbar(`<b>COCO</b> · 白板`)+`
   <h2 class="pagetitle">COCO 白板</h2>
-  <div class="pagedesc">默认打开下一次会议白板：系统根据上次会议、会后群聊、外部看板和已发布链接生成会议要过的重点、卡点、确认事项和下周计划。组长只需要校准内容，不需要从零搭白板；历史会议保留在左侧时间线。</div>
+  <div class="pagedesc">默认打开下一次会议白板：基于上次会议、会后群聊、外部看板和已发布链接，先把本次会议要过的重点、卡点、确认事项和下周计划排好。组长只需要校准内容，不需要从零搭白板；历史会议保留在左侧时间线。</div>
   <div class="kpis">${kpis}</div>
   <div class="sec" style="margin-bottom:18px"><div class="shead"><h3>${esc(c.stage.label)}</h3><span class="hint"><span class="linkchip" data-go="gantt">看完整甘特 →</span></span></div>${stg}</div>
   <div class="boardlayout"><div class="wktl">${tl}</div><div class="wkpanel">${panel}</div></div>`;
+}
+function psychBlock(w){
+ if(!w.psych && !(w.psychStages&&w.psychStages.length))return "";
+ const stages=(w.psychStages||[]).map(p=>`<div class="psyitem"><div class="pyt">${esc(p.t)}</div><div class="pyd">${esc(p.d)}</div></div>`).join("");
+ return `<div class="psychcard"><div class="psychhead"><span>客户心理变化</span><small>从会议与群聊提炼</small></div>${w.psych?`<div class="psychsummary">${esc(w.psych)}</div>`:""}${stages?`<div class="psygrid">${stages}</div>`:""}</div>`;
 }
 function weekPanel(w){
  // 真实白板格式：本周重点 + 会议议程 + 一张张话题卡（带负责人 + 总结 + 实物）
  if(w.cards){
    const head=`<div class="wkhead"><span class="wd">${esc(w.date)}</span><span class="tag lo">${esc(w.title)}</span>${w.badge?`<span class="tag auto">${esc(w.badge)}</span>`:""}</div>`;
    const concl=`<div class="oneliner">${esc(w.conclusion)}<div class="who">本周重点 · 会议判断</div></div>`;
-   const src=w.sourceLogic?`<div class="small" style="margin:-10px 0 16px;padding:8px 12px;background:var(--amber-bg);border:1px solid #EADFC2;color:var(--amber)">${esc(w.sourceLogic)}</div>`:"";
+   const src=w.sourceLogic?`<details class="source-note"><summary>展开生成依据</summary><div>${esc(w.sourceLogic)}</div></details>`:"";
    const cards=w.cards.map(wcard).join("");
-   return head+concl+src+cards;
+   return head+concl+psychBlock(w)+src+cards;
  }
  const blk=w.blockers||[];
  const blkH=blk.length?blk.map(x=>`<div class="blocker ${x.client?"client":""}"><div class="bi">${esc(x.item)}</div><div class="need">${x.client?"待贵方配合":"需"}：${esc(x.need)}</div>${x.owner?`<div class="small" style="margin-top:3px">跟进：${who(x.owner)}</div>`:""}</div>`).join(""):`<div class="small muted">本周无待配合事项</div>`;
@@ -735,7 +761,7 @@ function weekPanel(w){
   <div class="oneliner">${esc(w.conclusion)}<div class="who">本周重点 · 负责人确认</div></div>
   <div class="sec"><div class="shead"><h3>卡点 / 待对齐 / 待贵方配合</h3></div>${blkH}</div>
   ${reqH?`<div class="sec"><div class="shead"><h3>关键确认事项</h3><span class="hint">只记未闭环</span></div><table class="t"><thead><tr><th>日期</th><th>状态</th><th>事项</th><th>负责人</th><th>我们的回应</th></tr></thead><tbody>${reqH}</tbody></table></div>`:""}
-  ${w.psych?`<div class="sec"><div class="shead"><h3>客户动向</h3><span class="hint">关注点变化，不是复述聊天</span></div><div class="psych">${esc(w.psych)}</div></div>`:""}
+  ${psychBlock(w)}
   <div class="sec"><div class="shead"><h3>本周交付</h3><span class="hint">已发布挂平台链接，零交付标红</span></div>${deliv}</div>
   ${mets?`<div class="sec"><div class="shead"><h3>本周数据</h3><span class="hint">带对比，可点开来源</span></div><div class="metricgrid">${mets}</div></div>`:""}
   ${ask?`<div class="sec"><div class="shead"><h3>下次会必须问清楚</h3></div><ul class="ask">${ask}</ul></div>`:""}
