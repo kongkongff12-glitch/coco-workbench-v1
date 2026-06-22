@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>客户工作台 · 郎瀚威团队</title>
+<title>COCO 客户工作台</title>
 <style>
 /* 设计系统与 BD 工作台一致（姊妹站）。Codex 只改最下方 DB，不动渲染。 */
 :root{
@@ -12,11 +12,11 @@
   --green:#2E5E4E; --green-bg:#EAF1ED; --amber:#9A6B1F; --amber-bg:#F6EEDC;
   --gray:#8A8276; --gray-bg:#EFEBE2; --red:#B5432E; --red-bg:#F8E9E5;
   --blue:#3E5A7E; --blue-bg:#E8EEF5;
-  --serif:"Noto Serif SC","Songti SC",serif;
-  --sans:-apple-system,"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;
+  --serif:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.65}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55}
 a{color:inherit}
 .app{display:flex;min-height:100vh}
 .side{width:236px;flex-shrink:0;border-right:1px solid var(--line-dark);padding:26px 0 40px;position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -35,8 +35,8 @@ a{color:inherit}
 .topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:4px}
 .crumb{font-size:12px;color:var(--faint)}
 .crumb b{color:var(--sub);font-weight:500}
-h2.pagetitle{font-family:var(--serif);font-size:34px;font-weight:700;letter-spacing:0;margin:6px 0 4px}
-.pagedesc{color:var(--sub);font-size:16px;margin-bottom:20px;max-width:980px}
+h2.pagetitle{font-family:var(--serif);font-size:32px;font-weight:800;letter-spacing:0;margin:6px 0 4px}
+.pagedesc{color:var(--sub);font-size:14px;margin-bottom:18px;max-width:900px}
 
 .kpis{display:flex;gap:14px;margin-bottom:18px;flex-wrap:wrap}
 .kpi{background:var(--panel);border:1px solid var(--line);padding:13px 18px;min-width:120px;flex:1}
@@ -49,7 +49,7 @@ h2.pagetitle{font-family:var(--serif);font-size:34px;font-weight:700;letter-spac
 .stg:last-child{border-right:none}.stg.done{background:var(--green-bg);color:var(--green)}
 .stg.now{background:var(--ink);color:#F6F3EC;font-weight:600}.stg .d{display:block;font-size:10px;opacity:.82;margin-top:2px}
 
-.oneliner{border-left:4px solid var(--ink);background:var(--panel);padding:16px 20px;margin-bottom:20px;font-family:var(--serif);font-size:22px;line-height:1.65}
+.oneliner{border-left:5px solid var(--red);background:var(--panel);padding:14px 18px;margin-bottom:18px;font-family:var(--sans);font-size:20px;font-weight:700;line-height:1.45}
 .oneliner.empty{border-left-color:var(--faint);color:var(--faint);font-family:var(--sans);font-size:13.5px}
 .oneliner .who{font-family:var(--sans);font-size:11px;color:var(--faint);margin-top:6px}
 
@@ -110,6 +110,26 @@ table.t tr:hover td{background:#FBF9F4}
 .psyitem{background:#FBF9F4;border:1px solid var(--line);border-radius:6px;padding:9px 11px}
 .psyitem .pyt{font-weight:700;font-size:13.5px;line-height:1.45}
 .psyitem .pyd{font-size:12px;color:var(--sub);line-height:1.55;margin-top:4px}
+.mindhero{background:var(--panel);border:2px solid var(--ink);border-radius:14px;padding:18px 20px;margin-bottom:16px}
+.mindhero h3{font-size:24px;color:var(--red);font-weight:900;margin-bottom:8px}
+.mindhero p{font-size:16px;font-weight:700;line-height:1.6}
+.mindtimeline{display:grid;gap:12px;margin-bottom:18px}
+.mindstage{background:var(--panel);border:1px solid var(--line);border-left:6px solid var(--red);border-radius:10px;padding:13px 15px;display:grid;grid-template-columns:88px 1fr;gap:14px}
+.mindstage .md{font-size:20px;font-weight:900;color:var(--ink);line-height:1}
+.mindstage .mt{font-size:18px;font-weight:900;color:var(--red);margin-bottom:5px}
+.mindstage .ms{font-size:14px;line-height:1.55;color:var(--ink);font-weight:700}
+.mindstage .mr{font-size:13px;line-height:1.55;color:var(--sub);margin-top:6px}
+.mindsource{display:flex;flex-wrap:wrap;gap:6px;margin:7px 0}
+.mindsource span{font-size:11px;font-weight:900;color:var(--blue);background:var(--blue-bg);border-radius:999px;padding:2px 8px}
+.minddetail{margin-top:8px;background:#FBF9F4;border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+.minddetail .dl{font-size:12px;color:var(--red);font-weight:900;margin-bottom:4px}
+.minddetail .dv{font-size:13px;color:var(--ink);line-height:1.55;font-weight:700}
+.mindgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mindbox{background:var(--panel);border:2px solid var(--ink);border-radius:14px;padding:15px 17px}
+.mindbox h3{font-size:20px;color:var(--red);font-weight:900;margin-bottom:8px}
+.mindbox ul{list-style:none}
+.mindbox li{padding:7px 0;border-bottom:1px dashed var(--line);font-size:14px;line-height:1.5;font-weight:700}
+.mindbox li:last-child{border-bottom:none}
 .source-note{margin:-4px 0 14px;border:1px solid var(--line);background:#FBF9F4;border-radius:6px;padding:8px 11px;font-size:12px;color:var(--sub)}
 .source-note summary{cursor:pointer;color:var(--amber);font-weight:600}
 .source-note div{margin-top:6px;line-height:1.6}
@@ -145,6 +165,36 @@ table.t tr:hover td{background:#FBF9F4}
 .ccard .cmeta{display:flex;gap:12px;font-size:11px;color:var(--faint);align-items:center}
 .ccard .rf{color:var(--red);font-weight:600}
 
+/* 对接负责人总览 */
+.contact-page-title{font-size:18px;font-weight:900;margin-bottom:10px;color:var(--ink)}
+.contact-page-title small{font-size:12px;color:var(--sub);font-weight:700;margin-left:8px}
+.contact-hero{background:var(--panel);border:1px solid var(--line-dark);border-top:2px solid var(--ink);padding:24px 28px;margin-bottom:20px;display:grid;grid-template-columns:64px 1fr auto;align-items:center;gap:18px}
+.contact-avatar{width:42px;height:42px;border-radius:50%;background:var(--green-bg);border:2px solid #fff;box-shadow:0 0 0 1px var(--line-dark);display:inline-flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:900;color:var(--green);flex-shrink:0;background-size:cover;background-position:center}
+.contact-avatar.has-photo{color:transparent}
+.contact-avatar.lg{width:58px;height:58px;font-size:22px}
+.contact-hero h3{font-family:var(--serif);font-size:28px;line-height:1.15;margin-bottom:8px}
+.contact-hero .desc{font-size:14px;color:var(--sub);line-height:1.65}
+.contact-hero .lead-name{font-size:15px;font-weight:900;margin-top:3px}
+.contact-tag{display:inline-block;font-size:12px;color:#fff;background:var(--ink);border-radius:999px;padding:3px 10px;font-weight:900}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:20px}
+.team-card{background:#F6F2E9;border:1px solid var(--line-dark);padding:20px 18px;min-height:360px;display:flex;flex-direction:column}
+.team-card h3{font-family:var(--serif);font-size:20px;margin-bottom:12px}
+.team-card .team-tip{font-size:14px;color:var(--sub);line-height:1.75;margin-bottom:auto}
+.member-list{display:flex;flex-direction:column;gap:11px;border-top:1px dashed var(--line-dark);padding-top:18px;margin-top:26px}
+.member-row{display:flex;align-items:center;gap:9px;font-size:13px}
+.member-row b{font-weight:900;font-size:15px}
+.member-row small{display:block;font-size:12px;color:var(--sub);line-height:1.35;margin-top:1px}
+.hours-table{border:1px solid var(--line-dark);background:#F6F2E9;margin:0 0 24px}
+.hour-row{display:grid;grid-template-columns:110px 1fr;border-bottom:1px solid var(--line)}
+.hour-row:last-child{border-bottom:none}
+.hour-row .hl{padding:12px 16px;font-size:14px;font-weight:900;color:var(--ink)}
+.hour-row .hv{padding:12px 16px;font-size:14px;color:var(--sub);font-weight:700}
+.route-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.route-node{position:relative;background:var(--panel);border:1px solid var(--line-dark);padding:16px 14px;min-height:112px}
+.route-node:not(:last-child)::after{content:"›";position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--faint);font-size:26px}
+.route-node .rt{font-size:13px;color:var(--sub);line-height:1.45;min-height:36px}
+.route-node .rn{font-family:var(--serif);font-size:20px;font-weight:900;margin-top:15px;display:flex;align-items:center;gap:8px}
+
 /* 社媒看板 */
 .platgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .platcard{background:var(--panel);border:1px solid var(--line);padding:13px 15px}
@@ -154,21 +204,22 @@ table.t tr:hover td{background:#FBF9F4}
 .platlinks{display:flex;gap:6px;margin-top:7px}
 
 /* 甘特 */
-.gantt{border:1px solid var(--line);background:var(--panel);overflow-x:auto}
-.gantt .gridrow{display:grid}.gantt .lab{padding:8px 12px}
-.g-month{font-family:var(--serif);font-weight:700;font-size:11px;color:var(--sub);text-align:center;border-left:1px solid var(--line);padding:6px 0}
-.g-wk{font-size:10px;color:var(--faint);text-align:center;border-left:1px solid var(--line);padding:4px 0}
-.g-phase .pl{grid-column:1 / -1;background:var(--gray-bg);padding:7px 12px;font-family:var(--serif);font-size:13px;font-weight:700;border-top:1px solid var(--line)}
-.g-phase .pl .pnote{font-family:var(--sans);font-size:11px;color:var(--sub);font-weight:400;margin-left:8px}
+.gantt{border:2px solid var(--ink);border-radius:12px;background:var(--panel);overflow-x:auto}
+.gantt .gridrow{display:grid}.gantt .lab{padding:10px 12px}
+.g-month{font-family:var(--sans);font-weight:800;font-size:12px;color:var(--ink);text-align:center;border-left:1px solid var(--line);padding:8px 0;background:#F1EBDC}
+.g-wk{font-size:11px;color:var(--sub);font-weight:700;text-align:center;border-left:1px solid var(--line);padding:6px 0;background:#FBF9F4}
+.g-phase .pl{grid-column:1 / -1;background:var(--blue-bg);color:var(--blue);padding:9px 12px;font-family:var(--sans);font-size:15px;font-weight:900;border-top:2px solid var(--ink)}
+.g-phase .pl .pnote{font-family:var(--sans);font-size:12px;color:var(--sub);font-weight:700;margin-left:8px}
 .g-task{display:grid;border-top:1px solid var(--line)}
-.g-task .lab{font-size:12.5px;border-right:1px solid var(--line)}.g-task .lab .meta{display:block;font-size:11px;color:var(--faint);margin-top:2px}
-.track{position:relative;min-height:36px;background:repeating-linear-gradient(to right,transparent 0,transparent calc(100%/var(--c) - 1px),var(--line) calc(100%/var(--c) - 1px),var(--line) calc(100%/var(--c)))}
-.bar{position:absolute;top:7px;height:22px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;white-space:nowrap;overflow:hidden}
-.bar.done{background:var(--ink);color:#F6F3EC}.bar.doing{background:var(--red);color:#fff}.bar.plan{background:var(--blue-bg);color:var(--blue);border:1px dashed var(--blue)}
-.todayline{position:absolute;top:0;bottom:0;width:2px;background:var(--amber);opacity:.75}
-.ptag{font-size:9px;padding:0 5px;border-radius:99px;border:1px solid var(--line-dark);color:var(--faint);margin-right:5px;font-weight:600}
-.ptag.P0{background:var(--red-bg);color:var(--red);border-color:transparent}.ptag.P1{background:var(--amber-bg);color:var(--amber);border-color:transparent}.ptag.P2{background:var(--gray-bg);color:var(--gray);border-color:transparent}
-.glegend{display:flex;gap:16px;font-size:11px;color:var(--sub);margin-bottom:10px}.glegend i{display:inline-block;width:16px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.g-task .lab{font-size:13.5px;font-weight:800;line-height:1.35;border-right:1px solid var(--line);background:#FFFEFB}
+.g-task .lab .meta{display:block;font-size:12px;color:var(--sub);font-weight:700;margin-top:4px}
+.track{position:relative;min-height:46px;background:repeating-linear-gradient(to right,#FFFDF8 0,#FFFDF8 calc(100%/var(--c) - 1px),#DDD4C2 calc(100%/var(--c) - 1px),#DDD4C2 calc(100%/var(--c)))}
+.bar{position:absolute;top:8px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;white-space:nowrap;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.12)}
+.bar.done{background:#2E7D5B;color:#fff}.bar.doing{background:#D85C32;color:#fff}.bar.plan{background:#3E6EA8;color:#fff}.bar.blocked{background:#B5432E;color:#fff}
+.todayline{position:absolute;top:0;bottom:0;width:3px;background:#E0A126;opacity:.95}
+.ptag{font-size:10px;padding:1px 6px;border-radius:99px;border:1px solid var(--line-dark);color:var(--faint);margin-right:6px;font-weight:900}
+.ptag.P0{background:var(--red-bg);color:var(--red);border-color:transparent}.ptag.P1{background:var(--amber-bg);color:var(--amber);border-color:transparent}.ptag.P2{background:var(--blue-bg);color:var(--blue);border-color:transparent}.ptag.P3,.ptag.P5{background:var(--gray-bg);color:var(--gray);border-color:transparent}
+.glegend{display:flex;gap:14px;font-size:12px;font-weight:800;color:var(--ink);margin-bottom:10px;flex-wrap:wrap}.glegend i{display:inline-block;width:18px;height:12px;border-radius:4px;margin-right:5px;vertical-align:-1px}
 
 /* 时间线/动态流 */
 .tline .ev{display:flex;gap:12px}
@@ -191,12 +242,43 @@ table.t tr:hover td{background:#FBF9F4}
 .aihint{font-size:12px;color:var(--blue);margin-top:8px}
 
 /* 白板话题卡（照真实白板：红标题 + 负责人 + 总结 + 实物） */
-.wcard{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:12px}
-.wcard-h{display:flex;align-items:baseline;gap:10px;margin-bottom:9px;border-bottom:1px solid var(--line);padding-bottom:7px}
-.wcard-h .ct{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--red)}
+.wcard{background:var(--panel);border:2px solid var(--ink);border-radius:14px;padding:18px 20px;margin-bottom:18px}
+.wcard-h{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.wcard-h .ct{font-family:var(--serif);font-size:24px;font-weight:900;color:var(--red)}
 .wcard-h .co{margin-left:auto;font-size:12px;color:var(--sub);white-space:nowrap}
 .wcard-h .co b{color:var(--ink)}
-.wsum{font-size:15px;margin-bottom:9px;line-height:1.72}
+.wsum{font-size:15px;margin-bottom:10px;line-height:1.55;color:var(--ink);font-weight:600}
+.datefilter{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);padding:10px 12px;margin:0 0 18px;border-radius:10px}
+.datefilter .flabel{font-size:12px;color:var(--sub);font-weight:700;margin-right:4px}
+.datechip{border:1px solid var(--line-dark);background:#FBF9F4;color:var(--sub);border-radius:999px;padding:6px 11px;font-size:12px;cursor:pointer;display:inline-flex;gap:5px;align-items:center}
+.datechip:hover{border-color:var(--ink);color:var(--ink)}
+.datechip.on{background:var(--ink);color:#F6F3EC;border-color:var(--ink)}
+.datechip .red{color:var(--red);font-weight:800}
+.datechip.on .red{color:#F5B7A9}
+.briefgrid{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:12px;margin-bottom:18px}
+.briefgrid.contextgrid{grid-template-columns:1fr 1fr}
+.agenda-wide{background:var(--panel);border:2px solid var(--ink);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.agenda-wide h3{font-size:24px;color:var(--red);font-weight:900;margin-bottom:10px}
+.agenda-list{display:grid;grid-template-columns:1fr;gap:8px}
+.agenda-item{border:1px solid var(--line);background:#FBF9F4;border-radius:8px;padding:11px 13px;display:grid;grid-template-columns:68px 1fr;gap:10px;align-items:start}
+.agenda-item .time{color:var(--red);font-size:12px;font-weight:900;line-height:1.4}
+.agenda-item .text{font-size:15px;line-height:1.45;font-weight:800}
+.briefbox{background:var(--panel);border:2px solid var(--ink);border-radius:14px;padding:15px 17px}
+.briefbox h3{font-size:20px;color:var(--red);font-weight:900;margin-bottom:8px}
+.briefbox ul{list-style:none}
+.briefbox li{padding:7px 0;border-bottom:1px dashed var(--line);font-size:14px;line-height:1.45}
+.briefbox li:last-child{border-bottom:none}
+.briefbox .mini{display:inline-block;min-width:45px;color:var(--faint);font-size:12px;font-weight:700}
+.keygrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.keyitem{background:#FBF9F4;border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-height:86px}
+.keyitem .kk{font-size:12px;color:var(--red);font-weight:800;margin-bottom:5px}
+.keyitem .kv{font-size:14px;line-height:1.5;color:var(--ink)}
+.nextline{margin-top:10px;padding:9px 12px;background:var(--red-bg);color:var(--red);font-weight:800;border-radius:8px;font-size:14px}
+.detailbox{margin-top:12px;border:1px solid var(--line);border-radius:8px;background:#FBF9F4;overflow:hidden}
+.detailbox summary{cursor:pointer;list-style:none;padding:10px 12px;font-size:13px;font-weight:800;color:var(--ink)}
+.detailbox summary::after{content:"展开";float:right;color:var(--sub);font-weight:600}
+.detailbox[open] summary::after{content:"收起"}
+.detailbody{padding:0 12px 12px}
 .wsub{font-family:var(--serif);font-size:13.5px;font-weight:700;color:var(--red);margin:12px 0 6px}
 .agd{list-style:none}
 .agd li{padding:7px 0;font-size:15px;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:10px}
@@ -221,8 +303,43 @@ table.t tr:hover td{background:#FBF9F4}
 
 @media(max-width:900px){
   .side{display:none}.main{padding:18px 14px}
-  .boardlayout{grid-template-columns:1fr}.metricgrid,.platgrid,.cgrid,.psygrid{grid-template-columns:1fr}.shotwall{grid-template-columns:repeat(2,1fr)}
+  .boardlayout{grid-template-columns:1fr}.metricgrid,.platgrid,.cgrid,.psygrid,.mindgrid,.keygrid,.briefgrid,.briefgrid.contextgrid,.agenda-list,.team-grid,.hours-strip,.route-flow{grid-template-columns:1fr}.shotwall{grid-template-columns:repeat(2,1fr)}.mindstage{grid-template-columns:1fr}
+  .contact-hero{align-items:flex-start}.route-node:not(:last-child)::after{display:none}.hours-strip .hour{border-right:none;border-bottom:1px solid var(--line)}.hours-strip .hour:last-child{border-bottom:none}
 }
+
+/* evidence-first workspace additions */
+.source-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.source-pill,.source-button{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;color:var(--ink);padding:7px 10px;border-radius:999px;font-size:12px;text-decoration:none;cursor:pointer}
+.source-pill:hover,.source-button:hover{border-color:var(--accent);color:var(--accent)}
+.source-detail{margin-top:10px;padding:12px;border:1px dashed var(--line);background:#fffaf3;white-space:pre-wrap;line-height:1.7;max-height:260px;overflow:auto;font-size:13px}
+.psy-filter{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 18px}
+.psy-filter select{border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:6px}
+.signal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.signal-card{border:1px solid var(--line);background:#fff;padding:16px;border-radius:8px}
+.signal-card h3{font-size:20px;margin:4px 0 8px}
+.signal-card .meta{font-size:12px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.quote-row{border-left:3px solid var(--accent);padding:7px 10px;background:#fff8f3;margin:8px 0;font-size:13px;line-height:1.65}
+.issue-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+.issue-card{border:1px solid var(--line);background:#fff;padding:14px;border-radius:8px}
+.issue-card b{color:var(--accent)}
+.video-player{width:100%;max-height:360px;background:#111;border-radius:8px;margin-top:10px}
+.file-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.file-card{border:1px solid var(--line);background:#fff;padding:14px;border-radius:8px}
+.file-card h3{margin:2px 0 6px}
+.roadmap-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.roadmap-row{display:grid;grid-template-columns:180px 1fr 170px;gap:12px;align-items:stretch;border:1px solid var(--line);background:#fff;border-radius:8px;overflow:hidden}
+.roadmap-row .phase{font-weight:800;color:#fff;padding:14px;background:var(--accent)}
+.roadmap-row .phase.done{background:#3a8f58}.roadmap-row .phase.doing{background:#d28b22}.roadmap-row .phase.risk{background:#b64032}.roadmap-row .phase.next{background:#315c9b}
+.roadmap-row .body{padding:12px;line-height:1.65}.roadmap-row .owner{padding:12px;background:#fbf7ef;color:var(--muted)}
+.metric-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.metric-card{border:1px solid var(--line);background:#fff;padding:14px;border-radius:8px}
+.metric-card strong{font-size:24px;display:block;color:var(--accent)}
+.contact-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.contact-card{border:1px solid var(--line);background:#f7f2e9;padding:16px;min-height:250px}
+.person-row{display:flex;gap:10px;align-items:center;margin:10px 0}
+.avatar-img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid #fff;background:#e8dfd0}
+@media (max-width: 980px){.signal-grid,.issue-grid,.file-grid,.contact-grid,.metric-grid{grid-template-columns:1fr}.roadmap-row{grid-template-columns:1fr}.roadmap-row .owner{border-top:1px solid var(--line)}}
+
 </style>
 </head>
 <body>
@@ -312,7 +429,7 @@ weeks:[
          ["能力放大","重运营、midtech，AI 成为她们能力放大的翅膀","从工具卖点转为创业者能力放大叙事"],
          ["爆款话题方向","教育、培训、女性成长、流量、女性企业家关注的话题","形成下一批短视频/公众号/推文选题"],
          ["素材需求","需要言书头像照或形象照用于录制","客户需要提供可授权素材，团队要列清单"]]},
-       note:"这是客户心理变化，不是普通内容点。下次会需要确认是否把它立为下一轮内容主线。"},
+       note:"这是下一阶段内容方向判断，下次会需要确认是否把它立为内容主线。"},
 
      {topic:"【5】SEO / 官网架构 · 6/16 讨论会后的修复清单",owner:"李家乐 / 南雁 / Owen",
        summary:"6/16 SEO 讨论会已经把问题从“SEO 到哪一步了”推进到具体技术清单：CSR 导致首次抓取信息不足，About 页标题与首页重复，Canonical 指向首页，Docs 子域内容模板化/低质量，404/死链影响抓取预算。下次会要过的是每项谁改、何时改、如何验证。",
@@ -348,7 +465,7 @@ weeks:[
          ["P0","完成 CSR/SSG 静态输出可行性评估","首次抓取信息不足是当前 SEO 主卡点"],
          ["P1","提交 Docs 仓库内容质量 PR","客户已给 GitHub 仓库，Docs 低质内容影响收录"],
          ["P1","补齐 Tiger、VIDEO 5/6、文章的平台链接和数据","已发布动作必须回到白板闭环"],
-         ["P1","产出女性企业家/非技术创业者爆款选题池","客户心理变化已明确，适合作为下一轮内容主线"],
+         ["P1","产出女性企业家/非技术创业者爆款选题池","内容方向已逐步明确，适合作为下一轮内容主线"],
          ["P2","整理知外文化/MCN 案例包","客户明确要求继续做客户案例内容"]]} }
    ],
    blockers:[
@@ -702,13 +819,656 @@ files:[
 ]
 };
 
+/* ================= data.js 适配层：保留手工白板，接入真实资料库 ================= */
+(function hydrateFromDataJs(){
+ const raw=window.WORKBENCH_DATA;
+ if(!raw||!raw.meta)return;
+ const arr=v=>Array.isArray(v)?v:[];
+ const date=v=>String(v||"").slice(0,10);
+ const compactDate=v=>date(v).slice(5)||String(v||"");
+ const firstLine=v=>String(v||"").split(/\n+/).find(Boolean)||"已从 data.js 导入，详情见数据中心。";
+ const uniq=(items,key)=>{const seen=new Set();return items.filter(x=>{const k=key(x);if(seen.has(k))return false;seen.add(k);return true})};
+ const palette=["#2E5E4E","#3E5A7E","#9A6B1F","#B5432E","#8A8276","#5b6b4e","#211C15","#7A7163","#46506b"];
+ const teamMap={...DB.team};
+ arr(raw.team).forEach((p,i)=>{if(p&&p.name)teamMap[p.name]=teamMap[p.name]||palette[i%palette.length]});
+ DB.team=teamMap;
+ DB.meta={...DB.meta, sourceNote:raw.meta.sourceNote||DB.meta.sourceNote, dataGeneratedAt:raw.meta.generatedAt||""};
+
+ const coco=arr(DB.clients).find(c=>c.name===(raw.meta.client||"COCO"));
+ if(coco){
+   coco.fee=raw.meta.fee||coco.fee;
+   coco.lead=raw.meta.lead||coco.lead;
+   coco.one=arr(raw.board&&raw.board.conclusion)[0]||coco.one;
+   coco.red=arr(raw.requests).filter(r=>String(r.status||"").includes("待")||String(r.status||"").includes("处理")).length||coco.red;
+ }
+
+ if(arr(raw.team).length){
+   DB.roster={
+    lead:raw.meta.lead||DB.roster.lead,
+    reviewer:raw.meta.reviewer||DB.roster.reviewer,
+    members:arr(raw.team).map(p=>({name:p.name,role:arr(p.roles).join(" · ")||"成员",group:p.group||""})),
+    helpers:arr(DB.roster.helpers),
+    left:arr(DB.roster.left)
+   };
+ }
+
+ const toMetric=m=>{
+   const series=arr(m.series).map(Number).filter(Number.isFinite);
+   const cur=Number.isFinite(Number(m.value))?Number(m.value):(series.length?series[series.length-1]:0);
+   const prev=Number.isFinite(Number(m.previous))?Number(m.previous):(series.length>1?series[series.length-2]:0);
+   return {name:m.name||"指标",prev,cur,series:series.length?series:[prev,cur],src:m.src||"",srclabel:m.srclabel||"来源",owner:m.owner||"",top:Math.max(cur,prev,...(series.length?series:[0]))};
+ };
+ const weekly=key=>arr(raw.lineWeekly&&raw.lineWeekly[key]).map(x=>Number(x.count)||0);
+ const metricsFor=line=>arr(raw.metrics).filter(m=>m.line===line||(!line&&m.line==="全局")).map(toMetric);
+ if(arr(raw.lines).length){
+   DB.data={...DB.data,lines:arr(raw.lines).map(L=>({
+    label:L.label||L.key,
+    primary:L.primary||"",
+    weeks:weekly(L.key).length?weekly(L.key):[0],
+    metrics:metricsFor(L.key).length?metricsFor(L.key):metricsFor("")
+   }))};
+ }
+
+ const grouped={};
+ arr(raw.deliverables).forEach(d=>{
+   const line=d.line||"其他";
+   (grouped[line]||(grouped[line]=[])).push({
+    title:d.title||d.note||"未命名交付",
+    owner:d.owner||"",
+    date:date(d.date)||"",
+    pub:d.pub?{plat:d.type||"链接",url:d.pub}:null
+   });
+ });
+ Object.values(grouped).forEach(list=>list.sort((a,b)=>String(b.date).localeCompare(String(a.date))));
+
+ if(DB.weeks&&DB.weeks[0]){
+   const w=DB.weeks[0];
+   if(Object.keys(grouped).length)w.deliveries=grouped;
+   if(arr(raw.requests).length){
+    const imported=arr(raw.requests).map(r=>({
+     date:compactDate(r.date||r.updated),
+     source:r.source||"data.js",
+     quote:r.quote||r.text||"",
+     status:r.status||"处理中",
+     owner:r.owner||raw.meta.lead||"",
+     resp:r.response||r.resp||""
+    }));
+    w.requests=uniq([...imported,...arr(w.requests)],r=>`${r.date}|${r.quote}`);
+   }
+   if(raw.board&&arr(raw.board.blockers).length){
+    const imported=arr(raw.board.blockers).map(b=>({item:b.item||b.text||"",need:b.need||"",client:!!b.client,owner:b.owner||""}));
+    w.blockers=uniq([...arr(w.blockers),...imported],b=>`${b.item}|${b.need}`);
+   }
+   if(raw.board&&arr(raw.board.nextWeek).length)w.nextWeek=arr(w.nextWeek).length?w.nextWeek:raw.board.nextWeek;
+   if(arr(raw.metrics).length)w.metrics=arr(raw.metrics).map(toMetric);
+   w.sourceLogic=[w.sourceLogic,raw.meta.sourceNote,`data.js：${arr(raw.deliverables).length} 条交付、${arr(raw.meetings).length} 次会议、${arr(raw.files).length} 个物料索引`].filter(Boolean).join("；");
+ }
+
+ const knownDates=new Set(arr(DB.weeks).map(w=>w.date));
+ arr(raw.meetings).forEach(m=>{
+   if(knownDates.has(m.date))return;
+   DB.weeks.push({
+    date:m.date,
+    title:m.title||`COCO 周会 ${m.date}`,
+    badge:"data.js",
+    conclusion:firstLine(m.analysis),
+    requests:[],
+    deliveries:{},
+    metrics:[],
+    nextWeek:[],
+    agenda:arr(m.points),
+    shots:["data.js 会议记录","Notion 导入索引"]
+   });
+ });
+
+ const feedItems=[
+   ...arr(raw.actions).map(a=>({date:a.date,type:"req",who:a.owner||raw.meta.lead||"",text:a.task||"",line:a.priority||"行动"})),
+   ...arr(raw.deliverables).map(d=>({date:d.date,type:"deliver",who:d.owner||"",text:d.title||d.note||"",line:d.line||d.type||"交付"}))
+ ];
+ if(feedItems.length)DB.feed=feedItems.sort((a,b)=>String(b.date).localeCompare(String(a.date))).slice(0,140);
+
+ if(arr(raw.files).length){
+   DB.files=arr(raw.files).slice(0,160).map(f=>({
+    date:compactDate(f.date||raw.meta.weekStart),
+    kind:f.kind||"资料",
+    title:f.title||f.path||"未命名资料",
+    vis:f.visibility||"内部"
+   }));
+  }
+})();
+
+/* ================= 6/18 客户汇报版：进展、数据、风险、下一步 ================= */
+(function applyActual0618Whiteboard(){
+ DB.current={
+  kpis:[
+   {l:"最新白板",v:"06/18",t:"good"},
+   {l:"P0",v:"KOL转化",t:""},
+   {l:"视频条线",v:"录制提效",t:""},
+   {l:"SEO",v:"技术债",t:""},
+   {l:"内容方向",v:"客户案例",t:"good"}
+  ],
+  stage:{label:"6/18 周会：增长重点推进中",steps:[
+   {n:"KOL投放复盘",d:"已完成初判",s:"done"},
+   {n:"KOL漏斗诊断",d:"Steve/Jessie",s:"now"},
+   {n:"视频生产提效",d:"Demo/Use Case",s:"now"},
+   {n:"SEO技术债推进",d:"COCO技术侧",s:""}
+  ]}
+ };
+ DB.weeks[0]={
+  date:"2026-06-18",
+  title:"COCO 周会进展总览 · 2026/06/18",
+  badge:"客户汇报版",
+  sourceLogic:"",
+  conclusion:"本周重点围绕四件事推进：KOL 投放复盘、Demo / Use Case 视频提效、SEO 技术问题处理、真实客户案例内容沉淀。当前已有曝光、发布和收录增长，但点击转化、视频录制效率、官网技术承接仍是下一阶段需要重点推进的事项。",
+  cards:[
+   {topic:"本次会议议程",owner:"侯明真",type:"agenda",items:[
+    {n:"待讨论",t:"15min"},
+    {n:"Demo 演示视频 + 客户案例视频 + 常规视频进度",t:""},
+    {n:"SEO 进展",t:"10min"},
+    {n:"社媒数据看板",t:"5min"},
+    {n:"视频发布情况",t:"5min"},
+    {n:"SuperAI 内容收尾",t:""},
+    {n:"其他问题解疑",t:"10min"}
+   ]},
+
+   {topic:"【1】KOL 投放数据 · Steve + Jessie",owner:"Alex / 侯明真",
+    summary:"Steve Nouri 和 Jessie 都证明“曝光不是零”，但点击和转化没有接住。会议判断不是简单换 KOL，而是要把内容形式、落地页、CTA、评论回复和 GA/UTM 漏斗打通；否则换更贵的 KOL 也可能无效。",
+    table:{cols:["漏斗层","Steve Nouri","Jessie 七平台","白板判断"],rows:[
+     ["曝光 / 播放","480,829 impressions","33,008 plays","有上层流量，不是完全没流量"],
+     ["互动","1,105 reactions / 85 comments / 21 reposts / 96 saves","579 likes / 98 comments / 140 reposts / 137 saves / 28 bookmarks","评论和互动要被二次回复，形成回流"],
+     ["点击","266 total clicks，CTR 约 0.06%","点击未追踪","核心问题是从内容到链接的点击欲望太弱"],
+     ["转化","注册/成交未追踪","注册/成交未追踪","必须补完整 UTM/GA/注册/付费链路"],
+     ["下一步","复盘 Deal/Manus/OpenClaw 模板","拆 10 个 LinkedIn / Instagram 参考模板","先打样，再找 KOL；落地页优先 use case，不是官网首页"]
+    ]},
+    note:"会议口径：不要把结果归因成“KOL 不行”。先判断内容是否讲清楚具体场景，CTA 是否能让人点，落地页是否承接具体 use case。"},
+
+   {topic:"【2】具体做法 · 先做认知 + 信任",owner:"侯明真 / MengYu / Charlie",
+    summary:"本周将“营销如何落地”拆成可执行动作：先让目标人群知道 COCO 能做什么，再用真实客户、公开案例、联合宣发和 Trust Center 建立信任。",
+    table:{cols:["动作","做什么","责任分工","参考逻辑"],rows:[
+     ["动作1 ICP 渠道地图","按 ICP 拆出美国中小企业、ISP集成商、SMB直营、LinkedIn/KOL 等名单和触达渠道","Will 团队出结构，COCO 确认 ICP 优先级并补真实画像","先找对人，再谈转化"],
+     ["动作2 英文文案题","主推 a team where people and AI agents work side by side inside the tools you already use","Will 团队出英文候选，COCO 团队确认 Kevin 相关语义","先让用户秒懂定位"],
+     ["动作3 Charlie 个人号故事","Charlie 用真实客户故事讲自己如何用 COCO 管 40 个 Agent、整理客户、自动出消息、选题库","COCO 提供真实截图，Will 团队改成对外语料","个人可信度替代品牌空喊"],
+     ["动作4 第一条品宣 demo","拍一个 60-90 秒真人 + 屏幕 demo，展示 AI Agent 一起协作干活","Will 团队脚本/分镜/剪辑，COCO 供场景","不要只讲概念，要看到它跑起来"],
+     ["动作5 Wall of Love + 数据化案例","把客户语料、ROI、节省时间/成本、案例模板整理成销售资产","Will 团队结构化，COCO 确认授权素材","客户案例是信任飞轮"],
+     ["动作7 官网首屏改造","首屏放 Agent 在 IM 里干活的画面，标题 + Try for Free / Talk to Sales 双出口","Will 出结构文案，COCO 供真实界面素材","解决客户看不懂、流量接不住"],
+     ["动作8 Trust Center","写清客户数据不用于训练、合规与安全承诺 roadmap","Will 出清单和竞品对标，COCO/Kevin 确认技术事实","B2B 转化必须补信任门票"]
+    ]},
+    note:"呈现重点：每个动作都对应明确产出，方便后续按负责人和交付物推进。"},
+
+   {topic:"【3】视频剪辑 · Demo / Use Case / 基础视频进度",owner:"周星星 / 李阳阳 / 孔德浩",
+    summary:"视频条线按已完成、进行中、未开始、下一交付进行跟踪。当前重点是提升 Demo / Use Case 视频的录制效率，让 COCO 有更多可直接对外展示的销售语料。",
+    table:{cols:["模块","当前状态","关键事实","下一步"],rows:[
+     ["基础视频","稳定产出","Tiger 视频 3 产出 3 个版本；Alex 展会演讲视频产出 2 个版本；Paolo 切片持续发布","继续保持节奏，补链接和播放数据"],
+     ["知外文化客户案例","进行中","本周录制 2 条中英版本，剪辑中；录制约 5 小时，预计返工 2-3 小时","优先交付，补中英文脚本和客户可转发版本"],
+     ["Demo / Use Case","效率偏低","录制卡在产品熟悉、账号调配、场景理解；剪辑约 6-7 小时","侯明真、李家乐、孔德浩约 COCO Harry/Eric，把账号、Agent 连接、录制流程一次问清"],
+     ["协作方式","需要拆清楚","录制同学和剪辑同学不同，问题不能混成“环境配置”一句话","后续白板必须列：谁录、谁剪、卡点、耗时、下一步责任人"]
+    ]},
+    note:"下一步重点：把账号、产品流程、录制场景和剪辑分工提前确认，减少返工。"},
+
+   {topic:"【4】COCO SEO 本周进展 · 技术债和收录数据",owner:"李家乐 / Alex / COCO 技术人员",
+    summary:"SEO 页面工期正常，目前已上线页面收录率约 45%。但 COCO 官网技术债正在阻碍 SEO：CSR/客户端渲染导致 Google 首次抓取信息不足；docs 子域和 labs 等页面结构不利于权重；展示页应尽量回到主域名清晰路径。",
+    table:{cols:["指标","截至 6/10","截至 6/17","环比进度","解读"],rows:[
+     ["总曝光次数","188","913","+385.64%","Google 展示放量"],
+     ["品牌词曝光","17","95","+458.82%","品牌搜索开始扩大"],
+     ["总点击次数","6","35","+483.33%","逐步增长"],
+     ["品牌词点击","0","17","新增 17","需进一步观察"],
+     ["高意向词点击","5","13","+160.00%","逐渐增长"],
+     ["SEO页面收录率","—","45%","阶段进展","已上线页面继续优化"]
+    ]},
+    problems:{solved:[
+     {s:"已完成",name:"新旧域名重复在线 / Sitemap / Canonical 老问题",desc:"部分历史问题已完成修复，开始进入新一轮结构问题。"},
+     {s:"已推进",name:"5 个 use case 页面更新",desc:"对已收录网页做分析，并更新 use case 页面。"}
+    ],todo:[
+     {s:"进行中",name:"核心内容依赖客户端渲染",desc:"首页 HTML 对低权重站不够友好，需评估静态化或服务端输出。",pri:"P0"},
+     {s:"进行中",name:"/about canonical 指向首页",desc:"Google 不会独立索引 About，品牌页白做。",pri:"P0"},
+     {s:"进行中",name:"/about 与首页共用同一个 title",desc:"两页 title 都是 COCO AI — Hire AI Digital Employees，无法区分。",pri:"P0"},
+     {s:"进行中",name:"404 与异常索引",desc:"需检查并清理站点中死链与索引异常页面。",pri:"P1"},
+     {s:"进行中",name:"docs 子域内容模板化",desc:"docs 应回归工程文档，案例/展示页尽量挂主域名清晰路径。",pri:"P1"}
+    ]},
+    links:[{label:"GSC ↗",url:"https://search.google.com/search-console?utm_source=about-page&resource_id=sc-domain:icoco.ai"},{label:"工具页 ↗",url:"https://tools-one-beryl.vercel.app"}],
+    note:"会议判断：SEO 不是独立探索，它跟着 PMF 和画像走。PMF 越准，关键词和页面越清楚；但官网结构不改，页面做再多也容易接不住。"},
+
+   {topic:"【5】社媒数据看板 · 算法红利退去后的判断",owner:"侯明真",
+    summary:"大会活动带来的短期流量峰值正在回落，后续重点是从数据中找到可复制的内容方向，建立更稳定的社媒增长机制。",
+    table:{cols:["观察","判断","下一步"],rows:[
+     ["大会算法红利退去，浏览量明显下滑","不是失败，是提醒团队必须从热点流量转向稳定内容机制","复盘 5 个周期社媒数据，找出平台和内容类型差异"],
+     ["Charlie 个人号、COCO X、LinkedIn、公众号、小红书各有不同表现","不能只看发文数，要看浏览、点击、转发和平均阅读完成率","每周白板只展示能指导动作的数据"],
+     ["女性企业家、教育培训、女性成长、流量、知识付费等话题有共鸣基础","但不能写成泛女权情绪，要回到客户案例和生产力提升","用知外文化/言书这类客户故事讲 COCO 如何赋能"],
+     ["视频发布逐渐形成多平台矩阵","发布的目标是转向故事与转发语料，不是机械发了几条","每条视频补平台、链接、播放、是否可被销售复用"]
+    ]},
+    groups:[{h:"社媒看板",items:[{label:"飞书社媒数据看板 ↗",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1JbfS5"}]}],
+    note:"内容策略修正：从“女性企业家”抽象标签，改成“真实客户如何用 COCO 放大业务能力”的案例叙事。"},
+
+   {topic:"【6】本周视频发布情况",owner:"侯明真 / 周星星",
+    summary:"本周视频发布看板显示 11 items completed，基本是一日 1-2 条。白板重点不是炫数量，而是判断哪些内容能被 COCO 拿去对外讲，哪些能形成转发语料。",
+    table:{cols:["已发布内容","平台/状态","白板判断"],rows:[
+     ["Tiger 视频 3","视频号 / 小红书 / YouTube / 推荐 / LinkedIn，6/16","UGC 客户案例，需补播放数据和可转发话术"],
+     ["Paolo 直播切片 1-6","视频号 / 小红书，6/12-6/15","基础视频稳定产出，适合做日更和素材池"],
+     ["Demo 视频中英文版","YouTube / 推荐 / LinkedIn / 视频号 / 小红书，6/11-6/13","应转成销售演示语料"],
+     ["VIP dinner","视频号 / 小红书 / YouTube / 推荐 / LinkedIn，6/11","SuperAI 收尾素材的一部分"]
+    ]},
+    note:"会议口径：Tiger、Paolo、产品介绍片都要能被 COCO 拿去对外讲，而不是只算机械发布。"},
+
+   {topic:"【7】SuperAI 收尾内容发布总结",owner:"侯明真",
+    summary:"围绕 SuperAI 活动收尾，已完成公众号长文与 X / Twitter 内容发布，沉淀大会观察与品牌活动素材。",
+    table:{cols:["已发布内容","平台","核心内容","价值"],rows:[
+     ["公众号长文","公众号","1万人参会的新加坡 SuperAI，我看到了 AI 时代最被低估的真相","沉淀大会洞察与品牌表达"],
+     ["X Thread 01","X / Thread","我上周在新加坡参加 SuperAI 的观察","大会洞察输出，强化行业认知"],
+     ["X Thread 02","X / 视频帖","COCO 与 The Signal Institutional AI VIP Dinner","品牌活动回顾与社交影响展示"]
+    ]},
+    groups:[{h:"详情链接",items:[{label:"公众号文章 ↗",url:"https://mp.weixin.qq.com/s/PYw1pHxWB8MML4Tjdic3Qg"},{label:"X Thread 01 ↗",url:"https://x.com/CocoAIxyz/status/2066482235008790915?s=20"},{label:"X Thread 02 ↗",url:"https://x.com/CocoAIxyz/status/2065029317550350645?s=20"}]}],
+    note:"整体状态：已完成 1 篇公众号长文、2 条 X 内容，形成可继续复用的 SuperAI 收尾传播素材。"},
+
+   {topic:"【8】下周必须推进",owner:"侯明真",
+    summary:"下周重点围绕 KOL 漏斗复盘、客户案例内容、视频录制提效和 SEO 技术问题推进。每项事项都对应负责人和验收口径。",
+    table:{cols:["优先级","事项","责任人","验收口径"],rows:[
+     ["P0","Steve/Jessie/Deal 模板复盘，挑 10 个 LinkedIn/Instagram 参考模板","Alex / MengYu / 侯明真","形成 KOL 内容模板 + 评论回复策略 + UTM/GA 漏斗表"],
+     ["P0","知外文化文章重写并配图，标题先抓痛点，弱化泛女性叙事","侯明真","用小号直接发预览，不再用 PDF 代替排版；输出 2 个标题方向供选择"],
+     ["P0","视频录制提效会：侯明真、李家乐、孔德浩对接 COCO Harry/Eric","侯明真","问清账号、Agent 连接、录制流程、一次性配置和持续卡点"],
+     ["P0","SEO 技术债推进：CSR、URL结构、docs子域、About/Canonical","Alex / 李家乐 / COCO 技术","每项有 owner、目标日期、完成截图或 GSC 验证"],
+     ["P1","找 20 个“知外文化”式客户线索","Alex / Charlie","不要广撒网，先用榜单/短视频/深度文章枚举高质量名单"],
+     ["P1","每周白板提前生成作战版，不等最后一秒补资料","侯明真","每块都有证据、负责人、下一步；不确定的地方提前问 Will"]
+    ]},
+    note:"推进口径：优先处理能影响转化、发布效率和 SEO 承接能力的事项。"}
+  ],
+  blockers:[
+   {item:"KOL 投放有曝光但点击/转化弱",need:"补 UTM/GA 漏斗、评论回复、落地页和模板复盘",client:false,owner:"Alex / 侯明真"},
+   {item:"视频录制耗时过长，卡点没有提前拆清楚",need:"和 COCO Harry/Eric 开小会，问清账号、Agent 连接、录制流程",client:true,owner:"侯明真 / 孔德浩"},
+   {item:"官网技术债影响 SEO 和流量承接",need:"COCO 技术侧评估 CSR/静态化、URL 结构、docs 子域和 About/Canonical",client:true,owner:"李家乐 / Alex"},
+   {item:"客户案例文章还不能直接发布",need:"重写标题、补图、弱化泛女性叙事，改成真实客户如何用 COCO 提升业务",client:false,owner:"侯明真"}
+  ],
+  requests:[
+   {date:"06-18",source:"6月18日会议文本",quote:"Steve 投放有 48 万曝光但只有 266 点击，需复盘内容、CTA、落地页和 UTM/GA。",status:"处理中",owner:"Alex",resp:"整理漏斗和 Deal/Manus/OpenClaw 模板。"},
+   {date:"06-18",source:"6月18日会议文本",quote:"Demo / use case 视频录制耗时 5 小时、剪辑 6-7 小时，需拆清卡点。",status:"处理中",owner:"侯明真",resp:"约 COCO Harry/Eric 对齐产品使用和账号流程。"},
+   {date:"06-18",source:"6月18日会议文本",quote:"COCO 官网 CSR / URL / docs 子域影响 SEO 抓取和承接。",status:"待贵方提供",owner:"李家乐",resp:"需 COCO 技术侧配合评估和修复。"}
+  ],
+  psych:"",
+  psychStages:[],
+  deliveries:{
+   内容:[
+    {title:"SuperAI 公众号长文 + 2 条 X Thread 发布完成",owner:"侯明真",date:"06-18",pub:{plat:"公众号/X",url:"https://mp.weixin.qq.com/s/PYw1pHxWB8MML4Tjdic3Qg"}},
+    {title:"知外文化客户案例文章进入重写",owner:"侯明真",date:"06-18"}
+   ],
+   视频剪辑:[
+    {title:"本周视频发布 11 条，含 Tiger 视频、Paolo 切片、Demo 中英文版、VIP dinner",owner:"周星星 / 李阳阳",date:"06-18"},
+    {title:"知外文化客户案例视频录制 2 条中英版本，剪辑中",owner:"孔德浩 / 周星星",date:"06-18"}
+   ],
+   SEO:[
+    {title:"SEO 收录率约 45%，GSC 总曝光 188 → 913",owner:"李家乐",date:"06-18",pub:{plat:"GSC",url:"https://search.google.com/search-console?utm_source=about-page&resource_id=sc-domain:icoco.ai"}},
+    {title:"官网 CSR / URL / docs 子域 / Canonical 技术债列入推进",owner:"李家乐 / Alex",date:"06-18"}
+   ]
+  },
+  metrics:[
+   {name:"Steve Impressions",prev:0,cur:480829,series:[0,480829],srclabel:"KOL投放数据"},
+   {name:"Steve Total Clicks",prev:0,cur:266,series:[0,266],srclabel:"KOL投放数据"},
+   {name:"GSC 总曝光",prev:188,cur:913,series:[188,913],src:"https://search.google.com/search-console?utm_source=about-page&resource_id=sc-domain:icoco.ai",srclabel:"GSC ↗"},
+   {name:"GSC 总点击",prev:6,cur:35,series:[6,35],src:"https://search.google.com/search-console?utm_source=about-page&resource_id=sc-domain:icoco.ai",srclabel:"GSC ↗"}
+  ],
+  mustAsk:[
+   "Steve/Jessie 投放的 UTM、GA、注册、付费漏斗是否已完整导出？",
+   "COCO 技术侧谁负责 CSR/静态化、URL 结构、docs 子域和 About/Canonical？",
+   "视频录制到底是账号、产品理解、场景脚本还是剪辑流程卡住？",
+   "知外文化文章按哪一版标题方向重写：客户痛点优先，还是案例故事优先？",
+   "下周白板是否按实际作战板格式提前准备：证据、负责人、卡点、下一步？"
+  ],
+  nextWeek:[
+   "重做 KOL 漏斗复盘和 Deal/Manus/OpenClaw 模板库",
+   "完成知外文化客户案例文章重写和配图",
+   "约 COCO Harry/Eric 开视频录制提效会",
+   "推进 SEO 技术债 owner 和目标日期落地",
+   "整理 20 个知外文化式高质量客户线索"
+  ],
+  agenda:["待讨论","KOL投放复盘","具体做法","视频剪辑","SEO进展","社媒数据看板","视频发布情况","SuperAI收尾","下周必须推进"],
+  shots:["6/18 周会白板","KOL 投放数据表","视频进度表","SEO GSC 数据表","社媒数据看板","已发布内容链接"]
+ };
+ DB.weeks[0]={
+  date:"2026-06-18",
+  title:"6/18 会前白板",
+  badge:"会前展示版",
+  sourceLogic:"",
+  conclusion:"本张白板用于 6/18 周会现场展示：会前先把 KOL、视频、SEO、社媒和发布进展摆清楚，会议上再确认问题和下一步。",
+  brief:{
+   agenda:[
+    {t:"15min",n:"待讨论事项"},
+    {t:"重点",n:"Demo / Use Case / 客户案例视频进度"},
+    {t:"10min",n:"SEO 本周进展"},
+    {t:"5min",n:"社媒数据看板"},
+    {t:"5min",n:"视频发布情况"},
+    {t:"收尾",n:"SuperAI 内容发布总结"}
+   ],
+   last:[
+    "KOL 已有曝光，但点击与转化承接不足，需要补完整漏斗。",
+    "Demo / Use Case 视频重要性上升，要优先做成销售语料。",
+    "SEO 从页面产出进入官网技术结构修复阶段。",
+    "内容方向从泛话题转为真实客户案例和联合宣发。"
+   ],
+   todos:[
+    "Will 团队：输出 KOL 复盘、视频提效方案、SEO 问题清单、客户案例内容。",
+    "COCO 团队：提供技术 owner、账号/Agent 流程、客户授权素材和真实产品截图。",
+    "双方共同：确认下周 P0 优先级与每项验收方式。"
+   ]
+  },
+  cards:[
+   {topic:"本次会议重点",owner:"侯明真",
+    summary:"先过结果，再过问题，最后确认下周推进事项。",
+    highlights:[
+     {k:"会议主线",v:"KOL 投放复盘、Demo / Use Case 视频、SEO 技术问题、社媒与发布复盘"},
+     {k:"本周判断",v:"已有曝光和内容产出，但转化承接、录制效率、SEO 技术结构还要继续补"},
+     {k:"会议要确认",v:"KOL 漏斗数据、COCO 技术侧 owner、视频录制流程、客户案例内容方向"}
+    ],
+    next:"会后按四条线推进：KOL、视频、SEO、客户案例。",
+    detailTitle:"查看会议日程明细",
+    details:[{table:{cols:["模块","会议要过什么","负责人"],rows:[
+     ["KOL投放","Steve / Jessie 数据、点击弱原因、下一步模板","侯明真（COCO Alex 提供数据）"],
+     ["视频","Demo / Use Case / 客户案例视频进度和卡点","周星星 / 孔德浩"],
+     ["SEO","GSC 数据、技术问题、COCO 技术侧待配合","李家乐（COCO 技术侧 / Alex 配合）"],
+     ["内容","社媒看板、客户案例、SuperAI 收尾内容","侯明真"]
+    ]}}]},
+
+   {topic:"KOL 投放复盘",owner:"侯明真",
+    summary:"Steve / Jessie 证明上层曝光存在，当前问题主要在点击和后续转化承接。",
+    highlights:[
+     {k:"关键数据",v:"Steve：480,829 曝光，266 点击，CTR 约 0.06%"},
+     {k:"核心判断",v:"不是简单换 KOL，而是先检查内容卖点、CTA、评论回复、落地页和 UTM/GA"},
+     {k:"可复用方向",v:"先参考 Deal / Manus / OpenClaw 的投放素材结构，做出可测试模板"}
+    ],
+    next:"下一步：输出 KOL 内容模板 + 评论回复策略 + UTM/GA 漏斗表。",
+    detailTitle:"查看 KOL 数据和判断",
+    details:[{table:{cols:["层级","Steve Nouri","当前判断"],rows:[
+     ["曝光","480,829 impressions","上层流量存在"],
+     ["互动","1,105 reactions / 85 comments / 21 reposts / 96 saves","评论和互动需要二次回复"],
+     ["点击","266 total clicks，CTR 约 0.06%","从内容到落地页的点击欲望弱"],
+     ["转化","注册/成交未追踪","需要补 UTM / GA / 注册 / 付费链路"]
+    ]}},{items:["参考 Deal / Manus / OpenClaw 的素材结构。","先打样内容和落地页，再扩大 KOL 投放。","评论区回复要变成二次引流入口。"]}]},
+
+   {topic:"视频剪辑与销售语料",owner:"周星星 / 李阳阳 / 孔德浩",
+    summary:"基础视频产出稳定，下一阶段重点转向能被 COCO 对外讲清楚的 Demo / Use Case。",
+    gantt:{months:[{m:"日期",w:10,labels:["5/29","5/30","6/10","6/11","6/12","6/15","6/17","6/23","6/25","6/26"]}],today:6,phases:[
+     {name:"已完成",note:"基础视频与活动素材稳定产出",tasks:[
+      {name:"Josh 亲身讲述 COCO 使用感受",pri:"P2",start:0,span:1,state:"done",meta:"5/29"},
+      {name:"COCO 对 Lark 操作 / 界面展示",pri:"P1",start:1,span:1,state:"done",meta:"5/30"},
+      {name:"Tiger 视频 2 / 3",pri:"P1",start:2,span:5,state:"done",meta:"6/10-6/16"},
+      {name:"Demo 视频中英文版 / VIP dinner",pri:"P1",start:3,span:4,state:"done",meta:"6/11-6/13"},
+      {name:"Paolo 直播切片 1-6",pri:"P2",start:4,span:3,state:"done",meta:"6/12-6/15"}]},
+     {name:"进行中",note:"客户案例与 use case 转成销售语料",tasks:[
+      {name:"知外文化客户案例视频",pri:"P0",start:6,span:2,state:"doing",meta:"录制完成 · 剪辑中"},
+      {name:"Demo / Use Case 录制提效",pri:"P0",start:6,span:2,state:"doing",meta:"待对齐账号与场景"}]},
+     {name:"未开始",note:"下一批场景视频",tasks:[
+      {name:"制造 / 物流 / 快消 / MCN 客户场景",pri:"P2",start:7,span:2,state:"plan",meta:"预计交付"},
+      {name:"电商公司客户使用场景",pri:"P2",start:7,span:2,state:"plan",meta:"预计交付"},
+      {name:"AI 员工日常 / 新场景新玩法",pri:"P5",start:8,span:2,state:"plan",meta:"待启动"}]}
+    ]},
+    highlights:[
+     {k:"已完成",v:"本周 11 条视频发布，包括 Tiger、Paolo 切片、Demo 中英文版、VIP dinner"},
+     {k:"当前卡点",v:"Use Case 录制耗时偏长，主要卡在产品理解、账号流程和录制场景"},
+     {k:"判断",v:"视频不是只为发布数量服务，要变成销售、转发和客户解释语料"}
+    ],
+    next:"下一步：约 COCO Harry / Eric 对齐账号、Agent 连接和录制流程。",
+    detailTitle:"查看视频明细",
+    details:[{table:{cols:["模块","状态","下一步"],rows:[
+     ["基础视频","稳定发布，含 Tiger / Paolo / Demo / VIP dinner","继续补平台链接和播放数据"],
+     ["知外文化客户案例","中英文版本录制后剪辑中","优先交付客户可转发版本"],
+     ["Demo / Use Case","录制耗时偏长","先确认账号、产品流程和录制场景"],
+     ["销售语料","需要从发布数量转成可讲内容","每条视频标记是否可给销售/客户转发"]
+    ]}}]},
+
+   {topic:"SEO 本周进展",owner:"李家乐",
+    summary:"SEO 数据开始增长，但官网技术结构会影响后续收录和流量承接。",
+    gantt:{months:[{m:"5月",w:3,labels:["W3","W4","W5"]},{m:"6月",w:4,labels:["W1","W2","W3","W4"]},{m:"7月",w:4,labels:["W1","W2","W3","W4"]},{m:"8月",w:4,labels:["W1","W2","W3","W4"]}],today:6,phases:[
+     {name:"阶段零 · 准备期",note:"关键词 / 模板 / 基础设施",tasks:[
+      {name:"关键词研究 + 页面模板 + GSC 基础配置",pri:"P0",start:0,span:3,state:"done",meta:"已完成"}]},
+     {name:"阶段一 · 验证期",note:"目标：收录率 > 50%，5 个页面进入 Google 前 50",tasks:[
+      {name:"已发布矩阵页 / 首批 SEO 页面",pri:"P0",start:2,span:4,state:"done",meta:"收录率约 45%"},
+      {name:"5 个 Use Case 页面更新",pri:"P0",start:4,span:2,state:"done",meta:"已完成"},
+      {name:"CTA 埋点 / GSC 监控 / Index 追踪",pri:"P1",start:5,span:3,state:"doing",meta:"进行中"},
+      {name:"About / Canonical / Title 修复",pri:"P0",start:6,span:2,state:"doing",meta:"待技术侧确认"}]},
+     {name:"阶段二 · 扩展期",note:"目标：20-50 个关键词进入 Google 前 20",tasks:[
+      {name:"扩展场景页",pri:"P0",start:7,span:3,state:"plan",meta:"规划中"},
+      {name:"Use Case 体系化",pri:"P1",start:7,span:4,state:"plan",meta:"规划中"},
+      {name:"支柱页 / 目录站提交 / 工具页",pri:"P1",start:8,span:4,state:"plan",meta:"待启动"}]},
+     {name:"阶段三 · 规模期",note:"目标：行业页 + 数据页 + 多语言",tasks:[
+      {name:"行业页 / 场景矩阵 / 多语言结构",pri:"P2",start:12,span:3,state:"plan",meta:"8月推进"}]}
+    ]},
+    highlights:[
+     {k:"数据增长",v:"总曝光 188 → 913；总点击 6 → 35；页面收录率约 45%"},
+     {k:"主要问题",v:"CSR 渲染、About Canonical、标题重复、404、docs 子域内容结构"},
+     {k:"当前判断",v:"页面继续做，但技术债必须同步推进，否则流量很难稳定承接"}
+    ],
+    next:"下一步：COCO 技术侧确认 owner 和修复时间表。",
+    detailTitle:"查看 SEO 数据和问题清单",
+    details:[{table:{cols:["指标","6/10","6/17","环比"],rows:[
+     ["总曝光次数","188","913","+385.64%"],
+     ["品牌词曝光","17","95","+458.82%"],
+     ["总点击次数","6","35","+483.33%"],
+     ["品牌词点击","0","17","新增 17"],
+     ["高意向词点击","5","13","+160.00%"]
+    ]}},{items:["CSR 渲染影响 Google 初次抓取。","About canonical 和标题重复需要修复。","404、docs 子域和 URL 结构需要统一进入技术排期。"]}]},
+
+   {topic:"社媒与内容方向",owner:"侯明真",
+    summary:"大会流量红利正在回落，后续要从热点流量转向稳定内容机制。",
+    highlights:[
+     {k:"数据判断",v:"社媒数据下滑不是坏消息，它提示我们要找可复制的流量密码"},
+     {k:"内容方向",v:"少做泛话题，多做真实客户案例、业务场景、生产力提升"},
+     {k:"客户案例",v:"知外文化类案例适合做联合宣发和信任资产"}
+    ],
+    next:"下一步：重写知外文化客户案例，标题先抓业务痛点，再补客户故事和配图。",
+    detailTitle:"查看社媒与内容明细",
+    details:[{items:[
+     "大会算法红利退去后，数据回落是寻找稳定内容机制的信号。",
+     "内容不要只围绕泛女性话题，要落到真实客户如何用 COCO 放大业务能力。",
+     "Tiger、Paolo、产品介绍片都要补一层“客户能对外讲什么”的转发语料。"
+    ]},{links:[{label:"社媒数据看板 ↗",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1JbfS5"}]}]},
+
+   {topic:"待会议确认的推进项",owner:"侯明真",
+    summary:"这部分是会前拟推进项，需在 6/18 周会现场确认优先级和配合方式。",
+    highlights:[
+     {k:"P0",v:"KOL 漏斗复盘；视频录制提效会；SEO 技术债 owner 确认"},
+     {k:"P1",v:"知外文化客户案例重写；整理 20 个同类客户线索"},
+     {k:"交付标准",v:"每项都要有负责人、下一步、验证方式，避免只停留在讨论"}
+    ],
+    next:"会议确认后，这些事项进入 6/19-6/26 的每日执行记录。",
+    detailTitle:"查看拟推进明细",
+    details:[{table:{cols:["优先级","事项","验收口径"],rows:[
+     ["P0","KOL 漏斗复盘","内容模板 + 评论回复策略 + UTM/GA 漏斗表"],
+     ["P0","视频录制提效会","账号、Agent 连接、录制流程一次问清"],
+     ["P0","SEO 技术债推进","每项有 owner、目标日期、验证方式"],
+     ["P1","知外文化客户案例重写","标题、配图、客户故事和可转发版本"],
+     ["P1","20 个同类客户线索","按客户画像筛选，不广撒网"]
+    ]}}]}
+  ],
+  blockers:[
+   {item:"KOL 有曝光但点击/转化弱",need:"补 UTM/GA 漏斗、评论回复、落地页和内容模板复盘；COCO Alex 提供原始数据",client:true,owner:"侯明真"},
+   {item:"Demo / Use Case 录制效率需要提升",need:"和 COCO Harry/Eric 对齐账号、Agent 连接和录制流程",client:true,owner:"侯明真 / 孔德浩"},
+   {item:"官网技术结构影响 SEO 承接",need:"COCO 技术侧确认 CSR、URL、docs 子域和 About/Canonical 修复安排",client:true,owner:"李家乐"}
+  ],
+  requests:[
+   {date:"06-18",source:"6月18日会议文本",quote:"确认 Steve/Jessie 投放后的完整 UTM、GA、注册、付费漏斗数据。",status:"待贵方提供",owner:"侯明真",resp:"由 COCO Alex 提供原始数据后，整理漏斗与素材模板复盘。"},
+   {date:"06-18",source:"6月18日会议文本",quote:"确认 COCO 技术侧 SEO 修复负责人和时间表。",status:"待贵方提供",owner:"李家乐",resp:"列出 CSR、URL、docs、Canonical 修复清单。"},
+   {date:"06-18",source:"6月18日会议文本",quote:"确认 Demo / Use Case 视频录制流程和账号权限。",status:"处理中",owner:"侯明真",resp:"约 Harry / Eric 对齐。"}
+  ],
+  psych:"",
+  psychStages:[],
+  deliveries:{
+   内容:[{title:"SuperAI 公众号长文 + 2 条 X Thread 发布完成",owner:"侯明真",date:"06-18",pub:{plat:"公众号/X",url:"https://mp.weixin.qq.com/s/PYw1pHxWB8MML4Tjdic3Qg"}},{title:"知外文化客户案例进入重写",owner:"侯明真",date:"06-18"}],
+   视频剪辑:[{title:"本周视频发布 11 条",owner:"周星星 / 李阳阳",date:"06-18"},{title:"知外文化客户案例视频剪辑中",owner:"孔德浩 / 周星星",date:"06-18"}],
+   SEO:[{title:"GSC 总曝光 188 → 913，总点击 6 → 35",owner:"李家乐",date:"06-18",pub:{plat:"GSC",url:"https://search.google.com/search-console?utm_source=about-page&resource_id=sc-domain:icoco.ai"}},{title:"官网 SEO 技术问题列入推进",owner:"李家乐",date:"06-18"}]
+  },
+  metrics:[
+   {name:"Steve 曝光",prev:0,cur:480829,series:[0,480829],srclabel:"KOL投放数据"},
+   {name:"Steve 点击",prev:0,cur:266,series:[0,266],srclabel:"KOL投放数据"},
+   {name:"GSC 总曝光",prev:188,cur:913,series:[188,913],src:"https://search.google.com/search-console?utm_source=about-page&resource_id=sc-domain:icoco.ai",srclabel:"GSC ↗"},
+   {name:"GSC 总点击",prev:6,cur:35,series:[6,35],src:"https://search.google.com/search-console?utm_source=about-page&resource_id=sc-domain:icoco.ai",srclabel:"GSC ↗"}
+  ],
+  mustAsk:["KOL 投放后的 UTM / GA / 注册 / 付费漏斗是否完整？","COCO 技术侧 SEO 修复 owner 和时间表是谁？","Demo / Use Case 视频录制卡点到底是账号、产品流程还是场景脚本？"],
+  nextWeek:["KOL 漏斗复盘和模板库","视频录制提效会","SEO 技术债 owner 和时间表","知外文化客户案例重写","20 个同类客户线索整理"],
+  agenda:["KOL投放复盘","视频进度","SEO进展","社媒数据","发布情况","下周推进"],
+  shots:["KOL 投放数据","视频进度表","SEO GSC 数据","社媒数据看板","已发布内容链接"]
+ };
+ DB.clientPsych={
+  summary:"COCO 的 ICP 主线已校准为：NUS EMBA -> 知外文化 / 言书 / 汪丽娜 -> 找 200 个言书。Mona Das 不再放入核心 ICP，只作为 validation point / 影响力信号。核心事实层是知外文化 26 个 agent、介绍 40+ 客户（包括杜蕾斯中国）；后续白板和画像都围绕这条主线沉淀。",
+  stages:[
+    {date:"06/21",title:"ICP主线校准：知外文化 / 言书才是核心",source:["2026-06-21 群聊记录（客户反馈：ICP主线校准）"],signal:"客户明确校正：知外文化是核心，言书是这条线的核心 ICP；Mona Das 不是 ICP，而是 validation point / 影响力信号。",detail:"主线事实不是泛泛谈女性企业家，而是围绕“找 200 个言书”复制已验证链路：知外文化 26 个 agent、介绍 40+ 客户、包括杜蕾斯中国。",response:""},
+    {date:"07/15-07/18",title:"主线剧情：NUS EMBA -> 知外文化 -> 200 个言书",source:["2026-06-21 群聊记录（客户反馈：ICP主线校准）"],signal:"COCO 第一季主线是 NUS EMBA -> 知外文化 / 言书 / 汪丽娜；7/15 NUS EMBA 校友会晚宴露出，7/16 面向 NUS EMBA 学员做 AI 免费辅导会，作为 Season 1 的终点。",detail:"7/18 SF 见面与 Enterprise AI Adoption panel 承接品牌势能；之后进入 OpenMax / workspace / 新品牌发布的第二季。",response:""},
+   {date:"06/18 15:45",title:"女性客户画像开始成形",source:["6月18日群聊记录","Charlie 现场判断"],signal:"Charlie 提到过去谈了 20 个客户，18 个是女性，并把机会指向女性创业者、女性高管、midtech 与非 AI native 人群。",detail:"关键原话包括：AI 减少她们因为不会写代码无法做产品的生产力瓶颈；女企业家出没的地方我们都要出没；教育、培训、女性成长、流量、女性企业家关注话题都可成为内容入口。",response:"用户画像页要从“泛客户资料”转成“高能女性创业者为什么需要 COCO”的判断板。"},
+   {date:"06/18 17:16",title:"从曝光转向信任层与转化链路",source:["6月18日群聊记录 / Steve Nouri 数据截图","6月18日群聊记录"],signal:"Steve 帖子有 480,829 impression、266 clicks，但转化弱。Charlie 判断问题不在换一个 KOL，而是没有承接和信任层。",detail:"群聊里出现“美国没品牌，no trust layer”“看到 wtf is Coco 然后就跳走了”“流量不等于能转化”等判断。",response:"后续每个内容资产都要说明它补哪一层信任：品牌背书、客户证据、场景理解、CTA/落地页承接。"},
+   {date:"06/19 12:48",title:"ICP 被重新切到女性企业家",source:["6/19 群聊","客户画像统计"],signal:"Charlie 提到 COCO 统计过 40 个客户或客户渠道，37 个是女性；用户应聚焦 30-45 岁女性高管/企业家。",detail:"初步渠道判断：小红书干活分享 + 案例视频 + demo 直播 + 社群转私域/线下 -> 转化。平台不是流量装饰，而是信任路径。",response:"内容要围绕她们的决策路径：触点、背书、陪跑试用、共创、复购与转介绍。"},
+   {date:"06/20-06/21",title:"内容方法从产品稿升级为宣言型故事",source:["Charlie 参考 Nervos","女性企业家文章讨论"],signal:"Charlie 明确要找“女性企业家版 Nervos”，不是普通软文。结构是戏剧化冲突、资历背书、灵魂拷问、使命宣告。",detail:"参考组合：Nervos 的四幕式结构 + 李一诺《生于1977》的情绪密度 + 梁宁《愧疚感和罪恶感》的暗面坦诚。避免纯励志、纯鸡汤、纯产品卖点。",response:"素材库要沉淀写作公式，文章和视频都要能打穿“不会写代码也能带 AI 团队”的非共识。"},
+   {date:"06/21",title:"情绪层从爽文转向暗面诚实",source:["郝瑜文案反馈","Charlie / Will 讨论"],signal:"真正要打动的不是“赚钱”“套利”这类泛流量，而是高能女性长期自己扛事后的疲惫、被低估、愧疚、孤独和终于能交出去的松动。",detail:"郝瑜提出要写出“她们不说但都懂”的感受：算了我自己来、晚上还在回消息、被低估、总觉得自己应该做得更好、没人能分担最后拍板压力。",response:"用户画像要保留暗面情绪，但客户白板只呈现提炼后的洞察，不展示内部心路。"},
+   {date:"06/21",title:"影响力渠道从 buyer 扩展到信号人物",source:["2026-06-21 群聊记录（客户反馈：ICP主线校准）","Mona Das 通话准备"],signal:"Mona Das 不是 ICP，而是政客 / 社会运动家类型的 validation point，可用于验证女性赋能叙事的传播势能。",detail:"该线索保留为影响力渠道与叙事验证，不进入核心 ICP 主线；核心客户复制目标仍是“200 个言书”。",response:"后续渠道页要区分 buyer、signal、channel，不要把所有对象都按销售线索处理。"}
+  ],
+  evidence:[
+    {date:"06/21 22:52-22:59",type:"6月21日群聊记录",source:"2026-06-21 群聊记录（客户反馈：ICP主线校准）",detail:"客户确认：知外文化是核心，言书是核心 ICP；Mona Das 不是 ICP，是政客/社会运动家，只作为 validation point；生态核心是找 200 个言书。",meaning:"ICP 主线从泛女性企业家校准为“知外文化 / 言书 / 汪丽娜”这一可复制客户类型。"},
+   {date:"06/18 15:45-16:14",type:"6月18日群聊记录",source:"Will × COCO MKT",detail:"“过去谈了20个客户18个是女性”“重运营、midtech，AI 成了她们能力放大的翅膀”“教育、培训、女性成长、流量、女性企业家关注话题”。",meaning:"客户画像从泛 AI 出海收敛到女性创业者/女性高管。"},
+   {date:"06/18 17:16-19:26",type:"数据 + 群聊",source:"Steve Nouri LinkedIn 复盘",detail:"480,829 impression、266 clicks；讨论“no trust layer”“流量有了，转化太差”。",meaning:"问题是信任层和转化承接，而不是单纯扩大投放。"},
+   {date:"06/19",type:"6月19日群聊记录 + 视频源文件",source:"知外文化 Use Case 中文/英文版",detail:"6/19 中文版已发布；英文版在 6/19 晚完成多轮文案与 VO 修正。",meaning:"Use Case 视频是销售语料，不是机械发布。"},
+   {date:"06/20-06/21",type:"6月21日群聊记录 + 外部参考链接",source:"Nervos / 李一诺 / 梁宁 / 辣辣说",detail:"Nervos 提供宣言结构，李一诺提供人生叙事密度，梁宁提供暗面诚实，辣辣说提供女性成长语境。",meaning:"COCO 的爆款文章要从真实女性痛点和时代召唤出发。"},
+   {date:"06/21 09:37",type:"6月21日群聊记录",source:"Charlie 群聊",detail:"Nervos 四幕式结构 + 李一诺《生于1977》的情绪密度 + 梁宁《愧疚感和罪恶感》的暗面坦诚。",meaning:"文章要像宣言和真实人生叙事，不像产品软文。"},
+   {date:"06/21 22:24-22:43",type:"6月21日群聊记录",source:"郝瑜 / Charlie 群聊",detail:"“算了我自己来”的惯性、深夜独自处理、被低估、愧疚、孤独、没人分担最后拍板压力。",meaning:"女性企业家画像要有真实暗面，不能只写光明励志。"},
+   {date:"06/21",type:"6月21日群聊记录 + Mona Das 外部资料",source:"Mona Das 通话策略",detail:"前华盛顿州参议员、电影制作人、女性公共叙事传播者；不宜硬 pitch，先对齐使命。",meaning:"COCO 需要影响力人物与渠道型信号。"}
+  ],
+  currentQuestions:[
+   "如何让女性创业者感到：COCO 不是技术工具，而是她的执行层？",
+   "哪些真实材料能证明“她已经会管理人，因此也能管理 AI”？",
+   "哪类内容会让她愿意转发认同，而不是觉得鸡汤或营销？",
+   "曝光、信任、点击、注册、试用之间还缺哪一段证据链？",
+   "如何把“知外文化 / 言书 / 汪丽娜”沉淀成可复制的 200 个言书筛选标准？",
+   "哪些表达能让她觉得“这说的是我”，而不是觉得又是一篇 AI 营销稿？"
+  ],
+  meetingTactics:[
+   "先讲画像结论，再讲真实证据，再讲内容/视频/SEO如何服务这条画像。",
+   "文章不要只写“AI 很有用”，要写女性创业者为什么终于可以把执行层交出去。",
+   "每个视频和素材标注：触达谁、触发什么心理、下一步转化动作。",
+   "客户案例必须用真实细节支撑，不用虚构痛点补洞。",
+   "用户画像页保留内部判断，客户白板只输出简洁结论和可验证证据。",
+   "Alex 属于 COCO 侧，页面只记录为数据/素材/确认配合方，不放进 Will 团队负责人。"
+  ]
+ };
+ DB.demoVideos=[
+  {title:"知外文化客户案例视频（中文版）",type:"Use Case / 客户案例",status:"已发布",owner:"周星星 / 李阳阳",finished:"2026-06-19",length:"1:01",source:"9369bca75e1ae6c80a634552d0d6f470.mp4；COCO客户案例脚本_言书_Final_v3.7.pdf；微信群 6/19 发布确认",schedule:"原排期为 6/17 外部文化客户使用案例，实际因事实核对、脚本重写与重新剪辑，6/19 发布。",notes:["事实修正：知外文化不是知乎，是知乎外部合作的大 MCN。","主线修正为小红书事业部/女性创业者案例。","视频不是机械发布，目标是成为 COCO 对外销售语料。"]},
+  {title:"知外文化客户案例视频（英文版）",type:"Use Case / English",status:"已完成，待发布链接回填",owner:"周星星 / 梦雨 / 李阳阳",finished:"2026-06-19 22:33",length:"约 1:20-1:29",source:"微信群 6/19 多轮英文版反馈；本地源视频待回填（目录中有多个 1:10-1:28 版本，尚未唯一确认）",schedule:"中文版通过后推进英文版，重点修正 VO、英文表达和结尾 CTA。",notes:["关键表达：Going from using AI to managing AI is not about technology; it is about how you manage your AI workforce.","结尾 CTA：COCO AI agents, deploy in minutes. Get your first agent for $99.","整体 flow 和 vibe 已通过，仍需发布链接回填。"]},
+  {title:"Use Case / Demo 视频协作说明",type:"协作流程文档",status:"已发送 COCO",owner:"侯明真",finished:"2026-06-18 16:23",length:"PDF 文档",source:"Use Case、Demo视频协作说明.pdf",schedule:"用于校准后续 demo/use case 的录制协作方式。",notes:["三种协作方式：客户完整素材、客户粗录素材、Will 团队代录代剪。","建议单条原始素材 60-120 秒，1080p+。","先定方向、再制作、初剪确认、精修交付。"]}
+ ];
+ DB.materialLibrary=[
+  {date:"06/21",kind:"文案草稿",title:"不会写代码，照样带起 26 个 AI 员工",from:"郝瑜 / COCO侧",use:"女性企业家爆款文章主线",outline:"从一个人扛到 AI 执行层；言书与知外文化案例；COCO 不是聊天机器人，而是一支可管理的 AI 团队。",source:"用户粘贴全文；公众号女性创业者稿"},
+  {date:"06/21",kind:"参考文章",title:"Nervos：为了更好的世界",from:"Charlie",use:"宣言型结构参考",outline:"质疑开场、团队资历背书、灵魂拷问、使命宣告。适合改造成中国女企业家版 COCO 宣言。",source:"https://talk.nervos.org/t/nervos/2967"},
+  {date:"06/21",kind:"参考文章",title:"李一诺《生于1977》",from:"Charlie / 分析",use:"情绪密度参考",outline:"多重身份、人生根系、代表中国的隐性野心；适合女性企业家高共鸣叙事。",source:"https://nulishehui.blog.caixin.com/archives/171093"},
+  {date:"06/21",kind:"参考文章",title:"梁宁《愧疚感和罪恶感》",from:"Charlie / 写法拆解",use:"暗面诚实参考",outline:"用不完美、愧疚、自省和真实暗面降低宣言感，避免文章显得悬浮或过度光明。",source:"用户补充的写作公式与微信群讨论"},
+  {date:"06/21",kind:"参考文章",title:"辣辣说：准备好认知、能力、资源",from:"用户补充",use:"女性成长语境参考",outline:"学习力、共情力、链接力、表达力、组织力；从产品转向个人价值与社群组织力。",source:"用户粘贴全文"},
+  {date:"06/21",kind:"内容参考",title:"Charlie：Human agency is limitless",from:"Charlie / COCO侧",use:"COCO 价值观钩子",outline:"AI 抹平“我能不能做”的门槛后，真正稀缺的是人的意愿、判断和 agency；适合做品牌升级前的核心表达。",source:"微信群截图；Charlie LinkedIn 内容截图"},
+  {date:"06/21",kind:"访谈准备",title:"Mona Das 通话准备",from:"Charlie / AI 分析",use:"影响力渠道",outline:"前华盛顿州参议员、电影制作人、女性公共叙事传播者；对齐 mission，不硬 pitch 产品。",source:"monadas.org；用户聊天记录"},
+  {date:"06/19",kind:"PDF",title:"COCO AI 内容策略-【女性企业家版】",from:"梦雨 / COCO侧",use:"内容战略底稿",outline:"ICP 分层、平台矩阵、6 个月 roadmap、KPI 与反共识。",source:"D:/WX/xwechat_files/wxid_kx7sdz8jsnmi21_14c4/msg/file/2026-06/COCO AI 内容策略- 【女性企业家版】.pdf"},
+  {date:"06/19",kind:"PDF",title:"COCO客户案例脚本_言书_Final_v3.7",from:"侯明真",use:"知外文化中文版视频脚本",outline:"言书/知外文化案例最终脚本，6/19 经 Charlie 确认改为小红书事业部。",source:"D:/WX/xwechat_files/wxid_kx7sdz8jsnmi21_14c4/msg/file/2026-06/COCO客户案例脚本_言书_Final_v3.7.pdf"},
+  {date:"06/18",kind:"PDF",title:"Use Case / Demo 视频协作说明",from:"Will 团队",use:"视频协作 SOP",outline:"三种协作方式、素材规格、每周产出节奏、协作流程。",source:"D:/WX/xwechat_files/wxid_kx7sdz8jsnmi21_14c4/msg/file/2026-06/Use Case、Demo视频协作说明.pdf"},
+  {date:"06/19",kind:"PPT",title:"如何调度26个AI员工-贺小波",from:"Charlie / COCO侧",use:"26 AI 员工案例素材",outline:"用于支撑“不会写代码也能管理 AI 团队”的真实案例底料。",source:"D:/WX/xwechat_files/wxid_kx7sdz8jsnmi21_14c4/msg/file/2026-06/如何调度26个AI员工-贺小波(1).pptx"},
+  {date:"06/18",kind:"TXT",title:"Kesi US GTM team 1 / 2",from:"Charlie / COCO侧",use:"美国 GTM 与渠道参考",outline:"美国市场 GTM 人群、竞品/渠道/内容打法参考。",source:"D:/WX/xwechat_files/wxid_kx7sdz8jsnmi21_14c4/msg/file/2026-06/Kesi US GTM team 1.txt；Kesi US GTM team 2.txt"},
+  {date:"06/18",kind:"分析",title:"Steve Nouri KOL 投放与评论回复",from:"梦雨 / COCO侧",use:"KOL 转化漏斗复盘",outline:"48 万曝光、266 点击、85 条评论；重点是 P0 评论回复、UTM/GA、落地页与信任层。",source:"[LinkedIn] Steve Nouri - KOL 分析.pdf；Google Sheet 截图"},
+  {date:"06/18",kind:"SEO",title:"COCO SEO 技术卡点整理",from:"李家乐",use:"SEO 修复与技术债",outline:"CSR 渲染、canonical、URL 结构、docs 子域、404、hreflang 等问题；需要 Kevin/技术侧介入。",source:"icoco_ai_seo_(1).pdf；6/16 SEO 讨论会"}
+ ];
+ const coco=DB.clients&&DB.clients.find(c=>c.name==="COCO");
+ if(coco){
+  coco.one="6/18 周会进展：KOL 投放已有曝光，下一步重点优化点击与转化承接；视频、SEO 和客户案例内容同步推进。";
+  coco.red=DB.weeks[0].blockers.length;
+ }
+})();
+
 /* ================= 渲染（Codex 不改） ================= */
 const $=s=>document.querySelector(s);
 let route="overview", selWeek=0;
-const NAV={ 概览:["overview"], "客户 · COCO":["board","gantt","data"], 过程:["feed","requests","deliverables","meetings","files"], 操作:["submit","roster"] };
-const VIEWS={ overview:"全客户总览",board:"白板",gantt:"项目路线图",data:"数据中心",feed:"工作动态流",requests:"确认事项",deliverables:"交付时间线",meetings:"会议",files:"物料",submit:"录入",roster:"团队名单" };
+
+
+
+DB.sourceIndex=[
+ {id:"chat-0621-icp-feedback",title:"2026-06-21 群聊记录（客户反馈：ICP主线校准）",kind:"群聊记录",date:"2026-06-21",asset:"assets/sources/chat-2026-06-21-icp-feedback.md",excerpt:"客户确认：知外文化 / 言书 / 汪丽娜是主线，Mona Das 不是 ICP；生态核心是找 200 个言书；Season 1 以 NUS EMBA 与知外文化为主线，Season 2 进入 OpenMax / workspace 新品牌发布。"},
+  {id:"chat-2026-06-16-21",title:"6月16日—6月21日群聊记录",kind:"群聊记录",date:"2026-06-16 至 2026-06-21",asset:"assets/sources/chat-2026-06-16-21-excerpts.md",excerpt:"# 6月16日—6月21日群聊记录归类摘录\n\n> 说明：本文件由用户在当前对话中上传的微信截图与粘贴文本整理，用于客户工作台的可点开来源。截图原件未逐一搬运进站点，本文件保留可审阅的原文摘录与日期索引。\n\n## 6月16日：女性客户画像、视频协作、Steve Nouri数据\n- 侯明真：Tiger 的视频各平台都发了，下面是朋友圈转发文案。\n- Charlie：最近感觉越来越明显，过去谈了20个客户18个是女性。\n- Charlie：女性在选ai产品的时候还是比较有眼光的。\n- Charlie：重运营、midtech、AI成了她们能力放大的翅膀，解决了她们因为不会写代码无法做产品的生产力瓶颈。\n- Charlie：女企业家出没的地方，我们都要出没。\n- 侯明真：以后把女企业的赛道全覆盖，以后都让她们用上COCO。\n- Charlie：女性企业家，可以共情，共鸣的爆款内容；superai大会算法没了，回到阵地战，需要爆款内容。\n- 侯明真给Charlie：Use Case / Demo 视频协作说明，说明三种配合方式。\n- Charlie提供Steve Nouri LinkedIn数据：480,829 impressions，266 total clicks，CTR 约0.06%，reactions 1,105，comments 85，reposts 21，saves 96。\n\n## 6月17日：KOL、信任层、品牌联合宣发\n- Charlie：KOL投放这个还是要有体系化的信任，品牌基础之后才可以。\n- Charlie：美国我们现在没品牌，没基础，直接作一个 genai 来拍，蛮难转化。\n- Charlie：看到“wtf is Coco”然后就跳走了。\n- Charlie：真正要赚美国人的SaaS软件的钱，想问题还是要更系统一些。\n- Charlie：微信公共号 + 推特推文，负责人和分工要明确，什么时候可以回复消息。\n- Will：美国有关美国的漏斗，要多参考优秀2B竞品的冷启动。\n\n## 6月18日：会议白板、SEO、任务拆解\n- 会议主题：Will × COCO MKT会议，会议时间 2026/6/18 13:00-14:00，中国标准时间。\n- 白板：COCO英赛网站优化、KOL投放数据、具体做法、视频剪辑、SEO本周进展、社媒数据看板、本周视频发布情况、SuperAI收尾内容发布总结。\n- SEO问题：官网实时渲染不是HTML导致抓取困难；About canonical、URL结构、404、docs子域结构等是技术债，需要Kevin介入。\n- Will团队待办：Steve Nouri转化漏斗复盘、竞品看板扩充、Deal/Ins内容模板复盘、女性创业者文章重写发布、P0评论回复、视频录制问题对接、SEO todo list跟进。\n- COCO团队待办：补充5-10个TOB竞品、整理GA数据、P0评论话术、MCN榜单skill、SEO官网技术债修复、Eric配合产品使用问题对接。\n\n## 6月19日：知外文化案例视频与女性企业家内容\n- 侯明真：6.19 知外文化案例视频各平台都发了，下面是朋友圈转发文案。\n- 侯明真总结：大多数人用AI还是当员工在用，知外文化是120个人配26个AI，一起做营销；她们在COCO上把AI当合伙人。\n- Charlie：爆款文章，女性老板要看的文章；每天谈的客户和渠道都是美女企业家老板。\n- Charlie：COCO过去按数据统计，见了40个客户/客户渠道，37个是女性。\n- Charlie：COCO最大机会是让一大堆女性企业家、职场实力女高管，midtech、not AI native，可以通过COCO改变自己的职业工作生涯。\n- 梦雨：小红书干活分享 + 案例视频 + Demo直播 + 社群转私域流量/线下 -> 转化。\n\n## 6月20日：战略定位、品牌升级、内容方法\n- Charlie：Nervos文章的打穿逻辑值得参考：戏剧化冲突、资历背书、灵魂拷问、使命宣告。\n- 侯明真：借鉴梁宁《愧疚感和罪恶感》的暗面坦诚，新增言书\"坎\"那一章。\n- Charlie：0代码这个点我觉得有点浅；很多女企业家用COCO也不是用来做产品写代码，而是AI power之后，高agency、高自主性、高能动性的"},
+  {id:"meeting-2026-06-18",title:"2026-06-18 Will×COCO MKT会议逐字稿",kind:"会议文本",date:"2026-06-18",asset:"assets/sources/meeting-20260618-transcript.txt",excerpt:"6月18日周会逐字稿源文件，作为白板后续方向、SEO、视频与任务拆解的会议依据。"},
+  {id:"internal-review-2026-06-18",title:"6月18日内部复盘会议文本",kind:"内部复盘",date:"2026-06-18",asset:"assets/sources/coco-internal-review.txt",excerpt:"内部复盘会议文本，包含Steve Nouri投放复盘、任务拆解、SEO与视频后续处理逻辑。"},
+  {id:"signal-2026-05-08",title:"周度信号卡：2026年5月8日",kind:"周度信号卡",date:"2026-05-08",asset:"assets/sources/signal-2026-05-08.md",excerpt:"早期周度GTM内部会议信号卡。"},
+  {id:"signal-2026-05-22",title:"周度信号卡：2026年5月22日",kind:"周度信号卡",date:"2026-05-22",asset:"assets/sources/signal-2026-05-22.md",excerpt:"# 周度信号卡 — COCO\n\n客户代号：COCO\n会议日期：2026年5月22日\n会议时长：约1小时（00:01—01:01）\n分析日期：2026年5月31日\n会议性质：周度客户会议（KA案例复盘 + 三线社媒分发过盘 + GEO/SEO进展）\n\n## 核心议题\nICP客户画像收缩与案例视频内容工作流搭建（KA复盘叠加社媒三线分发过盘）。\n\n## 情感锚点\n\n### 1. ICP画像收缩、砍掉纯小C客户\n- 高温信号：填充词密度骤升，一口气长段陈述，\"不是我们用户\"\"不做了\"类判断重复多次。\n- 原话引用：Charlie 00:10:09 \"现在就是可有个基础的结论就是纯，就是买个几十美金，觉得我们99美金一个月还贵的那种小 c 就大概率不是我们的客户了。纯小 C 的可能就不做了，也没空伺候那些人之前搞了一堆试用的，到后来也就没续费。就是那帮人，不是我们用户。\"\n- 时间标记：00:10\n\n### 2. 单一渠道效应 vs 自办活动\n- 高温信号：重复\"没有任何卵用\"\"没有任何意义\"，语气强烈，连续否定过去的自办活动投入。\n- 原话引用：Charlie 00:11:30 \"我把这一个渠道管好了，就指别的各种各样别的事了，我辛辛苦苦做半天活动，没有任何卵用。这个从客户销售层面现在直接是一个很现实的状态，就是后面 JC 卡的那种有的没的活动 meta error 活动我都不去了，没有任何意义。\"\n- 时间标记：00:11\n\n### 3. Hack media 及其 LinkedIn ads 方案\n- 高温信号：反复贬低，\"挺水的\"\"扯淡\"\"虚\"\"就那么回事\"等词密集出现。\n- 原话引用：Charlie 00:16:27 \"克 media 我聊了，我觉得挺水的。那女的可能不懂，给我发了一个方案，我都不想给你发，就很扯淡，我觉得。\"\n- 时间标记：00:16—00:22\n\n## 新出现的人名/公司/事件\n- 杜蕾斯：大中华区总部正式官方合作。Charlie 00:09:44 \"对我们跟杜蕾斯已经正式合作了官方合作了。\"\n- 追觅：一个BU在用。Charlie 00:15:37 \"追觅的一个 BU 在用了。\"\n- Hack media / 艾瑞克：美国agency及老板，需与真正用AI产品的人沟通。\n- the nine bit / 第九城市：新加坡游戏子公司，单独案例。\n- GGoptima / 绩优：候选国内GEO供应商。\n- Salesforce 与 Slack 大会：Charlie参加后受到冲击。\n\n## 反复回归的人名/事件\n- Hack media / LinkedIn ads：持续走低。\n- 之外文化：持续升温，是最大客户和渠道案例之一。\n- 视频：出现5次以上，成为案例对外转化抓手。\n- workspace / 产品上线：保持平稳。\n\n## 关键原话摘录\n1. Charlie 00:10:09 \"纯小 C 的可能就不做了...就是那帮人，不是我们用户。\"\n2. Charlie 00:11:30 \"我辛辛苦苦做半天活动，没有任何卵用。\"\n3. Charlie 00:15:56 \"真正有进展的还是在亚洲在东边。\"\n4. Charlie 00:21:57 \"agency 就白白人那个圈子混的比较厉害...业务水平就那么回事。\"\n5. Charlie 00:37:16 \"我想把中国的 GEO 最牛逼的都聊一遍。\"\n\n## 回避/未完成的话题\n- 案例语料交付：Will多次索要语料，Charlie以\"找找\"\"你们找找看找不到我再找\"回应。\n- 案例对外工作流SOP：承认流程缺失，但未承诺时间。\n- 视频产品进度：推到内部日会。"},
+  {id:"signal-2026-05-29",title:"周度信号卡：2026年5月29日",kind:"周度信号卡",date:"2026-05-29",asset:"assets/sources/signal-2026-05-29.md",excerpt:"5月29日周度信号卡源文件。"},
+  {id:"profile-2026-05",title:"月度画像：COCO 2026年5月",kind:"月度画像",date:"2026-05",asset:"assets/sources/profile-2026-05.md",excerpt:"2026年5月客户画像总览，覆盖5月多次会议。"},
+  {id:"signal-2026-06-05",title:"周度信号卡：2026年6月5日",kind:"周度信号卡",date:"2026-06-05",asset:"assets/sources/signal-2026-06-05.md",excerpt:"# 周度信号卡 — COCO\n\n客户代号：COCO\n会议日期：2026年6月5日\n会议时长：约1小时10分钟\n分析日期：2026年6月9日\n会议性质：周度例会（新市场负责人 Alex 首次参会）\n\n## 核心议题\n视频内容生产卡点与网红/KOL 渠道的取舍排序。\n\n## 情感锚点\n\n### 1. Will 找来的 MCN agency（1万美金）\n- 高温信号：从汇报节奏突然切换到直白吐槽，连用\"贼丑\"\"贼恶心\"，重复\"没好好做\"\"一直卡着\"。\n- 原话引用：Charlie Hu 01:03:53 \"就是我们 will 找过来那个 agency，我就直话直说...我觉得他们第一波给我的视频贼丑，然后贼恶心，根本就没有符合我期望值...\"\n- 原话引用：Charlie Hu 01:04:25 \"他反正就一直逼我说拍50个视频，那我就第一波都没有让我满意，然后50个视频让我付钱...\"\n- 时间标记：01:03:53 – 01:05:09\n\n### 2. 私下拉会的\"文化\"\n- 高温信号：会议收尾时突然插入价值观表态，对新同事 Alex 喊话。\n- 原话引用：Charlie Hu 01:03:22 \"我要什么顾问我不喜欢那种私下你们拉会，然后搞得跟啥似的，我不喜欢这种文化。你有意见直接说...\"\n- 时间标记：01:03:22\n\n### 3. lollipopstar\n- 高温信号：先兴奋后否定，重复 scamy、\"有病吗\"，用背景信息论证不合作。\n- 原话引用：Charlie Hu 00:07:45 \"后来美国人的圈子里一问这个人口碑不太好，然后跟他合作的人都被他割了，有点 hustler scamming 的这种感觉。\"\n- 时间标记：00:07:45；01:06:59 – 01:07:56\n\n## 新出现的人名/公司/事件\n- 王荣鉴（Alex）：COCO 新市场负责人，本次首次参会。\n- lollipopstar / 艾瑞卡（Erica）：LA网红机构及其女老板，被否决。\n- 点马跳（dan）：投资人KOL，符合年龄定位的高质量参考对象。\n\n## 反复回归的人名/事件\n- Tiger：从\"形态不对\"到\"非常牛逼\"，情感升温。\n- Demo case 素材卡点：Will反复强调卡点，Charlie淡化。\n- MCN agency / 网红渠道成本：从开头否决到结尾集中爆发。\n\n## 关键原话摘录\n1. Charlie Hu 01:03:22 \"我不喜欢那种私下你们拉会...\"\n2. Charlie Hu 01:08:32 \"manus 抄 manus 就对了...\"\n3. Charlie Hu 00:51:41 \"大家都知道我卷王嘛...\"\n4. 王荣鉴 01:05:09 \"我希望自己就是有一个规划性的一个东西出来。\"\n5. Charlie Hu 01:04:25 \"我宁可慢慢白活着跟 tiger 去磨。\"\n\n## 回避/未完成的话题\n- Demo case素材产能：被淡化为\"不是绝对卡点\"。\n- MCN agency是否继续/付款：一直卡着，不做决定。\n- 白号测试数量与周期规划：Alex追问后仍未明确。"},
+  {id:"signal-2026-06-11",title:"周度信号卡：2026年6月11日",kind:"周度信号卡",date:"2026-06-11",asset:"assets/sources/signal-2026-06-11.md",excerpt:"# 周度信号卡 — COCO\n\n客户代号：COCO\n会议日期：2026年6月11日\n会议时长：约28分钟（转录区间 00:03:55–00:32:16）\n分析日期：2026年6月15日\n会议性质：周度例会（SuperAI/谷歌云活动复盘 + 软文与演讲内容定位讨论）\n\n## 核心议题\n复盘谷歌云/SuperAI活动，探讨活动后软文与对外演讲的内容定位策略。\n\n## 情感锚点\n\n### 1. 湾区互刷ARR与Anthropic算力折扣套利\n- 高温信号：Charlie主动跑题开启\"阿尔法\"话题，跨多轮追问确认湾区是否普遍这么做。\n- 原话引用：Charlie Hu 00:10:31 \"我说点阿尔法吧...硅谷有很多项目在互相刷 arr。\"\n- 原话引用：Charlie Hu 00:10:49 \"就是为了融资，你你做服务公司，我做 agent 公司，我买你100 K 的服务，你买我100 K 价值的那个 agent。\"\n- 时间标记：00:10:31–00:15:48\n\n### 2. 自身在中美AI博弈中的\"棋子\"定位\n- 高温信号：\"棋子\"一词反复出现，连续反问，价值判断密集。\n- 原话引用：Charlie Hu 00:17:34 \"你是能上牌桌的棋子吗？你上不了牌桌，你不是 relevant 的，那你就没有任何意义...你有利用价值，哪怕是只是利用价值。那也是价值。\"\n- 时间标记：00:16:22–00:18:19\n\n### 3. 对SuperAI参展公司的\"乌合之众\"判断\n- 高温信号：明知会得罪人仍坚持表达，措辞带攻击性。\n- 原话引用：Charlie Hu 00:22:04 \"Super AI 的很多小展台里的 AI 公司6个月之后会死一大片...我的感受就全是一帮乌合之众。\"\n- 时间标记：00:22:04–00:22:45\n\n## 新出现的人名/公司/事件\n- feel safe（Felsafe）：Anthropic早期投资人，有算力折扣资源。\n- fable five：Anthropic新模型，价格很贵。\n- rambo：追加Anthropic老股的人。\n- epic：新加坡孵化器。\n- mistro（疑似 Mistral）：参会法国大模型厂商。\n- plod（疑似 Plaud）：录音笔硬件案例。\n- 哈发瑞：新加坡上市公司客户，两次会议搞定并付费。\n\n## 反复回归的人名/事件\n- 谷歌云/Google活动：从复盘走向软文换转发策略。\n- SuperAI/新加坡AI生态：从中性到贬抑，再被拉回预测。\n- 算力/token经济：从套利讨论到行业趋势。\n\n## 关键原话摘录\n1. Charlie Hu 00:17:34 \"你是能上牌桌的棋子吗？\"\n2. Charlie Hu 00:22:04 \"全是一帮乌合之众。\"\n3. Charlie Hu 00:10:14 \"只能说找反共识的东西。\"\n4. Charlie Hu 00:21:53 \"否则的话扯犊子。\"\n5. Charlie Hu 00:29:20 \"新加坡创业，又有中国资源...也有美国客户。\"\n\n## 回避/未完成的话题\n- 是否做互刷ARR/算力套利：推迟到未来。\n- Anthropic老股/WhatsApp群：突然结束并玩笑带过。\n- SEO/网址未被索引：甩给Evan，定性为执行细节。"},
+  {id:"whiteboard-logic",title:"COCO周五白板生成逻辑",kind:"白板逻辑",date:"2026-06-21",asset:"assets/sources/whiteboard-current-logic.md",excerpt:"# COCO 周五白板生成逻辑\n\n## 正确时间顺序\n1. 每周五开会前，先持续更新白板。\n2. 周五会议直接使用白板过进展、问题、数据、材料和下一步。\n3. 会议文本是会后的记录，不能反向混进当周会前白板。\n4. 会后根据会议文本、群聊、每日产出与数据，生成下一周周五白板。\n\n## 白板应有结构\n1. 会议日程总览：单列呈现，本周要过什么。\n2. 上周重点回顾：只保留最重要的结果和变化。\n3. 客户最近新提出或集中讨论的问题：按问题列出。\n4. 我方处理方式/解决方案：对应到负责人、材料、数据或排期。\n5. 明细区：视频、SEO、数据、社媒、素材库、交付节点。\n6. 证据区：每个判断关联群聊日期、会议文本或素材文件。\n\n## 设计原则\n- 前面看重点，后面看明细。\n- 客户展示页少废话，避免心路历程。\n- 所有数据、判断、客户心理变化都要可追溯。"},
+  {id:"video-collab-pdf",title:"Use Case / Demo 视频协作说明",kind:"客户/我方素材",date:"2026-06-16",asset:"assets/sources/use-case-demo-collab.pdf",excerpt:"聚焦真实产品演示，三种协作方式，建议每周3-5条，1080p+，原始素材60-120秒。"},
+  {id:"yanshu-script-v37",title:"COCO客户案例脚本_言书_Final_v3.7",kind:"脚本文档",date:"2026-06-19",asset:"assets/sources/coco-case-script-yanshu-v3.7.pdf",excerpt:"知外文化客户案例视频脚本最终版，围绕言书、26个AI员工、女性企业家叙事。"},
+  {id:"female-strategy",title:"COCO AI 内容策略-女性企业家版",kind:"策略文档",date:"2026-06-20",asset:"assets/sources/coco-content-strategy-female-entrepreneur.pdf",excerpt:"女性企业家ICP内容策略：FOMO、Value-add、Shock、Social Proof。"},
+  {id:"he-xiaobo-deck",title:"如何调度26个AI员工-贺小波",kind:"客户素材",date:"2026-06-20",asset:"assets/sources/how-to-manage-26-ai-employees.pptx",excerpt:"对方提供/讨论的26个AI员工调度素材，用于案例与内容包装。"}
+];
+
+DB.signalCards=[
+ {id:"sig-0621-icp-mainline",month:"2026-06",week:"06/21",date:"2026-06-21",title:"ICP主线校准：知外文化 / 言书 / 汪丽娜",summary:"客户明确校正：知外文化是核心，言书是这条线的核心 ICP；Mona Das 不是 ICP，只作为 validation point / 影响力信号。主线从泛女性企业家收敛为：NUS EMBA -> 知外文化 / 言书 / 汪丽娜 -> 找 200 个言书。",tags:["ICP主线","知外文化","言书","NUS EMBA","OpenMax"],quotes:["知外文化是核心。言书是这条线的核心 ICP。","Mona Das 不是 ICP，是政客、社会运动家；只作为 validation point。","目前生态核心是找 200 个言书。","7/15 NUS EMBA 校友会晚宴露出，7/16 AI 免费辅导会，7/18 SF panel。"],sources:["chat-0621-icp-feedback"]},
+  {date:"2026-06-21",month:"2026-06",week:"6/16-6/21",title:"从泛AI增长转向女性企业家非共识ICP",summary:"客户画像从泛AI、YC/技术圈，收缩到30-45岁女性高管/女性企业家：不是浅层喜欢COCO，而是用COCO改变职业工作生涯。",tags:["ICP","女性企业家","内容策略"],sources:["chat-2026-06-16-21","female-strategy"],quotes:["Charlie：过去谈了20个客户18个是女性。","Charlie：COCO最大机会是让一大堆女性企业家、职场实力女高管，用COCO改变自己的职业工作生涯。","梦雨：小红书干活分享 + 案例视频 + demo直播 + 社群转私域流量/线下 -> 转化。"]},
+  {date:"2026-06-18",month:"2026-06",week:"6/18",title:"白板变成周五会议前置工作台",summary:"白板不是会后总结，而是会前持续更新、周五直接用于过会；会后再把会议文本、群聊和产出沉淀成下一周白板。",tags:["白板逻辑","会议机制"],sources:["meeting-2026-06-18","whiteboard-logic"],quotes:["白板应先有，再开会过；会议文本是会后记录。","结构：会议日程、上周重点、客户新问题、处理方式、明细、证据。"]},
+  {date:"2026-06-11",month:"2026-06",week:"6/11",title:"从活动曝光转向上牌桌与反共识",summary:"客户讨论不再停留在活动热度，而是转向自己在中美AI博弈、Google Cloud/SuperAI场域中的位置与可利用价值。",tags:["反共识","活动复盘","战略定位"],sources:["signal-2026-06-11"],quotes:["你是能上牌桌的棋子吗？","只能说找反共识的东西。","SuperAI 的很多小展台里的 AI 公司6个月之后会死一大片。"]},
+  {date:"2026-06-05",month:"2026-06",week:"6/05",title:"视频/KOL从采购转向自建方法论",summary:"客户对外部agency强烈不满，开始更信任慢慢磨Tiger、Manus式方法论和内部可控产能。",tags:["视频","KOL","Agency"],sources:["signal-2026-06-05"],quotes:["我宁可慢慢白活着跟 tiger 去磨。","我不喜欢那种私下你们拉会。","manus 抄 manus 就对了。"]},
+  {date:"2026-05-29",month:"2026-05",week:"5/29",title:"交付节奏开始被结构化管理",summary:"5月底开始，客户对视频、SEO、社媒与案例材料的节奏要求更清晰，需要把资料堆叠转成可持续交付系统。",tags:["交付","节奏","客户管理"],sources:["signal-2026-05-29"],quotes:["5月29日周度信号卡已作为源文件收录，可点开核对完整原文。"]},
+  {date:"2026-05-22",month:"2026-05",week:"5/22",title:"砍小C、收缩ICP、视频成为抓手",summary:"客户明确纯小C不是目标用户，单一有效渠道优先级上升，案例视频成为对外转化核心抓手。",tags:["ICP收缩","渠道","案例视频"],sources:["signal-2026-05-22"],quotes:["纯小 C 的可能就不做了...就是那帮人，不是我们用户。","我辛辛苦苦做半天活动，没有任何卵用。","视频是一个更好的抓手。"]},
+  {date:"2026-05-08",month:"2026-05",week:"5/08",title:"早期GTM信号进入周度记录",summary:"5月初开始将SEO/GEO、社媒数据、客户会议与交付信号纳入结构化周度观察。",tags:["早期信号","GTM"],sources:["signal-2026-05-08","profile-2026-05"],quotes:["5月8日周度信号卡与5月月度画像已收录，可点开查看完整原文。"]}
+];
+
+DB.whiteboardIssues=[
+ {title:"ICP主线校准：知外文化 / 言书才是核心",problem:"客户确认：Mona Das 不是 ICP，而是 validation point；真正主线是 NUS EMBA -> 知外文化 / 言书 / 汪丽娜 -> 找 200 个言书。",handling:"白板和画像改为主线剧情：Season 1 聚焦 NUS EMBA 与知外文化案例验证，Season 2 承接 OpenMax / workspace / 新品牌发布。",sources:["chat-0621-icp-feedback"]},
+  {title:"女性企业家ICP与内容定位",problem:"客户最近集中讨论：COCO精准用户更偏30-45岁女性高管/企业家，现有AI圈GTM不够贴合。",handling:"沉淀女性企业家内容策略；文章、视频、小红书优先围绕“不懂代码，也能带AI团队 / 把判断力放大”展开。",sources:["chat-2026-06-16-21","female-strategy"]},
+  {title:"KOL投放转化漏斗不清",problem:"Steve Nouri有48万曝光但点击和转化偏弱，问题不是简单换KOL。",handling:"先做投放复盘模板、P0评论回复话术、UTM/GA漏斗记录，再决定是否继续投放。",sources:["chat-2026-06-16-21","internal-review-2026-06-18"]},
+  {title:"SEO技术债影响收录和权重",problem:"官网实时渲染、About canonical、URL结构、404、docs子域等问题影响Google抓取和权重分配。",handling:"拆成SEO路线图，要求COCO技术侧明确owner和修复时间；Will团队持续周更关键词与进度。",sources:["signal-2026-06-11","chat-2026-06-16-21"]},
+  {title:"Demo / Use Case视频产能与流程",problem:"客户录制素材、账号、Agent连接和剪辑反馈链路不清，影响Demo/Use Case视频效率。",handling:"建立视频路线图与视频库；每条视频标注类型、完成时间、源文件、状态和下一步。",sources:["video-collab-pdf","chat-2026-06-16-21"]},
+  {title:"社媒数据下滑与内容转向",problem:"红利退去后，简单发布数据下滑；需要从“发了没”转成“能否成为销售语料、信任资产和可转发故事”。",handling:"围绕女性企业家、知外文化、案例视频、LinkedIn评论互动，形成可复用内容资产。",sources:["chat-2026-06-16-21","female-strategy"]}
+];
+
+DB.demoVideos=[
+  {title:"知外文化中文案例视频",type:"Use Case",status:"已完成 / 已发布",done:"2026-06-19",duration:"约1分钟",asset:"assets/sources/demo-use-case-video-zh.mp4",source:"6月19日群聊记录 + 源视频文件",note:"知外文化客户中文案例视频，客户反馈新版可发布。"},
+  {title:"知外文化英文案例视频",type:"Use Case",status:"待核对源文件",done:"2026-06-20",duration:"约1分20秒",asset:"assets/sources/demo-use-case-video-en.mp4",source:"6月20日群聊记录 + 源视频文件（如站内无法播放则需补源文件）",note:"英文版案例视频，群聊中提到英文版已修改。"},
+  {title:"COCO Demo/Use Case补充视频",type:"Demo",status:"待核对标题",done:"2026-06-20",duration:"待核对",asset:"assets/sources/demo-use-case-video-extra.mp4",source:"用户上传视频源文件",note:"作为视频库占位，等待确认具体标题与用途。"}
+];
+
+DB.materialLibrary=[
+  {title:"Use Case / Demo 视频协作说明",type:"PDF",owner:"Will团队",date:"2026-06-16",asset:"assets/sources/use-case-demo-collab.pdf",sources:["video-collab-pdf"],outline:["三种协作方式：客户完整素材、客户粗素材、我方代录。","建议每周3-5条，1080p+，单条原始素材60-120秒。","用于减少反复沟通，提高Demo/Use Case视频产出效率。"]},
+  {title:"COCO客户案例脚本_言书_Final_v3.7",type:"PDF",owner:"Will团队",date:"2026-06-19",asset:"assets/sources/coco-case-script-yanshu-v3.7.pdf",sources:["yanshu-script-v37"],outline:["知外文化客户案例视频脚本。","围绕言书、26个AI员工、女性企业家、AI合伙人叙事。","群聊中确认新版已可发布。"]},
+  {title:"COCO AI 内容策略-女性企业家版",type:"PDF",owner:"COCO / Will协作",date:"2026-06-20",asset:"assets/sources/coco-content-strategy-female-entrepreneur.pdf",sources:["female-strategy"],outline:["核心策略：FOMO、Value-add、Shock、Social Proof。","目标用户：30-45岁女性高管/企业家。","强调不懂代码也能管理AI团队、把判断力放大。"]},
+  {title:"如何调度26个AI员工-贺小波",type:"PPTX",owner:"对方素材",date:"2026-06-20",asset:"assets/sources/how-to-manage-26-ai-employees.pptx",sources:["he-xiaobo-deck"],outline:["对方提供/讨论的26个AI员工调度素材。","可用于案例包装、文章论据与视频叙事。"]},
+  {title:"2026-06-18 会议逐字稿",type:"TXT",owner:"会议文本",date:"2026-06-18",asset:"assets/sources/meeting-20260618-transcript.txt",sources:["meeting-2026-06-18"],outline:["周会原始文本。","用于核对6月18日白板之后的方向、任务和分工。"]},
+  {title:"COCO内部复盘会议",type:"TXT",owner:"内部复盘",date:"2026-06-18",asset:"assets/sources/coco-internal-review.txt",sources:["internal-review-2026-06-18"],outline:["内部复盘会议源文件。","用于核对Steve Nouri、SEO、视频、任务拆解。"]},
+  {title:"Kesi US GTM team 1 / 2",type:"TXT",owner:"对方/群聊素材",date:"2026-06-17",asset:"assets/sources/kesi-us-gtm-team-1.txt",asset2:"assets/sources/kesi-us-gtm-team-2.txt",sources:["chat-2026-06-16-21"],outline:["美国GTM团队相关素材。","用于KOL、竞品与美国市场打法参考。"]},
+  {title:"6月16日—6月21日群聊记录摘录",type:"MD",owner:"群聊证据",date:"2026-06-21",asset:"assets/sources/chat-2026-06-16-21-excerpts.md",sources:["chat-2026-06-16-21"],outline:["按日期归类的聊天证据。","用于客户画像、白板、任务、视频、素材库的来源核对。"]},
+  {title:"5月—6月周度/月度信号卡",type:"MD",owner:"画像证据",date:"2026-05/06",asset:"assets/sources/profile-2026-05.md",sources:["signal-2026-05-08","signal-2026-05-22","signal-2026-05-29","profile-2026-05","signal-2026-06-05","signal-2026-06-11"],outline:["5月月度画像与多张周度信号卡。","支持用户画像心理变化的历史追踪和筛选。"]}
+];
+
+DB.seoRoadmap=[
+  {phase:"已完成",tone:"done",task:"SEO页面基础工期正常；页面收录率约45%；工具页已完成25页；部分关键词开始增长。",owner:"李家乐 / COCO技术侧",source:["chat-2026-06-16-21"]},
+  {phase:"进行中",tone:"doing",task:"CSR渲染导致Google抓取困难、About canonical、URL结构、404死链、GSC提交、use-case页面体系。",owner:"COCO技术侧需明确owner",source:["signal-2026-06-11","chat-2026-06-16-21"]},
+  {phase:"本周优先",tone:"risk",task:"官网渲染方式、docs子域结构、案例/工具页URL命名，需形成可对AI友好的主域结构。",owner:"Kevin介入 / Will团队跟进",source:["chat-2026-06-16-21"]},
+  {phase:"下周持续",tone:"next",task:"关键词周更、页面收录进度周更、工具站/工具页扩充、数据回传到看板。",owner:"李家乐",source:["chat-2026-06-16-21"]}
+];
+
+DB.videoRoadmap=[
+  {phase:"已完成",tone:"done",task:"Tiger视频、基础视频、SuperAI内容、知外文化中文视频等已完成/发布，进入销售语料沉淀。",owner:"周星星 / 李阳阳 / 孔德浩",source:["chat-2026-06-16-21"]},
+  {phase:"进行中",tone:"doing",task:"知外文化英文视频、客户案例脚本、素材录制、脚本语法校对、剪辑反馈。",owner:"视频剪辑团队",source:["yanshu-script-v37","video-collab-pdf"]},
+  {phase:"卡点",tone:"risk",task:"客户账号、Agent连接、录制流程、中文/英文不同部门反馈，导致返工。",owner:"侯明真 / Eric / 李家乐协同",source:["chat-2026-06-16-21"]},
+  {phase:"下一步",tone:"next",task:"视频库每条标注类型、完成时间、源文件、发布状态；对外发布前先核对客户口径。",owner:"侯明真统筹",source:["whiteboard-logic"]}
+];
+
+DB.dataCenterUpdate={
+  feishu:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5",
+  cards:[
+    {name:"Steve Nouri KOL",value:"480,829",label:"Impressions",detail:"266 clicks，CTR约0.06%，Reactions 1,105，Comments 85，Reposts 21，Saves 96",sources:["chat-2026-06-16-21"]},
+    {name:"SEO曝光",value:"188 → 913",label:"+385.64%",detail:"总点击 6 → 35；品牌词曝光 17 → 95；高意向词点击 5 → 13。",sources:["chat-2026-06-16-21"]},
+    {name:"Jessie专访",value:"33,008",label:"播放/曝光",detail:"7平台合计互动982，互动率约2.98%。",sources:["meeting-2026-06-18"]},
+    {name:"客户画像",value:"37 / 40",label:"女性客户或渠道",detail:"Charlie群聊提到，COCO过去见到的40个客户/渠道里37个女性形象明显。",sources:["chat-2026-06-16-21"]}
+  ]
+};
+
+DB.peopleAvatars={
+  "侯明真":"assets/avatars/hou.svg","田长举":"assets/avatars/tian.svg","吕教东":"assets/avatars/lu.svg","周星星":"assets/avatars/zhou.svg","李阳阳":"assets/avatars/liyangyang.svg","孔德浩":"assets/avatars/kongdehao.svg","李家乐":"assets/avatars/lijiale.svg","孔维彤":"assets/avatars/kongweitong.svg"
+};
+
+var psyMonth="all";
+var psyWeek="all";
+
+const NAV={ 概览:["overview"], "客户 · COCO":["board","psychology","videos","library","seoRoadmap","videoRoadmap","data","contacts"], 过程:["sources","feed","requests","deliverables","meetings","files"], 操作:["submit","roster"] };
+const VIEWS={ overview:"全客户总览",board:"白板",psychology:"用户画像 / 心理变化",videos:"Demo/Use Case视频",library:"素材库",seoRoadmap:"SEO路线图",videoRoadmap:"视频路线图",data:"数据中心",contacts:"对接负责人",sources:"证据索引",feed:"工作动态流",requests:"确认事项",deliverables:"交付时间线",meetings:"会议",files:"物料",submit:"录入",roster:"团队名单" };
 
 function esc(s){return String(s??"").replace(/[<>&"]/g,m=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[m]))}
+function escapeHtml(s){return esc(s)}
 function color(n){return DB.team[n]||"#8A8276"}
 function av(n){return `<span class="av" style="background:${color(n)}">${esc((n||"?")[0])}</span>`}
 function who(n){return `<span class="who-inline">${av(n)}<span>${esc(n)}</span></span>`}
@@ -717,16 +1477,25 @@ function link(u,l){return u?`<a class="linkchip" href="${esc(u)}" target="_blank
 function pct(p,c){if(!p)return c?"新增":"—";const d=Math.round((c-p)/p*100);return (d>=0?"+":"")+d+"%"}
 function spark(s){if(!s||s.length<2)return `<span class="small muted">趋势待补</span>`;const w=128,h=28,p=3,mx=Math.max(...s),mn=Math.min(...s),r=(mx-mn)||1;const pts=s.map((v,i)=>`${(p+i*(w-2*p)/(s.length-1)).toFixed(1)},${(h-p-(v-mn)/r*(h-2*p)).toFixed(1)}`).join(" ");const lst=pts.split(" ").pop().split(",");return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><polyline points="${pts}" fill="none" stroke="var(--green)" stroke-width="1.5" stroke-linejoin="round"/><circle cx="${lst[0]}" cy="${lst[1]}" r="2.2" fill="var(--green)"/></svg>`}
 
+function evidenceForDate(date,line){
+ const d=String(date||"");
+ if(d.includes("06-16")||d.includes("06/16"))return "6月16日 SEO 讨论会记录 / 群聊记录";
+ if(d.includes("06-18")||d.includes("06/18"))return "6月18日会议文本 + 6月18日群聊记录";
+ if(d.includes("06-19")||d.includes("06/19"))return "6月19日群聊记录 + 对应视频 / 脚本源文件";
+ if(d.includes("06-20")||d.includes("06/20"))return "6月20日群聊记录";
+ if(d.includes("06-21")||d.includes("06/21"))return "6月21日群聊记录";
+ return line?`${line} 记录待补`:"来源待补";
+}
 function go(v){route=v;render();window.scrollTo(0,0)}
 function pickWeek(i){selWeek=i;render()}
 function bind(){document.querySelectorAll("[data-go]").forEach(e=>e.onclick=()=>go(e.dataset.go));document.querySelectorAll("[data-wk]").forEach(e=>e.onclick=()=>pickWeek(+e.dataset.wk))}
-function render(){renderSide();const fn={overview:overviewView,board:boardView,gantt:ganttView,data:dataView,feed:feedView,requests:requestsView,deliverables:deliverablesView,meetings:meetingsView,files:filesView,submit:submitView,roster:rosterView}[route];$("#main").innerHTML=fn();bind()}
+function render(){renderSide();const fn={overview:overviewView,board:boardView,psychology:psychologyView,videos:videosView,library:libraryView,seoRoadmap:seoRoadmapView,videoRoadmap:videoRoadmapView,gantt:ganttView,data:dataView,contacts:contactsView,sources:sourcesView,feed:feedView,requests:requestsView,deliverables:deliverablesView,meetings:meetingsView,files:filesView,submit:submitView,roster:rosterView}[route];$("#main").innerHTML=fn();bind()}
 
 function renderSide(){
  const cnt={requests:DB.weeks[0].requests?DB.weeks[0].requests.length:0,feed:DB.feed.length};
  const item=k=>`<div class="nav-item ${route===k?"on":""}" data-go="${k}">${VIEWS[k]}${cnt[k]?`<span class="cnt">${cnt[k]}</span>`:""}</div>`;
  const nav=Object.entries(NAV).map(([g,ks])=>`<div class="navgroup"><div class="glabel">${g}</div>${ks.map(item).join("")}</div>`).join("");
- $("#sidebar").innerHTML=`<div class="brand"><h1>客户工作台</h1><div class="tagline">郎瀚威团队 · 多客户作战室</div><div class="ver">${esc(DB.meta.version)} · 更新 ${esc(DB.meta.updated)}</div></div>${nav}`;
+ $("#sidebar").innerHTML=`<div class="brand"><h1>COCO 客户工作台</h1><div class="tagline">COCO 项目专属工作台</div><div class="ver">${esc(DB.meta.version)} · 更新 ${esc(DB.meta.updated)}</div></div>${nav}`;
 }
 function topbar(c){return `<div class="topbar"><div class="crumb">${c}</div></div>`}
 
@@ -747,35 +1516,42 @@ function boardView(){
  const c=DB.current, w=DB.weeks[selWeek];
  const kpis=c.kpis.map(k=>`<div class="kpi ${k.t}"><div class="v">${esc(k.v)}</div><div class="l">${esc(k.l)}</div></div>`).join("");
  const stg=`<div class="stagebar">${c.stage.steps.map(s=>`<div class="stg ${s.s}">${esc(s.n)}<span class="d">${esc(s.d)}</span></div>`).join("")}</div>`;
- const tl=DB.weeks.map((x,i)=>{
+ const dates=DB.weeks.map((x,i)=>{
    const red=x.blockers?x.blockers.length:0;
-   return `<div class="wk ${i===selWeek?"on":""} ${x.draft?"draft":""}" data-wk="${i}"><div class="d">${esc(x.date.slice(5))}${red?`<span class="reddot">● ${red}</span>`:""}</div><div class="t">${esc(x.title)}</div><div class="one">${esc(x.conclusion||"")}</div></div>`;
+   return `<button class="datechip ${i===selWeek?"on":""}" data-wk="${i}">${esc(x.date.slice(5))}${red?`<span class="red">● ${red}</span>`:""}</button>`;
  }).join("");
  const panel = w.stub ? `<div class="wkhead"><span class="wd">${esc(w.date)}</span><span class="tag lo">${esc(w.title)}</span></div><div class="oneliner empty">${esc(w.conclusion)}</div><div class="small muted">这一周的白板会由该次会议分析 + 当周登记数据生成，目前为占位。</div>` : weekPanel(w);
+  const issues = whiteboardIssuesBlock();
  return topbar(`<b>COCO</b> · 白板`)+`
   <h2 class="pagetitle">COCO 白板</h2>
-  <div class="pagedesc">默认打开下一次会议白板：基于上次会议、会后群聊、外部看板和已发布链接，先把本次会议要过的重点、卡点、确认事项和下周计划排好。组长只需要校准内容，不需要从零搭白板；历史会议保留在左侧时间线。</div>
+  <div class="pagedesc">周五会前使用的展示白板：由上次会后方向、本周每日执行、当前数据看板和未闭环事项生成；会议文本会进入会后纪要，并用于生成下一张周五白板。</div>
   <div class="kpis">${kpis}</div>
-  <div class="sec" style="margin-bottom:18px"><div class="shead"><h3>${esc(c.stage.label)}</h3><span class="hint"><span class="linkchip" data-go="gantt">看完整甘特 →</span></span></div>${stg}</div>
-  <div class="boardlayout"><div class="wktl">${tl}</div><div class="wkpanel">${panel}</div></div>`;
+  <div class="sec" style="margin-bottom:18px"><div class="shead"><h3>${esc(c.stage.label)}</h3><span class="hint"><span class="linkchip" data-go="videoRoadmap">看视频路线图 →</span></span></div>${stg}</div>
+  <div class="datefilter"><span class="flabel">日期筛选</span>${dates}</div>
+  <div class="wkpanel">${issues}${panel}</div>`;
 }
 function psychBlock(w){
- if(!w.psych && !(w.psychStages&&w.psychStages.length))return "";
- const stages=(w.psychStages||[]).map(p=>`<div class="psyitem"><div class="pyt">${esc(p.t)}</div><div class="pyd">${esc(p.d)}</div></div>`).join("");
- return `<div class="psychcard"><div class="psychhead"><span>客户心理变化</span><small>从会议与群聊提炼</small></div>${w.psych?`<div class="psychsummary">${esc(w.psych)}</div>`:""}${stages?`<div class="psygrid">${stages}</div>`:""}</div>`;
+ return "";
 }
 function weekPanel(w){
  // 真实白板格式：本周重点 + 会议议程 + 一张张话题卡（带负责人 + 总结 + 实物）
  if(w.cards){
    const head=`<div class="wkhead"><span class="wd">${esc(w.date)}</span><span class="tag lo">${esc(w.title)}</span>${w.badge?`<span class="tag auto">${esc(w.badge)}</span>`:""}</div>`;
    const concl=`<div class="oneliner">${esc(w.conclusion)}<div class="who">本周重点 · 会议判断</div></div>`;
-   const src=w.sourceLogic?`<details class="source-note"><summary>展开生成依据</summary><div>${esc(w.sourceLogic)}</div></details>`:"";
+   const b=w.brief||{};
+   const list=(arr,withTime)=>`<ul>${(arr||[]).map(x=>`<li>${withTime&&x.t?`<span class="mini">${esc(x.t)}</span>`:""}${esc(x.n||x)}</li>`).join("")}</ul>`;
+   const agenda=(b.agenda&&b.agenda.length)?`<div class="agenda-wide"><h3>会议日程总览</h3><div class="agenda-list">${b.agenda.map(x=>`<div class="agenda-item"><span class="time">${esc(x.t||"")}</span><span class="text">${esc(x.n||x)}</span></div>`).join("")}</div></div>`:"";
+   const context=(b.last||b.todos)?`<div class="briefgrid contextgrid">
+    <div class="briefbox"><h3>上次会议重点</h3>${list(b.last,false)}</div>
+    <div class="briefbox"><h3>双方待办</h3>${list(b.todos,false)}</div>
+   </div>`:"";
+   const src=`<div class="small cfg" style="margin:12px 0;color:var(--sub);border:1px dashed var(--line);padding:10px 12px;background:var(--paper)">证据口径：白板结论来自 6月18日会议白板、6月18日会议文本、6月18日-6月21日群聊记录与已归档素材；明细见“证据索引”。</div>`;
    const cards=w.cards.map(wcard).join("");
-   return head+concl+psychBlock(w)+src+cards;
+   return head+concl+agenda+context+psychBlock(w)+src+cards;
  }
  const blk=w.blockers||[];
  const blkH=blk.length?blk.map(x=>`<div class="blocker ${x.client?"client":""}"><div class="bi">${esc(x.item)}</div><div class="need">${x.client?"待贵方配合":"需"}：${esc(x.need)}</div>${x.owner?`<div class="small" style="margin-top:3px">跟进：${who(x.owner)}</div>`:""}</div>`).join(""):`<div class="small muted">本周无待配合事项</div>`;
- const reqH=(w.requests||[]).map(r=>`<tr><td class="small">${esc(r.date)}</td><td>${statusTag(r.status)}</td><td><div class="q">${esc(r.source)}：${esc(r.quote)}</div></td><td>${who(r.owner)}</td><td class="small">${esc(r.resp)}</td></tr>`).join("");
+ const reqH=(w.requests||[]).map(r=>`<tr><td class="small">${esc(r.date)}</td><td>${statusTag(r.status)}</td><td><div class="q">${esc(r.source)}：${esc(r.quote)}</div><div class="small muted">${esc(r.evidence||evidenceForDate(r.date))}</div></td><td>${who(r.owner)}</td><td class="small">${esc(r.resp)}</td></tr>`).join("");
  const order=["内容","视频剪辑","SEO"], pri={内容:"田长举",视频剪辑:"周星星",SEO:"李家乐"};
  const deliv=order.map(L=>{const rows=(w.deliveries&&w.deliveries[L])||[];const body=rows.length?rows.map(d=>{const pub=d.pub?(d.pub.url?link(d.pub.url,d.pub.plat+" ↗"):`<span class="tag tbd">待发布</span>`):"";return `<div class="delivery"><div class="grow">${esc(d.title)}</div>${pub}${who(d.owner)}<span class="dt">${esc(d.date)}</span></div>`;}).join(""):`<div class="emptyline">本周无交付</div>`;return `<div class="linegroup"><div class="lh">${esc(L)} <span class="pri">· 主负责 ${esc(pri[L])}</span></div>${body}</div>`;}).join("");
  const mets=(w.metrics||[]).map(m=>{if(m.stale)return "";const up=m.cur>=m.prev;return `<div class="metric"><div class="ml"><span>${esc(m.name)}</span>${m.src?link(m.src,m.srclabel):""}</div><div class="rowm"><div class="v">${m.cur}</div><span class="delta ${up?"up":"dn"}">${pct(m.prev,m.cur)}</span></div><div class="prev">上期 ${m.prev} → 本期 ${m.cur}</div><div class="foot" style="display:flex;align-items:center;justify-content:space-between;gap:8px">${spark(m.series)}${m.owner?`<span class="small">${who(m.owner)}</span>`:""}</div></div>`;}).join("");
@@ -794,64 +1570,98 @@ function weekPanel(w){
   ${arch}`;
 }
 
-/* 甘特 */
-function ganttChart(g,compact){
- const cols=g.months.reduce((a,m)=>a+m.w,0);const tmpl=`grid-template-columns:${compact?180:300}px repeat(${cols},minmax(${compact?22:28}px,1fr))`;
- const months=g.months.map(m=>`<div class="g-month" style="grid-column:span ${m.w}">${esc(m.m)}</div>`).join("");
- let wks="";g.months.forEach(m=>{for(let i=1;i<=m.w;i++)wks+=`<div class="g-wk">${esc(m.labels?m.labels[i-1]:"W"+i)}</div>`});
- const today=g.today!=null?((g.today)+0.5)/cols*100:-1;const lbl=s=>s==="done"?"已完成":s==="doing"?"进行中":"";
- const ph=g.phases.map(p=>{const ts=p.tasks.map(t=>{const left=t.start/cols*100,wd=t.span/cols*100;return `<div class="g-task" style="grid-template-columns:${compact?180:300}px 1fr"><div class="lab">${t.pri?`<span class="ptag ${t.pri}">${t.pri}</span>`:""}${esc(t.name)}<span class="meta">${esc(t.meta||"")}</span></div><div class="track" style="--c:${cols}">${today>=0?`<div class="todayline" style="left:${today}%"></div>`:""}<div class="bar ${t.state}" style="left:${left}%;width:${wd}%">${lbl(t.state)}</div></div></div>`}).join("");return (p.name?`<div class="gridrow g-phase" style="${tmpl}"><div class="pl">${esc(p.name)}<span class="pnote">${esc(p.note||"")}</span></div></div>`:"")+ts}).join("");
- return `<div class="glegend"><span><i style="background:var(--ink)"></i>已完成</span><span><i style="background:var(--red)"></i>进行中</span><span><i style="background:var(--blue-bg);border:1px dashed var(--blue)"></i>计划中</span></div><div class="gantt"><div class="gridrow" style="${tmpl}"><div class="lab"></div>${months}</div><div class="gridrow" style="${tmpl}"><div class="lab small" style="color:var(--faint)">任务 / 目标</div>${wks}</div>${ph}</div>`;
+
+function sourceById(id){ return (DB.sourceIndex||[]).find(s=>s.id===id); }
+function sourceActions(ids=[]){
+  return `<div class="source-actions">${ids.map(id=>{
+    const s=sourceById(id); if(!s) return "";
+    const label=`${s.kind} · ${s.date}`;
+    const open=s.asset?`<a class="source-pill" href="${s.asset}" target="_blank">打开来源：${label}</a>`:"";
+    const detail=`<button class="source-button" onclick="toggleSource('${id}')">展开原文摘录</button>`;
+    return open+detail;
+  }).join("")}</div>${ids.map(id=>{
+    const s=sourceById(id); if(!s) return "";
+    return `<div id="source-${id}" class="source-detail" style="display:none">${escapeHtml(s.excerpt||"暂无摘录，请打开来源文件查看。")}</div>`;
+  }).join("")}`;
 }
-function cardTable(t){return `<div class="smatrix"><table><thead><tr>${t.cols.map(c=>`<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map((cell,i)=>`<td class="${i===0?"pl":""}">${esc(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`}
-function socialMatrix(m){
- const head=`<tr><th>平台 / 负责人</th><th>指标</th>${m.weeks.map(w=>`<th>${esc(w)}</th>`).join("")}</tr>`;
- const body=m.rows.map(r=>{const ms=Object.entries(r.metrics);return ms.map((mm,i)=>`<tr>${i===0?`<td class="pl" rowspan="${ms.length}">${esc(r.plat)}${r.po?`<span class="po">${esc(r.po)}</span>`:""}</td>`:""}<td style="text-align:left;color:var(--sub)">${esc(mm[0])}</td>${mm[1].map(v=>`<td class="${mm[0].match(/浏览|播放|阅读/)?"hl":""}">${esc(v)}</td>`).join("")}</tr>`).join("")}).join("");
- return `<div class="smatrix"><table><thead>${head}</thead><tbody>${body}</tbody></table></div>${m.link?`<div class="linkrow cfg">${link(m.url,m.link)}</div>`:""}`;
+function toggleSource(id){
+  const el=document.getElementById("source-"+id);
+  if(el) el.style.display=el.style.display==="none"?"block":"none";
 }
-function problemList(p){
- const sec=(title,arr,cls)=>`<div class="sg" style="color:var(--${cls})">${title}</div>`+arr.map(x=>`<div class="si"><span class="tag ${cls==="green"?"hi":"soft"}">${esc(x.s)}</span><span class="nm">${esc(x.name)}</span><span class="desc">${esc(x.desc||"")}</span>${x.pri?`<span class="ptag ${x.pri.startsWith("P0")?"P0":"P1"}">${esc(x.pri)}</span>`:""}</div>`).join("");
- return `<div class="statuslist">${p.solved?sec("● 已解决",p.solved,"green"):""}${p.todo?sec("● 待修复",p.todo,"red"):""}</div>`;
-}
-function linkGroups(gs){return gs.map(g=>`<div class="linkgroup"><div class="lgh">${esc(g.h)}</div><div class="linkrow">${g.items.map(it=>link(it.url,it.label)).join("")}</div></div>`).join("")}
-function wcard(c){
- const head=`<div class="wcard-h"><span class="ct">${esc(c.topic)}</span>${c.owner?`<span class="co">负责人：<b>${esc(c.owner)}</b></span>`:""}</div>`;
- let body="";
- if(c.type==="agenda"){body=`<ul class="agd">${c.items.map((a,i)=>`<li><span><span class="anum">${i+1}</span>${esc(a.n)}</span><span class="at">${esc(a.t||"")}</span></li>`).join("")}</ul>`;}
- else{
-   if(c.summary)body+=`<div class="wsum">${esc(c.summary)}</div>`;
-   if(c.gantt)body+=`<div class="cfg">${ganttChart(c.gantt,true)}</div>`;
-   if(c.sub)c.sub.forEach(s=>{body+=`<div class="wsub">${esc(s.h)}</div>`;if(s.summary)body+=`<div class="wsum">${esc(s.summary)}</div>`;if(s.table)body+=cardTable(s.table);if(s.problems)body+=problemList(s.problems);if(s.gantt)body+=`<div class="cfg">${ganttChart(s.gantt,true)}</div>`;if(s.links)body+=`<div class="linkrow cfg">${s.links.map(l=>link(l.url,l.label)).join("")}</div>`;});
-   if(c.table)body+=cardTable(c.table);
-   if(c.matrix)body+=socialMatrix(c.matrix);
-   if(c.problems)body+=problemList(c.problems);
-   if(c.groups)body+=linkGroups(c.groups);
-   if(c.links)body+=`<div class="linkrow cfg">${c.links.map(l=>link(l.url,l.label)).join("")}</div>`;
-   if(c.note)body+=`<div class="small cfg" style="color:var(--blue)">${esc(c.note)}</div>`;
- }
- return `<div class="wcard">${head}${body}</div>`;
-}
-function ganttView(){
- const charts=DB.gantt.map(g=>`<div class="sec"><div class="shead"><h3>${esc(g.title)}</h3><span class="hint">黄线为本周</span></div>${ganttChart(g)}</div>`).join("");
- return topbar(`<b>COCO</b> · 项目路线图`)+`<h2 class="pagetitle">项目路线图</h2><div class="pagedesc">SEO 与视频/案例两条主线并列展示：一眼看到现在铺到哪、哪些资产可发、下一步做什么。</div>${charts}`;
+function tagsHtml(tags=[]){ return tags.map(t=>`<span class="tag">${t}</span>`).join(""); }
+function whiteboardIssuesBlock(){
+  return `<section class="panel"><h2>客户最近提出 / 集中讨论的问题</h2><p class="lead">上周回顾之后，先看最近客户真正关心的问题，再看我们如何处理。</p><div class="issue-grid">${DB.whiteboardIssues.map(i=>`<div class="issue-card"><h3>${i.title}</h3><p><b>客户问题：</b>${i.problem}</p><p><b>处理方式：</b>${i.handling}</p>${sourceActions(i.sources)}</div>`).join("")}</div></section>`;
 }
 
-/* 数据中心 + 社媒看板 */
+function psychologyView(){
+  const months=[...new Set(DB.signalCards.map(s=>s.month))].sort().reverse();
+  const weeks=[...new Set(DB.signalCards.map(s=>s.week))];
+  const list=DB.signalCards.filter(s=>(psyMonth==="all"||s.month===psyMonth)&&(psyWeek==="all"||s.week===psyWeek)).sort((a,b)=>b.date.localeCompare(a.date));
+  return `<section class="panel"><h1>用户画像 / 心理变化</h1><p class="lead">最新变化放在前面；每条判断都能点开来源，按月或按周筛选历史记录。</p>
+    <div class="psy-filter">
+      <label>月份 <select onchange="psyMonth=this.value;render()"><option value="all">全部月份</option>${months.map(m=>`<option value="${m}" ${psyMonth===m?"selected":""}>${m}</option>`).join("")}</select></label>
+      <label>周次 <select onchange="psyWeek=this.value;render()"><option value="all">全部周次</option>${weeks.map(w=>`<option value="${w}" ${psyWeek===w?"selected":""}>${w}</option>`).join("")}</select></label>
+    </div>
+    <div class="signal-grid">${list.map(s=>`<article class="signal-card"><div class="meta"><span>${s.date}</span><span>${s.week}</span></div><h3>${s.title}</h3><p>${s.summary}</p><div>${tagsHtml(s.tags)}</div>${(s.quotes||[]).map(q=>`<div class="quote-row">${escapeHtml(q)}</div>`).join("")}${sourceActions(s.sources)}</article>`).join("")}</div>
+  </section>`;
+}
+
+function seoRoadmapView(){
+  return `<section class="panel"><h1>SEO路线图</h1><p class="lead">按状态拆开，不和视频混在一起；每个卡点都回到会议、群聊或看板。</p>
+  <div class="roadmap-grid">${DB.seoRoadmap.map(r=>`<div class="roadmap-row"><div class="phase ${r.tone}">${r.phase}</div><div class="body"><b>${r.task}</b>${sourceActions(r.source)}</div><div class="owner">${r.owner}</div></div>`).join("")}</div>
+  <div class="source-actions"><a class="source-pill" href="${DB.dataCenterUpdate.feishu}" target="_blank">打开飞书社媒数据看板</a></div>
+  </section>`;
+}
+
+function videoRoadmapView(){
+  return `<section class="panel"><h1>视频路线图</h1><p class="lead">按完成、进行中、卡点、下一步拆开，并与视频库源文件互相对应。</p>
+  <div class="roadmap-grid">${DB.videoRoadmap.map(r=>`<div class="roadmap-row"><div class="phase ${r.tone}">${r.phase}</div><div class="body"><b>${r.task}</b>${sourceActions(r.source)}</div><div class="owner">${r.owner}</div></div>`).join("")}</div>
+  <div class="source-actions"><button class="source-button" data-go="videos" onclick="go('videos')">打开Demo/Use Case视频库</button></div>
+  </section>`;
+}
+
 function dataView(){
- const blocks=DB.data.lines.map(L=>{const mets=L.metrics.map(m=>{const last=m.series[m.series.length-1],prev=m.series[m.series.length-2];return `<div class="metric"><div class="ml"><span>${esc(m.name)}</span>${m.src?link(m.src,m.srclabel):""}</div><div class="rowm"><div class="v">${last}</div><span class="delta ${last>=prev?"up":"dn"}">${pct(prev,last)}</span></div><div class="prev">历史最高 ${m.top}</div><div class="foot">${spark(m.series)}</div></div>`}).join("");const mw=Math.max(...L.weeks);const bars=L.weeks.map(cc=>{const h=Math.round(cc/mw*40)+4;return `<div style="flex:1;text-align:center"><div style="height:${h}px;background:${cc===0?"var(--red)":"var(--ink)"};margin:0 auto"></div><div style="font-size:10px;color:var(--faint);margin-top:3px">${cc}</div></div>`}).join("");return `<div class="sec"><div class="shead"><h3>${esc(L.label)}</h3><span class="hint">主负责 ${esc(L.primary)}</span></div><div class="metricgrid" style="margin-bottom:14px">${mets}</div><div class="small" style="margin-bottom:6px">近 8 周交付节奏（断更周标红）</div><div style="display:flex;gap:6px;align-items:flex-end;background:var(--panel);border:1px solid var(--line);padding:12px 14px">${bars}</div></div>`}).join("");
- const plat=DB.social.map(s=>`<div class="platcard"><div class="pn">${esc(s.name)}</div><div class="pstats"><div><div class="num">${esc(s.fans)}</div><div class="lab">粉丝</div></div><div><div class="num" style="font-size:13px;padding-top:4px">${esc(s.inter)}</div><div class="lab">近况</div></div></div>${s.series&&s.series.length>1?spark(s.series):""}<div class="platlinks">${link(s.board,"数据看板 ↗")}${link(s.link,"主页 ↗")}</div></div>`).join("");
- return topbar(`<b>COCO</b> · 数据中心`)+`<h2 class="pagetitle">数据中心</h2><div class="pagedesc">按条线积累的趋势、交付节奏，加各平台社媒看板（点开看实时数据）。</div>${blocks}<div class="sec"><div class="shead"><h3>社媒看板</h3><span class="hint">点开看各平台实时数据</span></div><div class="platgrid">${plat}</div></div>`;
+  return `<section class="panel"><h1>数据中心</h1><p class="lead">先放目前聊天和白板截图里能确认的数据；飞书实时看板如果需要继续补全，需要可访问截图或导出。</p>
+  <div class="metric-grid">${DB.dataCenterUpdate.cards.map(c=>`<div class="metric-card"><span class="muted">${c.name}</span><strong>${c.value}</strong><b>${c.label}</b><p>${c.detail}</p>${sourceActions(c.sources)}</div>`).join("")}</div>
+  <div class="source-actions"><a class="source-pill" href="${DB.dataCenterUpdate.feishu}" target="_blank">打开飞书社媒数据看板</a></div>
+  </section>`;
 }
 
-function feedView(){const lab={deliver:"交付",req:"沟通",metric:"数据",file:"文件"};let h="";DB.feed.forEach((e,i)=>{h+=`<div class="ev ${e.type==="req"?"key":""}"><div class="dt">${esc(e.date.split(" ")[1]||"")}<br>${esc(e.date.split(" ")[0])}</div><div class="rail"><div class="dot"></div>${i<DB.feed.length-1?'<div class="bar2"></div>':""}</div><div class="body"><div class="meta"><span class="evt ${e.type}">${lab[e.type]}</span><span class="tag lo">${esc(e.line)}</span>${who(e.who)}</div>${esc(e.text)}</div></div>`});return topbar(`<b>COCO</b> · 工作动态流`)+`<h2 class="pagetitle">工作动态流</h2><div class="pagedesc">项目每天的进展流水，随时掌握、无需等周会同步。</div><div class="tline">${h}</div>`}
+function personLine(name,role){
+  const img=DB.peopleAvatars[name]||"";
+  return `<div class="person-row">${img?`<img class="avatar-img" src="${img}" alt="${name}">`:`<div class="avatar">${name.slice(0,1)}</div>`}<div><b>${name}</b><br><span class="muted">${role}</span></div></div>`;
+}
+function contactsView(){
+  return `<section class="panel"><h1>Will × COCO 对接负责人总览</h1><p class="lead">如有相关事项，可直接联系 Will 团队对应负责人。</p>
+  <div class="contact-grid">
+    <div class="contact-card"><h3>内容团队</h3><p>全渠道社媒内容策划、文案沟通与发表，素材协同，demo / use case 视频脚本。</p>${personLine("侯明真","负责人")}${personLine("田长举","协同")}${personLine("吕教东","协同")}</div>
+    <div class="contact-card"><h3>视频剪辑团队</h3><p>素材录制、视频剪辑、成片修改、交付跟进。</p>${personLine("周星星","负责人")}${personLine("李阳阳","剪辑")}${personLine("孔德浩","素材录制")}</div>
+    <div class="contact-card"><h3>SEO 团队</h3><p>SEO相关需求、优化执行、平台策略沟通。</p>${personLine("李家乐","负责人")}</div>
+    <div class="contact-card"><h3>数据分析 / 报告调研</h3><p>Will团队专项小组执行。数据分析、报告调研需求，请联系侯明真或孔维彤统一对接。</p>${personLine("侯明真","统一对接")}${personLine("孔维彤","统一对接")}</div>
+  </div>
+  <div class="tablelike" style="margin-top:18px"><div><b>工作时间</b><span>周一至周五 · 9:00-12:00 / 1:00-5:30</span></div><div><b>休息时间</b><span>周六为休息日，回复可能不及时</span></div><div><b>紧急事项</b><span>可提前告知，可安排加班</span></div></div>
+  <h2>有事找谁</h2><div class="issue-grid">
+    ${["整体统筹 / 跨团队协同 → 侯明真","内容相关 → 侯明真","视频剪辑相关 → 周星星","SEO相关 → 李家乐","数据分析 / 报告调研 → 侯明真"].map(x=>`<div class="issue-card">${x}</div>`).join("")}
+  </div></section>`;
+}
 
-function requestsView(){const all=[];DB.weeks.forEach(w=>(w.requests||[]).forEach(r=>all.push(r)));const rows=all.map(r=>`<tr><td class="small">${esc(r.date)}</td><td>${esc(r.source)}</td><td><div class="q">${esc(r.quote)}</div></td><td>${statusTag(r.status)}</td><td>${who(r.owner)}</td><td class="small">${esc(r.resp)}</td></tr>`).join("");return topbar(`<b>COCO</b> · 确认事项`)+`<h2 class="pagetitle">确认事项（只记未闭环）</h2><div class="pagedesc">只登记会议中需要确认、需要跟到闭环的事项；已回应过一周自动收口。白板“关键确认事项”的来源。</div><table class="t"><thead><tr><th>日期</th><th>来源</th><th>事项</th><th>状态</th><th>负责人</th><th>我们的回应</th></tr></thead><tbody>${rows}</tbody></table>`}
+function videosView(){
+  return `<section class="panel"><h1>Demo/Use Case视频</h1><p class="lead">视频源文件已尽量复制进站内资产；能播放的直接在这里播放，缺源文件的会标记待补。</p>
+  <div class="signal-grid">${DB.demoVideos.map(v=>`<article class="signal-card"><div class="meta"><span>${v.type}</span><span>${v.status}</span><span>完成时间：${v.done}</span></div><h3>${v.title}</h3><p>${v.note}</p><p class="muted">来源：${v.source}</p>${v.asset?`<video class="video-player" controls preload="metadata" src="${v.asset}"></video><div class="source-actions"><a class="source-pill" href="${v.asset}" target="_blank">打开视频源文件</a></div>`:"<p class='muted'>待补源文件</p>"}</article>`).join("")}</div>
+  </section>`;
+}
 
-function deliverablesView(){const all=[];DB.weeks.forEach(w=>{if(w.deliveries)Object.entries(w.deliveries).forEach(([L,arr])=>arr.forEach(d=>all.push({...d,line:L})))});all.sort((a,b)=>b.date.localeCompare(a.date));const rows=all.map(d=>{const pub=d.pub?(d.pub.url?link(d.pub.url,d.pub.plat+" ↗"):`<span class="tag tbd">待发布</span>`):"";return `<tr><td class="small">${esc(d.date)}</td><td><span class="tag lo">${esc(d.line)}</span></td><td>${esc(d.title)}</td><td>${who(d.owner)}</td><td>${pub}</td></tr>`}).join("");return topbar(`<b>COCO</b> · 交付时间线`)+`<h2 class="pagetitle">交付时间线</h2><div class="pagedesc">全部交付按时间倒序，已发布挂平台链接。</div><table class="t"><thead><tr><th>日期</th><th>条线</th><th>交付</th><th>负责人</th><th>链接</th></tr></thead><tbody>${rows}</tbody></table>`}
+function libraryView(){
+  return `<section class="panel"><h1>素材库</h1><p class="lead">资料已经转成站内可打开的源文件；文本类可展开原文摘录，PDF/PPT可直接跳转打开。</p>
+  <div class="file-grid">${DB.materialLibrary.map(m=>`<article class="file-card"><div class="meta"><span>${m.type}</span><span>${m.date}</span><span>${m.owner}</span></div><h3>${m.title}</h3><ul>${m.outline.map(x=>`<li>${x}</li>`).join("")}</ul><div class="source-actions">${m.asset?`<a class="source-pill" href="${m.asset}" target="_blank">打开源文件</a>`:""}${m.asset2?`<a class="source-pill" href="${m.asset2}" target="_blank">打开源文件 2</a>`:""}</div>${sourceActions(m.sources)}</article>`).join("")}</div>
+  </section>`;
+}
 
-function meetingsView(){const rows=DB.weeks.map(w=>`<tr><td class="small">${esc(w.date)}</td><td>${esc(w.title)}</td><td class="small">${w.stub?'<span class="tag tbd">回填中</span>':esc((w.conclusion||"").slice(0,40)+"…")}</td><td><span class="linkchip" data-go="board">看白板 →</span></td></tr>`).join("");return topbar(`<b>COCO</b> · 会议`)+`<h2 class="pagetitle">会议归档</h2><div class="pagedesc">每次会议 = 时间线上的一周。外层只看日期/会议名，点"看白板"进那一周；原文默认折叠、内部可见。</div><table class="t"><thead><tr><th>日期</th><th>会议</th><th>一句话</th><th></th></tr></thead><tbody>${rows}</tbody></table>`}
-
-function filesView(){const rows=DB.files.map(f=>`<tr><td class="small">${esc(f.date)}</td><td><span class="tag lo">${esc(f.kind)}</span></td><td>${esc(f.title)}</td><td>${f.vis==="内部"?'<span class="tag soft">内部</span>':'<span class="tag ok">可复用</span>'}</td></tr>`).join("");return topbar(`<b>COCO</b> · 物料`)+`<h2 class="pagetitle">物料</h2><div class="pagedesc">上传的原文件 + 分析：会议转录、聊天记录、文档和外部链接。视频只存链接，作为白板和会议判断的证据来源。</div><table class="t"><thead><tr><th>日期</th><th>类型</th><th>标题</th><th>属性</th></tr></thead><tbody>${rows}</tbody></table>`}
+function sourcesView(){
+  return `<section class="panel"><h1>证据索引</h1><p class="lead">所有判断优先回到这里：群聊按日期、会议文本、周度/月度信号卡、对方素材分别列出。</p>
+  <div class="file-grid">${DB.sourceIndex.map(s=>`<article class="file-card"><div class="meta"><span>${s.kind}</span><span>${s.date}</span></div><h3>${s.title}</h3><p>${s.excerpt?escapeHtml(s.excerpt).slice(0,180)+"...":"点击打开来源文件查看。"}</p><div class="source-actions">${s.asset?`<a class="source-pill" href="${s.asset}" target="_blank">打开来源文件</a>`:""}<button class="source-button" onclick="toggleSource('${s.id}')">展开原文摘录</button></div><div id="source-${s.id}" class="source-detail" style="display:none">${escapeHtml(s.excerpt||"暂无摘录，请打开来源文件查看。")}</div></article>`).join("")}</div>
+  </section>`;
+}
 
 function submitView(){return topbar(`<b>COCO</b> · 录入`)+`<h2 class="pagetitle">录入</h2><div class="pagedesc">两种方式：①「随手记」一句话丢进去，AI 自动归类；② 丢一段会议转录 / 群聊，AI 抽出本周的交付/事项/数据。手动表单只是补充。</div>
  <div class="quickbox"><div class="small" style="margin-bottom:6px">随手记（推荐）</div><textarea placeholder="例：今天交付了 VC 文章抓取页，给 COCO 6 篇本周阅读列表 —— 或者直接粘一段群聊/会议片段"></textarea><div class="aihint">↳ AI 会判断这是交付 / 确认事项 / 数据点，自动归类填好，你确认即可。</div><div style="margin-top:10px"><button class="submitbtn">AI 归类并预填</button></div></div>
@@ -868,3 +1678,6 @@ render();
 </script>
 </body>
 </html>
+
+
+
