@@ -1489,6 +1489,11 @@ function evidenceForDate(date,line){
 function go(v){route=v;render();window.scrollTo(0,0)}
 function pickWeek(i){selWeek=i;render()}
 function bind(){document.querySelectorAll("[data-go]").forEach(e=>e.onclick=()=>go(e.dataset.go));document.querySelectorAll("[data-wk]").forEach(e=>e.onclick=()=>pickWeek(+e.dataset.wk))}
+function feedView(){return `<section class="panel"><h2>工作动态流</h2><p class="lead">按时间记录 COCO 项目中的群聊、会议、交付与客户反馈，后续作为证据索引和白板更新来源。</p></section>`}
+function requestsView(){return `<section class="panel"><h2>确认事项</h2><p class="lead">集中展示客户新提出的问题、我们给出的处理方式、负责人和状态。</p></section>`}
+function deliverablesView(){return `<section class="panel"><h2>交付时间线</h2><p class="lead">汇总内容、视频、SEO、数据等交付节点，用于周会前核对。</p></section>`}
+function meetingsView(){return `<section class="panel"><h2>会议</h2><p class="lead">沉淀每次周会日程、会议文本、上周回顾和双方待办。</p></section>`}
+function filesView(){return `<section class="panel"><h2>物料</h2><p class="lead">集中放置客户提供素材、会议文本、PDF、视频与截图证据。</p></section>`}
 function render(){
  renderSide();
  const viewMap={overview:overviewView,board:boardView,psychology:psychologyView,videos:videosView,library:libraryView,seoRoadmap:seoRoadmapView,videoRoadmap:videoRoadmapView,gantt:ganttView,data:dataView,contacts:contactsView,sources:sourcesView,feed:feedView,requests:requestsView,deliverables:deliverablesView,meetings:meetingsView,files:filesView,submit:submitView,roster:rosterView};
@@ -1690,6 +1695,7 @@ render();
 </script>
 </body>
 </html>
+
 
 
 
