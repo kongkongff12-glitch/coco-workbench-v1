@@ -1587,6 +1587,50 @@ function weekPanel(w){
 }
 
 
+function wcard(c){
+  c=c||{};
+  const asList=v=>Array.isArray(v)?v:(v===undefined||v===null||v===""?[]:[v]);
+  const first=(...vals)=>vals.find(v=>v!==undefined&&v!==null&&v!==""&&(!Array.isArray(v)||v.length))||"";
+  const title=first(c.title,c.topic,c.name,c.label,"事项");
+  const owner=first(c.owner,c.lead,c.responsible,c.team,c.role);
+  const status=first(c.status,c.stage,c.tag,c.state);
+  const summary=first(c.summary,c.desc,c.description,c.text,c.conclusion,c.note);
+  const sources=asList(first(c.sources,c.sourceIds,c.evidenceIds,c.evidence,[])).filter(Boolean);
+  const itemText=v=>{
+    if(v===undefined||v===null) return "";
+    if(typeof v==="string"||typeof v==="number") return esc(v);
+    const k=first(v.k,v.key,v.time,v.date,v.label);
+    const val=first(v.v,v.value,v.text,v.note,v.title,v.name,v.desc);
+    return `${k?`<span class="mini">${esc(k)}</span> `:""}${esc(val)}`;
+  };
+  const block=(label,items)=>{
+    items=asList(items).filter(Boolean);
+    if(!items.length) return "";
+    return `<div class="wblock"><div class="wlabel">${esc(label)}</div><ul>${items.map(x=>`<li>${itemText(x)}</li>`).join("")}</ul></div>`;
+  };
+  const metrics=asList(c.metrics).filter(Boolean).map(m=>{
+    if(typeof m==="string") return `<span class="tag">${esc(m)}</span>`;
+    const name=first(m.name,m.label,m.k);
+    const value=first(m.value,m.v,m.cur,m.text);
+    return `<span class="tag">${esc(name)}${value?`：${esc(value)}`:""}</span>`;
+  }).join("");
+  const links=asList(c.links).filter(Boolean).map(l=>{
+    const url=typeof l==="string"?l:l.url;
+    const label=typeof l==="string"?l:first(l.label,l.title,l.name,l.url,"打开链接");
+    return url?`<a class="source-pill" href="${esc(url)}" target="_blank">${esc(label)}</a>`:"";
+  }).join("");
+  return `<section class="wcard">
+    <div class="wcard-h"><div class="ct">${esc(title)}</div><div class="co">${owner?`<b>${esc(owner)}</b>`:""}${status?` · ${esc(status)}`:""}</div></div>
+    ${summary?`<p>${esc(summary)}</p>`:""}
+    ${metrics?`<div class="source-actions">${metrics}</div>`:""}
+    ${block("关键结论",first(c.points,c.highlights,c.insights,c.findings,[]))}
+    ${block("本周动作 / 进展",first(c.items,c.actions,c.outputs,c.progress,c.deliveries,[]))}
+    ${block("问题与解决方式",first(c.solutions,c.issues,c.todo,c.todos,c.nexts,[]))}
+    ${links?`<div class="source-actions">${links}</div>`:""}
+    ${sources.length?sourceActions(sources):""}
+  </section>`;
+}
+
 function sourceById(id){ return (DB.sourceIndex||[]).find(s=>s.id===id); }
 function sourceActions(ids=[]){
   return `<div class="source-actions">${ids.map(id=>{
