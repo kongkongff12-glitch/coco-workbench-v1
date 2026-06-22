@@ -1489,7 +1489,18 @@ function evidenceForDate(date,line){
 function go(v){route=v;render();window.scrollTo(0,0)}
 function pickWeek(i){selWeek=i;render()}
 function bind(){document.querySelectorAll("[data-go]").forEach(e=>e.onclick=()=>go(e.dataset.go));document.querySelectorAll("[data-wk]").forEach(e=>e.onclick=()=>pickWeek(+e.dataset.wk))}
-function render(){renderSide();const fn={overview:overviewView,board:boardView,psychology:psychologyView,videos:videosView,library:libraryView,seoRoadmap:seoRoadmapView,videoRoadmap:videoRoadmapView,gantt:ganttView,data:dataView,contacts:contactsView,sources:sourcesView,feed:feedView,requests:requestsView,deliverables:deliverablesView,meetings:meetingsView,files:filesView,submit:submitView,roster:rosterView}[route];$("#main").innerHTML=fn();bind()}
+function render(){
+ renderSide();
+ const viewMap={overview:overviewView,board:boardView,psychology:psychologyView,videos:videosView,library:libraryView,seoRoadmap:seoRoadmapView,videoRoadmap:videoRoadmapView,gantt:ganttView,data:dataView,contacts:contactsView,sources:sourcesView,feed:feedView,requests:requestsView,deliverables:deliverablesView,meetings:meetingsView,files:filesView,submit:submitView,roster:rosterView};
+ const fn=viewMap[route]||overviewView;
+ try{
+  $("#main").innerHTML=fn();
+ }catch(err){
+  console.error(err);
+  $("#main").innerHTML=`<section class="panel"><h2>页面加载异常</h2><p class="lead">请刷新页面，或联系 Will 团队查看。</p></section>`;
+ }
+ bind();
+}
 
 function renderSide(){
  const cnt={requests:DB.weeks[0].requests?DB.weeks[0].requests.length:0,feed:DB.feed.length};
@@ -1613,6 +1624,7 @@ function seoRoadmapView(){
   </section>`;
 }
 
+function ganttView(){return videoRoadmapView()}
 function videoRoadmapView(){
   return `<section class="panel"><h1>视频路线图</h1><p class="lead">按完成、进行中、卡点、下一步拆开，并与视频库源文件互相对应。</p>
   <div class="roadmap-grid">${DB.videoRoadmap.map(r=>`<div class="roadmap-row"><div class="phase ${r.tone}">${r.phase}</div><div class="body"><b>${r.task}</b>${sourceActions(r.source)}</div><div class="owner">${r.owner}</div></div>`).join("")}</div>
@@ -1678,6 +1690,7 @@ render();
 </script>
 </body>
 </html>
+
 
 
 
