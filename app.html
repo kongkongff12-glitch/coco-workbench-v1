@@ -307,17 +307,24 @@ table.t tr:hover td{background:#FBF9F4}
 .wblock li:first-child{border-top:0}
 .wblock .mini,.mini{color:var(--red);font-weight:900}
 .wcard>p{font-size:15px;line-height:1.6;font-weight:650;margin-bottom:10px}
-.media-wall{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
-.media-card{border:1px solid var(--line);background:#fff;border-radius:8px;overflow:hidden;text-decoration:none;color:var(--ink);display:block}
-.media-card img{width:100%;height:170px;object-fit:cover;display:block;background:#F6F1E7}
-.media-doc{height:170px;display:flex;align-items:center;justify-content:center;background:var(--amber-bg);font-weight:900;color:var(--amber);font-size:18px}
-.media-card .media-cap{padding:8px 10px;font-size:12px;font-weight:800;line-height:1.35}
-.recent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:12px 0 18px}
-.recent-card{border:1px solid var(--line);background:#fff;border-radius:8px;overflow:hidden;text-decoration:none;color:var(--ink);display:block;min-height:170px}
-.recent-card img{width:100%;height:122px;object-fit:cover;display:block;background:#F6F1E7}
-.recent-doc{height:122px;display:flex;align-items:center;justify-content:center;background:var(--blue-bg);color:var(--blue);font-weight:900;font-size:18px}
-.recent-card .rcap{padding:8px 9px;font-size:12px;line-height:1.35;font-weight:800}
-.recent-card .rcap span{display:block;color:var(--sub);font-size:11px;font-weight:700;margin-bottom:2px}
+.media-wall{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.media-card{border:1px solid var(--line);background:#fff;border-radius:8px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;min-height:360px}
+.media-frame{height:300px;background:#F6F1E7;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);overflow:hidden}
+.media-frame img{width:100%;height:100%;object-fit:contain;display:block}
+.media-doc{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--amber-bg);font-weight:900;color:var(--amber);font-size:22px}
+.media-card .media-cap{padding:9px 11px;font-size:13px;font-weight:900;line-height:1.35}
+.media-card .media-sub{padding:0 11px 9px;color:var(--sub);font-size:12px;line-height:1.35}
+.media-detail{margin:0 11px 11px;border:1px solid var(--line);border-radius:7px;background:#FBF9F4;overflow:hidden}
+.media-detail summary{cursor:pointer;list-style:none;padding:7px 9px;font-size:12px;font-weight:800;color:var(--red)}
+.media-detail summary::after{content:"打开";float:right;color:var(--sub);font-weight:700}
+.media-detail[open] summary::after{content:"收起"}
+.media-detail div{padding:0 9px 9px;font-size:12px;line-height:1.55;color:var(--sub)}
+.recent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:12px 0 18px}
+.recent-card{border:1px solid var(--line);background:#fff;border-radius:8px;overflow:hidden;text-decoration:none;color:var(--ink);display:block;min-height:270px}
+.recent-card img{width:100%;height:210px;object-fit:contain;display:block;background:#F6F1E7;border-bottom:1px solid var(--line)}
+.recent-doc{height:210px;display:flex;align-items:center;justify-content:center;background:var(--blue-bg);color:var(--blue);font-weight:900;font-size:20px;border-bottom:1px solid var(--line)}
+.recent-card .rcap{padding:9px 10px;font-size:12px;line-height:1.35;font-weight:800}
+.recent-card .rcap span{display:block;color:var(--sub);font-size:11px;font-weight:700;margin-bottom:3px}
 
 @media(max-width:900px){
   .side{display:none}.main{padding:18px 14px}
@@ -340,12 +347,20 @@ table.t tr:hover td{background:#FBF9F4}
 .issue-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
 .issue-card{border:1px solid var(--line);background:#fff;padding:14px;border-radius:8px}
 .issue-card b{color:var(--accent)}
-.video-player{width:100%;max-height:360px;background:#111;border-radius:8px;margin-top:10px}
+.video-player{width:100%;aspect-ratio:16/9;max-height:380px;background:#111;border-radius:8px;margin-top:10px;object-fit:contain;display:block}
+.video-card.portrait .video-player{width:min(270px,100%);aspect-ratio:9/16;max-height:560px;margin-left:auto;margin-right:auto}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.video-filterbar{display:flex;gap:10px;flex-wrap:wrap;align-items:end;border:1px solid var(--line);background:#FBF9F4;border-radius:10px;padding:12px;margin:0 0 16px}
+.video-filterbar label{display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--sub);font-weight:800}
+.video-filterbar select{min-width:180px;border:1px solid var(--line-dark);background:#fff;border-radius:7px;padding:8px 10px;color:var(--ink);font-family:var(--sans)}
 .video-status-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 18px}
 .video-status-card{border:1px solid var(--line);background:#fff;padding:12px 14px;border-radius:8px}
 .video-status-card b{display:block;font-size:22px;color:var(--accent);line-height:1.1}.video-status-card span{font-size:12px;color:var(--muted)}
 .video-missing{min-height:210px;border:2px dashed var(--line-dark);background:#FBF9F4;border-radius:8px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--red);font-weight:900;margin-top:10px;padding:18px}
 .video-note-list{list-style:none;margin:10px 0 0;padding:0}.video-note-list li{border-top:1px dashed var(--line);padding:7px 0;font-size:13px;line-height:1.55}.video-note-list b{color:var(--accent)}
+.uploadbox{border:1px dashed var(--line-dark);background:#FBF9F4;border-radius:10px;padding:14px;margin:10px 0 13px}
+.uploadbox input[type=file]{background:#fff;border-style:dashed;cursor:pointer}
+.uploadlist{margin-top:8px;font-size:12px;color:var(--sub);line-height:1.55;white-space:pre-wrap}
 .file-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .file-card{border:1px solid var(--line);background:#fff;padding:14px;border-radius:8px}
 .file-card h3{margin:2px 0 6px}
@@ -1410,6 +1425,7 @@ const AUTH_KEY="coco-workbench-auth-v5";
 const APP_SHELL='<div class="app"><nav class="side" id="sidebar"></nav><main class="main" id="main"></main></div>';
 const $=s=>document.querySelector(s);
 let route="overview", selWeek=0;
+let videoFilters={group:"全部",date:"全部"};
 function mountAppShell(){ if(!document.querySelector("#sidebar")||!document.querySelector("#main")){ document.body.innerHTML=APP_SHELL; } }
 function bytesToHex(buf){ return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join(""); }
 async function passHash(v){ return bytesToHex(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(v))); }
@@ -1522,8 +1538,8 @@ DB.peopleAvatars={
 var psyMonth="all";
 var psyWeek="all";
 
-const NAV={ 概览:["overview"], "客户 · COCO":["board","psychology","videos","library","seoRoadmap","videoRoadmap","data","contacts"], 过程:["sources","feed","requests","deliverables","meetings","files"], 操作:["submit","roster"] };
-const VIEWS={ overview:"全客户总览",board:"白板",psychology:"用户画像 / 心理变化",videos:"Demo/Use Case视频",library:"素材库",seoRoadmap:"SEO路线图",videoRoadmap:"视频路线图",data:"数据中心",contacts:"对接负责人",sources:"证据索引",feed:"工作动态流",requests:"确认事项",deliverables:"交付时间线",meetings:"会议",files:"物料",submit:"录入",roster:"团队名单" };
+const NAV={ "COCO 总览":["overview"], "工作台":["board","psychology","videos","library","seoRoadmap","videoRoadmap","data","contacts"], 过程:["sources","feed","requests","deliverables","meetings","files"], 操作:["submit","roster"] };
+const VIEWS={ overview:"问题总览",board:"白板",psychology:"用户画像 / 心理变化",videos:"Demo/Use Case视频",library:"素材库",seoRoadmap:"SEO路线图",videoRoadmap:"视频路线图",data:"数据中心",contacts:"对接负责人",sources:"证据索引",feed:"工作动态流",requests:"确认事项",deliverables:"交付时间线",meetings:"会议",files:"物料",submit:"录入",roster:"团队名单" };
 
 function esc(s){return String(s??"").replace(/[<>&"]/g,m=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[m]))}
 function escapeHtml(s){return esc(s)}
@@ -1573,16 +1589,13 @@ function renderSide(){
 }
 function topbar(c){return `<div class="topbar"><div class="crumb">${c}</div></div>`}
 
-/* 全客户总览 */
+/* COCO 问题总览 */
 function overviewView(){
- const cards=DB.clients.map(c=>`<div class="ccard ${c.active?"":"dim"}" ${c.active?'data-go="board"':""}>
-   <div class="ct"><span class="cn">${esc(c.name)}</span><span class="cf">${esc(c.fee)}/月</span></div>
-   <div class="cone">${esc(c.one)}</div>
-   <div class="cmeta">${who(c.lead)}<span>负责人</span>${c.red?`<span class="rf">● ${c.red} 项待处理</span>`:'<span class="muted">—</span>'}</div></div>`).join("");
- return topbar(`郎瀚威团队 · 全客户总览`)+`
-  <h2 class="pagetitle">全客户总览</h2>
-  <div class="pagedesc">一屏看到每个客户的本周一句话和红灯数，点进 COCO 看完整白板。第一期只跑通 COCO，其余试点后接入。</div>
-  <div class="cgrid">${cards}</div>`;
+ const issues=(DB.whiteboardIssues||[]).map((i,idx)=>`<div class="issue-card"><div class="meta"><span>问题 ${idx+1}</span><span>${esc((i.sources||[]).length)} 个来源</span></div><h3>${esc(i.title)}</h3><p><b>客户问题：</b>${esc(i.problem)}</p><p><b>处理方式：</b>${esc(i.handling)}</p>${sourceActions(i.sources||[])}</div>`).join("");
+ return topbar(`<b>COCO</b> · 问题总览`)+`
+  <h2 class="pagetitle">客户最近提出 / 集中讨论的问题</h2>
+  <div class="pagedesc">这个站点现在只服务 COCO。首页先放老板、Will 和负责人最需要看的问题板：客户在问什么、我们怎么处理、证据在哪里。</div>
+  <div class="issue-grid">${issues}</div>`;
 }
 
 /* 白板：当前态 + 周时间线 + 选中周 */
@@ -1595,14 +1608,13 @@ function boardView(){
    return `<button class="datechip ${i===selWeek?"on":""}" data-wk="${i}">${esc(x.date.slice(5))}${red?`<span class="red">● ${red}</span>`:""}</button>`;
  }).join("");
  const panel = w.stub ? `<div class="wkhead"><span class="wd">${esc(w.date)}</span><span class="tag lo">${esc(w.title)}</span></div><div class="oneliner empty">${esc(w.conclusion)}</div><div class="small muted">这一周的白板会由该次会议分析 + 当周登记数据生成，目前为占位。</div>` : weekPanel(w);
-  const issues = whiteboardIssuesBlock();
- return topbar(`<b>COCO</b> · 白板`)+`
+  return topbar(`<b>COCO</b> · 白板`)+`
   <h2 class="pagetitle">COCO 白板</h2>
   <div class="pagedesc">周五会前使用的展示白板：由上次会后方向、本周每日执行、当前数据看板和未闭环事项生成；会议文本会进入会后纪要，并用于生成下一张周五白板。</div>
   <div class="kpis">${kpis}</div>
   <div class="sec" style="margin-bottom:18px"><div class="shead"><h3>${esc(c.stage.label)}</h3><span class="hint"><span class="linkchip" data-go="videoRoadmap">看视频路线图 →</span></span></div>${stg}</div>
   <div class="datefilter"><span class="flabel">日期筛选</span>${dates}</div>
-  <div class="wkpanel">${issues}${panel}</div>`;
+  <div class="wkpanel">${panel}</div>`;
 }
 function psychBlock(w){
  return "";
@@ -1662,8 +1674,10 @@ function renderMediaWall(media=[]){
   return `<div class="media-wall">${media.map(m=>{
     const src=m.src||m.url||"";
     const label=m.label||m.title||m.type||"素材";
+    const type=m.type||((src||"").split(".").pop()||"文件");
     const isImage=!!m.src;
-    return `<a class="media-card" href="${esc(src)}" target="_blank">${isImage?`<img src="${esc(src)}" alt="${esc(label)}">`:`<div class="media-doc">${esc((m.type||"DOC").toUpperCase())}</div>`}<div class="media-cap">${esc(label)}</div></a>`;
+    const detail=m.detail||m.note||"点击“打开原文件”可查看完整文件；预览区已按完整比例缩放，不裁切截图内容。";
+    return `<article class="media-card"><div class="media-frame">${isImage?`<img src="${esc(src)}" alt="${esc(label)}">`:`<div class="media-doc">${esc(String(type).toUpperCase())}</div>`}</div><div class="media-cap">${esc(label)}</div><div class="media-sub">${esc(type)} · 完整比例缩放预览</div><details class="media-detail"><summary>查看详情</summary><div>${esc(detail)}</div></details><div class="source-actions" style="padding:0 11px 11px;margin-top:auto"><a class="source-pill" href="${esc(src)}" target="_blank">打开原文件</a></div></article>`;
   }).join("")}</div>`;
 }
 function renderCardDetails(title,details=[]){
@@ -1795,19 +1809,32 @@ function psychologyView(){
   </section>`;
 }
 
+function boardCardByTopic(keyword){
+  const weeks=DB.weeks||[];
+  for(const w of weeks){
+    const card=(w.cards||[]).find(c=>String(c.topic||c.title||"").includes(keyword)&&c.gantt);
+    if(card) return card;
+  }
+  return null;
+}
+function roadmapRowsToGantt(rows=[],label="路线图"){
+  const state={done:"done",doing:"doing",risk:"blocked",next:"plan"};
+  return {months:[{m:"6月",w:4,labels:["W1","W2","W3","W4"]},{m:"7月",w:4,labels:["W1","W2","W3","W4"]},{m:"8月",w:4,labels:["W1","W2","W3","W4"]}],today:3,phases:rows.map((r,i)=>({name:r.phase||`${label}阶段 ${i+1}`,note:r.owner||"",tasks:[{name:r.task||"待补任务",pri:i<2?"P0":"P1",start:Math.min(i*2,9),span:2,state:state[r.tone]||"plan",meta:r.owner||""}]}))};
+}
+function roadmapSourceList(rows=[]){
+  return rows.map(r=>`<div class="issue-card"><h3>${esc(r.phase||"")}</h3><p>${esc(r.task||"")}</p><div class="small muted">负责人：${esc(r.owner||"待定")}</div>${sourceActions(r.source||[])}</div>`).join("");
+}
 function seoRoadmapView(){
-  return `<section class="panel"><h1>SEO路线图</h1><p class="lead">按状态拆开，不和视频混在一起；每个卡点都回到会议、群聊或看板。</p>
-  <div class="roadmap-grid">${DB.seoRoadmap.map(r=>`<div class="roadmap-row"><div class="phase ${r.tone}">${r.phase}</div><div class="body"><b>${r.task}</b>${sourceActions(r.source)}</div><div class="owner">${r.owner}</div></div>`).join("")}</div>
-  <div class="source-actions"><a class="source-pill" href="${DB.dataCenterUpdate.feishu}" target="_blank">打开飞书社媒数据看板</a></div>
-  </section>`;
+  const card=boardCardByTopic("SEO");
+  const gantt=(card&&card.gantt)||roadmapRowsToGantt(DB.seoRoadmap||[],"SEO");
+  return `<section class="panel"><h1>SEO路线图</h1><p class="lead">已切换成白板同款彩色甘特图：阶段、任务、状态和当前线一屏展示，下面保留来源追溯。</p>${renderCardGantt(gantt)}${card?renderCardDetails(card.detailTitle,card.details):""}<div class="source-actions"><a class="source-pill" href="${DB.dataCenterUpdate.feishu}" target="_blank">打开飞书社媒数据看板</a></div><div class="issue-grid" style="margin-top:14px">${roadmapSourceList(DB.seoRoadmap||[])}</div></section>`;
 }
 
 function ganttView(){return videoRoadmapView()}
 function videoRoadmapView(){
-  return `<section class="panel"><h1>视频路线图</h1><p class="lead">按完成、进行中、卡点、下一步拆开，并与视频库源文件互相对应。</p>
-  <div class="roadmap-grid">${DB.videoRoadmap.map(r=>`<div class="roadmap-row"><div class="phase ${r.tone}">${r.phase}</div><div class="body"><b>${r.task}</b>${sourceActions(r.source)}</div><div class="owner">${r.owner}</div></div>`).join("")}</div>
-  <div class="source-actions"><button class="source-button" data-go="videos" onclick="go('videos')">打开Demo/Use Case视频库</button></div>
-  </section>`;
+  const card=boardCardByTopic("视频");
+  const gantt=(card&&card.gantt)||roadmapRowsToGantt(DB.videoRoadmap||[],"视频");
+  return `<section class="panel"><h1>视频路线图</h1><p class="lead">已切换成白板同款彩色甘特图：完成、进行中、计划和卡点按时间轴展示，并和视频库互相对应。</p>${renderCardGantt(gantt)}${card?renderCardDetails(card.detailTitle,card.details):""}<div class="source-actions"><button class="source-button" data-go="videos" onclick="go('videos')">打开Demo/Use Case视频库</button></div><div class="issue-grid" style="margin-top:14px">${roadmapSourceList(DB.videoRoadmap||[])}</div></section>`;
 }
 
 function dataView(){
@@ -1835,15 +1862,23 @@ function contactsView(){
   </div></section>`;
 }
 
+function setVideoFilter(key,value){videoFilters[key]=value||"全部";render();}
+function videoDateKey(v){return v.done||"待补";}
+function isPortraitVideo(v){return /竖屏|vertical/i.test([v.type,v.title,v.asset].join(" "));}
 function videosView(){
   const videos=DB.demoVideos||[];
   const ready=videos.filter(v=>v.asset).length;
   const missing=videos.length-ready;
-  const groups=[...new Set(videos.map(v=>v.group||"未分组"))];
-  const card=v=>`<article class="signal-card"><div class="meta"><span>${esc(v.group||"")}</span><span>${esc(v.type)}</span><span>${esc(v.status)}</span><span>${esc(v.done)}</span></div><h3>${esc(v.title)}</h3><p>${esc(v.note)}</p>${v.asset?`<video class="video-player" controls preload="metadata" src="${esc(v.asset)}"></video><div class="source-actions"><a class="source-pill" href="${esc(v.asset)}" target="_blank">打开视频源文件</a></div>`:`<div class="video-missing">${esc(v.status)}<br><span class="small">${esc(v.source)}</span></div>`}<ul class="video-note-list"><li><b>用途：</b>${esc(v.use||"待补")}</li><li><b>下一步：</b>${esc(v.next||"待补")}</li><li><b>来源：</b>${esc(v.source||"待补")}</li></ul></article>`;
-  return `<section class="panel"><h1>Demo / Use Case 视频库</h1><p class="lead">本页按客户可汇报素材管理：先看是否已入库、能否直接播放，再看用途、下一步和缺口。</p>
-    <div class="video-status-row"><div class="video-status-card"><b>${videos.length}</b><span>应入库视频</span></div><div class="video-status-card"><b>${ready}</b><span>已接入站内播放</span></div><div class="video-status-card"><b>${missing}</b><span>缺源文件</span></div><div class="video-status-card"><b>4</b><span>视频主题组</span></div></div>
-    ${groups.map(g=>`<div class="sec"><div class="shead"><h3>${esc(g)}</h3><span class="hint">${videos.filter(v=>(v.group||"未分组")===g).length} 条</span></div><div class="signal-grid">${videos.filter(v=>(v.group||"未分组")===g).map(card).join("")}</div></div>`).join("")}
+  const groups=["全部",...[...new Set(videos.map(v=>v.group||"未分组"))]];
+  const dates=["全部",...[...new Set(videos.map(videoDateKey))].sort()];
+  const filtered=videos.filter(v=>(videoFilters.group==="全部"||(v.group||"未分组")===videoFilters.group)&&(videoFilters.date==="全部"||videoDateKey(v)===videoFilters.date));
+  const groupOptions=groups.map(g=>`<option value="${esc(g)}" ${videoFilters.group===g?"selected":""}>${esc(g)}</option>`).join("");
+  const dateOptions=dates.map(d=>`<option value="${esc(d)}" ${videoFilters.date===d?"selected":""}>${esc(d)}</option>`).join("");
+  const card=v=>{const portrait=isPortraitVideo(v);return `<article class="signal-card video-card ${portrait?"portrait":"landscape"}"><div class="meta"><span>${esc(v.group||"")}</span><span>${esc(v.type)}</span><span>${esc(v.status)}</span><span>${esc(v.done)}</span></div><h3>${esc(v.title)}</h3><p>${esc(v.note)}</p>${v.asset?`<video class="video-player ${portrait?"portrait":"landscape"}" controls preload="metadata" src="${esc(v.asset)}"></video><div class="source-actions"><a class="source-pill" href="${esc(v.asset)}" target="_blank">打开视频源文件</a></div>`:`<div class="video-missing">${esc(v.status)}<br><span class="small">${esc(v.source)}</span></div>`}<ul class="video-note-list"><li><b>用途：</b>${esc(v.use||"待补")}</li><li><b>下一步：</b>${esc(v.next||"待补")}</li><li><b>来源：</b>${esc(v.source||"待补")}</li></ul></article>`};
+  return `<section class="panel"><h1>Demo / Use Case 视频库</h1><p class="lead">可按分类和入库日期自动筛选；竖屏素材按竖屏比例展示，横屏素材按横屏比例展示。</p>
+    <div class="video-status-row"><div class="video-status-card"><b>${videos.length}</b><span>应入库视频</span></div><div class="video-status-card"><b>${ready}</b><span>已接入站内播放</span></div><div class="video-status-card"><b>${missing}</b><span>缺源文件</span></div><div class="video-status-card"><b>${filtered.length}</b><span>当前筛选结果</span></div></div>
+    <div class="video-filterbar"><label>分类<select onchange="setVideoFilter('group',this.value)">${groupOptions}</select></label><label>日期<select onchange="setVideoFilter('date',this.value)">${dateOptions}</select></label><button class="source-button" onclick="videoFilters={group:'全部',date:'全部'};render()">重置筛选</button></div>
+    ${filtered.length?`<div class="video-grid">${filtered.map(card).join("")}</div>`:`<div class="emptyline">没有匹配的视频，换一个筛选条件。</div>`}
   </section>`;
 }
 
@@ -1862,13 +1897,20 @@ function sourcesView(){
   </section>`;
 }
 
-function submitView(){return topbar(`<b>COCO</b> · 录入`)+`<h2 class="pagetitle">录入</h2><div class="pagedesc">两种方式：①「随手记」一句话丢进去，AI 自动归类；② 丢一段会议转录 / 群聊，AI 抽出本周的交付/事项/数据。手动表单只是补充。</div>
+function showUploadNames(input){
+  const box=document.getElementById("uploadNames");
+  if(!box) return;
+  const files=Array.from(input.files||[]).map(f=>`${f.name} · ${Math.max(1,Math.round(f.size/1024))}KB`);
+  box.textContent=files.length?files.join("\n"):"未选择文件";
+}
+function submitView(){return topbar(`<b>COCO</b> · 录入`)+`<h2 class="pagetitle">录入</h2><div class="pagedesc">两种方式：①「随手记」一句话丢进去，AI 自动归类；② 上传文件/图片并补一句说明，后续归档进证据索引或白板素材。</div>
  <div class="quickbox"><div class="small" style="margin-bottom:6px">随手记（推荐）</div><textarea placeholder="例：今天交付了 VC 文章抓取页，给 COCO 6 篇本周阅读列表 —— 或者直接粘一段群聊/会议片段"></textarea><div class="aihint">↳ AI 会判断这是交付 / 确认事项 / 数据点，自动归类填好，你确认即可。</div><div style="margin-top:10px"><button class="submitbtn">AI 归类并预填</button></div></div>
- <div class="form"><div class="small" style="margin-bottom:10px">或手动登记一条交付</div>
-  <div class="fr"><label>类型</label><select><option>社媒发布</option><option>视频</option><option>SEO页面</option><option>深度报告</option><option>个人IP内容</option><option>活动支持</option><option>方案文档</option></select></div>
-  <div class="row2"><div class="fr"><label>负责人（本客户核心，可展开选全员）</label><select><option>侯明真</option><option>田长举</option><option>周星星</option><option>李阳阳</option><option>李家乐</option><option>吕教东</option><option>代逸如（帮忙）</option></select></div><div class="fr"><label>日期</label><input value="2026-06-05"></div></div>
-  <div class="fr"><label>一句话说明（必填）</label><input placeholder="例：ICP 案例页第二批上线"></div>
-  <div class="fr"><label>已发布链接（选填，自动显示平台 ↗）</label><input placeholder="https://"></div>
+ <div class="form"><div class="small" style="margin-bottom:10px">或手动登记一条交付 / 素材</div>
+  <div class="fr"><label>类型</label><select><option>社媒发布</option><option>视频</option><option>SEO页面</option><option>深度报告</option><option>图片截图</option><option>客户文件</option><option>个人IP内容</option><option>活动支持</option><option>方案文档</option></select></div>
+  <div class="row2"><div class="fr"><label>负责人（本客户核心，可展开选全员）</label><select><option>侯明真</option><option>田长举</option><option>周星星</option><option>李阳阳</option><option>李家乐</option><option>吕教东</option><option>代逸如（帮忙）</option></select></div><div class="fr"><label>日期</label><input value="2026-06-24"></div></div>
+  <div class="uploadbox"><label>上传文件 / 图片</label><input type="file" multiple accept="image/*,video/*,.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.csv,.txt" onchange="showUploadNames(this)"><div id="uploadNames" class="uploadlist">未选择文件</div><div class="aihint">静态预览版会先记录文件名；真正发布时把文件放入 assets 后即可出现在素材库 / 证据索引。</div></div>
+  <div class="fr"><label>一句话说明（必填）</label><input placeholder="例：6/24 新增 SEO 模板截图，放入本周白板 SEO 卡片"></div>
+  <div class="fr"><label>原帖 / 来源链接（选填）</label><input placeholder="https://"></div>
   <button class="submitbtn">提交</button></div>`}
 
 function rosterView(){const rows=DB.roster.members.map(m=>`<tr><td>${who(m.name)}</td><td>${esc(m.role)}</td><td class="small">${esc(m.group)}</td></tr>`).join("");const hp=DB.roster.helpers.map(h=>`<tr><td>${who(h.name)}</td><td><span class="tag fresh">帮忙</span></td><td class="small">${esc(h.note)}</td></tr>`).join("");const lf=DB.roster.left.map(l=>`<tr><td>${who(l.name)}</td><td><span class="tag lo">已离职</span></td><td class="small">${esc(l.note)}</td></tr>`).join("");return topbar(`<b>COCO</b> · 团队名单`)+`<h2 class="pagetitle">团队名单</h2><div class="pagedesc">本客户核心成员引用全公司全员名单（/team.yaml）。负责人 ${esc(DB.roster.lead)} · 把关 ${esc(DB.roster.reviewer)}。增删人改一处、全站联动。</div><table class="t"><thead><tr><th>成员</th><th>本客户角色</th><th>所属组</th></tr></thead><tbody>${rows}${hp}${lf}</tbody></table>`}
