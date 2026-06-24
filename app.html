@@ -300,6 +300,24 @@ table.t tr:hover td{background:#FBF9F4}
 .linkgroup .lgh{font-size:12.5px;font-weight:600;margin-bottom:5px}
 .linkrow{display:flex;flex-wrap:wrap;gap:6px}
 .cfg{margin-top:8px}
+.wblock{margin-top:12px}
+.wlabel{font-size:12px;font-weight:900;color:var(--red);margin-bottom:6px}
+.wblock ul{list-style:none;margin:0;padding:0}
+.wblock li{border-top:1px dashed var(--line);padding:8px 0;font-size:14px;line-height:1.55}
+.wblock li:first-child{border-top:0}
+.wblock .mini,.mini{color:var(--red);font-weight:900}
+.wcard>p{font-size:15px;line-height:1.6;font-weight:650;margin-bottom:10px}
+.media-wall{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
+.media-card{border:1px solid var(--line);background:#fff;border-radius:8px;overflow:hidden;text-decoration:none;color:var(--ink);display:block}
+.media-card img{width:100%;height:170px;object-fit:cover;display:block;background:#F6F1E7}
+.media-doc{height:170px;display:flex;align-items:center;justify-content:center;background:var(--amber-bg);font-weight:900;color:var(--amber);font-size:18px}
+.media-card .media-cap{padding:8px 10px;font-size:12px;font-weight:800;line-height:1.35}
+.recent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:12px 0 18px}
+.recent-card{border:1px solid var(--line);background:#fff;border-radius:8px;overflow:hidden;text-decoration:none;color:var(--ink);display:block;min-height:170px}
+.recent-card img{width:100%;height:122px;object-fit:cover;display:block;background:#F6F1E7}
+.recent-doc{height:122px;display:flex;align-items:center;justify-content:center;background:var(--blue-bg);color:var(--blue);font-weight:900;font-size:18px}
+.recent-card .rcap{padding:8px 9px;font-size:12px;line-height:1.35;font-weight:800}
+.recent-card .rcap span{display:block;color:var(--sub);font-size:11px;font-weight:700;margin-bottom:2px}
 
 @media(max-width:900px){
   .side{display:none}.main{padding:18px 14px}
@@ -1246,6 +1264,8 @@ files:[
      {k:"当前判断",v:"页面继续做，但技术债必须同步推进，否则流量很难稳定承接"}
     ],
     next:"下一步：COCO 技术侧确认 owner 和修复时间表。",
+    links:[{label:"SEO 行动清单",url:"assets/sources/recent-coco-chat-20260619-24/260622/COCO_SEO_行动清单_v4.pdf"},{label:"SEO 白板模板截图",url:"assets/screenshots/seo-template-20260624.png"}],
+    media:[{label:"SEO 白板汇报模板截图",src:"assets/screenshots/seo-template-20260624.png",type:"模板截图"},{label:"COCO SEO 行动清单 v4",url:"assets/sources/recent-coco-chat-20260619-24/260622/COCO_SEO_行动清单_v4.pdf",type:"PDF"}],
     detailTitle:"查看 SEO 数据和问题清单",
     details:[{table:{cols:["指标","6/10","6/17","环比"],rows:[
      ["总曝光次数","188","913","+385.64%"],
@@ -1263,6 +1283,8 @@ files:[
      {k:"客户案例",v:"知外文化类案例适合做联合宣发和信任资产"}
     ],
     next:"下一步：重写知外文化客户案例，标题先抓业务痛点，再补客户故事和配图。",
+    links:[{label:"飞书社媒数据看板",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1JbfS5"},{label:"COCO X 官方号",url:"https://x.com/CocoAIxyz"},{label:"Charlie X",url:"https://x.com/CharliehuAI"},{label:"公众号案例文章",url:"https://mp.weixin.qq.com/s/PYw1pHxWB8MML4Tjdic3Qg"}],
+    media:[{label:"6/23 社媒截图",src:"assets/sources/recent-coco-chat-20260619-24/260623/42.jpg",type:"截图"},{label:"6/22 讨论截图",src:"assets/sources/recent-coco-chat-20260619-24/260622/fbdbcb52-81ef-4257-aad4-366918264784.png",type:"截图"}],
     detailTitle:"查看社媒与内容明细",
     details:[{items:[
      "大会算法红利退去后，数据回落是寻找稳定内容机制的信号。",
@@ -1319,7 +1341,7 @@ files:[
   summary:"COCO 的 ICP 主线已校准为：NUS EMBA -> 知外文化 / 言书 / 汪丽娜 -> 找 200 个言书。Mona Das 不再放入核心 ICP，只作为 validation point / 影响力信号。核心事实层是知外文化 26 个 agent、介绍 40+ 客户（包括杜蕾斯中国）；后续白板和画像都围绕这条主线沉淀。",
   stages:[
     {date:"06/21",title:"ICP主线校准：知外文化 / 言书才是核心",source:["2026-06-21 群聊记录（客户反馈：ICP主线校准）"],signal:"客户明确校正：知外文化是核心，言书是这条线的核心 ICP；Mona Das 不是 ICP，而是 validation point / 影响力信号。",detail:"主线事实不是泛泛谈女性企业家，而是围绕“找 200 个言书”复制已验证链路：知外文化 26 个 agent、介绍 40+ 客户、包括杜蕾斯中国。",response:""},
-    {date:"07/15-07/18",title:"主线剧情：NUS EMBA -> 知外文化 -> 200 个言书",source:["2026-06-21 群聊记录（客户反馈：ICP主线校准）"],signal:"COCO 第一季主线是 NUS EMBA -> 知外文化 / 言书 / 汪丽娜；7/15 NUS EMBA 校友会晚宴露出，7/16 面向 NUS EMBA 学员做 AI 免费辅导会，作为 Season 1 的终点。",detail:"7/18 SF 见面与 Enterprise AI Adoption panel 承接品牌势能；之后进入 OpenMax / workspace / 新品牌发布的第二季。",response:""},
+    {date:"06/21 提出",title:"主线剧情：NUS EMBA -> 知外文化 -> 200 个言书",source:["2026-06-21 群聊记录（客户反馈：ICP主线校准）"],signal:"COCO 第一季主线是 NUS EMBA -> 知外文化 / 言书 / 汪丽娜；7/15-7/18 是后续活动窗口，不作为这条画像信号的发生日期。",detail:"后续活动日期：7/15 NUS EMBA 校友会晚宴露出，7/16 面向 NUS EMBA 学员做 AI 免费辅导会，7/18 SF 见面与 Enterprise AI Adoption panel 承接品牌势能；之后进入 OpenMax / workspace / 新品牌发布的第二季。",response:""},
    {date:"06/18 15:45",title:"女性客户画像开始成形",source:["6月18日群聊记录","Charlie 现场判断"],signal:"Charlie 提到过去谈了 20 个客户，18 个是女性，并把机会指向女性创业者、女性高管、midtech 与非 AI native 人群。",detail:"关键原话包括：AI 减少她们因为不会写代码无法做产品的生产力瓶颈；女企业家出没的地方我们都要出没；教育、培训、女性成长、流量、女性企业家关注话题都可成为内容入口。",response:"用户画像页要从“泛客户资料”转成“高能女性创业者为什么需要 COCO”的判断板。"},
    {date:"06/18 17:16",title:"从曝光转向信任层与转化链路",source:["6月18日群聊记录 / Steve Nouri 数据截图","6月18日群聊记录"],signal:"Steve 帖子有 480,829 impression、266 clicks，但转化弱。Charlie 判断问题不在换一个 KOL，而是没有承接和信任层。",detail:"群聊里出现“美国没品牌，no trust layer”“看到 wtf is Coco 然后就跳走了”“流量不等于能转化”等判断。",response:"后续每个内容资产都要说明它补哪一层信任：品牌背书、客户证据、场景理解、CTA/落地页承接。"},
    {date:"06/19 12:48",title:"ICP 被重新切到女性企业家",source:["6/19 群聊","客户画像统计"],signal:"Charlie 提到 COCO 统计过 40 个客户或客户渠道，37 个是女性；用户应聚焦 30-45 岁女性高管/企业家。",detail:"初步渠道判断：小红书干活分享 + 案例视频 + demo 直播 + 社群转私域/线下 -> 转化。平台不是流量装饰，而是信任路径。",response:"内容要围绕她们的决策路径：触点、背书、陪跑试用、共创、复购与转介绍。"},
@@ -1420,6 +1442,10 @@ DB.sourceIndex=[
   {id:"he-xiaobo-deck",title:"如何调度26个AI员工-贺小波",kind:"客户素材",date:"2026-06-20",asset:"assets/sources/how-to-manage-26-ai-employees.pptx",excerpt:"对方提供/讨论的26个AI员工调度素材，用于案例与内容包装。"}
 ];
 
+DB.recentChatAssets=[{"date":"2026-06-19","kind":"聊天截图 / 图片","label":"5c8452cc-3f47-478f-ab67-10982af79884.png","src":"assets/sources/recent-coco-chat-20260619-24/260619/5c8452cc-3f47-478f-ab67-10982af79884.png","isImage":true,"ext":"png"},{"date":"2026-06-20","kind":"聊天截图 / 图片","label":"24.png","src":"assets/sources/recent-coco-chat-20260619-24/260620/24.png","isImage":true,"ext":"png"},{"date":"2026-06-20","kind":"聊天截图 / 图片","label":"27.png","src":"assets/sources/recent-coco-chat-20260619-24/260620/27.png","isImage":true,"ext":"png"},{"date":"2026-06-20","kind":"聊天截图 / 图片","label":"32.png","src":"assets/sources/recent-coco-chat-20260619-24/260620/32.png","isImage":true,"ext":"png"},{"date":"2026-06-20","kind":"聊天截图 / 图片","label":"35.png","src":"assets/sources/recent-coco-chat-20260619-24/260620/35.png","isImage":true,"ext":"png"},{"date":"2026-06-20","kind":"聊天截图 / 图片","label":"36.png","src":"assets/sources/recent-coco-chat-20260619-24/260620/36.png","isImage":true,"ext":"png"},{"date":"2026-06-20","kind":"聊天截图 / 图片","label":"40.png","src":"assets/sources/recent-coco-chat-20260619-24/260620/40.png","isImage":true,"ext":"png"},{"date":"2026-06-20","kind":"聊天截图 / 图片","label":"41.png","src":"assets/sources/recent-coco-chat-20260619-24/260620/41.png","isImage":true,"ext":"png"},{"date":"2026-06-20","kind":"聊天截图 / 图片","label":"6a9044e9d500863550c70deddbdd5ec2.png","src":"assets/sources/recent-coco-chat-20260619-24/260620/6a9044e9d500863550c70deddbdd5ec2.png","isImage":true,"ext":"png"},{"date":"2026-06-20","kind":"聊天截图 / 图片","label":"b2743057-3cb8-4868-b5ab-7cc9866d4551.png","src":"assets/sources/recent-coco-chat-20260619-24/260620/b2743057-3cb8-4868-b5ab-7cc9866d4551.png","isImage":true,"ext":"png"},{"date":"2026-06-21","kind":"聊天截图 / 图片","label":"2.png","src":"assets/sources/recent-coco-chat-20260619-24/260621/2.png","isImage":true,"ext":"png"},{"date":"2026-06-21","kind":"聊天截图 / 图片","label":"22495834-8fcb-4eaf-925b-ad31a97b8a73.png","src":"assets/sources/recent-coco-chat-20260619-24/260621/22495834-8fcb-4eaf-925b-ad31a97b8a73.png","isImage":true,"ext":"png"},{"date":"2026-06-21","kind":"聊天截图 / 图片","label":"3.png","src":"assets/sources/recent-coco-chat-20260619-24/260621/3.png","isImage":true,"ext":"png"},{"date":"2026-06-21","kind":"聊天截图 / 图片","label":"4.png","src":"assets/sources/recent-coco-chat-20260619-24/260621/4.png","isImage":true,"ext":"png"},{"date":"2026-06-21","kind":"聊天截图 / 图片","label":"95.jpg","src":"assets/sources/recent-coco-chat-20260619-24/260621/95.jpg","isImage":true,"ext":"jpg"},{"date":"2026-06-21","kind":"聊天截图 / 图片","label":"d86549fe-95e3-4f0f-8886-b7d0cf853716.png","src":"assets/sources/recent-coco-chat-20260619-24/260621/d86549fe-95e3-4f0f-8886-b7d0cf853716.png","isImage":true,"ext":"png"},{"date":"2026-06-22","kind":"PDF材料","label":"COCO_SEO_行动清单_v4.pdf","src":"assets/sources/recent-coco-chat-20260619-24/260622/COCO_SEO_行动清单_v4.pdf","isImage":false,"ext":"pdf"},{"date":"2026-06-22","kind":"PDF材料","label":"COCO客户案例脚本_知外26个AI_v0.51.pdf","src":"assets/sources/recent-coco-chat-20260619-24/260622/COCO客户案例脚本_知外26个AI_v0.51.pdf","isImage":false,"ext":"pdf"},{"date":"2026-06-22","kind":"PDF材料","label":"COCO品牌改名_各社媒平台信息修改清单.pdf","src":"assets/sources/recent-coco-chat-20260619-24/260622/COCO品牌改名_各社媒平台信息修改清单.pdf","isImage":false,"ext":"pdf"},{"date":"2026-06-22","kind":"PDF材料","label":"Deel KOL与创作者合作策略深度分析.pdf","src":"assets/sources/recent-coco-chat-20260619-24/260622/Deel KOL与创作者合作策略深度分析.pdf","isImage":false,"ext":"pdf"},{"date":"2026-06-22","kind":"PDF材料","label":"Deel 全媒体流量投放深度分析.pdf","src":"assets/sources/recent-coco-chat-20260619-24/260622/Deel 全媒体流量投放深度分析.pdf","isImage":false,"ext":"pdf"},{"date":"2026-06-22","kind":"PDF材料","label":"Deel推特内容策略深度分析.pdf","src":"assets/sources/recent-coco-chat-20260619-24/260622/Deel推特内容策略深度分析.pdf","isImage":false,"ext":"pdf"},{"date":"2026-06-22","kind":"聊天截图 / 图片","label":"fbdbcb52-81ef-4257-aad4-366918264784.png","src":"assets/sources/recent-coco-chat-20260619-24/260622/fbdbcb52-81ef-4257-aad4-366918264784.png","isImage":true,"ext":"png"},{"date":"2026-06-22","kind":"Word材料","label":"GA数据分析报告-Steve-Nouri-LinkedIn投放复盘-v5.docx","src":"assets/sources/recent-coco-chat-20260619-24/260622/GA数据分析报告-Steve-Nouri-LinkedIn投放复盘-v5.docx","isImage":false,"ext":"docx"},{"date":"2026-06-23","kind":"聊天截图 / 图片","label":"10.jpg","src":"assets/sources/recent-coco-chat-20260619-24/260623/10.jpg","isImage":true,"ext":"jpg"},{"date":"2026-06-23","kind":"聊天截图 / 图片","label":"36.png","src":"assets/sources/recent-coco-chat-20260619-24/260623/36.png","isImage":true,"ext":"png"},{"date":"2026-06-23","kind":"聊天截图 / 图片","label":"37.png","src":"assets/sources/recent-coco-chat-20260619-24/260623/37.png","isImage":true,"ext":"png"},{"date":"2026-06-23","kind":"聊天截图 / 图片","label":"42.jpg","src":"assets/sources/recent-coco-chat-20260619-24/260623/42.jpg","isImage":true,"ext":"jpg"},{"date":"2026-06-23","kind":"聊天截图 / 图片","label":"44.png","src":"assets/sources/recent-coco-chat-20260619-24/260623/44.png","isImage":true,"ext":"png"},{"date":"2026-06-23","kind":"聊天截图 / 图片","label":"5ab05fb9-21f0-41f0-b4cf-d785dedda9ea.png","src":"assets/sources/recent-coco-chat-20260619-24/260623/5ab05fb9-21f0-41f0-b4cf-d785dedda9ea.png","isImage":true,"ext":"png"},{"date":"2026-06-23","kind":"聊天截图 / 图片","label":"90.jpg","src":"assets/sources/recent-coco-chat-20260619-24/260623/90.jpg","isImage":true,"ext":"jpg"},{"date":"2026-06-23","kind":"聊天截图 / 图片","label":"93e1aa3a-aabd-4717-a96a-d6a067400148.png","src":"assets/sources/recent-coco-chat-20260619-24/260623/93e1aa3a-aabd-4717-a96a-d6a067400148.png","isImage":true,"ext":"png"},{"date":"2026-06-24","kind":"聊天截图 / 图片","label":"193f87e1-9d42-4e22-ab2a-b8ca00a45f5f.png","src":"assets/sources/recent-coco-chat-20260619-24/260624/193f87e1-9d42-4e22-ab2a-b8ca00a45f5f.png","isImage":true,"ext":"png"},{"date":"2026-06-24","kind":"聊天截图 / 图片","label":"82.png","src":"assets/sources/recent-coco-chat-20260619-24/260624/82.png","isImage":true,"ext":"png"},{"date":"2026-06-24","kind":"聊天截图 / 图片","label":"87.png","src":"assets/sources/recent-coco-chat-20260619-24/260624/87.png","isImage":true,"ext":"png"}];
+
+DB.sourceIndex.unshift({"id":"recent-coco-chat-20260619-24","title":"6/19-6/24 最新聊天记录与材料包","kind":"群聊截图 / 材料包","date":"2026-06-19 至 2026-06-24","asset":"assets/sources/recent-coco-chat-20260619-24/260624/193f87e1-9d42-4e22-ab2a-b8ca00a45f5f.png","excerpt":"本次用户补充的 coco.zip 已入库，共 35 个文件，覆盖 6/19-6/24 的聊天截图、SEO 行动清单、知外文化案例脚本、品牌改名清单、Deel 投放分析和 GA 复盘文档。"});
+
 DB.signalCards=[
  {id:"sig-0621-icp-mainline",month:"2026-06",week:"06/21",date:"2026-06-21",title:"ICP主线校准：知外文化 / 言书 / 汪丽娜",summary:"客户明确校正：知外文化是核心，言书是这条线的核心 ICP；Mona Das 不是 ICP，只作为 validation point / 影响力信号。主线从泛女性企业家收敛为：NUS EMBA -> 知外文化 / 言书 / 汪丽娜 -> 找 200 个言书。",tags:["ICP主线","知外文化","言书","NUS EMBA","OpenMax"],quotes:["知外文化是核心。言书是这条线的核心 ICP。","Mona Das 不是 ICP，是政客、社会运动家；只作为 validation point。","目前生态核心是找 200 个言书。","7/15 NUS EMBA 校友会晚宴露出，7/16 AI 免费辅导会，7/18 SF panel。"],sources:["chat-0621-icp-feedback"]},
   {date:"2026-06-21",month:"2026-06",week:"6/16-6/21",title:"从泛AI增长转向女性企业家非共识ICP",summary:"客户画像从泛AI、YC/技术圈，收缩到30-45岁女性高管/女性企业家：不是浅层喜欢COCO，而是用COCO改变职业工作生涯。",tags:["ICP","女性企业家","内容策略"],sources:["chat-2026-06-16-21","female-strategy"],quotes:["Charlie：过去谈了20个客户18个是女性。","Charlie：COCO最大机会是让一大堆女性企业家、职场实力女高管，用COCO改变自己的职业工作生涯。","梦雨：小红书干活分享 + 案例视频 + demo直播 + 社群转私域流量/线下 -> 转化。"]},
@@ -1450,7 +1476,7 @@ DB.demoVideos=[
   {group:"COCO 产品介绍",title:"COCO 产品介绍视频（中文版）",type:"Product / 中文",status:"已入库",done:"2026-06-20",duration:"待回填",asset:"assets/videos/coco-product-zh.mp4",source:"用户上传视频源文件",note:"中文产品介绍，可用于客户会议和中文渠道。",use:"降低“COCO 到底是什么”的解释成本。",next:"补发布平台与对应话术。"},
   {group:"COCO 企业级记忆",title:"COCO 企业级记忆展示（英文版横屏）",type:"Demo / English / 横屏",status:"已入库",done:"2026-06-21",duration:"待回填",asset:"assets/videos/coco-memory-en-landscape.mp4",source:"用户上传视频源文件",note:"企业级记忆能力横屏展示，适合官网、会议和销售材料。",use:"证明 COCO 可以沉淀客户上下文，不只是单次对话工具。",next:"补中文版后形成完整三件套。"},
   {group:"COCO 企业级记忆",title:"COCO 企业级记忆展示（英文版竖屏）",type:"Demo / English / 竖屏",status:"已入库",done:"2026-06-21",duration:"待回填",asset:"assets/videos/coco-memory-en-vertical.mp4",source:"用户上传视频源文件",note:"企业级记忆能力竖屏展示，适合移动端和短视频传播。",use:"把复杂能力拆成更容易转发的短视频素材。",next:"确认是否需要字幕版。"},
-  {group:"COCO 企业级记忆",title:"COCO 企业级记忆展示（中文版）",type:"Demo / 中文",status:"缺源文件",done:"待补",duration:"待补",asset:"",source:"本轮应有 10 个视频，目前 D 盘仅收到 9 个源文件",note:"缺少中文版企业级记忆展示。",use:"用于中文客户解释 COCO 的长期记忆与客户上下文能力。",next:"请 COCO / 视频团队补交源文件后入库。"}
+  {group:"COCO 企业级记忆",title:"COCO 企业级记忆展示（中文版）",type:"Demo / 中文",status:"已入库",done:"2026-06-24",duration:"待回填",asset:"assets/videos/coco-memory-zh.mp4",source:"用户 6/24 补传源文件 df26e6785880fa0baf32707ac5334ed0_raw.mp4",note:"中文版企业级记忆展示已补齐。",use:"用于中文客户解释 COCO 的长期记忆与客户上下文能力。",next:"补封面、字幕与发布平台链接。"}
 ];
 
 DB.materialLibrary=[
@@ -1619,6 +1645,61 @@ function weekPanel(w){
 }
 
 
+function renderCardTable(t){
+  if(!t||!Array.isArray(t.cols)||!Array.isArray(t.rows)) return "";
+  return `<div class="smatrix cfg"><table><thead><tr>${t.cols.map(c=>`<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map((cell,i)=>`<td class="${i===0?"pl":""}">${esc(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+function renderCardLinks(links=[]){
+  return links.filter(Boolean).map(l=>{
+    const url=typeof l==="string"?l:l.url;
+    const label=typeof l==="string"?l:(l.label||l.title||l.name||l.url||"打开链接");
+    return url?`<a class="source-pill" href="${esc(url)}" target="_blank">${esc(label)}</a>`:"";
+  }).join("");
+}
+function renderMediaWall(media=[]){
+  media=(Array.isArray(media)?media:[]).filter(Boolean);
+  if(!media.length) return "";
+  return `<div class="media-wall">${media.map(m=>{
+    const src=m.src||m.url||"";
+    const label=m.label||m.title||m.type||"素材";
+    const isImage=!!m.src;
+    return `<a class="media-card" href="${esc(src)}" target="_blank">${isImage?`<img src="${esc(src)}" alt="${esc(label)}">`:`<div class="media-doc">${esc((m.type||"DOC").toUpperCase())}</div>`}<div class="media-cap">${esc(label)}</div></a>`;
+  }).join("")}</div>`;
+}
+function renderCardDetails(title,details=[]){
+  details=(Array.isArray(details)?details:[]).filter(Boolean);
+  if(!details.length) return "";
+  const body=details.map(d=>{
+    if(d.table) return renderCardTable(d.table);
+    if(d.links) return `<div class="source-actions">${renderCardLinks(d.links)}</div>`;
+    if(d.items) return `<ul class="agd">${d.items.map((item,idx)=>`<li><span><span class="anum">${idx+1}</span>${esc(typeof item==="string"?item:(item.text||item.title||item.v||""))}</span></li>`).join("")}</ul>`;
+    return `<p>${esc(d.text||d.title||"")}</p>`;
+  }).join("");
+  return `<details class="detailbox"><summary>${esc(title||"查看明细")}</summary><div class="detailbody">${body}</div></details>`;
+}
+function renderCardGantt(g){
+  if(!g||!Array.isArray(g.months)||!Array.isArray(g.phases)) return "";
+  const months=g.months;
+  const total=months.reduce((sum,m)=>sum+(Number(m.w)||0),0)||1;
+  const minWidth=210+total*54;
+  const headerCols=`210px repeat(${total}, minmax(54px,1fr))`;
+  const labels=months.flatMap(m=>Array.isArray(m.labels)&&m.labels.length?m.labels:Array.from({length:Number(m.w)||1},(_,i)=>`W${i+1}`));
+  const today=Number(g.today);
+  const todayLine=Number.isFinite(today)?`<div class="todayline" style="left:${Math.max(0,Math.min(100,(today/total)*100))}%"></div>`:"";
+  const phaseHtml=g.phases.map(p=>{
+    const tasks=Array.isArray(p.tasks)?p.tasks:[];
+    const taskHtml=tasks.map(t=>{
+      const start=Math.max(0,Number(t.start)||0);
+      const span=Math.max(.5,Number(t.span)||1);
+      const left=Math.max(0,Math.min(100,(start/total)*100));
+      const width=Math.max(4,Math.min(100-left,(span/total)*100));
+      const state=["done","doing","plan","blocked"].includes(t.state)?t.state:"plan";
+      return `<div class="g-task" style="grid-template-columns:210px minmax(${total*54}px,1fr);min-width:${minWidth}px"><div class="lab"><span class="ptag ${esc(t.pri||"")}">${esc(t.pri||"")}</span>${esc(t.name||"任务")}<span class="meta">${esc(t.meta||"")}</span></div><div class="track" style="--c:${total}">${todayLine}<div class="bar ${state}" style="left:${left}%;width:${width}%">${esc(t.meta||t.name||"")}</div></div></div>`;
+    }).join("");
+    return `<div class="g-phase gridrow" style="grid-template-columns:${headerCols};min-width:${minWidth}px"><div class="pl">${esc(p.name||"阶段")}${p.note?`<span class="pnote">${esc(p.note)}</span>`:""}</div></div>${taskHtml}`;
+  }).join("");
+  return `<div class="glegend"><span><i style="background:#2E7D5B"></i>已完成</span><span><i style="background:#D85C32"></i>进行中</span><span><i style="background:#3E6EA8"></i>计划中</span><span><i style="background:#B5432E"></i>卡点</span></div><div class="gantt"><div class="gridrow" style="grid-template-columns:${headerCols};min-width:${minWidth}px"><div class="lab"></div>${months.map(m=>`<div class="g-month" style="grid-column:span ${Number(m.w)||1}">${esc(m.m||"")}</div>`).join("")}</div><div class="gridrow" style="grid-template-columns:${headerCols};min-width:${minWidth}px"><div class="lab"></div>${labels.map(l=>`<div class="g-wk">${esc(l)}</div>`).join("")}</div>${phaseHtml}</div>`;
+}
 function wcard(c){
   c=c||{};
   const asList=v=>Array.isArray(v)?v:(v===undefined||v===null||v===""?[]:[v]);
@@ -1646,18 +1727,18 @@ function wcard(c){
     const value=first(m.value,m.v,m.cur,m.text);
     return `<span class="tag">${esc(name)}${value?`：${esc(value)}`:""}</span>`;
   }).join("");
-  const links=asList(c.links).filter(Boolean).map(l=>{
-    const url=typeof l==="string"?l:l.url;
-    const label=typeof l==="string"?l:first(l.label,l.title,l.name,l.url,"打开链接");
-    return url?`<a class="source-pill" href="${esc(url)}" target="_blank">${esc(label)}</a>`:"";
-  }).join("");
+  const links=renderCardLinks(asList(c.links));
   return `<section class="wcard">
     <div class="wcard-h"><div class="ct">${esc(title)}</div><div class="co">${owner?`<b>${esc(owner)}</b>`:""}${status?` · ${esc(status)}`:""}</div></div>
     ${summary?`<p>${esc(summary)}</p>`:""}
     ${metrics?`<div class="source-actions">${metrics}</div>`:""}
     ${block("关键结论",first(c.points,c.highlights,c.insights,c.findings,[]))}
+    ${renderCardGantt(c.gantt)}
+    ${c.table?renderCardTable(c.table):""}
+    ${renderMediaWall(c.media)}
     ${block("本周动作 / 进展",first(c.items,c.actions,c.outputs,c.progress,c.deliveries,[]))}
     ${block("问题与解决方式",first(c.solutions,c.issues,c.todo,c.todos,c.nexts,[]))}
+    ${renderCardDetails(c.detailTitle,c.details)}
     ${links?`<div class="source-actions">${links}</div>`:""}
     ${sources.length?sourceActions(sources):""}
   </section>`;
@@ -1773,7 +1854,10 @@ function libraryView(){
 }
 
 function sourcesView(){
+  const recent=DB.recentChatAssets||[];
+  const recentHtml=recent.length?`<div class="briefbox" style="margin-bottom:14px"><h3>6/19-6/24 最新聊天记录与材料包</h3><p class="lead">本次新上传的 coco.zip 已入库：聊天截图、SEO 行动清单、案例脚本、品牌改名清单、Deel 分析和 GA 复盘文档都在这里。</p><div class="recent-grid">${recent.map(a=>`<a class="recent-card" href="${esc(a.src)}" target="_blank">${a.isImage?`<img src="${esc(a.src)}" alt="${esc(a.label)}">`:`<div class="recent-doc">${esc((a.ext||"DOC").toUpperCase())}</div>`}<div class="rcap"><span>${esc(a.date)} · ${esc(a.kind)}</span>${esc(a.label)}</div></a>`).join("")}</div></div>`:"";
   return `<section class="panel"><h1>证据索引</h1><p class="lead">所有判断优先回到这里：群聊按日期、会议文本、周度/月度信号卡、对方素材分别列出。</p>
+  ${recentHtml}
   <div class="file-grid">${DB.sourceIndex.map(s=>`<article class="file-card"><div class="meta"><span>${s.kind}</span><span>${s.date}</span></div><h3>${s.title}</h3><p>${s.excerpt?escapeHtml(s.excerpt).slice(0,180)+"...":"点击打开来源文件查看。"}</p><div class="source-actions">${s.asset?`<a class="source-pill" href="${s.asset}" target="_blank">打开来源文件</a>`:""}<button class="source-button" onclick="toggleSource('${s.id}')">展开原文摘录</button></div><div id="source-${s.id}" class="source-detail" style="display:none">${escapeHtml(s.excerpt||"暂无摘录，请打开来源文件查看。")}</div></article>`).join("")}</div>
   </section>`;
 }
