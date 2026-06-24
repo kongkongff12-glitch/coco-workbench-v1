@@ -323,6 +323,11 @@ table.t tr:hover td{background:#FBF9F4}
 .issue-card{border:1px solid var(--line);background:#fff;padding:14px;border-radius:8px}
 .issue-card b{color:var(--accent)}
 .video-player{width:100%;max-height:360px;background:#111;border-radius:8px;margin-top:10px}
+.video-status-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 18px}
+.video-status-card{border:1px solid var(--line);background:#fff;padding:12px 14px;border-radius:8px}
+.video-status-card b{display:block;font-size:22px;color:var(--accent);line-height:1.1}.video-status-card span{font-size:12px;color:var(--muted)}
+.video-missing{min-height:210px;border:2px dashed var(--line-dark);background:#FBF9F4;border-radius:8px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--red);font-weight:900;margin-top:10px;padding:18px}
+.video-note-list{list-style:none;margin:10px 0 0;padding:0}.video-note-list li{border-top:1px dashed var(--line);padding:7px 0;font-size:13px;line-height:1.55}.video-note-list b{color:var(--accent)}
 .file-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .file-card{border:1px solid var(--line);background:#fff;padding:14px;border-radius:8px}
 .file-card h3{margin:2px 0 6px}
@@ -352,7 +357,7 @@ table.t tr:hover td{background:#FBF9F4}
    下方含 Coco.excalidraw 全量白板时间线；最新会议列为 2026-06-11。
 ================================================================ */
 const DB={
-meta:{ version:"会议白板生成版 v4", updated:"2026-06-16", client:"COCO" },
+meta:{ version:"客户工作OS版 v5", updated:"2026-06-24", client:"COCO" },
 team:{ 侯明真:"#2E5E4E",周星星:"#3E5A7E",李阳阳:"#9A6B1F",李家乐:"#B5432E",田长举:"#8A8276",吕教东:"#5b6b4e",孔维彤:"#211C15",代逸如:"#7A7163",查理:"#46506b" },
 
 /* 全客户总览（团队首页） */
@@ -1416,9 +1421,16 @@ DB.whiteboardIssues=[
 ];
 
 DB.demoVideos=[
-  {title:"知外文化中文案例视频",type:"Use Case",status:"已完成 / 已发布",done:"2026-06-19",duration:"约1分钟",asset:"assets/sources/demo-use-case-video-zh.mp4",source:"6月19日群聊记录 + 源视频文件",note:"知外文化客户中文案例视频，客户反馈新版可发布。"},
-  {title:"知外文化英文案例视频",type:"Use Case",status:"待核对源文件",done:"2026-06-20",duration:"约1分20秒",asset:"assets/sources/demo-use-case-video-en.mp4",source:"6月20日群聊记录 + 源视频文件（如站内无法播放则需补源文件）",note:"英文版案例视频，群聊中提到英文版已修改。"},
-  {title:"COCO Demo/Use Case补充视频",type:"Demo",status:"待核对标题",done:"2026-06-20",duration:"待核对",asset:"assets/sources/demo-use-case-video-extra.mp4",source:"用户上传视频源文件",note:"作为视频库占位，等待确认具体标题与用途。"}
+  {group:"知外文化客户案例",title:"知外文化客户案例视频（中文版）",type:"Use Case / 中文",status:"已入库 / 已发布",done:"2026-06-19",duration:"约1分钟",asset:"assets/videos/zhiwai-case-zh.mp4",source:"6月19日群聊记录 + 源视频文件",note:"核心销售语料：言书 / 知外文化 / 26 个 AI agent，中文版已确认可发布。",use:"证明 COCO 不是聊天机器人，而是可被女性创业者管理的 AI 执行层。",next:"补正式发布链接与对外引用口径。"},
+  {group:"知外文化客户案例",title:"知外文化客户案例视频（英文版横屏）",type:"Use Case / English / 横屏",status:"已入库",done:"2026-06-19",duration:"约1分20秒",asset:"assets/videos/zhiwai-case-en-landscape.mp4",source:"6月19日-6月20日群聊记录 + 源视频文件",note:"英文横屏版，用于官网、LinkedIn、销售材料和会议展示。",use:"把知外文化案例翻成海外客户能理解的管理 AI workforce 叙事。",next:"发布前核对英文 CTA 与客户可公开信息。"},
+  {group:"知外文化客户案例",title:"知外文化客户案例视频（英文版竖屏）",type:"Use Case / English / 竖屏",status:"已入库",done:"2026-06-19",duration:"约1分20秒",asset:"assets/videos/zhiwai-case-en-vertical.mp4",source:"6月19日-6月20日群聊记录 + 源视频文件",note:"英文竖屏版，适合短视频平台、社媒切片和移动端传播。",use:"承接女性企业家 / 非技术 founder 的短视频触达。",next:"确认发布平台与封面文案。"},
+  {group:"COCO skill 展示",title:"COCO Skill 展示视频（英文版）",type:"Demo / English",status:"已入库",done:"2026-06-20",duration:"待回填",asset:"assets/videos/coco-skill-en.mp4",source:"用户上传视频源文件",note:"展示 COCO skill / agent 执行能力，适合海外客户看产品能力。",use:"解释 COCO 如何把任务拆给 AI 员工执行。",next:"补标题、封面和发布链接。"},
+  {group:"COCO skill 展示",title:"COCO Skill 展示视频（中文版）",type:"Demo / 中文",status:"已入库",done:"2026-06-20",duration:"待回填",asset:"assets/videos/coco-skill-zh.mp4",source:"用户上传视频源文件",note:"中文版 skill 展示，用于中文客户、内部会议和销售解释。",use:"把产品能力讲成可理解的执行场景。",next:"补发布状态与对应客户需求。"},
+  {group:"COCO 产品介绍",title:"COCO 产品介绍视频（英文版）",type:"Product / English",status:"已入库",done:"2026-06-20",duration:"待回填",asset:"assets/videos/coco-product-en.mp4",source:"用户上传视频源文件",note:"英文产品介绍，区别于客户案例和单个 skill 展示。",use:"作为海外首触达后的基础解释材料。",next:"补落地页链接和 CTA。"},
+  {group:"COCO 产品介绍",title:"COCO 产品介绍视频（中文版）",type:"Product / 中文",status:"已入库",done:"2026-06-20",duration:"待回填",asset:"assets/videos/coco-product-zh.mp4",source:"用户上传视频源文件",note:"中文产品介绍，可用于客户会议和中文渠道。",use:"降低“COCO 到底是什么”的解释成本。",next:"补发布平台与对应话术。"},
+  {group:"COCO 企业级记忆",title:"COCO 企业级记忆展示（英文版横屏）",type:"Demo / English / 横屏",status:"已入库",done:"2026-06-21",duration:"待回填",asset:"assets/videos/coco-memory-en-landscape.mp4",source:"用户上传视频源文件",note:"企业级记忆能力横屏展示，适合官网、会议和销售材料。",use:"证明 COCO 可以沉淀客户上下文，不只是单次对话工具。",next:"补中文版后形成完整三件套。"},
+  {group:"COCO 企业级记忆",title:"COCO 企业级记忆展示（英文版竖屏）",type:"Demo / English / 竖屏",status:"已入库",done:"2026-06-21",duration:"待回填",asset:"assets/videos/coco-memory-en-vertical.mp4",source:"用户上传视频源文件",note:"企业级记忆能力竖屏展示，适合移动端和短视频传播。",use:"把复杂能力拆成更容易转发的短视频素材。",next:"确认是否需要字幕版。"},
+  {group:"COCO 企业级记忆",title:"COCO 企业级记忆展示（中文版）",type:"Demo / 中文",status:"缺源文件",done:"待补",duration:"待补",asset:"",source:"本轮应有 10 个视频，目前 D 盘仅收到 9 个源文件",note:"缺少中文版企业级记忆展示。",use:"用于中文客户解释 COCO 的长期记忆与客户上下文能力。",next:"请 COCO / 视频团队补交源文件后入库。"}
 ];
 
 DB.materialLibrary=[
@@ -1444,7 +1456,7 @@ DB.videoRoadmap=[
   {phase:"已完成",tone:"done",task:"Tiger视频、基础视频、SuperAI内容、知外文化中文视频等已完成/发布，进入销售语料沉淀。",owner:"周星星 / 李阳阳 / 孔德浩",source:["chat-2026-06-16-21"]},
   {phase:"进行中",tone:"doing",task:"知外文化英文视频、客户案例脚本、素材录制、脚本语法校对、剪辑反馈。",owner:"视频剪辑团队",source:["yanshu-script-v37","video-collab-pdf"]},
   {phase:"卡点",tone:"risk",task:"客户账号、Agent连接、录制流程、中文/英文不同部门反馈，导致返工。",owner:"侯明真 / Eric / 李家乐协同",source:["chat-2026-06-16-21"]},
-  {phase:"下一步",tone:"next",task:"视频库每条标注类型、完成时间、源文件、发布状态；对外发布前先核对客户口径。",owner:"侯明真统筹",source:["whiteboard-logic"]}
+  {phase:"下一步",tone:"next",task:"视频库已入库 9 条源文件、缺 1 条中文版企业级记忆视频；每条继续补发布状态、用途和客户口径。",owner:"侯明真统筹",source:["whiteboard-logic"]}
 ];
 
 DB.dataCenterUpdate={
@@ -1654,15 +1666,31 @@ function whiteboardIssuesBlock(){
 }
 
 function psychologyView(){
-  const months=[...new Set(DB.signalCards.map(s=>s.month))].sort().reverse();
-  const weeks=[...new Set(DB.signalCards.map(s=>s.week))];
-  const list=DB.signalCards.filter(s=>(psyMonth==="all"||s.month===psyMonth)&&(psyWeek==="all"||s.week===psyWeek)).sort((a,b)=>b.date.localeCompare(a.date));
-  return `<section class="panel"><h1>用户画像 / 心理变化</h1><p class="lead">最新变化放在前面；每条判断都能点开来源，按月或按周筛选历史记录。</p>
-    <div class="psy-filter">
-      <label>月份 <select onchange="psyMonth=this.value;render()"><option value="all">全部月份</option>${months.map(m=>`<option value="${m}" ${psyMonth===m?"selected":""}>${m}</option>`).join("")}</select></label>
-      <label>周次 <select onchange="psyWeek=this.value;render()"><option value="all">全部周次</option>${weeks.map(w=>`<option value="${w}" ${psyWeek===w?"selected":""}>${w}</option>`).join("")}</select></label>
+  const p=DB.clientPsych||{};
+  const stages=p.stages||[];
+  const evidence=p.evidence||[];
+  const questions=p.currentQuestions||[];
+  const tactics=p.meetingTactics||[];
+  const months=[...new Set((DB.signalCards||[]).map(s=>s.month).filter(Boolean))].sort().reverse();
+  const weeks=[...new Set((DB.signalCards||[]).map(s=>s.week).filter(Boolean))];
+  const list=(DB.signalCards||[]).filter(s=>(psyMonth==="all"||s.month===psyMonth)&&(psyWeek==="all"||s.week===psyWeek)).sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));
+  const stageHtml=stages.map(s=>`<article class="mindstage"><div><div class="md">${esc(s.date)}</div></div><div><div class="mt">${esc(s.title)}</div><div class="mindsource">${(s.source||[]).map(x=>`<span>${esc(x)}</span>`).join("")}</div><div class="ms">${esc(s.signal)}</div><div class="mr">${esc(s.detail)}</div>${s.response?`<div class="minddetail"><div class="dl">应对策略</div><div class="dv">${esc(s.response)}</div></div>`:""}</div></article>`).join("");
+  const evidenceHtml=evidence.map(e=>`<div class="minddetail"><div class="dl">${esc(e.date)} · ${esc(e.type)}</div><div class="dv"><b>${esc(e.source)}</b>：${esc(e.detail)}<br><span class="muted">对应判断：${esc(e.meaning)}</span></div></div>`).join("");
+  return `<section class="panel"><h1>用户画像 / 心理变化</h1><p class="lead">内部判断页：用于看清客户关注点如何变化、为什么变化，以及下次会议怎么讲。客户白板只取这里的结论，不展示内部心路。</p>
+    <div class="mindhero"><h3>当前总判断</h3><p>${esc(p.summary||"暂无判断")}</p></div>
+    <div class="mindgrid">
+      <div class="mindbox"><h3>客户现在真正关心</h3><ul>${questions.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+      <div class="mindbox"><h3>下次会议讲法</h3><ul>${tactics.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
     </div>
-    <div class="signal-grid">${list.map(s=>`<article class="signal-card"><div class="meta"><span>${s.date}</span><span>${s.week}</span></div><h3>${s.title}</h3><p>${s.summary}</p><div>${tagsHtml(s.tags)}</div>${(s.quotes||[]).map(q=>`<div class="quote-row">${escapeHtml(q)}</div>`).join("")}${sourceActions(s.sources)}</article>`).join("")}</div>
+    <div class="sec" style="margin-top:18px"><div class="shead"><h3>变化时间线</h3><span class="hint">从最新客户校准往前追</span></div><div class="mindtimeline">${stageHtml}</div></div>
+    <details class="source-note" open><summary>来源与证据明细</summary><div>${evidenceHtml}</div></details>
+    <div class="sec"><div class="shead"><h3>历史信号卡</h3><span class="hint">按月 / 周筛选</span></div>
+      <div class="psy-filter">
+        <label>月份 <select onchange="psyMonth=this.value;render()"><option value="all">全部月份</option>${months.map(m=>`<option value="${m}" ${psyMonth===m?"selected":""}>${m}</option>`).join("")}</select></label>
+        <label>周次 <select onchange="psyWeek=this.value;render()"><option value="all">全部周次</option>${weeks.map(w=>`<option value="${w}" ${psyWeek===w?"selected":""}>${w}</option>`).join("")}</select></label>
+      </div>
+      <div class="signal-grid">${list.map(s=>`<article class="signal-card"><div class="meta"><span>${esc(s.date)}</span><span>${esc(s.week)}</span></div><h3>${esc(s.title)}</h3><p>${esc(s.summary)}</p><div>${tagsHtml(s.tags||[])}</div>${(s.quotes||[]).map(q=>`<div class="quote-row">${escapeHtml(q)}</div>`).join("")}${sourceActions(s.sources||[])}</article>`).join("")}</div>
+    </div>
   </section>`;
 }
 
@@ -1707,8 +1735,14 @@ function contactsView(){
 }
 
 function videosView(){
-  return `<section class="panel"><h1>Demo/Use Case视频</h1><p class="lead">视频源文件已尽量复制进站内资产；能播放的直接在这里播放，缺源文件的会标记待补。</p>
-  <div class="signal-grid">${DB.demoVideos.map(v=>`<article class="signal-card"><div class="meta"><span>${v.type}</span><span>${v.status}</span><span>完成时间：${v.done}</span></div><h3>${v.title}</h3><p>${v.note}</p><p class="muted">来源：${v.source}</p>${v.asset?`<video class="video-player" controls preload="metadata" src="${v.asset}"></video><div class="source-actions"><a class="source-pill" href="${v.asset}" target="_blank">打开视频源文件</a></div>`:"<p class='muted'>待补源文件</p>"}</article>`).join("")}</div>
+  const videos=DB.demoVideos||[];
+  const ready=videos.filter(v=>v.asset).length;
+  const missing=videos.length-ready;
+  const groups=[...new Set(videos.map(v=>v.group||"未分组"))];
+  const card=v=>`<article class="signal-card"><div class="meta"><span>${esc(v.group||"")}</span><span>${esc(v.type)}</span><span>${esc(v.status)}</span><span>${esc(v.done)}</span></div><h3>${esc(v.title)}</h3><p>${esc(v.note)}</p>${v.asset?`<video class="video-player" controls preload="metadata" src="${esc(v.asset)}"></video><div class="source-actions"><a class="source-pill" href="${esc(v.asset)}" target="_blank">打开视频源文件</a></div>`:`<div class="video-missing">${esc(v.status)}<br><span class="small">${esc(v.source)}</span></div>`}<ul class="video-note-list"><li><b>用途：</b>${esc(v.use||"待补")}</li><li><b>下一步：</b>${esc(v.next||"待补")}</li><li><b>来源：</b>${esc(v.source||"待补")}</li></ul></article>`;
+  return `<section class="panel"><h1>Demo / Use Case 视频库</h1><p class="lead">本页按客户可汇报素材管理：先看是否已入库、能否直接播放，再看用途、下一步和缺口。</p>
+    <div class="video-status-row"><div class="video-status-card"><b>${videos.length}</b><span>应入库视频</span></div><div class="video-status-card"><b>${ready}</b><span>已接入站内播放</span></div><div class="video-status-card"><b>${missing}</b><span>缺源文件</span></div><div class="video-status-card"><b>4</b><span>视频主题组</span></div></div>
+    ${groups.map(g=>`<div class="sec"><div class="shead"><h3>${esc(g)}</h3><span class="hint">${videos.filter(v=>(v.group||"未分组")===g).length} 条</span></div><div class="signal-grid">${videos.filter(v=>(v.group||"未分组")===g).map(card).join("")}</div></div>`).join("")}
   </section>`;
 }
 
@@ -1739,6 +1773,8 @@ render();
 </script>
 </body>
 </html>
+
+
 
 
 
