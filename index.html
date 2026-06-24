@@ -345,6 +345,12 @@ table.t tr:hover td{background:#FBF9F4}
 .avatar-img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid #fff;background:#e8dfd0}
 @media (max-width: 980px){.signal-grid,.issue-grid,.file-grid,.contact-grid,.metric-grid{grid-template-columns:1fr}.roadmap-row{grid-template-columns:1fr}.roadmap-row .owner{border-top:1px solid var(--line)}}
 
+.auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:24px}
+.auth-card{width:min(420px,100%);background:var(--panel);border:2px solid var(--ink);border-radius:14px;padding:26px 28px;box-shadow:0 12px 30px rgba(33,28,21,.08)}
+.auth-card h1{font-family:var(--serif);font-size:28px;line-height:1.2;margin-bottom:8px}.auth-card p{font-size:14px;color:var(--sub);line-height:1.65;margin-bottom:16px}
+.auth-card input{width:100%;border:1px solid var(--line-dark);background:var(--bg);border-radius:8px;padding:12px 13px;font-size:16px;color:var(--ink);font-family:var(--sans)}
+.auth-card button{width:100%;margin-top:12px;border:0;background:var(--ink);color:#fff;border-radius:8px;padding:12px 14px;font-size:15px;font-weight:900;cursor:pointer}.auth-card button:hover{background:#000}
+.auth-error{min-height:20px;margin-top:10px;color:var(--red);font-size:13px;font-weight:800}.lockbtn{border:1px solid var(--line-dark);background:transparent;color:var(--sub);border-radius:999px;padding:3px 8px;font-size:11px;cursor:pointer;margin-top:8px}.lockbtn:hover{color:var(--red);border-color:var(--red)}
 </style>
 </head>
 <body>
@@ -1377,8 +1383,22 @@ files:[
 })();
 
 /* ================= 渲染（Codex 不改） ================= */
+const AUTH_HASH="667282499d40d5935c6b80672ea0a875477ada7b3b093aa2fc428f862216d3e0";
+const AUTH_KEY="coco-workbench-auth-v5";
+const APP_SHELL='<div class="app"><nav class="side" id="sidebar"></nav><main class="main" id="main"></main></div>';
 const $=s=>document.querySelector(s);
 let route="overview", selWeek=0;
+function mountAppShell(){ if(!document.querySelector("#sidebar")||!document.querySelector("#main")){ document.body.innerHTML=APP_SHELL; } }
+function bytesToHex(buf){ return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join(""); }
+async function passHash(v){ return bytesToHex(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(v))); }
+function showAuth(){
+ document.body.innerHTML=`<div class="auth-screen"><div class="auth-card"><h1>COCO 客户工作台</h1><p>请输入访问密码。通过后会在本机保留登录状态。</p><input id="authPass" type="password" autocomplete="current-password" placeholder="访问密码"><button id="authBtn">进入工作台</button><div id="authError" class="auth-error"></div><p class="small muted" style="margin:6px 0 0">静态站密码门用于访问提示，不等同于服务端权限系统。</p></div></div>`;
+ const input=document.querySelector("#authPass"), btn=document.querySelector("#authBtn"), err=document.querySelector("#authError");
+ const tryUnlock=async()=>{ try{ if(await passHash((input.value||"").trim())===AUTH_HASH){ localStorage.setItem(AUTH_KEY,"1"); mountAppShell(); render(); } else { err.textContent="密码不对，请重新输入。"; input.select(); } }catch(e){ err.textContent="当前浏览器不支持本地密码校验，请使用 http://127.0.0.1 或 HTTPS 打开。"; } };
+ btn.onclick=tryUnlock; input.onkeydown=e=>{ if(e.key==="Enter") tryUnlock(); }; setTimeout(()=>input.focus(),60);
+}
+function lockApp(){ localStorage.removeItem(AUTH_KEY); showAuth(); }
+function bootWithAuth(){ if(localStorage.getItem(AUTH_KEY)==="1"){ mountAppShell(); render(); } else { showAuth(); } }
 
 
 
@@ -1523,7 +1543,7 @@ function renderSide(){
  const cnt={requests:DB.weeks[0].requests?DB.weeks[0].requests.length:0,feed:DB.feed.length};
  const item=k=>`<div class="nav-item ${route===k?"on":""}" data-go="${k}">${VIEWS[k]}${cnt[k]?`<span class="cnt">${cnt[k]}</span>`:""}</div>`;
  const nav=Object.entries(NAV).map(([g,ks])=>`<div class="navgroup"><div class="glabel">${g}</div>${ks.map(item).join("")}</div>`).join("");
- $("#sidebar").innerHTML=`<div class="brand"><h1>COCO 客户工作台</h1><div class="tagline">COCO 项目专属工作台</div><div class="ver">${esc(DB.meta.version)} · 更新 ${esc(DB.meta.updated)}</div></div>${nav}`;
+ $("#sidebar").innerHTML=`<div class="brand"><h1>COCO 客户工作台</h1><div class="tagline">COCO 项目专属工作台</div><div class="ver">${esc(DB.meta.version)} · 更新 ${esc(DB.meta.updated)}</div><button class="lockbtn" onclick="lockApp()">锁定</button></div>${nav}`;
 }
 function topbar(c){return `<div class="topbar"><div class="crumb">${c}</div></div>`}
 
@@ -1769,10 +1789,12 @@ function submitView(){return topbar(`<b>COCO</b> · 录入`)+`<h2 class="pagetit
 
 function rosterView(){const rows=DB.roster.members.map(m=>`<tr><td>${who(m.name)}</td><td>${esc(m.role)}</td><td class="small">${esc(m.group)}</td></tr>`).join("");const hp=DB.roster.helpers.map(h=>`<tr><td>${who(h.name)}</td><td><span class="tag fresh">帮忙</span></td><td class="small">${esc(h.note)}</td></tr>`).join("");const lf=DB.roster.left.map(l=>`<tr><td>${who(l.name)}</td><td><span class="tag lo">已离职</span></td><td class="small">${esc(l.note)}</td></tr>`).join("");return topbar(`<b>COCO</b> · 团队名单`)+`<h2 class="pagetitle">团队名单</h2><div class="pagedesc">本客户核心成员引用全公司全员名单（/team.yaml）。负责人 ${esc(DB.roster.lead)} · 把关 ${esc(DB.roster.reviewer)}。增删人改一处、全站联动。</div><table class="t"><thead><tr><th>成员</th><th>本客户角色</th><th>所属组</th></tr></thead><tbody>${rows}${hp}${lf}</tbody></table>`}
 
-render();
+bootWithAuth();
 </script>
 </body>
 </html>
+
+
 
 
 
