@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -1291,12 +1291,6 @@ files:[
     ],
     next:"下一步：COCO 技术侧确认 owner 和修复时间表；Will 团队持续补关键词、页面状态、问题原因和结果。",
     links:[{label:"SEO 页面情况全过程追踪",url:"https://app.notion.com/p/373fc520994e80c69886c61145ab7103?v=373fc520994e80fbbf6d000cead57d50&source=copy_link"},{label:"SEO 技术问题跟进表",url:"https://app.notion.com/p/375fc520994e80ec905ec2ce89720938?v=f79fc520994e8229ab7008d2b911b7ee"},{label:"SEO 行动清单",url:"assets/sources/recent-coco-chat-20260619-24/260622/COCO_SEO_行动清单_v4.pdf"}],
-    media:[
-     {label:"SEO 周报数据总览模板",src:"assets/screenshots/seo-weekly-template-data-overview.png",type:"模板截图",detail:"数据总览必须含核心指标、关键词表、页面链接、环比进度和数据解读。"},
-     {label:"SEO 原因分析模板",src:"assets/screenshots/seo-weekly-template-rootcause.png",type:"模板截图",detail:"用于承接上周异常或增长原因，写清具体原因、措施、Claude 建议和结果。"},
-     {label:"SEO 详细工作模板",src:"assets/screenshots/seo-weekly-template-work-details.png",type:"模板截图",detail:"每项详细工作都按原因、措施、结果展开。"},
-     {label:"SEO 对方团队工作模板",src:"assets/screenshots/seo-weekly-template-owner-work.png",type:"模板截图",detail:"明确 COCO 技术侧或对方团队本周必须完成的工作。"}
-    ],
     detailTitle:"查看 SEO 数据、关键词和问题清单",
     details:[{table:{cols:["指标","6/10","6/17","环比","解读"],rows:[
      ["总曝光次数","188","913","+385.64%","展示放量，需看具体关键词和页面贡献"],
@@ -1325,7 +1319,10 @@ files:[
     ],
     next:"下一步：会前一天把最近一周飞书社媒数据看板截图、已发布内容截图和原帖链接补齐，会议当天直接演示。",
     links:[{label:"飞书社媒数据看板",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5"},{label:"COCO X 官方号",url:"https://x.com/CocoAIxyz"},{label:"Charlie X",url:"https://x.com/CharliehuAI"},{label:"公众号案例文章",url:"https://mp.weixin.qq.com/s/PYw1pHxWB8MML4Tjdic3Qg"}],
-    media:[{label:"最近一周社媒数据看板截图位",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5",type:"看板截图",detail:"这里应放最新一周飞书社媒数据看板截图；当前先保留大尺寸截图位，避免误放错误讨论截图。"},{label:"最近已发布社媒内容截图位",url:"https://x.com/CocoAIxyz",type:"发布截图",detail:"这里应放最近已经发布的社媒内容截图，并关联原帖链接。"}],
+    workSections:[
+     {title:"一、最近一周社媒数据看板",wide:true,reason:"待更新：会前上传飞书社媒数据看板截图后，在这里填写平台表现、环比变化、异常点和可复制内容类型。",action:"从飞书看板提炼平台、浏览/点击/互动、内容类型和客户案例方向，不再只放一个链接。",result:"待更新"},
+     {title:"二、最近已发布社媒内容",wide:true,reason:"待更新：补公众号、X、LinkedIn、小红书等已发布内容截图和原帖链接。",action:"每条内容标记平台、发布时间、互动结果、是否可作为销售语料。",result:"待更新"}
+    ],
     detailTitle:"查看社媒看板和已发布内容",
     details:[{table:{cols:["模块","本周应放内容","状态"],rows:[
      ["最近一周社媒数据看板","飞书社媒看板截图 + 总结：平台、浏览/点击/互动、环比变化、可复制内容类型","待上传最新截图"],
@@ -1381,7 +1378,146 @@ files:[
   agenda:["KOL投放复盘","视频进度","SEO进展","社媒数据","发布情况","下周推进"],
   shots:["KOL 投放数据","视频进度表","SEO GSC 数据","社媒数据看板","已发布内容链接"]
  };
- DB.clientPsych={
+ (function applyDraft0626Whiteboard(){
+ if((DB.weeks||[]).some(w=>w.date==="2026-06-26")) return;
+ const base=(DB.weeks||[]).find(w=>w.date==="2026-06-18")||{};
+ const copyGantt=keyword=>{const card=(base.cards||[]).find(c=>String(c.topic||"").includes(keyword))||{};return card.gantt?JSON.parse(JSON.stringify(card.gantt)):null;};
+ const seoPages="https://app.notion.com/p/373fc520994e80c69886c61145ab7103?v=373fc520994e80fbbf6d000cead57d50&source=copy_link";
+ const seoTech="https://app.notion.com/p/375fc520994e80ec905ec2ce89720938?v=f79fc520994e8229ab7008d2b911b7ee";
+ const socialBoard="https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5";
+ DB.current={
+  kpis:[
+   {l:"最新白板",v:"06/26",t:""},
+   {l:"资料状态",v:"待更新",t:"tbd"},
+   {l:"社媒",v:"待补看板",t:""},
+   {l:"SEO",v:"待同步",t:""},
+   {l:"视频",v:"待确认",t:""}
+  ],
+  stage:{label:"6/26 会前白板：资料待补齐",steps:[
+   {n:"聊天记录",d:"当前包到 06/24",s:"done"},
+   {n:"社媒看板",d:"待上传截图",s:"now"},
+   {n:"SEO Notion",d:"待同步",s:""},
+   {n:"会议确认",d:"06/26",s:""}
+  ]}
+ };
+ DB.weeks.unshift({
+  date:"2026-06-26",
+  title:"6/26 会前白板",
+  badge:"待更新",
+  sourceLogic:"",
+  conclusion:"待更新：当前聊天记录压缩包只看到 6/19-6/24 材料，尚未看到 6/25-6/26 新记录。先按会前白板模板搭好结构，缺数据处全部标记为待更新。",
+  brief:{
+   agenda:[
+    {t:"5min",n:"近期关注与客户新问题"},
+    {t:"10min",n:"社媒数据看板与已发布内容"},
+    {t:"10min",n:"SEO 页面 / 关键词 / 技术问题"},
+    {t:"10min",n:"视频剪辑与销售语料"},
+    {t:"5min",n:"下周推进与对方团队配合"}
+   ],
+   last:[
+    "ICP 主线已校准为 NUS EMBA -> 知外文化 / 言书 / 汪丽娜 -> 200 个言书。",
+    "Mona Das 不放核心 ICP，只作为 validation point / 影响力信号。",
+    "SEO、社媒和视频都要围绕客户状态、交付、风险和下周计划来讲。"
+   ],
+   todos:[
+    "Will 团队：会前补飞书社媒看板截图、SEO Notion 最新数据、视频交付状态。",
+    "COCO 团队：补技术 owner、素材授权、原帖链接、产品/账号卡点。",
+    "缺失项：待更新。"
+   ]
+  },
+  cards:[
+   {topic:"本次会议重点",owner:"侯明真",summary:"待更新：6/26 白板先按会前展示结构搭好，会议当天只看本页确认状态、风险和下一步。",highlights:[
+    {k:"近期关注",v:"客户最近集中讨论的问题、需要确认的 owner、交付风险。"},
+    {k:"本周主线",v:"社媒看板、SEO 页面/关键词/技术问题、视频销售语料。"},
+    {k:"缺口",v:"6/25-6/26 新聊天记录、飞书社媒截图、SEO Notion 最新数据待补。"}
+   ],next:"待更新：补齐数据后形成最终会议版。",detailTitle:"查看会前待补项",details:[{table:{cols:["模块","本周要呈现","状态"],rows:[
+    ["近期关注","客户新问题、集中讨论点、处理方式","待更新"],
+    ["社媒","飞书看板截图 + 已发布内容链接/截图","待更新"],
+    ["SEO","Notion 页面追踪 + 技术问题表 + 关键词表","待更新"],
+    ["视频","剪辑进度、发布链接、销售语料判断","待更新"]
+   ]}}]},
+
+   {topic:"社媒与内容方向",owner:"侯明真",summary:"待更新：需补最近一周飞书社媒数据看板截图，以及最近已发布社媒内容的截图和原帖链接。",highlights:[
+    {k:"看板",v:"待更新：平台、浏览/点击/互动、环比变化。"},
+    {k:"内容",v:"待更新：公众号 / X / LinkedIn / 小红书等已发布内容截图和原帖链接。"},
+    {k:"判断",v:"从数据中找可复制内容类型，不只看发了几条。"}
+   ],links:[{label:"飞书社媒数据看板",url:socialBoard},{label:"COCO X 官方号",url:"https://x.com/CocoAIxyz"},{label:"公众号案例文章",url:"https://mp.weixin.qq.com/s/PYw1pHxWB8MML4Tjdic3Qg"}],detailTitle:"查看社媒待补模板",details:[{table:{cols:["模块","本周应放内容","状态"],rows:[
+    ["最近一周社媒数据看板","飞书社媒看板截图 + 平台数据总结 + 环比判断","待更新"],
+    ["最近已发布社媒内容","原帖链接 + 截图 + 互动表现 + 是否可销售复用","待更新"],
+    ["内容方向判断","客户案例、业务场景、生产力提升、可转发语料","待更新"]
+   ]}}],workSections:[
+    {title:"一、最近一周社媒数据看板",wide:true,reason:"待更新：会前上传飞书社媒看板截图后填写。",action:"按平台拆浏览、点击、互动、转发、内容类型和异常变化。",result:"待更新"},
+    {title:"二、最近已发布社媒内容",wide:true,reason:"待更新：需要补原帖链接和截图。",action:"每条内容记录平台、发布时间、截图、原帖链接、互动结果和销售复用判断。",result:"待更新"}
+   ]},
+
+   {topic:"SEO 本周进展",owner:"李家乐",summary:"待更新：会前从 SEO Notion 表同步页面、关键词、曝光点击、技术问题和对方团队进度。",gantt:copyGantt("SEO"),highlights:[
+    {k:"页面追踪",v:"待更新：从 Notion 页面情况全过程追踪同步。"},
+    {k:"技术问题",v:"待更新：从 SEO 技术问题跟进表同步 owner / 日期 / 验证方式。"},
+    {k:"关键词",v:"待更新：补页面链接、关键词、曝光数、点击数和原因判断。"}
+   ],links:[{label:"SEO 页面情况全过程追踪",url:seoPages},{label:"SEO 技术问题跟进表",url:seoTech}],detailTitle:"查看 SEO 页面化模板",details:[{table:{cols:["指标","上周","本周","环比进度","数据解读"],rows:[
+    ["总曝光次数","待更新","待更新","待更新","待更新"],
+    ["品牌词曝光","待更新","待更新","待更新","待更新"],
+    ["总点击次数","待更新","待更新","待更新","待更新"],
+    ["品牌词点击","待更新","待更新","待更新","待更新"],
+    ["高意向词点击","待更新","待更新","待更新","待更新"]
+   ]}},{table:{cols:["网页链接","关键词","印象数","点击数","当前处理"],rows:[
+    ["待更新","待更新","待更新","待更新","待更新"],
+    ["待更新","待更新","待更新","待更新","待更新"],
+    ["待更新","待更新","待更新","待更新","待更新"]
+   ]}}],workSections:[
+    {title:"一、分析目前的问题和原因",wide:true,reason:"待更新：针对上周数据变化拆具体原因。",action:"用 GSC / Notion 页面表 / 技术问题表定位关键词、页面和抓取问题。",claude:"待更新：把问题分为技术抓取、内容匹配、关键词选择、转化承接。",result:"待更新"},
+    {title:"二、详细工作：关键词与页面追踪",reason:"待更新",action:"待更新",result:"待更新"},
+    {title:"三、详细工作：技术问题推进",reason:"待更新",action:"待更新",result:"待更新"},
+    {title:"四、详细工作：内容与扩展计划",reason:"待更新",action:"待更新",result:"待更新"},
+    {title:"五、需要对方团队做的工作",wide:true,ownerWork:"待更新：COCO 技术侧 owner、目标日期、验证方式。",result:"待更新"}
+   ]},
+
+   {topic:"视频剪辑与销售语料",owner:"周星星 / 李阳阳 / 孔德浩",summary:"待更新：补本周视频剪辑、发布链接、竖屏/横屏版本、销售复用判断和卡点。",gantt:copyGantt("视频"),highlights:[
+    {k:"交付",v:"待更新：本周完成/进行中/未开始视频清单。"},
+    {k:"销售语料",v:"待更新：哪些视频可转发给客户、哪些仍需重剪。"},
+    {k:"卡点",v:"待更新：账号、场景、录制、剪辑、发布链路。"}
+   ],next:"待更新：补齐视频库筛选字段和发布时间。",detailTitle:"查看视频待补模板",details:[{table:{cols:["视频/素材","状态","负责人","下一步"],rows:[
+    ["待更新","待更新","待更新","待更新"],
+    ["待更新","待更新","待更新","待更新"],
+    ["待更新","待更新","待更新","待更新"]
+   ]}}]},
+
+   {topic:"客户画像 / 心理变化",owner:"侯明真",summary:"待更新：当前记录显示 ICP 主线已校准，后续需要根据 6/25-6/26 新聊天记录继续校准心理画像。",highlights:[
+    {k:"当前主线",v:"NUS EMBA -> 知外文化 / 言书 / 汪丽娜 -> 200 个言书。"},
+    {k:"非核心",v:"Mona Das 作为 validation point / 影响力信号，不放核心 ICP。"},
+    {k:"待补",v:"6/25-6/26 最新聊天记录。"}
+   ],next:"待更新：补新聊天记录后刷新用户画像页面和本卡结论。"},
+
+   {topic:"待会议确认的推进项",owner:"侯明真",summary:"待更新：会议当天确认下周每项工作的 owner、日期和验收口径。",highlights:[
+    {k:"SEO",v:"技术问题 owner / 修复日期 / 验证方式。"},
+    {k:"社媒",v:"飞书看板截图、原帖链接、内容方向判断。"},
+    {k:"视频",v:"剪辑计划、发布节奏、销售语料复用口径。"}
+   ],next:"待更新：会议确认后写入下一周执行记录。"}
+  ],
+  blockers:[
+   {item:"6/25-6/26 新聊天记录尚未在当前 coco.zip 中出现",need:"补最新日期聊天记录后更新画像和白板",client:false,owner:"侯明真"},
+   {item:"社媒看板截图待上传",need:"补最近一周飞书社媒数据看板截图",client:false,owner:"侯明真"},
+   {item:"SEO Notion 最新数据待同步",need:"补页面、关键词、技术问题、对方 owner 和验证方式",client:true,owner:"李家乐"}
+  ],
+  requests:[
+   {date:"06-26",source:"会前白板草稿",quote:"待更新：补最新聊天记录和看板数据。",status:"待更新",owner:"侯明真",resp:"等待新资料后刷新。"}
+  ],
+  psych:"",
+  psychStages:[],
+  deliveries:{内容:[],视频剪辑:[],SEO:[]},
+  metrics:[],
+  mustAsk:[
+   "6/25-6/26 的聊天记录是否另有新压缩包或文件夹？",
+   "最近一周飞书社媒数据看板截图是哪一张？",
+   "SEO 页面情况和技术问题 Notion 表本周最新数据是否已更新？",
+   "哪些已发布内容需要放进会前白板作为截图+原帖链接？"
+  ],
+  nextWeek:["待更新：根据 6/26 会议确认后的事项生成。"],
+  agenda:["近期关注","社媒数据看板","SEO 本周进展","视频与销售语料","待确认事项"],
+  shots:["待更新：飞书社媒看板截图","待更新：已发布内容截图","待更新：SEO Notion 数据"]
+ });
+})();
+DB.clientPsych={
   summary:"COCO 的 ICP 主线已校准为：NUS EMBA -> 知外文化 / 言书 / 汪丽娜 -> 找 200 个言书。Mona Das 不再放入核心 ICP，只作为 validation point / 影响力信号。核心事实层是知外文化 26 个 agent、介绍 40+ 客户（包括杜蕾斯中国）；后续白板和画像都围绕这条主线沉淀。",
   stages:[
     {date:"06/21",title:"ICP主线校准：知外文化 / 言书才是核心",source:["2026-06-21 群聊记录（客户反馈：ICP主线校准）"],signal:"客户明确校正：知外文化是核心，言书是这条线的核心 ICP；Mona Das 不是 ICP，而是 validation point / 影响力信号。",detail:"主线事实不是泛泛谈女性企业家，而是围绕“找 200 个言书”复制已验证链路：知外文化 26 个 agent、介绍 40+ 客户、包括杜蕾斯中国。",response:""},
@@ -1420,7 +1556,15 @@ files:[
    "Alex 属于 COCO 侧，页面只记录为数据/素材/确认配合方，不放进 Will 团队负责人。"
   ]
  };
- DB.demoVideos=[
+ if(DB.clientPsych){
+ DB.clientPsych.stages=DB.clientPsych.stages||[];
+ DB.clientPsych.evidence=DB.clientPsych.evidence||[];
+ DB.clientPsych.currentQuestions=DB.clientPsych.currentQuestions||[];
+ DB.clientPsych.stages.unshift({id:"psych-0626-draft",date:"06/24-06/26",title:"6/26 会前画像待更新",source:["coco.zip 当前可见 6/19-6/24 材料"],signal:"当前新包尚未看到 6/25-6/26 聊天记录，先把 6/26 白板和画像缺口标记出来。",detail:"已确认核心画像仍沿用 NUS EMBA -> 知外文化 / 言书 / 汪丽娜 -> 200 个言书；Mona Das 作为 validation point，不进入核心 ICP。",response:"后续补充 6/25-6/26 聊天记录后，更新心理变化、近期关注和 6/26 白板。"});
+ DB.clientPsych.evidence.unshift({date:"06/24-06/26",type:"聊天记录包检查",source:"coco.zip",detail:"当前压缩包内可见日期为 260619、260620、260621、260622、260623、260624，未发现 260625 或 260626。",meaning:"6/26 白板先按模板生成，缺失内容标记为待更新。"});
+ DB.clientPsych.currentQuestions.unshift("待更新：补 6/25-6/26 最新聊天记录后，校准客户近期关注、心理画像和 6/26 白板。存量包目前只看到 6/19-6/24。");
+}
+DB.demoVideos=[
   {title:"知外文化客户案例视频（中文版）",type:"Use Case / 客户案例",status:"已发布",owner:"周星星 / 李阳阳",finished:"2026-06-19",length:"1:01",source:"9369bca75e1ae6c80a634552d0d6f470.mp4；COCO客户案例脚本_言书_Final_v3.7.pdf；微信群 6/19 发布确认",schedule:"原排期为 6/17 外部文化客户使用案例，实际因事实核对、脚本重写与重新剪辑，6/19 发布。",notes:["事实修正：知外文化不是知乎，是知乎外部合作的大 MCN。","主线修正为小红书事业部/女性创业者案例。","视频不是机械发布，目标是成为 COCO 对外销售语料。"]},
   {title:"知外文化客户案例视频（英文版）",type:"Use Case / English",status:"已完成，待发布链接回填",owner:"周星星 / 梦雨 / 李阳阳",finished:"2026-06-19 22:33",length:"约 1:20-1:29",source:"微信群 6/19 多轮英文版反馈；本地源视频待回填（目录中有多个 1:10-1:28 版本，尚未唯一确认）",schedule:"中文版通过后推进英文版，重点修正 VO、英文表达和结尾 CTA。",notes:["关键表达：Going from using AI to managing AI is not about technology; it is about how you manage your AI workforce.","结尾 CTA：COCO AI agents, deploy in minutes. Get your first agent for $99.","整体 flow 和 vibe 已通过，仍需发布链接回填。"]},
   {title:"Use Case / Demo 视频协作说明",type:"协作流程文档",status:"已发送 COCO",owner:"侯明真",finished:"2026-06-18 16:23",length:"PDF 文档",source:"Use Case、Demo视频协作说明.pdf",schedule:"用于校准后续 demo/use case 的录制协作方式。",notes:["三种协作方式：客户完整素材、客户粗录素材、Will 团队代录代剪。","建议单条原始素材 60-120 秒，1080p+。","先定方向、再制作、初剪确认、精修交付。"]}
@@ -1443,7 +1587,7 @@ files:[
  ];
  const coco=DB.clients&&DB.clients.find(c=>c.name==="COCO");
  if(coco){
-  coco.one="6/18 周会进展：KOL 投放已有曝光，下一步重点优化点击与转化承接；视频、SEO 和客户案例内容同步推进。";
+  coco.one="6/26 会前白板已搭好：社媒、SEO、视频和客户画像缺口均标为待更新，等最新聊天记录和看板截图补齐。";
   coco.red=DB.weeks[0].blockers.length;
  }
 })();
@@ -1566,14 +1710,21 @@ DB.dataCenterUpdate={
 };
 
 DB.peopleAvatars={
-  "侯明真":"assets/avatars/hou.svg","田长举":"assets/avatars/tian.svg","吕教东":"assets/avatars/lu.svg","周星星":"assets/avatars/zhou.svg","李阳阳":"assets/avatars/liyangyang.svg","孔德浩":"assets/avatars/kongdehao.svg","李家乐":"assets/avatars/lijiale.svg","孔维彤":"assets/avatars/kongweitong.svg"
+  "侯明真":"assets/avatars/people/houmingzhen.jpg",
+  "田长举":"assets/avatars/people/tianchangju.jpg",
+  "吕教东":"assets/avatars/people/lvjiaodong.jpg",
+  "周星星":"assets/avatars/people/zhouxingxing.jpg",
+  "李阳阳":"assets/avatars/people/liyangyang.jpg",
+  "孔德浩":"assets/avatars/people/kongdehao.jpg",
+  "李家乐":"assets/avatars/people/lijiale.jpg",
+  "孔维彤":"assets/avatars/people/kongweitong.jpg"
 };
 
 var psyMonth="all";
 var psyWeek="all";
 
-const NAV={ "COCO 总览":["overview"], "工作台":["board","psychology","videos","library","seoRoadmap","videoRoadmap","data","contacts"], 过程:["sources","feed","requests","deliverables","meetings","files"], 操作:["submit","roster"] };
-const VIEWS={ overview:"问题总览",board:"白板",psychology:"用户画像 / 心理变化",videos:"Demo/Use Case视频",library:"素材库",seoRoadmap:"SEO路线图",videoRoadmap:"视频路线图",data:"数据中心",contacts:"对接负责人",sources:"证据索引",feed:"工作动态流",requests:"确认事项",deliverables:"交付时间线",meetings:"会议",files:"物料",submit:"录入",roster:"团队名单" };
+const NAV={ "近期关注":["overview"], "工作台":["board","psychology","videos","library","seoRoadmap","videoRoadmap","data","contacts"], 过程:["sources","feed","requests","deliverables","meetings","files"], 操作:["submit","roster"] };
+const VIEWS={ overview:"近期关注",board:"白板",psychology:"用户画像 / 心理变化",videos:"Demo/Use Case视频",library:"素材库",seoRoadmap:"SEO路线图",videoRoadmap:"视频路线图",data:"数据中心",contacts:"对接负责人",sources:"证据索引",feed:"工作动态流",requests:"确认事项",deliverables:"交付时间线",meetings:"会议",files:"物料",submit:"录入",roster:"团队名单" };
 
 function esc(s){return String(s??"").replace(/[<>&"]/g,m=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[m]))}
 function escapeHtml(s){return esc(s)}
@@ -1623,11 +1774,11 @@ function renderSide(){
 }
 function topbar(c){return `<div class="topbar"><div class="crumb">${c}</div></div>`}
 
-/* COCO 问题总览 */
+/* COCO 近期关注 */
 function overviewView(){
  const issues=(DB.whiteboardIssues||[]).map((i,idx)=>`<div class="issue-card"><div class="meta"><span>问题 ${idx+1}</span><span>${esc((i.sources||[]).length)} 个来源</span></div><h3>${esc(i.title)}</h3><p><b>客户问题：</b>${esc(i.problem)}</p><p><b>处理方式：</b>${esc(i.handling)}</p>${sourceActions(i.sources||[])}</div>`).join("");
- return topbar(`<b>COCO</b> · 问题总览`)+`
-  <h2 class="pagetitle">客户最近提出 / 集中讨论的问题</h2>
+ return topbar(`<b>COCO</b> · 近期关注`)+`
+  <h2 class="pagetitle">近期关注</h2>
   <div class="pagedesc">这个站点现在只服务 COCO。首页先放老板、Will 和负责人最需要看的问题板：客户在问什么、我们怎么处理、证据在哪里。</div>
   <div class="issue-grid">${issues}</div>`;
 }
