@@ -349,7 +349,7 @@ table.t tr:hover td{background:#FBF9F4}
 .issue-card b{color:var(--accent)}
 .video-player{width:100%;aspect-ratio:16/9;max-height:380px;background:#111;border-radius:8px;margin-top:10px;object-fit:contain;display:block}
 .video-card.portrait .video-player{width:min(270px,100%);aspect-ratio:9/16;max-height:560px;margin-left:auto;margin-right:auto}
-.video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.video-group{margin-top:16px}.video-group .shead{margin-bottom:10px}
 .video-filterbar{display:flex;gap:10px;flex-wrap:wrap;align-items:end;border:1px solid var(--line);background:#FBF9F4;border-radius:10px;padding:12px;margin:0 0 16px}
 .video-filterbar label{display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--sub);font-weight:800}
 .video-filterbar select{min-width:180px;border:1px solid var(--line-dark);background:#fff;border-radius:7px;padding:8px 10px;color:var(--ink);font-family:var(--sans)}
@@ -369,6 +369,17 @@ table.t tr:hover td{background:#FBF9F4}
 .roadmap-row .phase{font-weight:800;color:#fff;padding:14px;background:var(--accent)}
 .roadmap-row .phase.done{background:#3a8f58}.roadmap-row .phase.doing{background:#d28b22}.roadmap-row .phase.risk{background:#b64032}.roadmap-row .phase.next{background:#315c9b}
 .roadmap-row .body{padding:12px;line-height:1.65}.roadmap-row .owner{padding:12px;background:#fbf7ef;color:var(--muted)}
+.file-card ul{list-style:none;margin:10px 0 0;padding:0}
+.file-card li{border-top:1px dashed var(--line);padding:7px 0;font-size:13px;line-height:1.55}
+.file-card li:first-child{border-top:0}
+.work-sections{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.work-section{border:1px solid var(--line);background:#fff;border-radius:8px;padding:14px 15px;min-height:210px}
+.work-section.wide{grid-column:1 / -1}
+.work-section h4{font-family:var(--serif);font-size:21px;color:var(--ink);margin:0 0 10px;font-weight:900}
+.work-section dl{margin:0}.work-section dt{color:var(--red);font-weight:900;margin:10px 0 4px}.work-section dd{margin:0;color:var(--ink);font-size:14px;line-height:1.6}
+.board-placeholder{height:300px;border:1px dashed var(--line-dark);background:#fff8ed;border-radius:8px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--amber);font-weight:900;padding:18px;line-height:1.6}
+.board-link-card{border:1px solid var(--line);background:#fff;border-radius:8px;padding:16px;margin-top:12px}
+.board-link-card h3{margin:0 0 8px;color:var(--red)}
 .metric-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .metric-card{border:1px solid var(--line);background:#fff;padding:14px;border-radius:8px}
 .metric-card strong{font-size:24px;display:block;color:var(--accent)}
@@ -376,7 +387,7 @@ table.t tr:hover td{background:#FBF9F4}
 .contact-card{border:1px solid var(--line);background:#f7f2e9;padding:16px;min-height:250px}
 .person-row{display:flex;gap:10px;align-items:center;margin:10px 0}
 .avatar-img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid #fff;background:#e8dfd0}
-@media (max-width: 980px){.signal-grid,.issue-grid,.file-grid,.contact-grid,.metric-grid{grid-template-columns:1fr}.roadmap-row{grid-template-columns:1fr}.roadmap-row .owner{border-top:1px solid var(--line)}}
+@media (max-width: 980px){.signal-grid,.issue-grid,.file-grid,.contact-grid,.metric-grid,.video-grid,.media-wall{grid-template-columns:1fr}.roadmap-row{grid-template-columns:1fr}.roadmap-row .owner{border-top:1px solid var(--line)}}
 
 .auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:24px}
 .auth-card{width:min(420px,100%);background:var(--panel);border:2px solid var(--ink);border-radius:14px;padding:26px 28px;box-shadow:0 12px 30px rgba(33,28,21,.08)}
@@ -1278,18 +1289,33 @@ files:[
      {k:"主要问题",v:"CSR 渲染、About Canonical、标题重复、404、docs 子域内容结构"},
      {k:"当前判断",v:"页面继续做，但技术债必须同步推进，否则流量很难稳定承接"}
     ],
-    next:"下一步：COCO 技术侧确认 owner 和修复时间表。",
-    links:[{label:"SEO 行动清单",url:"assets/sources/recent-coco-chat-20260619-24/260622/COCO_SEO_行动清单_v4.pdf"},{label:"SEO 白板模板截图",url:"assets/screenshots/seo-template-20260624.png"}],
-    media:[{label:"SEO 白板汇报模板截图",src:"assets/screenshots/seo-template-20260624.png",type:"模板截图"},{label:"COCO SEO 行动清单 v4",url:"assets/sources/recent-coco-chat-20260619-24/260622/COCO_SEO_行动清单_v4.pdf",type:"PDF"}],
-    detailTitle:"查看 SEO 数据和问题清单",
-    details:[{table:{cols:["指标","6/10","6/17","环比"],rows:[
-     ["总曝光次数","188","913","+385.64%"],
-     ["品牌词曝光","17","95","+458.82%"],
-     ["总点击次数","6","35","+483.33%"],
-     ["品牌词点击","0","17","新增 17"],
-     ["高意向词点击","5","13","+160.00%"]
-    ]}},{items:["CSR 渲染影响 Google 初次抓取。","About canonical 和标题重复需要修复。","404、docs 子域和 URL 结构需要统一进入技术排期。"]}]},
-
+    next:"下一步：COCO 技术侧确认 owner 和修复时间表；Will 团队持续补关键词、页面状态、问题原因和结果。",
+    links:[{label:"SEO 页面情况全过程追踪",url:"https://app.notion.com/p/373fc520994e80c69886c61145ab7103?v=373fc520994e80fbbf6d000cead57d50&source=copy_link"},{label:"SEO 技术问题跟进表",url:"https://app.notion.com/p/375fc520994e80ec905ec2ce89720938?v=f79fc520994e8229ab7008d2b911b7ee"},{label:"SEO 行动清单",url:"assets/sources/recent-coco-chat-20260619-24/260622/COCO_SEO_行动清单_v4.pdf"}],
+    media:[
+     {label:"SEO 周报数据总览模板",src:"assets/screenshots/seo-weekly-template-data-overview.png",type:"模板截图",detail:"数据总览必须含核心指标、关键词表、页面链接、环比进度和数据解读。"},
+     {label:"SEO 原因分析模板",src:"assets/screenshots/seo-weekly-template-rootcause.png",type:"模板截图",detail:"用于承接上周异常或增长原因，写清具体原因、措施、Claude 建议和结果。"},
+     {label:"SEO 详细工作模板",src:"assets/screenshots/seo-weekly-template-work-details.png",type:"模板截图",detail:"每项详细工作都按原因、措施、结果展开。"},
+     {label:"SEO 对方团队工作模板",src:"assets/screenshots/seo-weekly-template-owner-work.png",type:"模板截图",detail:"明确 COCO 技术侧或对方团队本周必须完成的工作。"}
+    ],
+    detailTitle:"查看 SEO 数据、关键词和问题清单",
+    details:[{table:{cols:["指标","6/10","6/17","环比","解读"],rows:[
+     ["总曝光次数","188","913","+385.64%","展示放量，需看具体关键词和页面贡献"],
+     ["品牌词曝光","17","95","+458.82%","品牌搜索开始扩大"],
+     ["总点击次数","6","35","+483.33%","点击增长但仍需检查承接"],
+     ["品牌词点击","0","17","新增 17","品牌点击开始出现"],
+     ["高意向词点击","5","13","+160.00%","高意向词逐渐增长"]
+    ]}},{table:{cols:["网页/页面","关键词","曝光数","点击数","当前处理"],rows:[
+     ["页面追踪表","按 Notion 页面情况全过程追踪同步","待同步","待同步","每周会前从 Notion / GSC 更新"],
+     ["技术问题表","CSR / canonical / title / 404 / docs 子域","待同步","待同步","COCO 技术侧确认 owner 和修复时间"],
+     ["新页面计划","Use Case / 场景页 / 工具页 / 支柱页","待同步","待同步","按阶段二扩展期补齐关键词和页面"]
+    ]}},{items:["数据总览：每周必须放核心指标 + 关键词表 + 页面链接 + 数据解读。","原因分析：对上周异常或增长点写清原因、措施、Claude 建议、结果。","详细工作：每项工作按原因 / 措施 / 结果记录，不能只写一句完成。","对方团队工作：技术 owner、修复日期、验证方式必须单列。"]}],
+    workSections:[
+     {title:"一、分析目前的问题和原因",wide:true,reason:"SEO 已有曝光和点击增长，但页面收录、关键词排名、转化承接仍受官网技术结构影响。",action:"每周对照 GSC / Notion 页面表，拆出具体关键词、页面和异常原因。",claude:"把问题分成技术抓取、页面内容、关键词匹配、转化承接四类，不混在一个结论里。",result:"会前白板呈现为数据总览 + 关键词表 + 问题原因。"},
+     {title:"二、详细工作：关键词与页面追踪",reason:"只看总曝光不够，必须知道是哪批页面和关键词在贡献增长。",action:"从 SEO 页面情况全过程追踪 Notion 同步页面、关键词、曝光、点击和当前状态。",result:"形成周会可直接讨论的页面/关键词表。"},
+     {title:"三、详细工作：技术问题推进",reason:"CSR、canonical、title、404、docs 子域会影响收录和权重。",action:"维护 SEO 技术问题跟进表，逐项标 owner、目标日期和验证口径。",result:"COCO 技术侧可以按表处理，Will 团队按周追进度。"},
+     {title:"四、详细工作：内容与扩展计划",reason:"验证期之后需要扩展场景页、Use Case 体系、支柱页、工具页。",action:"按阶段二/三的甘特图持续补页面计划、关键词优先级和交付状态。",result:"SEO 产出从零散页面变成可追踪的增长路线图。"},
+     {title:"五、需要对方团队做的工作",wide:true,ownerWork:"COCO 技术侧确认官网技术问题 owner；Alex / 技术同学同步 GSC、Notion 表和修复状态；每周会前提供最新关键词和页面数据。",result:"会议当天只看最新白板，不再临时翻聊天记录和表格。"}
+    ]},
    {topic:"社媒与内容方向",owner:"侯明真",
     summary:"大会流量红利正在回落，后续要从热点流量转向稳定内容机制。",
     highlights:[
@@ -1297,16 +1323,19 @@ files:[
      {k:"内容方向",v:"少做泛话题，多做真实客户案例、业务场景、生产力提升"},
      {k:"客户案例",v:"知外文化类案例适合做联合宣发和信任资产"}
     ],
-    next:"下一步：重写知外文化客户案例，标题先抓业务痛点，再补客户故事和配图。",
-    links:[{label:"飞书社媒数据看板",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1JbfS5"},{label:"COCO X 官方号",url:"https://x.com/CocoAIxyz"},{label:"Charlie X",url:"https://x.com/CharliehuAI"},{label:"公众号案例文章",url:"https://mp.weixin.qq.com/s/PYw1pHxWB8MML4Tjdic3Qg"}],
-    media:[{label:"6/23 社媒截图",src:"assets/sources/recent-coco-chat-20260619-24/260623/42.jpg",type:"截图"},{label:"6/22 讨论截图",src:"assets/sources/recent-coco-chat-20260619-24/260622/fbdbcb52-81ef-4257-aad4-366918264784.png",type:"截图"}],
-    detailTitle:"查看社媒与内容明细",
-    details:[{items:[
-     "大会算法红利退去后，数据回落是寻找稳定内容机制的信号。",
-     "内容不要只围绕泛女性话题，要落到真实客户如何用 COCO 放大业务能力。",
-     "Tiger、Paolo、产品介绍片都要补一层“客户能对外讲什么”的转发语料。"
-    ]},{links:[{label:"社媒数据看板 ↗",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1JbfS5"}]}]},
-
+    next:"下一步：会前一天把最近一周飞书社媒数据看板截图、已发布内容截图和原帖链接补齐，会议当天直接演示。",
+    links:[{label:"飞书社媒数据看板",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5"},{label:"COCO X 官方号",url:"https://x.com/CocoAIxyz"},{label:"Charlie X",url:"https://x.com/CharliehuAI"},{label:"公众号案例文章",url:"https://mp.weixin.qq.com/s/PYw1pHxWB8MML4Tjdic3Qg"}],
+    media:[{label:"最近一周社媒数据看板截图位",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5",type:"看板截图",detail:"这里应放最新一周飞书社媒数据看板截图；当前先保留大尺寸截图位，避免误放错误讨论截图。"},{label:"最近已发布社媒内容截图位",url:"https://x.com/CocoAIxyz",type:"发布截图",detail:"这里应放最近已经发布的社媒内容截图，并关联原帖链接。"}],
+    detailTitle:"查看社媒看板和已发布内容",
+    details:[{table:{cols:["模块","本周应放内容","状态"],rows:[
+     ["最近一周社媒数据看板","飞书社媒看板截图 + 总结：平台、浏览/点击/互动、环比变化、可复制内容类型","待上传最新截图"],
+     ["已发布社媒内容","公众号 / X / LinkedIn / 小红书等原帖链接 + 截图 + 白板判断","先保留链接，待补截图"],
+     ["会议判断","从数据中判断内容方向，而不是只展示发了几条","每周会前更新"]
+    ]}},{items:[
+     "社媒卡片只保留正确的数据看板和已发布内容截图，之前错误讨论截图已撤掉。",
+     "每周会前一天更新：最近一周数据看板截图、关键数据总结、已发布内容链接/截图、下一步内容动作。",
+     "重点看能指导动作的数据：平台差异、内容类型、互动质量、转发语料和客户案例。"
+    ]},{links:[{label:"飞书社媒数据看板 ↗",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5"},{label:"公众号案例文章 ↗",url:"https://mp.weixin.qq.com/s/PYw1pHxWB8MML4Tjdic3Qg"},{label:"COCO X 官方号 ↗",url:"https://x.com/CocoAIxyz"}]}]},
    {topic:"待会议确认的推进项",owner:"侯明真",
     summary:"这部分是会前拟推进项，需在 6/18 周会现场确认优先级和配合方式。",
     highlights:[
@@ -1521,6 +1550,11 @@ DB.videoRoadmap=[
   {phase:"下一步",tone:"next",task:"视频库已入库 9 条源文件、缺 1 条中文版企业级记忆视频；每条继续补发布状态、用途和客户口径。",owner:"侯明真统筹",source:["whiteboard-logic"]}
 ];
 
+DB.seoNotionLinks={
+  pages:"https://app.notion.com/p/373fc520994e80c69886c61145ab7103?v=373fc520994e80fbbf6d000cead57d50&source=copy_link",
+  tech:"https://app.notion.com/p/375fc520994e80ec905ec2ce89720938?v=f79fc520994e8229ab7008d2b911b7ee"
+};
+
 DB.dataCenterUpdate={
   feishu:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5",
   cards:[
@@ -1714,6 +1748,11 @@ function renderCardGantt(g){
   }).join("");
   return `<div class="glegend"><span><i style="background:#2E7D5B"></i>已完成</span><span><i style="background:#D85C32"></i>进行中</span><span><i style="background:#3E6EA8"></i>计划中</span><span><i style="background:#B5432E"></i>卡点</span></div><div class="gantt"><div class="gridrow" style="grid-template-columns:${headerCols};min-width:${minWidth}px"><div class="lab"></div>${months.map(m=>`<div class="g-month" style="grid-column:span ${Number(m.w)||1}">${esc(m.m||"")}</div>`).join("")}</div><div class="gridrow" style="grid-template-columns:${headerCols};min-width:${minWidth}px"><div class="lab"></div>${labels.map(l=>`<div class="g-wk">${esc(l)}</div>`).join("")}</div>${phaseHtml}</div>`;
 }
+function renderWorkSections(sections=[]){
+  sections=(Array.isArray(sections)?sections:[]).filter(Boolean);
+  if(!sections.length) return "";
+  return `<div class="work-sections">${sections.map((s,idx)=>`<section class="work-section ${s.wide?"wide":""}"><h4>${esc(s.title||`详细工作 ${idx+1}`)}</h4><dl>${["reason","action","claude","result","ownerWork"].map(k=>s[k]?`<dt>${esc({reason:"原因",action:"措施",claude:"Claude/分析建议",result:"结果",ownerWork:"需要对方团队做的工作"}[k])}</dt><dd>${esc(s[k])}</dd>`:"").join("")}</dl></section>`).join("")}</div>`;
+}
 function wcard(c){
   c=c||{};
   const asList=v=>Array.isArray(v)?v:(v===undefined||v===null||v===""?[]:[v]);
@@ -1753,6 +1792,7 @@ function wcard(c){
     ${block("本周动作 / 进展",first(c.items,c.actions,c.outputs,c.progress,c.deliveries,[]))}
     ${block("问题与解决方式",first(c.solutions,c.issues,c.todo,c.todos,c.nexts,[]))}
     ${renderCardDetails(c.detailTitle,c.details)}
+    ${renderWorkSections(c.workSections)}
     ${links?`<div class="source-actions">${links}</div>`:""}
     ${sources.length?sourceActions(sources):""}
   </section>`;
@@ -1827,7 +1867,7 @@ function roadmapSourceList(rows=[]){
 function seoRoadmapView(){
   const card=boardCardByTopic("SEO");
   const gantt=(card&&card.gantt)||roadmapRowsToGantt(DB.seoRoadmap||[],"SEO");
-  return `<section class="panel"><h1>SEO路线图</h1><p class="lead">已切换成白板同款彩色甘特图：阶段、任务、状态和当前线一屏展示，下面保留来源追溯。</p>${renderCardGantt(gantt)}${card?renderCardDetails(card.detailTitle,card.details):""}<div class="source-actions"><a class="source-pill" href="${DB.dataCenterUpdate.feishu}" target="_blank">打开飞书社媒数据看板</a></div><div class="issue-grid" style="margin-top:14px">${roadmapSourceList(DB.seoRoadmap||[])}</div></section>`;
+  return `<section class="panel"><h1>SEO路线图</h1><p class="lead">已切换成白板同款彩色甘特图：阶段、任务、状态和当前线一屏展示，下面保留来源追溯。</p>${renderCardGantt(gantt)}${card?renderCardDetails(card.detailTitle,card.details):""}<div class="source-actions"><a class="source-pill" href="${DB.seoNotionLinks.pages}" target="_blank">SEO页面情况全过程追踪</a><a class="source-pill" href="${DB.seoNotionLinks.tech}" target="_blank">SEO 技术问题跟进表</a></div><div class="issue-grid" style="margin-top:14px">${roadmapSourceList(DB.seoRoadmap||[])}</div></section>`;
 }
 
 function ganttView(){return videoRoadmapView()}
@@ -1838,12 +1878,11 @@ function videoRoadmapView(){
 }
 
 function dataView(){
-  return `<section class="panel"><h1>数据中心</h1><p class="lead">先放目前聊天和白板截图里能确认的数据；飞书实时看板如果需要继续补全，需要可访问截图或导出。</p>
-  <div class="metric-grid">${DB.dataCenterUpdate.cards.map(c=>`<div class="metric-card"><span class="muted">${c.name}</span><strong>${c.value}</strong><b>${c.label}</b><p>${c.detail}</p>${sourceActions(c.sources)}</div>`).join("")}</div>
-  <div class="source-actions"><a class="source-pill" href="${DB.dataCenterUpdate.feishu}" target="_blank">打开飞书社媒数据看板</a></div>
+  return `<section class="panel"><h1>数据中心</h1><p class="lead">数据中心只作为飞书社媒数据看板入口。具体周度结论会在每周白板的“社媒与内容方向”卡片里总结，这里先不重复放散数据。</p>
+  <div class="board-link-card"><h3>飞书社媒数据看板</h3><p>用于查看 COCO 各平台社媒数据、发布内容和周度表现。会前白板会从这里提炼最近一周的关键变化。</p><div class="source-actions"><a class="source-pill" href="${DB.dataCenterUpdate.feishu}" target="_blank">打开飞书社媒数据看板</a></div></div>
+  <div class="board-placeholder" style="margin-top:14px">最近一周社媒数据看板截图位<br>下次提供截图后，将在白板和数据中心同步显示。</div>
   </section>`;
 }
-
 function personLine(name,role){
   const img=DB.peopleAvatars[name]||"";
   return `<div class="person-row">${img?`<img class="avatar-img" src="${img}" alt="${name}">`:`<div class="avatar">${name.slice(0,1)}</div>`}<div><b>${name}</b><br><span class="muted">${role}</span></div></div>`;
@@ -1875,13 +1914,14 @@ function videosView(){
   const groupOptions=groups.map(g=>`<option value="${esc(g)}" ${videoFilters.group===g?"selected":""}>${esc(g)}</option>`).join("");
   const dateOptions=dates.map(d=>`<option value="${esc(d)}" ${videoFilters.date===d?"selected":""}>${esc(d)}</option>`).join("");
   const card=v=>{const portrait=isPortraitVideo(v);return `<article class="signal-card video-card ${portrait?"portrait":"landscape"}"><div class="meta"><span>${esc(v.group||"")}</span><span>${esc(v.type)}</span><span>${esc(v.status)}</span><span>${esc(v.done)}</span></div><h3>${esc(v.title)}</h3><p>${esc(v.note)}</p>${v.asset?`<video class="video-player ${portrait?"portrait":"landscape"}" controls preload="metadata" src="${esc(v.asset)}"></video><div class="source-actions"><a class="source-pill" href="${esc(v.asset)}" target="_blank">打开视频源文件</a></div>`:`<div class="video-missing">${esc(v.status)}<br><span class="small">${esc(v.source)}</span></div>`}<ul class="video-note-list"><li><b>用途：</b>${esc(v.use||"待补")}</li><li><b>下一步：</b>${esc(v.next||"待补")}</li><li><b>来源：</b>${esc(v.source||"待补")}</li></ul></article>`};
-  return `<section class="panel"><h1>Demo / Use Case 视频库</h1><p class="lead">可按分类和入库日期自动筛选；竖屏素材按竖屏比例展示，横屏素材按横屏比例展示。</p>
+  const filteredGroups=[...new Set(filtered.map(v=>v.group||"未分组"))];
+  const grouped=filteredGroups.map(g=>{const list=filtered.filter(v=>(v.group||"未分组")===g);return `<div class="video-group"><div class="shead"><h3>${esc(g)}</h3><span class="hint">${list.length} 条 · 同一分类不同展现形式放在一行</span></div><div class="video-grid">${list.map(card).join("")}</div></div>`}).join("");
+  return `<section class="panel"><h1>Demo / Use Case 视频库</h1><p class="lead">同一分类的视频放在一起展示，横屏、竖屏、中英文等不同展现形式尽量同排对比；仍可按分类和入库日期筛选。</p>
     <div class="video-status-row"><div class="video-status-card"><b>${videos.length}</b><span>应入库视频</span></div><div class="video-status-card"><b>${ready}</b><span>已接入站内播放</span></div><div class="video-status-card"><b>${missing}</b><span>缺源文件</span></div><div class="video-status-card"><b>${filtered.length}</b><span>当前筛选结果</span></div></div>
     <div class="video-filterbar"><label>分类<select onchange="setVideoFilter('group',this.value)">${groupOptions}</select></label><label>日期<select onchange="setVideoFilter('date',this.value)">${dateOptions}</select></label><button class="source-button" onclick="videoFilters={group:'全部',date:'全部'};render()">重置筛选</button></div>
-    ${filtered.length?`<div class="video-grid">${filtered.map(card).join("")}</div>`:`<div class="emptyline">没有匹配的视频，换一个筛选条件。</div>`}
+    ${filtered.length?grouped:`<div class="emptyline">没有匹配的视频，换一个筛选条件。</div>`}
   </section>`;
 }
-
 function libraryView(){
   return `<section class="panel"><h1>素材库</h1><p class="lead">资料已经转成站内可打开的源文件；文本类可展开原文摘录，PDF/PPT可直接跳转打开。</p>
   <div class="file-grid">${DB.materialLibrary.map(m=>`<article class="file-card"><div class="meta"><span>${m.type}</span><span>${m.date}</span><span>${m.owner}</span></div><h3>${m.title}</h3><ul>${m.outline.map(x=>`<li>${x}</li>`).join("")}</ul><div class="source-actions">${m.asset?`<a class="source-pill" href="${m.asset}" target="_blank">打开源文件</a>`:""}${m.asset2?`<a class="source-pill" href="${m.asset2}" target="_blank">打开源文件 2</a>`:""}</div>${sourceActions(m.sources)}</article>`).join("")}</div>
