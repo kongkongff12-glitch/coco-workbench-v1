@@ -111,7 +111,7 @@ if (-not $SkipPagesSourceUpdate) {
     New-Item -ItemType Directory -Path $tmpDir -Force | Out-Null
   }
   $pagesInput = Join-Path -Path $tmpDir -ChildPath "github-pages-source.json"
-  Set-Content -LiteralPath $pagesInput -Value $pagesBody -Encoding UTF8
+  [System.IO.File]::WriteAllText($pagesInput, $pagesBody, [System.Text.UTF8Encoding]::new($false))
 
   try {
     $oldErrorActionPreference = $ErrorActionPreference
