@@ -1611,8 +1611,8 @@ function showAuth(){
  const tryUnlock=async()=>{ try{ if(await passHash((input.value||"").trim())===AUTH_HASH){ localStorage.setItem(AUTH_KEY,"1"); mountAppShell(); render(); } else { err.textContent="密码不对，请重新输入。"; input.select(); } }catch(e){ err.textContent="当前浏览器不支持本地密码校验，请使用 http://127.0.0.1 或 HTTPS 打开。"; } };
  btn.onclick=tryUnlock; input.onkeydown=e=>{ if(e.key==="Enter") tryUnlock(); }; setTimeout(()=>input.focus(),60);
 }
-function lockApp(){ localStorage.removeItem(AUTH_KEY); showAuth(); }
-function bootWithAuth(){ if(localStorage.getItem(AUTH_KEY)==="1"){ mountAppShell(); render(); } else { showAuth(); } }
+function lockApp(){ mountAppShell(); render(); }
+function bootWithAuth(){ mountAppShell(); render(); }
 
 
 
@@ -1840,10 +1840,150 @@ DB.peopleAvatars={
  };
 })();
 
+(function applyWhiteboard20260626Standard(){
+ const wk=(DB.weeks||[]).find(w=>w.date==="2026-06-26");
+ if(!wk)return;
+ const imgBase="assets/screenshots/whiteboard-20260626/";
+ const srcBase="assets/sources/whiteboard-20260626/";
+ const img=(file,label,detail)=>({src:imgBase+file,label:label||file,type:"图片",detail:detail||"用户提供的 2026-06-26 最新白板截图，已按完整比例放入对应模块。"});
+ const src=(file,label)=>({label:label||file,url:srcBase+file});
+ DB.sourceIndex=DB.sourceIndex||[];
+ const sourceEntries=[
+  {id:"wb-20260626-excalidraw",title:"2026-06-26 最新 Excalidraw 白板原始剪贴板",kind:"白板原件",date:"2026-06-26",asset:srcBase+"whiteboard-20260626-excalidraw-clipboard.txt",excerpt:"用户补充的 20260626 最新白板原始素材。页面按标准周会模板重排，但截图内容全部进入对应模块。"},
+  {id:"wb-20260626-brand-rename",title:"COCO品牌改名：各社媒平台信息修改清单",kind:"PDF",date:"2026-06-26",asset:srcBase+"COCO品牌改名_各社媒平台信息修改清单.pdf",excerpt:"8个平台改名清单：国内小红书、视频号个人IP、公众号；海外 X 官方号、Charlie X、YouTube、LinkedIn 公司页、Charlie LinkedIn。公众号认证约 300 元，LinkedIn 公司页可能最慢。"},
+  {id:"wb-20260626-seo-action",title:"COCO SEO 行动清单 v4",kind:"PDF",date:"2026-06-21 / 2026-06-26 使用",asset:srcBase+"COCO_SEO_行动清单_v4.pdf",excerpt:"SEO 工作按“定方向 -> 建地基 -> 做内容 -> 持续运营”推进。COCO 侧负责技术 SEO 基础设施，Will 侧负责关键词、内容模板、案例页与发布运营。"},
+  {id:"wb-20260626-zhiwai-script",title:"COCO客户案例脚本：知外26个AI v0.77 客户版",kind:"PDF",date:"2026-06-26",asset:srcBase+"COCO客户案例脚本_知外26个AI_v0.77_客户版.pdf",excerpt:"知外文化客户案例脚本，白板中标注“全在 COCO 上跑”表述需要进一步校准，脚本确定后进入录制剪辑。"},
+  {id:"wb-20260626-deel-allmedia",title:"Deel 全媒体流量投放深度分析",kind:"PDF",date:"2026-06-26",asset:srcBase+"Deel 全媒体流量投放深度分析(1).pdf",excerpt:"用于竞品 Deel 讨论：看全媒体投放、外部 KOL 合作和创始人打法如何形成稳定传播系统。"},
+  {id:"wb-20260626-deel-kol",title:"Deel KOL 与创作者合作策略深度分析",kind:"PDF",date:"2026-06-26",asset:srcBase+"Deel KOL与创作者合作策略深度分析(1).pdf",excerpt:"用于拆解 Deel 如何借助外部 KOL 和创作者放大原创内容，而不是只靠官方账号发布。"},
+  {id:"wb-20260626-deel-trust",title:"Deel 信任机制深度分析",kind:"PDF",date:"2026-06-26",asset:srcBase+"Deel 信任机制深度分析(1).pdf",excerpt:"用于 COCO 美国市场信任层讨论：把 Agent 可靠性、公司背书、案例体系、产品证据和 Trust Center 产品化。"},
+  {id:"wb-20260626-deel-twitter",title:"Deel 推特内容策略与创始人冷启动材料包",kind:"PDF合集",date:"2026-06-26",asset:srcBase+"Deel推特内容策略深度分析(1).pdf",excerpt:"包含 Deel 官方推特、CEO Alex Bouaziz、CRO Shuo Wang 的内容策略与冷启动分析，支撑 6/26 founder brand 和竞品讨论。"}
+ ];
+ sourceEntries.forEach(s=>{
+  const i=DB.sourceIndex.findIndex(x=>x.id===s.id);
+  if(i>=0)DB.sourceIndex[i]=Object.assign({},DB.sourceIndex[i],s);else DB.sourceIndex.unshift(s);
+ });
+ const agendaItems=[
+  {n:"品牌升级与 ICP 调整",t:"15min"},
+  {n:"竞品 Deel 讨论",t:""},
+  {n:"剪辑工具 -> agent 产品化",t:""},
+  {n:"founder 品牌建设与 Zylos 的顶级 agent 框架打造",t:""},
+  {n:"社媒数据看板复盘",t:"5min"},
+  {n:"SEO",t:""},
+  {n:"视频剪辑（知外文化脚本敲定）",t:""},
+  {n:"视频与文本发布情况",t:"5min"},
+  {n:"其他问题解疑",t:"10min"}
+ ];
+ wk.title="6/26 会议白板";
+ wk.badge="已按标准重排";
+ wk.stub=false;
+ wk.brief={focus:"品牌升级 / SEO 新站 / 社媒复盘 / 视频销售语料 / Deel 竞品打法",agenda:agendaItems,summary:"本次按原先周会白板标准重排：先议程，再按业务模块承接截图和源文件；截图内容不丢，但不照截图顺序硬排。"};
+ wk.cards=[
+  {topic:"本次会议议程",owner:"侯明真",type:"agenda",summary:"20260626 会议按 9 个议题推进。这里使用用户最新白板议程原文，并作为后续模块顺序的总索引。",items:agendaItems.map((a,i)=>({k:"【"+(i+1)+"】"+a.t,v:a.n})),media:[img("01-agenda.png","20260626会议议程截图")],sources:["wb-20260626-excalidraw"]},
+  {topic:"【1】品牌升级与 ICP 调整",owner:"侯明真 / Will",summary:"品牌方向从 COCO 过渡到 OpenMax；外部暂时仍以 COCO 发布，待 logo 和各类资质申请完成后正式过渡。ICP 收到“女性企业家 / 一线城市 / 独立 / 高阶女性用户”这条主线，COCO 的表达要变成女性企业家的工作伙伴。",highlights:[
+   {k:"品牌名",v:"COCO -> OpenMax；需要过渡期，暂时仍是 COCO。"},
+   {k:"ICP",v:"女性企业家，类似知外文化言书，一线城市、独立、高阶女性用户。"},
+   {k:"核心表达",v:"COCO 是女性企业家客户的“man”：让女性更可以独立自主工作，不再需要“男人”。"},
+   {k:"内容方向",v:"社媒内容聚焦女性企业家；公众号先作为例行发布与修改阵地。"}
+  ],items:["对外暂以 COCO 发布，等 logo 与资质申请完毕后正式过渡为 OpenMax。","各社媒账号统一检查名称、头像、logo、背景、简介、网址和 handle。","社媒内容先收敛到女性企业家能共鸣、愿意转发、愿意收藏的场景。"],media:[img("02-brand-icp.png","品牌升级与 ICP 调整白板")],sources:["wb-20260626-brand-rename"],links:[src("COCO品牌改名_各社媒平台信息修改清单.pdf","打开品牌改名清单 PDF")]},
+  {topic:"【1.1】品牌改名跨平台执行清单",owner:"侯明真 / COCO 品牌方",summary:"品牌改名不是只改名字，8 个平台都要检查头像、名称、背景图、简介、网址、handle 和认证状态。国内 3 个、海外 5 个账号原账号保留，粉丝保留；公众号与 LinkedIn 公司页是相对更慢的卡点。",table:{cols:["平台","必须改","不动 / 待确认","风险"],rows:[
+   ["小红书","头像、名称、背景图、简介全换新品牌","小红书号 ID 不动","直接改即可"],
+   ["视频号个人 IP CharlieAI洞察","简介从 COCO AI 联合创始人改为新品牌联合创始人","名字、头像仍保留 Charlie 个人 IP","直接改"],
+   ["公众号 icoco","头像、名称、简介全换新品牌","原账号保留","企业认证号需约 300 元重新认证"],
+   ["X 官方号 @CocoAIxyz","名称、handle、头像 logo、网址","banner 是否保留海洋风待品牌方确认","待确认新视觉方向"],
+   ["Charlie 个人 X","简介、官方 handle、网址","名字、@handle、头像、banner、地点等不动","依赖官方新 handle"],
+   ["YouTube 官方号","频道名、handle、头像、描述、链接、banner COCO 字样","无认证章顾虑","banner 必须去 COCO 字样"],
+   ["LinkedIn 公司页","公司名、About、logo、URL、banner","员工关联先后台直接改","可能走客服/营业执照，最慢"],
+   ["Charlie LinkedIn","当前任职公司、精选职位、描述里的 COCO/域名","名字、头像、headline、About 等保留","等公司页改好后再动"]
+  ]},items:["国内 3 个号 + 海外 5 个号共 8 个平台，全部原账号改名，粉丝保留，不需要重注册。","带 COCO 字样的名称、头像、logo、简介必须改；海洋风视觉方向等品牌方确认。","公众号认证、LinkedIn 公司页是耗时项，需要预留时间和预算。"],media:[img("03-brand-rename-domestic.png","国内平台改名清单"),img("04-brand-rename-overseas.png","海外平台改名清单")],sources:["wb-20260626-brand-rename"],links:[src("COCO品牌改名_各社媒平台信息修改清单.pdf","打开品牌改名源文件")]},
+  {topic:"【2】竞品 Deel 讨论 / 全媒体与 KOL 打法",owner:"侯明真 / Will",summary:"本模块不是把 Deel 报告堆上来，而是提炼成 COCO 可用打法：Charlie 个人方向已经对了，但现在卡在触达；下一步需要用外部 KOL 放大原创内容，把案例、观点、demo、SEO 和 Trust Center 形成固定节奏。",highlights:[
+   {k:"当前判断",v:"Charlie 个人方向已在输出观点、打单费、发案例，但触达不足。"},
+   {k:"下一步",v:"借助被大 V / KOL 放大，再把原创和案例做成固定节奏。"},
+   {k:"公司层面",v:"美国市场重信任：法人确权、专家背书、demo 录屏、公开案例、程序化 SEO 与 Trust Center。"},
+   {k:"产品化",v:"把 Agent 可靠性做成可展示、可验证、可传播的信任中心，而不是只靠口头解释。"}
+  ],items:["对照 Deel：看全媒体投放、外部 KOL 合作、创始人内容和公司级信任资产怎样互相补位。","COCO 公司号冷启动要少做散点动作，多沉淀“美国故事 + 真实使用 + 案例体系 + Trust Center”。","后续需要把 Charlie / Kevin / Howard 的 founder brand 与产品信任层连起来。"],media:[img("08-deel-discussion.png","竞品 Deel 讨论白板"),img("09-competitor-dashboard.png","竞品数据看板（含 Deel）")],sources:["wb-20260626-deel-allmedia","wb-20260626-deel-kol","wb-20260626-deel-trust","wb-20260626-deel-twitter"],links:[src("Deel 全媒体流量投放深度分析(1).pdf","Deel 全媒体流量投放报告"),src("Deel KOL与创作者合作策略深度分析(1).pdf","Deel KOL 与创作者报告"),src("Deel 信任机制深度分析(1).pdf","Deel 信任机制报告"),src("Deel推特内容策略深度分析(1).pdf","Deel 推特内容策略报告"),src("Deel CEO Alex Bouaziz推特内容策略深度分析(1).pdf","Alex 内容策略报告"),src("Deel CRO Shuo Wang推特内容策略深度分析(1).pdf","Shuo 内容策略报告")]},
+  {topic:"【3】剪辑工具 -> agent 产品化",owner:"周星星 / 李阳阳",summary:"COCO 客户有大量简单视频剪辑的共性需求。当前 Will 团队已经在用 Claude、Codex/HyperFrames、即梦、Veed、达芬奇等工具完成剪辑辅助，下一步应把这个 SOP 变成 agent 产品化机会。",table:{cols:["工具 / 方法","当前用途","产品化判断"],rows:[
+   ["Claude","做部分动效效果","效果可用，但仍需不断迭代"],
+   ["Codex + HyperFrames","做动效与文字清晰的数据展示","文字清楚，但也需要迭代"],
+   ["Codex 纯数据视频","不还原真实场景时，可做完整视频","适合数据展示型素材"],
+   ["即梦","高级清晰的视频生活场景","可能产生数据幻觉，适合生活化场景"],
+   ["Veed","AI 配字幕","作为后处理工具"],
+   ["达芬奇","调色","作为精修工具"]
+  ]},items:["把“剪辑辅助工具链”沉淀成标准流程：输入素材 -> 文案/脚本 -> 数据场景 -> 动效 -> 字幕 -> 调色。","产品化方向可以先服务 COCO 内部和客户案例视频，再抽象成可复用的 agent。"],media:[img("10-editing-agent-product.png","剪辑工具 -> agent 产品化白板")],sources:["wb-20260626-excalidraw"]},
+  {topic:"【4】Founder 品牌建设与 Zylos 顶级 agent 框架",owner:"侯明真 / Will",summary:"Founder brand 不能只有 Charlie。Kevin、Howard 也要被塑造成顶级技术大牛的人设；Zylos -> Hermez 的 agent 框架，也需要在技术社区建立存在感。",highlights:[
+   {k:"Founder IP",v:"除了 Charlie，总还需要 Kevin、Howard 的 founder 品牌。"},
+   {k:"人设",v:"顶级技术大牛，而不是只做公司功能介绍。"},
+   {k:"Zylos",v:"Zylos -> Hermez；顶级 agent 框架需要在技术社区持续建立。"}
+  ],items:["为 Kevin / Howard 设计技术型内容栏目：架构拆解、工程决策、agent 框架思考、真实技术坑。","Zylos/Hermez 的内容要进入开发者与技术社区，而不只放在公司号里。"],media:[img("11-founder-brand-zylos.png","Founder 品牌与 Zylos 顶级 agent 框架白板")],sources:["wb-20260626-excalidraw"]},
+  {topic:"【5】社媒数据看板复盘",owner:"侯明真",summary:"本周社媒复盘要把“产出情况”和“数据异常”拆开看：截图里已经有 6/17-6/24 与 6/11-6/16 对比，尤其要解释 YouTube / Shorts 为什么有这么多 view，以及哪些内容来自知外文化客户案例视频、崔牛会活动帖子。",table:{cols:["平台 / 内容","6/17-6/24","6/11-6/16","判断"],rows:[
+   ["X 个人号 Charlie 浏览量","1,237","3,673","大会后流量回落，需借助 KOL 与固定节奏"],
+   ["X 企业号 COCO 浏览量","1,456","2,735","官方号仍需内容承接与二次转推"],
+   ["YouTube 官方号浏览量","2","89","短视频流量需要核对来源与发布时间"],
+   ["Charlie 视频号播放量","1,489","5,928","视频号上周活动红利更明显"],
+   ["公众号阅读量","-","695","公众号作为中文阵地仍要保留"],
+   ["小红书浏览量","38","295","需继续匹配女性企业家场景"]
+  ]},items:["飞书看板链接已放入模块；完整数据以截图与飞书源表为准。","白板问题：数据需要复盘分析，尤其是 YouTube / YouTube Shorts，这么多 view 是怎么做到的。","社媒看板图片已入库，页面内可直接打开大图。"],media:[img("12-social-dashboard-part1.png","社媒数据看板局部 1"),img("13-social-dashboard-overview.png","社媒数据看板总览"),img("14-social-dashboard-full.png","社媒数据看板全图"),img("15-social-dashboard-detail.png","社媒数据看板细节")],links:[{label:"飞书社媒数据看板",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5"}],sources:["wb-20260626-excalidraw"]},
+  {topic:"【6】SEO / OpenMax 新站行动清单",owner:"李家乐",summary:"围绕品牌升级与新域名重建，SEO 应按“定方向 -> 建地基 -> 做内容 -> 持续运营”推进。前期先确认新品牌名、新域名和核心关键词方向；页面建设以适合 Google 抓取为核心，保证标题、正文、URL、内链、移动端体验和多语言结构清晰可读。",gantt:{months:[{m:"6月",w:2,labels:["6/26","方向确认"]},{m:"7月",w:4,labels:["建站地基","页面结构","内容模板","发布节奏"]},{m:"8月",w:4,labels:["迁移验证","品牌词","非品牌词","监控"]}],today:0,phases:[
+   {name:"定方向",note:"前置决策，需先拍板",tasks:[{name:"锁定新品牌名、新域名、核心关键词方向",pri:"P0",start:0,span:2,state:"doing",meta:"OpenMax / 域名待确认"}]},
+   {name:"建地基",note:"COCO 方主导：技术 SEO 基础设施",tasks:[{name:"SSR/SSG 首屏完整 HTML、索引控制、200/301/404、canonical",pri:"P0",start:2,span:2,state:"plan",meta:"待技术侧排期"},{name:"主域统一结构、语义 slug、Breadcrumb、Core Web Vitals、WebP/CDN、多语言 hreflang",pri:"P0",start:3,span:3,state:"plan",meta:"基础设施"}]},
+   {name:"做内容",note:"Will 方主导，COCO 补产品输入",tasks:[{name:"关键词研究、内容页模板、知外/言书等案例页、Article/FAQ/Organization schema",pri:"P1",start:4,span:4,state:"plan",meta:"模板与发布"}]},
+   {name:"持续运营",note:"上线后监控迭代",tasks:[{name:"GSC 覆盖率 / 抓取报告 / 排名与流量监测，异常及时处理",pri:"P1",start:7,span:3,state:"plan",meta:"持续运营"}]}
+  ]},table:{cols:["指标","截至 6/17","截至 6/22","环比","数据解读"],rows:[
+   ["总曝光次数","765","607","下降 20.65%","展示不稳定"],
+   ["品牌词曝光","84","90","上升 7.14%","品牌搜索小幅增长"],
+   ["总点击次数","30","18","下降 40.00%","点击下滑明显，排名承接仍需优化"],
+   ["品牌词点击","13","9","下降 30.77%","品牌词点击下降"],
+   ["高意向词点击","9","5","下降 44.44%","高意向词点击减少"]
+  ]},items:["COCO 侧：解决可抓取性、URL 与站点结构、性能与移动端、多语言和结构化数据。","Will 侧：关键词研究、内容页模板、案例页落地、持续内容产出、GSC 监控。","页面关键词样例包括 AI employee pricing、ai-code-reviewer、coco-agent-teams、deploy-ai-employees、ai-ad-copy-generation 等。"],media:[img("05-seo-direction.png","SEO 定方向截图"),img("06-seo-foundation.png","SEO 建地基截图"),img("07-seo-content-ops.png","SEO 做内容与持续运营截图"),img("16-seo-week-progress.png","本周 SEO 进度截图"),img("17-seo-week-progress-large.png","本周 SEO 甘特大图"),img("18-seo-metrics.png","SEO 指标与关键词截图"),img("19-seo-keyword-bars.png","SEO 关键词柱状对比")],sources:["wb-20260626-seo-action"],links:[src("COCO_SEO_行动清单_v4.pdf","打开 COCO SEO 行动清单 v4")]},
+  {topic:"【7】视频剪辑 / 知外文化脚本敲定",owner:"周星星 / 李阳阳",summary:"视频条线分两块：基础视频是和 Nik 的 podcast，目前已用 Charlie 单人素材切出 4 个视频；等待 Nik 提供两人同时出镜版本后重剪，预计切出 6 个切片、共 18 个视频，下周二全部切完。知外文化客户案例视频脚本需要先把“全在 COCO 上跑”这类不准确表述修掉。",gantt:{months:[{m:"6/26-6/30",w:5,labels:["6/26","6/27","6/28","6/29","6/30"]}],today:0,phases:[
+   {name:"已完成",note:"基础视频先行产出",tasks:[{name:"Charlie 单人素材已切出 4 个视频",pri:"P0",start:0,span:1,state:"done",meta:"4 个视频"}]},
+   {name:"进行中",note:"等待补素材后重剪",tasks:[{name:"等 Nik 提供两人同时出镜版本，重新剪辑",pri:"P0",start:0,span:3,state:"doing",meta:"重剪中"}]},
+   {name:"下一交付",note:"下周二完成",tasks:[{name:"预计 6 个切片，共 18 个视频",pri:"P1",start:2,span:3,state:"plan",meta:"下周二全部切完"},{name:"知外文化脚本确认后立即录制剪辑",pri:"P0",start:0,span:2,state:"blocked",meta:"待脚本确认"}]}
+  ]},items:["基础视频：和 Nik 的 podcast。","知外文化客户案例视频脚本正在敲定，白板明确提出“全在 COCO 上跑”不准确，需要改。","脚本确定后立即进入录制剪辑。"],media:[img("20-video-editing.png","视频剪辑进度白板"),img("21-zhiwai-script.png","知外文化客户案例脚本敲定白板")],sources:["wb-20260626-zhiwai-script"],links:[src("COCO客户案例脚本_知外26个AI_v0.77_客户版.pdf","打开知外 26 个 AI 客户案例脚本")]},
+  {topic:"【8】视频与文本发布情况",owner:"侯明真",summary:"本周已经有可对外展示的发布素材：知外文化客户案例短视频 1 号（呈现多 agent 协作卖点）已经各平台发布，崔牛会活动也已发布。白板里必须放原帖链接，避免只写“已发”。",table:{cols:["内容","状态","原帖 / 推特链接"],rows:[
+   ["知外文化客户案例视频 1","各平台已发","https://x.com/CocoAIxyz/status/2067810047846195551?s=20"],
+   ["崔牛会活动","已发布","https://x.com/CocoAIxyz/status/2069263112260436271?s=20"]
+  ]},items:["发布情况进入白板后，要继续回填平台、链接、转发、互动和是否需要二次分发。","这部分与社媒数据看板联动，不再只做截图留档。"],media:[img("22-video-text-publish.png","视频与文本发布情况白板")],links:[{label:"知外文化客户案例视频推特",url:"https://x.com/CocoAIxyz/status/2067810047846195551?s=20"},{label:"崔牛会活动推特",url:"https://x.com/CocoAIxyz/status/2069263112260436271?s=20"}],sources:["wb-20260626-excalidraw"]},
+  {topic:"【9】其他问题解疑 / 待确认",owner:"侯明真",summary:"会议最后集中确认卡点，避免白板变成素材堆。当前最需要确认的是新品牌/域名、各平台改名权限与认证预算、SEO 技术侧排期、知外脚本改法、YouTube/Shorts 数据来源。",items:["确认 OpenMax 新品牌名、新域名和对外过渡节奏。","确认 8 个社媒平台改名 owner、权限、预算与先后顺序。","确认 SEO 技术侧 owner 与排期：SSR/SSG、canonical、URL 结构、schema、GSC。","确认知外文化脚本中不准确表述的替代表达。","确认社媒数据里 YouTube / Shorts view 的真实来源。"],sources:["wb-20260626-excalidraw","wb-20260626-brand-rename","wb-20260626-seo-action","wb-20260626-zhiwai-script"]}
+ ];
+ wk.requests=[
+  {q:"OpenMax 新品牌名、新域名、logo 和资质申请节奏何时确认？",owner:"侯明真 / COCO 品牌方",status:"待确认"},
+  {q:"公众号重新认证 300 元与 LinkedIn 公司页客服流程由谁推进？",owner:"侯明真",status:"待确认"},
+  {q:"SEO 技术地基的 owner、排期和验收方式如何定？",owner:"李家乐 / COCO 技术侧",status:"待对齐"},
+  {q:"知外文化脚本“全在 COCO 上跑”不准确，最终替代表述是什么？",owner:"周星星 / 李阳阳",status:"待确认"},
+  {q:"YouTube / Shorts 数据异常的真实来源和可复制动作是什么？",owner:"侯明真",status:"待复盘"}
+ ];
+ wk.blockers=[
+  "新品牌名、新域名和视觉方向未完全拍板，影响全平台改名与 SEO 重建。",
+  "SEO 技术地基依赖 COCO 技术侧排期，不能只靠内容侧补。",
+  "知外文化脚本有关键表述待改，脚本未定会拖住后续录制剪辑。",
+  "社媒看板里 YouTube / Shorts 数据需要解释来源，否则无法沉淀 SOP。"
+ ];
+ DB.current={
+  kpis:[
+   {l:"最新白板",v:"06/26",t:""},
+   {l:"已补模块",v:"11",t:""},
+   {l:"截图入库",v:"22",t:""},
+   {l:"源文件",v:"11 PDF",t:""},
+   {l:"状态",v:"已重排",t:"good"}
+  ],
+  stage:{label:"20260626会议 · 标准白板",steps:[
+   {n:"议程",d:"9项",s:"done"},
+   {n:"品牌 / ICP",d:"OpenMax",s:"now"},
+   {n:"SEO",d:"建地基",s:"next"},
+   {n:"社媒 / 视频",d:"复盘",s:"next"}
+  ]}
+ };
+ const coco=DB.clients&&DB.clients.find(c=>c.name==="COCO");
+ if(coco){
+  coco.one="6/26 白板已按标准重排：品牌升级、社媒改名、Deel 竞品、SEO 新站、社媒看板、视频剪辑与发布链接均已进入对应模块。";
+  coco.red=wk.blockers.length;
+ }
+})();
+
 var psyMonth="all";
 var psyWeek="all";
 
-const NAV={ "近期关注":["overview"], "工作台":["board","psychology","videos","library","seoRoadmap","videoRoadmap","data","contacts"], 过程:["sources","feed","requests","deliverables","meetings","files"], 操作:["submit","roster"] };
+const NAV={ "近期关注":["overview"], "工作台":["board","psychology","videos","library","seoRoadmap","videoRoadmap","data","contacts"], 常用:["submit"], 过程:["sources","feed","requests","deliverables","meetings","files"], 操作:["roster"] };
 const VIEWS={ overview:"近期关注",board:"白板",psychology:"用户画像 / 心理变化",videos:"Demo/Use Case视频",library:"素材库",seoRoadmap:"SEO路线图",videoRoadmap:"视频路线图",data:"数据中心",contacts:"对接负责人",sources:"证据索引",feed:"工作动态流",requests:"确认事项",deliverables:"交付时间线",meetings:"会议",files:"物料",submit:"录入",roster:"团队名单" };
 
 function esc(s){return String(s??"").replace(/[<>&"]/g,m=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[m]))}
@@ -1890,7 +2030,7 @@ function renderSide(){
  const cnt={requests:DB.weeks[0].requests?DB.weeks[0].requests.length:0,feed:DB.feed.length};
  const item=k=>`<div class="nav-item ${route===k?"on":""}" data-go="${k}">${VIEWS[k]}${cnt[k]?`<span class="cnt">${cnt[k]}</span>`:""}</div>`;
  const nav=Object.entries(NAV).map(([g,ks])=>`<div class="navgroup"><div class="glabel">${g}</div>${ks.map(item).join("")}</div>`).join("");
- $("#sidebar").innerHTML=`<div class="brand"><h1>COCO 客户工作台</h1><div class="tagline">COCO 项目专属工作台</div><div class="ver">${esc(DB.meta.version)} · 更新 ${esc(DB.meta.updated)}</div><button class="lockbtn" onclick="lockApp()">锁定</button></div>${nav}`;
+ $("#sidebar").innerHTML=`<div class="brand"><h1>COCO 客户工作台</h1><div class="tagline">COCO 项目专属工作台</div><div class="ver">${esc(DB.meta.version)} · 更新 ${esc(DB.meta.updated)}</div></div>${nav}`;
 }
 function topbar(c){return `<div class="topbar"><div class="crumb">${c}</div></div>`}
 
