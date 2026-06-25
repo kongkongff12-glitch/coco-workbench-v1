@@ -2079,6 +2079,8 @@ DB.peopleAvatars={
 
 var psyMonth="all";
 var psyWeek="all";
+var meetingMonth="all";
+var meetingQuery="";
 
 const NAV={ "工作台":["overview","psychology","board","videos","seoRoadmap","videoRoadmap","data","contacts","library","submit"], 过程:["meetings","sources","feed","requests","roster"] };
 const VIEWS={ overview:"近期关注",board:"白板",psychology:"用户画像 / 心理变化",videos:"Demo/Use Case视频",library:"素材库",seoRoadmap:"SEO路线图",videoRoadmap:"视频路线图",data:"数据中心",contacts:"对接负责人",sources:"证据索引",feed:"工作动态流",requests:"确认事项",deliverables:"交付时间线",meetings:"会议",files:"物料",submit:"每日信息录入",roster:"团队名单" };
@@ -2104,7 +2106,7 @@ function evidenceForDate(date,line){
 }
 function go(v){route=v;render();window.scrollTo(0,0)}
 function pickWeek(i){selWeek=i;render()}
-function bind(){document.querySelectorAll("[data-go]").forEach(e=>e.onclick=()=>go(e.dataset.go));document.querySelectorAll("[data-wk]").forEach(e=>e.onclick=()=>pickWeek(+e.dataset.wk))}
+function bind(){document.querySelectorAll("[data-go]").forEach(e=>e.onclick=()=>go(e.dataset.go));document.querySelectorAll("[data-wk]").forEach(e=>e.onclick=()=>pickWeek(+e.dataset.wk));document.querySelectorAll("[data-mmonth]").forEach(e=>e.onclick=()=>{meetingMonth=e.dataset.mmonth;render();})}
 function feedTypeLabel(t){return ({deliver:"交付",req:"客户问题",metric:"数据",whiteboard:"白板动作",request:"确认事项"}[t]||t||"动态")}
 function workFeedItems(){
  const w=DB.weeks&&DB.weeks[0]||{};
@@ -2220,6 +2222,15 @@ function fullBlocksHtml(blocks=[]){
  return blocks.map(b=>`<div class="minddetail"><div class="dl">${esc(b.title)}</div><div class="dv">${esc(b.body||"")}</div></div>`).join("");
 }
 function rawTextBox(text){return text?`<pre style="white-space:pre-wrap;line-height:1.65;margin:10px 0 0;color:var(--ink)">${esc(text)}</pre>`:`<p class="muted">当前导出未提供逐字稿文本；请打开原始会议表查看。</p>`}
+function meetingMonthKey(d){return String(d||"").slice(0,7)}
+function meetingFilterText(m){
+ return [m.date,m.title,m.fullSummary,m.taskText,m.willTaskText,m.note,(m.summaryBlocks||[]).map(b=>`${b.title} ${b.body}`).join(" "),(m.taskSides&&m.taskSides.will||[]).map(b=>`${b.title} ${b.body}`).join(" "),(m.taskSides&&m.taskSides.coco||[]).map(b=>`${b.title} ${b.body}`).join(" ")].join(" ");
+}
+function meetingFilterBar(allMeetings,filteredCount){
+ const months=[...new Set(allMeetings.map(m=>meetingMonthKey(m.date)).filter(Boolean))].sort().reverse();
+ const chips=[`<button class="datechip ${meetingMonth==="all"?"on":""}" data-mmonth="all">全部</button>`].concat(months.map(m=>`<button class="datechip ${meetingMonth===m?"on":""}" data-mmonth="${esc(m)}">${esc(m.replace("-","/"))}</button>`)).join("");
+ return `<div class="source-note"><div class="small" style="margin-bottom:8px">会议筛选：当前显示 ${filteredCount} / ${allMeetings.length} 条</div><div class="datefilter" style="margin:0 0 10px 0"><span class="flabel">月份</span>${chips}</div><div class="row2"><div class="fr"><label>关键词</label><input id="meetingSearch" value="${esc(meetingQuery)}" placeholder="搜 SuperAI、SEO、知外、待办、负责人..." onkeydown="if(event.key==='Enter'){meetingQuery=this.value.trim();render()}"></div><div class="fr" style="align-self:end"><button class="submitbtn" type="button" onclick="meetingQuery=(document.getElementById('meetingSearch')||{}).value||'';render()">搜索</button><button class="source-button" type="button" onclick="meetingQuery='';meetingMonth='all';render()" style="margin-left:8px">清空</button></div></div></div>`;
+}
 function meetingRecordCard(m){
  const will=m.taskSides&&m.taskSides.will||[], coco=m.taskSides&&m.taskSides.coco||[], all=m.taskSides&&m.taskSides.all||[];
  return `<article class="wcard"><div class="wcard-h"><div class="ct">${esc(m.date)} · ${esc(m.title)}</div><div class="co">Notion会议记录</div></div>
@@ -2236,18 +2247,21 @@ function meetingRecordCard(m){
 }
 function meetingsView(){
  ensureNotionMeetingDetails();
- const meetings=(DB.notionMeetingDetails||fallbackMeetingDetails()).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+ const allMeetings=(DB.notionMeetingDetails||fallbackMeetingDetails()).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+ const q=String(meetingQuery||"").trim().toLowerCase();
+ const meetings=allMeetings.filter(m=>(meetingMonth==="all"||meetingMonthKey(m.date)===meetingMonth)&&(!q||meetingFilterText(m).toLowerCase().includes(q)));
  const sourceIds=["notion-meetings-export-20260626-all-csv","notion-meeting-20260611-md","notion-meeting-20260611-transcript","notion-meetings-export-20260626-zip"];
  return `<section class="panel"><h1>会议</h1><p class="lead">按 Notion 会议记录格式呈现：每次会议先看会议重点和双方待办，再展开完整会议总结，最后查看原会议原文 / 逐字稿来源。</p>
   <div class="kpirow">
-   <div class="kpi"><b>${meetings.length}</b><span>有效会议</span></div>
+   <div class="kpi"><b>${allMeetings.length}</b><span>有效会议</span></div>
    <div class="kpi"><b>03/03-06/18</b><span>时间范围</span></div>
-   <div class="kpi"><b>6/11</b><span>含页面与逐字稿</span></div>
+   <div class="kpi"><b>${meetings.length}</b><span>当前筛选</span></div>
   </div>
   ${sourceActions(sourceIds)}
+  ${meetingFilterBar(allMeetings,meetings.length)}
   ${DB.notionMeetingLoading?`<div class="source-note">正在读取 Notion 原始导出，稍后自动切换为完整会议记录。</div>`:""}
   ${DB.notionMeetingError?`<div class="source-note">Notion 原始导出读取失败，当前展示兜底摘要；可打开全量 CSV 查看原文。</div>`:""}
-  <section class="sec"><div class="shead"><h3>全部会议记录</h3><span class="hint">重点 / 双方待办 / 展开全文 / 原文</span></div><div class="mindtimeline">${meetings.map(meetingRecordCard).join("")}</div></section>
+  <section class="sec"><div class="shead"><h3>会议记录</h3><span class="hint">重点 / 双方待办 / 展开全文 / 原文</span></div><div class="mindtimeline">${meetings.length?meetings.map(meetingRecordCard).join(""):`<div class="source-note">没有匹配的会议记录，换个月份或清空关键词试试。</div>`}</div></section>
  </section>`;
 }
 function filesView(){return `<section class="panel"><h2>物料</h2><p class="lead">集中放置客户提供素材、会议文本、PDF、视频与截图证据。</p></section>`}
@@ -2274,11 +2288,19 @@ function topbar(c){return `<div class="topbar"><div class="crumb">${c}</div></di
 
 /* COCO 近期关注 */
 function overviewView(){
- const issues=(DB.whiteboardIssues||[]).map((i,idx)=>`<div class="issue-card"><div class="meta"><span>问题 ${idx+1}</span><span>${esc((i.sources||[]).length)} 个来源</span></div><h3>${esc(i.title)}</h3><p><b>客户问题：</b>${esc(i.problem)}</p><p><b>处理方式：</b>${esc(i.handling)}</p>${sourceActions(i.sources||[])}</div>`).join("");
+ const issues=DB.whiteboardIssues||[];
+ const focus=issues.slice(0,3);
+ const handled=issues.slice(3,6);
+ const issueStages=issues.map((i,idx)=>`<article class="mindstage"><div><div class="md">${String(idx+1).padStart(2,"0")}</div></div><div><div class="mt">${esc(i.title)}</div><div class="mindsource">${(i.sources||[]).map(x=>`<span>${esc(x)}</span>`).join("")}</div><div class="ms">${esc(i.problem)}</div><div class="mr">${esc(i.handling)}</div>${sourceActions(i.sources||[])}</div></article>`).join("");
  return topbar(`<b>COCO</b> · 近期关注`)+`
-  <h2 class="pagetitle">近期关注</h2>
-  <div class="pagedesc">这个站点现在只服务 COCO。首页先放老板、Will 和负责人最需要看的问题板：客户在问什么、我们怎么处理、证据在哪里。</div>
-  <div class="issue-grid">${issues}</div>`;
+  <section class="panel"><h1>近期关注</h1><p class="lead">客户工作台首页：用和“用户画像 / 心理变化”一致的阅读层级，先看当前最重要的判断，再看问题、处理方式和证据来源。</p>
+    <div class="mindhero"><h3>当前总判断</h3><p>6/26 会前最重要的不是堆材料，而是把品牌升级、社媒数据、SEO 新站、视频脚本和会议确认事项串成同一张工作白板：客户要一眼看到进展、卡点、负责人和下一步。</p></div>
+    <div class="mindgrid">
+      <div class="mindbox"><h3>客户现在最关心</h3><ul>${focus.map(i=>`<li>${esc(i.title)}</li>`).join("")}</ul></div>
+      <div class="mindbox"><h3>我们当前处理方式</h3><ul>${handled.length?handled.map(i=>`<li>${esc(i.title)}</li>`).join(""):issues.slice(0,3).map(i=>`<li>${esc(i.handling)}</li>`).join("")}</ul></div>
+    </div>
+    <div class="sec" style="margin-top:18px"><div class="shead"><h3>关注事项明细</h3><span class="hint">客户问题 / 处理方式 / 来源</span></div><div class="mindtimeline">${issueStages}</div></div>
+  </section>`;
 }
 
 /* 白板：当前态 + 周时间线 + 选中周 */
