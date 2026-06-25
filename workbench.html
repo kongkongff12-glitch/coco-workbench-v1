@@ -2081,7 +2081,7 @@ var psyMonth="all";
 var psyWeek="all";
 
 const NAV={ "工作台":["overview","psychology","board","videos","seoRoadmap","videoRoadmap","data","contacts","library","submit"], 过程:["meetings","sources","feed","requests","roster"] };
-const VIEWS={ overview:"近期关注",board:"白板",psychology:"用户画像 / 心理变化",videos:"Demo/Use Case视频",library:"素材库",seoRoadmap:"SEO路线图",videoRoadmap:"视频路线图",data:"数据中心",contacts:"对接负责人",sources:"证据索引",feed:"工作动态流",requests:"确认事项",deliverables:"交付时间线",meetings:"会议",files:"物料",submit:"录入",roster:"团队名单" };
+const VIEWS={ overview:"近期关注",board:"白板",psychology:"用户画像 / 心理变化",videos:"Demo/Use Case视频",library:"素材库",seoRoadmap:"SEO路线图",videoRoadmap:"视频路线图",data:"数据中心",contacts:"对接负责人",sources:"证据索引",feed:"工作动态流",requests:"确认事项",deliverables:"交付时间线",meetings:"会议",files:"物料",submit:"每日信息录入",roster:"团队名单" };
 
 function esc(s){return String(s??"").replace(/[<>&"]/g,m=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[m]))}
 function escapeHtml(s){return esc(s)}
@@ -2105,8 +2105,27 @@ function evidenceForDate(date,line){
 function go(v){route=v;render();window.scrollTo(0,0)}
 function pickWeek(i){selWeek=i;render()}
 function bind(){document.querySelectorAll("[data-go]").forEach(e=>e.onclick=()=>go(e.dataset.go));document.querySelectorAll("[data-wk]").forEach(e=>e.onclick=()=>pickWeek(+e.dataset.wk))}
-function feedView(){return `<section class="panel"><h2>工作动态流</h2><p class="lead">按时间记录 COCO 项目中的群聊、会议、交付与客户反馈，后续作为证据索引和白板更新来源。</p></section>`}
-function requestsView(){return `<section class="panel"><h2>确认事项</h2><p class="lead">集中展示客户新提出的问题、我们给出的处理方式、负责人和状态。</p></section>`}
+function feedTypeLabel(t){return ({deliver:"交付",req:"客户问题",metric:"数据",whiteboard:"白板动作",request:"确认事项"}[t]||t||"动态")}
+function workFeedItems(){
+ const w=DB.weeks&&DB.weeks[0]||{};
+ const cardItems=(w.cards||[]).filter(c=>c.type!=="agenda").map(c=>({date:w.date,type:"whiteboard",who:c.owner||"",line:c.topic||"白板",text:c.summary||c.conclusion||c.topic||""}));
+ const requestItems=(w.requests||[]).map(r=>({date:w.date,type:"request",who:r.owner||"",line:r.status||"待确认",text:r.q||r.quote||""}));
+ return cardItems.concat(requestItems,DB.feed||[]).filter(x=>x.text).slice(0,80);
+}
+function feedView(){
+ const items=workFeedItems();
+ return topbar(`<b>COCO</b> · 工作动态流`)+`<h2 class="pagetitle">工作动态流</h2><div class="pagedesc">按时间沉淀 COCO 项目动作：本周白板模块、确认事项、历史交付、数据变化和客户反馈都会进入这里。</div>
+ <div class="signal-grid">${items.map(i=>`<article class="signal-card"><div class="meta"><span>${esc(i.date||"")}</span><span>${esc(feedTypeLabel(i.type))}</span></div><h3>${esc(i.line||feedTypeLabel(i.type))}</h3><p>${esc(i.text)}</p><div class="source-actions">${i.who?`<span class="tag">${esc(i.who)}</span>`:""}${i.type?`<span class="tag soft">${esc(feedTypeLabel(i.type))}</span>`:""}</div></article>`).join("")}</div>`;
+}
+function requestsView(){
+ const w=DB.weeks&&DB.weeks[0]||{};
+ const reqs=(w.requests||[]);
+ const rows=reqs.map((r,i)=>`<tr><td class="small">${esc(w.date||r.date||"")}</td><td>${statusTag(r.status||"待确认")}</td><td><div class="q">${esc(r.q||r.quote||"")}</div>${r.source?`<div class="small muted">${esc(r.source)}</div>`:""}</td><td>${who(r.owner||"侯明真")}</td><td class="small">${esc(r.resp||"等待确认后回填处理结果。")}</td></tr>`).join("");
+ const issueCards=(DB.whiteboardIssues||[]).map((i,idx)=>`<div class="issue-card"><div class="meta"><span>近期问题 ${idx+1}</span><span>${esc((i.sources||[]).length)} 个来源</span></div><h3>${esc(i.title)}</h3><p><b>客户问题：</b>${esc(i.problem)}</p><p><b>处理方式：</b>${esc(i.handling)}</p>${sourceActions(i.sources||[])}</div>`).join("");
+ return topbar(`<b>COCO</b> · 确认事项`)+`<h2 class="pagetitle">确认事项</h2><div class="pagedesc">集中看最新白板里还没闭环的问题：谁负责、当前状态、下一步等确认后回填。</div>
+ ${rows?`<table class="t"><thead><tr><th>日期</th><th>状态</th><th>事项</th><th>负责人</th><th>处理记录</th></tr></thead><tbody>${rows}</tbody></table>`:`<div class="source-note">当前暂无未闭环确认事项。</div>`}
+ <section class="sec"><div class="shead"><h3>近期问题闭环</h3><span class="hint">从近期关注同步</span></div><div class="issue-grid">${issueCards}</div></section>`;
+}
 function deliverablesView(){return `<section class="panel"><h2>交付时间线</h2><p class="lead">汇总内容、视频、SEO、数据等交付节点，用于周会前核对。</p></section>`}
 function cleanNotionText(s){return String(s||"").replace(/\r/g,"").replace(/\u00a0/g," ").trim()}
 function normalizeMeetingDate(d){return cleanNotionText(d).replace(/\//g,"-")}
@@ -2290,7 +2309,8 @@ function weekPanel(w){
    const concl=`<div class="oneliner">${esc(w.conclusion)}<div class="who">本周重点 · 会议判断</div></div>`;
    const b=w.brief||{};
    const list=(arr,withTime)=>`<ul>${(arr||[]).map(x=>`<li>${withTime&&x.t?`<span class="mini">${esc(x.t)}</span>`:""}${esc(x.n||x)}</li>`).join("")}</ul>`;
-   const agenda=(b.agenda&&b.agenda.length)?`<div class="agenda-wide"><h3>会议日程总览</h3><div class="agenda-list">${b.agenda.map(x=>`<div class="agenda-item"><span class="time">${esc(x.t||"")}</span><span class="text">${esc(x.n||x)}</span></div>`).join("")}</div></div>`:"";
+   const hasAgendaCard=(w.cards||[]).some(c=>c.type==="agenda"||String(c.topic||"").includes("本次会议议程"));
+   const agenda=(!hasAgendaCard&&b.agenda&&b.agenda.length)?`<div class="agenda-wide"><h3>会议日程总览</h3><div class="agenda-list">${b.agenda.map(x=>`<div class="agenda-item"><span class="time">${esc(x.t||"")}</span><span class="text">${esc(x.n||x)}</span></div>`).join("")}</div></div>`:"";
    const context=(b.last||b.todos)?`<div class="briefgrid contextgrid">
     <div class="briefbox"><h3>上次会议重点</h3>${list(b.last,false)}</div>
     <div class="briefbox"><h3>双方待办</h3>${list(b.todos,false)}</div>
@@ -2658,7 +2678,7 @@ function saveSubmissionDraft(){
  submitNotice("manualResult","<b style='color:#b83a26'>已保存为本机草稿。</b><br>类型："+esc(entry.type)+"<br>负责人："+esc(entry.owner)+"<br>日期："+esc(entry.date)+"<br>文件："+(entry.files.length?esc(entry.files.map(function(f){return f.name}).join("、")):"未上传文件")+"<br><br>当前是静态站：会先记录所有文件名；真正入库时再把文件放进 assets 并更新素材库 / 证据索引。");
  return false;
 }
-function submitView(){return topbar(`<b>COCO</b> · 录入`)+`<h2 class="pagetitle">录入</h2><div class="pagedesc">两种方式：①「随手记」一句话丢进去，AI 自动归类；② 上传文件/图片并补一句说明，后续归档进证据索引或白板素材。</div>
+function submitView(){return topbar(`<b>COCO</b> · 每日信息录入`)+`<h2 class="pagetitle">每日信息录入</h2><div class="pagedesc">两种方式：①「随手记」一句话丢进去，AI 自动归类；② 上传文件/图片并补一句说明，后续归档进证据索引或白板素材。</div>
  <div class="quickbox"><div class="small" style="margin-bottom:6px">随手记（推荐）</div><textarea id="quickNote" placeholder="例：今天交付了 VC 文章抓取页，给 COCO 6 篇本周阅读列表 —— 或者直接粘一段群聊/会议片段"></textarea><div class="aihint">↳ AI 会判断这是交付 / 确认事项 / 数据点，自动归类填好，你确认即可。</div><div style="margin-top:10px"><button class="submitbtn" type="button" onclick="return prefillSubmission()">AI 归类并预填</button></div><div id="quickResult" class="submit-live-result" style="display:none;margin-top:10px;border:1px solid var(--line);background:#FBF9F4;padding:10px 12px;border-radius:6px;font-size:12px;line-height:1.55;color:var(--ink)"></div></div>
  <div class="form"><div class="small" style="margin-bottom:10px">或手动登记一条交付 / 素材</div>
   <div class="fr"><label>类型</label><select id="manualType"><option>社媒发布</option><option>视频</option><option>SEO页面</option><option>深度报告</option><option>图片截图</option><option>客户文件</option><option>个人IP内容</option><option>活动支持</option><option>方案文档</option></select></div>
