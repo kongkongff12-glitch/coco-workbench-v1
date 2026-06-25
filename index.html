@@ -315,7 +315,11 @@ table.t tr:hover td{background:#FBF9F4}
 .media-card{border:1px solid var(--line);background:#fff;border-radius:8px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;min-height:360px}
 .media-frame{height:300px;background:#F6F1E7;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);overflow:hidden}
 .media-frame img{width:100%;height:100%;object-fit:contain;display:block}
-.media-doc{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--amber-bg);font-weight:900;color:var(--amber);font-size:22px}
+.media-doc{width:100%;height:100%;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;background:var(--amber-bg);font-weight:900;color:var(--amber);font-size:22px}
+.media-doc.pdf-doc{background:#FFF2F0;color:#B83A26}
+.pdf-badge{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:22px;border-radius:4px;background:#D64532;color:#fff;font-size:10px;font-weight:900;letter-spacing:.4px;box-shadow:0 1px 0 rgba(0,0,0,.12)}
+.file-title{display:flex;align-items:center;gap:8px;margin:2px 0 6px}
+.file-title h3{margin:0}
 .media-card .media-cap{padding:9px 11px;font-size:13px;font-weight:900;line-height:1.35}
 .media-card .media-sub{padding:0 11px 9px;color:var(--sub);font-size:12px;line-height:1.35}
 .media-detail{margin:0 11px 11px;border:1px solid var(--line);border-radius:7px;background:#FBF9F4;overflow:hidden}
@@ -326,7 +330,7 @@ table.t tr:hover td{background:#FBF9F4}
 .recent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:12px 0 18px}
 .recent-card{border:1px solid var(--line);background:#fff;border-radius:8px;overflow:hidden;text-decoration:none;color:var(--ink);display:block;min-height:270px}
 .recent-card img{width:100%;height:210px;object-fit:contain;display:block;background:#F6F1E7;border-bottom:1px solid var(--line)}
-.recent-doc{height:210px;display:flex;align-items:center;justify-content:center;background:var(--blue-bg);color:var(--blue);font-weight:900;font-size:20px;border-bottom:1px solid var(--line)}
+.recent-doc{height:210px;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;background:var(--blue-bg);color:var(--blue);font-weight:900;font-size:20px;border-bottom:1px solid var(--line)}
 .recent-card .rcap{padding:9px 10px;font-size:12px;line-height:1.35;font-weight:800}
 .recent-card .rcap span{display:block;color:var(--sub);font-size:11px;font-weight:700;margin-bottom:3px}
 
@@ -339,6 +343,7 @@ table.t tr:hover td{background:#FBF9F4}
 /* evidence-first workspace additions */
 .source-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
 .source-pill,.source-button{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;color:var(--ink);padding:7px 10px;border-radius:999px;font-size:12px;text-decoration:none;cursor:pointer}
+.source-pill.pdf-link{border-color:#F0B5AA;background:#FFF7F5}
 .source-pill:hover,.source-button:hover{border-color:var(--accent);color:var(--accent)}
 .source-detail{margin-top:10px;padding:12px;border:1px dashed var(--line);background:#fffaf3;white-space:pre-wrap;line-height:1.7;max-height:260px;overflow:auto;font-size:13px}
 .psy-filter{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 18px}
@@ -1849,18 +1854,33 @@ DB.peopleAvatars={
  const src=(file,label)=>({label:label||file,url:srcBase+file});
  DB.sourceIndex=DB.sourceIndex||[];
  const sourceEntries=[
-  {id:"wb-20260626-excalidraw",title:"2026-06-26 最新 Excalidraw 白板原始剪贴板",kind:"白板原件",date:"2026-06-26",asset:srcBase+"whiteboard-20260626-excalidraw-clipboard.txt",excerpt:"用户补充的 20260626 最新白板原始素材。页面按标准周会模板重排，但截图内容全部进入对应模块。"},
+  {id:"wb-20260626-excalidraw",title:"2026-06-26 Excalidraw 白板剪贴板",kind:"白板数据",date:"2026-06-26",asset:srcBase+"whiteboard-20260626-excalidraw-clipboard.txt",excerpt:"用户补充的 20260626 白板素材，用于核对议程与结构化内容；页面不直接展示参考版式截图。"},
   {id:"wb-20260626-brand-rename",title:"COCO品牌改名：各社媒平台信息修改清单",kind:"PDF",date:"2026-06-26",asset:srcBase+"COCO品牌改名_各社媒平台信息修改清单.pdf",excerpt:"8个平台改名清单：国内小红书、视频号个人IP、公众号；海外 X 官方号、Charlie X、YouTube、LinkedIn 公司页、Charlie LinkedIn。公众号认证约 300 元，LinkedIn 公司页可能最慢。"},
   {id:"wb-20260626-seo-action",title:"COCO SEO 行动清单 v4",kind:"PDF",date:"2026-06-21 / 2026-06-26 使用",asset:srcBase+"COCO_SEO_行动清单_v4.pdf",excerpt:"SEO 工作按“定方向 -> 建地基 -> 做内容 -> 持续运营”推进。COCO 侧负责技术 SEO 基础设施，Will 侧负责关键词、内容模板、案例页与发布运营。"},
   {id:"wb-20260626-zhiwai-script",title:"COCO客户案例脚本：知外26个AI v0.77 客户版",kind:"PDF",date:"2026-06-26",asset:srcBase+"COCO客户案例脚本_知外26个AI_v0.77_客户版.pdf",excerpt:"知外文化客户案例脚本，白板中标注“全在 COCO 上跑”表述需要进一步校准，脚本确定后进入录制剪辑。"},
   {id:"wb-20260626-deel-allmedia",title:"Deel 全媒体流量投放深度分析",kind:"PDF",date:"2026-06-26",asset:srcBase+"Deel 全媒体流量投放深度分析(1).pdf",excerpt:"用于竞品 Deel 讨论：看全媒体投放、外部 KOL 合作和创始人打法如何形成稳定传播系统。"},
   {id:"wb-20260626-deel-kol",title:"Deel KOL 与创作者合作策略深度分析",kind:"PDF",date:"2026-06-26",asset:srcBase+"Deel KOL与创作者合作策略深度分析(1).pdf",excerpt:"用于拆解 Deel 如何借助外部 KOL 和创作者放大原创内容，而不是只靠官方账号发布。"},
   {id:"wb-20260626-deel-trust",title:"Deel 信任机制深度分析",kind:"PDF",date:"2026-06-26",asset:srcBase+"Deel 信任机制深度分析(1).pdf",excerpt:"用于 COCO 美国市场信任层讨论：把 Agent 可靠性、公司背书、案例体系、产品证据和 Trust Center 产品化。"},
-  {id:"wb-20260626-deel-twitter",title:"Deel 推特内容策略与创始人冷启动材料包",kind:"PDF合集",date:"2026-06-26",asset:srcBase+"Deel推特内容策略深度分析(1).pdf",excerpt:"包含 Deel 官方推特、CEO Alex Bouaziz、CRO Shuo Wang 的内容策略与冷启动分析，支撑 6/26 founder brand 和竞品讨论。"}
+  {id:"wb-20260626-deel-twitter",title:"Deel 推特内容策略与创始人冷启动材料包",kind:"PDF合集",date:"2026-06-26",asset:srcBase+"Deel推特内容策略深度分析(1).pdf",excerpt:"包含 Deel 官方推特、CEO Alex Bouaziz、CRO Shuo Wang 的内容策略与冷启动分析，支撑 6/26 founder brand 和竞品讨论。"},
+  {id:"wb-20260626-coco-deel-playbook",title:"COCO 对标 Deel 公司打法",kind:"PDF",date:"2026-06-26",asset:srcBase+"COCO对标Deel公司打法.pdf",excerpt:"公司层面对标 Deel：官号双轨语调与 demo 录屏、自己先用自己的产品、客户案例体系、程序化 SEO、固定品类母题、Trust Center、KOL 造场、ISP 推荐与未来生态打法。"},
+  {id:"wb-20260626-charlie-founder-twitter",title:"Charlie 创始人推特账号对标打法",kind:"PDF",date:"2026-06-26",asset:srcBase+"Charlie创始人推特账号对标打法_.pdf",excerpt:"个人号对标 Deel 创始人：原创观点与脆弱性长文、借高触达账号放大、固定品类母题、客户案例帖、线下峰会系统性内容化；Charlie 当前触达仍低于 Deel 创始人标尺。"}
  ];
  sourceEntries.forEach(s=>{
   const i=DB.sourceIndex.findIndex(x=>x.id===s.id);
   if(i>=0)DB.sourceIndex[i]=Object.assign({},DB.sourceIndex[i],s);else DB.sourceIndex.unshift(s);
+ });
+ DB.dataCenterUpdate=Object.assign({},DB.dataCenterUpdate||{},{
+  feishu:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5",
+  socialSnapshots:[img("social-dashboard-latest-two-weeks.png","近两周社媒数据看板","用户新补充的近两周社媒数据表，只作为数据证据展示。")],
+  socialRows:[
+   ["X 个人号 Charlie","浏览量","1,237","3,673","本周低于上周，需复盘活动红利退去后的常态触达。"],
+   ["LinkedIn 企业号 COCO","点赞","5","14","互动下滑，企业号内容仍需更强承接。"],
+   ["YouTube 官方号","浏览量","2","89","短视频来源与发布时间需要核对。"],
+   ["X 企业号 COCO","浏览量","1,456","2,735","官方号浏览量回落，需要二次转推和 KOL 放大。"],
+   ["Charlie 视频号","播放量","1,489","5,928","视频号上周活动/案例红利明显，本周需找可复制原因。"],
+   ["公众号 官方号","阅读量","-","695","公众号仍是中文内容阵地。"],
+   ["小红书 官方","浏览量","38","295","需要继续匹配女性企业家场景。"]
+  ]
  });
  const agendaItems=[
   {n:"品牌升级与 ICP 调整",t:"15min"},
@@ -1895,12 +1915,19 @@ DB.peopleAvatars={
    ["LinkedIn 公司页","公司名、About、logo、URL、banner","员工关联先后台直接改","可能走客服/营业执照，最慢"],
    ["Charlie LinkedIn","当前任职公司、精选职位、描述里的 COCO/域名","名字、头像、headline、About 等保留","等公司页改好后再动"]
   ]},items:["国内 3 个号 + 海外 5 个号共 8 个平台，全部原账号改名，粉丝保留，不需要重注册。","带 COCO 字样的名称、头像、logo、简介必须改；海洋风视觉方向等品牌方确认。","公众号认证、LinkedIn 公司页是耗时项，需要预留时间和预算。"],sources:["wb-20260626-brand-rename"],links:[src("COCO品牌改名_各社媒平台信息修改清单.pdf","打开品牌改名源文件")]},
-  {topic:"【2】竞品 Deel 讨论 / 全媒体与 KOL 打法",owner:"侯明真 / Will",summary:"本模块不是把 Deel 报告堆上来，而是提炼成 COCO 可用打法：Charlie 个人方向已经对了，但现在卡在触达；下一步需要用外部 KOL 放大原创内容，把案例、观点、demo、SEO 和 Trust Center 形成固定节奏。",highlights:[
-   {k:"当前判断",v:"Charlie 个人方向已在输出观点、打单费、发案例，但触达不足。"},
-   {k:"下一步",v:"借助被大 V / KOL 放大，再把原创和案例做成固定节奏。"},
-   {k:"公司层面",v:"美国市场重信任：法人确权、专家背书、demo 录屏、公开案例、程序化 SEO 与 Trust Center。"},
-   {k:"产品化",v:"把 Agent 可靠性做成可展示、可验证、可传播的信任中心，而不是只靠口头解释。"}
-  ],items:["对照 Deel：看全媒体投放、外部 KOL 合作、创始人内容和公司级信任资产怎样互相补位。","COCO 公司号冷启动要少做散点动作，多沉淀“美国故事 + 真实使用 + 案例体系 + Trust Center”。","后续需要把 Charlie / Kevin / Howard 的 founder brand 与产品信任层连起来。"],media:[img("09-competitor-dashboard.png","竞品数据看板（含 Deel）")],sources:["wb-20260626-deel-allmedia","wb-20260626-deel-kol","wb-20260626-deel-trust","wb-20260626-deel-twitter"],links:[src("Deel 全媒体流量投放深度分析(1).pdf","Deel 全媒体流量投放报告"),src("Deel KOL与创作者合作策略深度分析(1).pdf","Deel KOL 与创作者报告"),src("Deel 信任机制深度分析(1).pdf","Deel 信任机制报告"),src("Deel推特内容策略深度分析(1).pdf","Deel 推特内容策略报告"),src("Deel CEO Alex Bouaziz推特内容策略深度分析(1).pdf","Alex 内容策略报告"),src("Deel CRO Shuo Wang推特内容策略深度分析(1).pdf","Shuo 内容策略报告")]},
+  {topic:"【2】竞品 Deel 讨论 / 全媒体与 KOL 打法",owner:"侯明真 / Will",summary:"本模块按 Deel 的公司层打法拆成 COCO 可执行动作：美国做声量和信任，亚太做转化；短期先从官号内容、公开使用证据、客户案例、程序化 SEO 和 Trust Center 入手，避免只堆报告。",highlights:[
+   {k:"直接流量飞轮",v:"Deel 直接流量占 55%，来自产品成为日常工作入口；COCO 终局要把日活和留存做实。"},
+   {k:"短期零成本",v:"官号从版本日志改成共情 + 专业双轨，主力素材改为多 Agent 同屏 demo 录屏。"},
+   {k:"信任层",v:"公开“COCO 团队自己每天怎样用 Agent 干活”，再建设数据安全 + Agent 可靠性 Trust Center。"},
+   {k:"转化战场",v:"女性企业家主线下，KOL 不是买泛粉，而是找女性创业者/高管社群里的 anchor 造场。"}
+  ],table:{cols:["Deel 做法","COCO 对应动作","优先级"],rows:[
+   ["官号双轨：meme 共情 + 合规/安全专业内容","COCO 官号主力改为产品 demo 录屏，痛点对准女性企业家“被支撑/被托付”","现在可做"],
+   ["自己先用自己的产品，反复证明内部跑通","定期公开“这周用 Agent 团队干成了什么”","现在可做"],
+   ["高频客户案例与 Wall of Love","知外文化做标杆，格式固定为：谁 + 用 COCO 干了什么 + 结果","现在可做"],
+   ["程序化 SEO + 术语库 + 交通灯框架","布局 AI agent / AI digital employee / Slack alternative AI 等高意图词","建设项"],
+   ["Trust Center 把合规产品化","COCO 做 Agent 可靠性 + 数据安全 Trust Center","建设项"],
+   ["KOL 金字塔与合作伙伴推荐机制","美国做声量与信任，亚太做 ISP/系统集成商转化","分阶段"]
+  ]},items:["竞品社媒数据以用户新给的截图为准，原链接已放入下方。","对标 Deel 不照搬大预算动作；1500 美元返佣、1500 万创投赛、阿森纳赞助这类先记为未来。","私域逻辑不迁移到美国，美国阶段优先解决声量与信任。"],media:[img("competitor-social-dashboard-20260626.png","竞品社媒数据看板")],sources:["wb-20260626-coco-deel-playbook","wb-20260626-deel-allmedia","wb-20260626-deel-kol","wb-20260626-deel-trust","wb-20260626-deel-twitter"],links:[{label:"竞品社媒数据原链接",url:"https://my.feishu.cn/wiki/C8L2wWtQWia6qbkt0srckIYrnwf?sheet=467d44"},src("COCO对标Deel公司打法.pdf","COCO 对标 Deel 公司打法"),src("Deel 全媒体流量投放深度分析(1).pdf","Deel 全媒体流量投放报告"),src("Deel KOL与创作者合作策略深度分析(1).pdf","Deel KOL 与创作者报告"),src("Deel 信任机制深度分析(1).pdf","Deel 信任机制报告"),src("Deel推特内容策略深度分析(1).pdf","Deel 推特内容策略报告")]},
   {topic:"【3】剪辑工具 -> agent 产品化",owner:"周星星 / 李阳阳",summary:"COCO 客户有大量简单视频剪辑的共性需求。当前 Will 团队已经在用 Claude、Codex/HyperFrames、即梦、Veed、达芬奇等工具完成剪辑辅助，下一步应把这个 SOP 变成 agent 产品化机会。",table:{cols:["工具 / 方法","当前用途","产品化判断"],rows:[
    ["Claude","做部分动效效果","效果可用，但仍需不断迭代"],
    ["Codex + HyperFrames","做动效与文字清晰的数据展示","文字清楚，但也需要迭代"],
@@ -1909,11 +1936,18 @@ DB.peopleAvatars={
    ["Veed","AI 配字幕","作为后处理工具"],
    ["达芬奇","调色","作为精修工具"]
   ]},items:["把“剪辑辅助工具链”沉淀成标准流程：输入素材 -> 文案/脚本 -> 数据场景 -> 动效 -> 字幕 -> 调色。","产品化方向可以先服务 COCO 内部和客户案例视频，再抽象成可复用的 agent。"],sources:["wb-20260626-excalidraw"]},
-  {topic:"【4】Founder 品牌建设与 Zylos 顶级 agent 框架",owner:"侯明真 / Will",summary:"Founder brand 不能只有 Charlie。Kevin、Howard 也要被塑造成顶级技术大牛的人设；Zylos -> Hermez 的 agent 框架，也需要在技术社区建立存在感。",highlights:[
-   {k:"Founder IP",v:"除了 Charlie，总还需要 Kevin、Howard 的 founder 品牌。"},
-   {k:"人设",v:"顶级技术大牛，而不是只做公司功能介绍。"},
-   {k:"Zylos",v:"Zylos -> Hermez；顶级 agent 框架需要在技术社区持续建立。"}
-  ],items:["为 Kevin / Howard 设计技术型内容栏目：架构拆解、工程决策、agent 框架思考、真实技术坑。","Zylos/Hermez 的内容要进入开发者与技术社区，而不只放在公司号里。"],sources:["wb-20260626-excalidraw"]},
+  {topic:"【4】Founder 品牌建设与 Zylos 顶级 agent 框架",owner:"侯明真 / Will",summary:"Founder brand 不能只有 Charlie，但 Charlie 个人号先要按 Deel 创始人账号的打法补齐：原创观点、脆弱性长文、高触达账号放大、固定品类母题、客户案例和线下峰会内容化。Kevin、Howard 也要建立技术型 founder 人设。",highlights:[
+   {k:"Charlie 当前状态",v:"6 月已开始输出原创观点和客户案例，币圈类内容已停；但原创帖触达多在 200-600。"},
+   {k:"Deel 标尺",v:"Deel 创始人原创帖浏览中位约 2,000-8,600；主动回复占比王硕 29%、Alex 63%，Charlie 截至 6/4 约 2%。"},
+   {k:"固定母题",v:"把“AI 当 co-founder / 5 个 AI 干活、1 个 AI 管、0 个人传话”收敛成长期英文短语。"},
+   {k:"Zylos / Hermez",v:"顶级 agent 框架需要在技术社区建立存在感，而不是只放公司号。"}
+  ],table:{cols:["Founder 动作","Charlie / COCO 做法","备注"],rows:[
+   ["原创观点 + 脆弱性长文","补一篇 COCO 起源故事：为什么做 Human x Agent、最初假设如何修正、如何 pivot 到多 Agent 协作","推特 thread + 领英长文双发"],
+   ["借高触达账号放大","旗舰内容经由 AI/企业级 KOL 转发放大","解决 200-600 触达瓶颈"],
+   ["固定品类母题","长期绑定“人和 Agent 平等协作”的差异点","不要散成多句口号"],
+   ["客户案例帖","Zhiwai / AXRAH 做固定栏目：谁 + 用 COCO 干了什么 + 结果","具体指标需授权"],
+   ["线下峰会内容化","会前观点预热、会中现场洞察、会后复盘 thread","SuperAI / Google Cloud 等活动继续结构化"]
+  ]},items:["Kevin / Howard 需要技术型内容栏目：架构拆解、工程决策、agent 框架思考、真实技术坑。","Zylos -> Hermez 的框架叙事进入技术社区，建立“顶级 agent 框架”的认知。"],sources:["wb-20260626-charlie-founder-twitter","wb-20260626-excalidraw"],links:[src("Charlie创始人推特账号对标打法_.pdf","Charlie 创始人推特账号对标打法")]},
   {topic:"【5】社媒数据看板复盘",owner:"侯明真",summary:"本周社媒复盘要把“产出情况”和“数据异常”拆开看：截图里已经有 6/17-6/24 与 6/11-6/16 对比，尤其要解释 YouTube / Shorts 为什么有这么多 view，以及哪些内容来自知外文化客户案例视频、崔牛会活动帖子。",table:{cols:["平台 / 内容","6/17-6/24","6/11-6/16","判断"],rows:[
    ["X 个人号 Charlie 浏览量","1,237","3,673","大会后流量回落，需借助 KOL 与固定节奏"],
    ["X 企业号 COCO 浏览量","1,456","2,735","官方号仍需内容承接与二次转推"],
@@ -1921,19 +1955,20 @@ DB.peopleAvatars={
    ["Charlie 视频号播放量","1,489","5,928","视频号上周活动红利更明显"],
    ["公众号阅读量","-","695","公众号作为中文阵地仍要保留"],
    ["小红书浏览量","38","295","需继续匹配女性企业家场景"]
-  ]},items:["飞书看板链接已放入模块；完整数据以截图与飞书源表为准。","白板问题：数据需要复盘分析，尤其是 YouTube / YouTube Shorts，这么多 view 是怎么做到的。","社媒看板图片已入库，页面内可直接打开大图。"],media:[img("12-social-dashboard-part1.png","社媒数据看板局部 1"),img("13-social-dashboard-overview.png","社媒数据看板总览"),img("14-social-dashboard-full.png","社媒数据看板全图"),img("15-social-dashboard-detail.png","社媒数据看板细节")],links:[{label:"飞书社媒数据看板",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5"}],sources:["wb-20260626-excalidraw"]},
-  {topic:"【6】SEO / OpenMax 新站行动清单",owner:"李家乐",summary:"围绕品牌升级与新域名重建，SEO 应按“定方向 -> 建地基 -> 做内容 -> 持续运营”推进。前期先确认新品牌名、新域名和核心关键词方向；页面建设以适合 Google 抓取为核心，保证标题、正文、URL、内链、移动端体验和多语言结构清晰可读。",gantt:{months:[{m:"6月",w:2,labels:["6/26","方向确认"]},{m:"7月",w:4,labels:["建站地基","页面结构","内容模板","发布节奏"]},{m:"8月",w:4,labels:["迁移验证","品牌词","非品牌词","监控"]}],today:0,phases:[
-   {name:"定方向",note:"前置决策，需先拍板",tasks:[{name:"锁定新品牌名、新域名、核心关键词方向",pri:"P0",start:0,span:2,state:"doing",meta:"OpenMax / 域名待确认"}]},
-   {name:"建地基",note:"COCO 方主导：技术 SEO 基础设施",tasks:[{name:"SSR/SSG 首屏完整 HTML、索引控制、200/301/404、canonical",pri:"P0",start:2,span:2,state:"plan",meta:"待技术侧排期"},{name:"主域统一结构、语义 slug、Breadcrumb、Core Web Vitals、WebP/CDN、多语言 hreflang",pri:"P0",start:3,span:3,state:"plan",meta:"基础设施"}]},
-   {name:"做内容",note:"Will 方主导，COCO 补产品输入",tasks:[{name:"关键词研究、内容页模板、知外/言书等案例页、Article/FAQ/Organization schema",pri:"P1",start:4,span:4,state:"plan",meta:"模板与发布"}]},
-   {name:"持续运营",note:"上线后监控迭代",tasks:[{name:"GSC 覆盖率 / 抓取报告 / 排名与流量监测，异常及时处理",pri:"P1",start:7,span:3,state:"plan",meta:"持续运营"}]}
+  ]},items:["飞书看板链接已放入模块；完整数据以截图与飞书源表为准。","白板问题：数据需要复盘分析，尤其是 YouTube / YouTube Shorts，这么多 view 是怎么做到的。","本模块只放一张近两周社媒数据总图，不再拆细节图和全图。"],media:[img("social-dashboard-latest-two-weeks.png","近两周社媒数据看板")],links:[{label:"飞书社媒数据看板",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5"}],sources:["wb-20260626-excalidraw"]},
+  {topic:"【6】SEO / OpenMax 新站行动清单",owner:"李家乐",summary:"SEO 不再直接摆截图，而是按行动清单转成可执行结构：先定品牌名、域名和关键词方向，再补技术地基，然后持续做内容和运营。5 月的页面铺设与基础 SEO 进度保留在路线图里，6/26 之后进入 OpenMax 迁移与新站地基阶段。",gantt:{months:[{m:"5月",w:4,labels:["W1","W2","W3","W4"]},{m:"6月",w:4,labels:["W1","W2","W3","W4"]},{m:"7月",w:4,labels:["W1","W2","W3","W4"]},{m:"8月",w:4,labels:["W1","W2","W3","W4"]}],today:7,phases:[
+   {name:"5月-6月基础铺设",note:"保留既有 SEO 路线，不丢 5 月",tasks:[{name:"关键词研究、首批页面模板、案例页/工具页铺设、GSC 基础监控",pri:"P0",start:0,span:7,state:"done",meta:"已进入数据复盘"}]},
+   {name:"定方向",note:"品牌升级前置决策",tasks:[{name:"锁定 OpenMax 品牌名、新域名、核心关键词方向与迁移边界",pri:"P0",start:7,span:2,state:"doing",meta:"6/26 会上确认"}]},
+   {name:"建地基",note:"COCO 方主导：技术 SEO 基础设施",tasks:[{name:"SSR/SSG 首屏完整 HTML、索引控制、200/301/404、canonical",pri:"P0",start:9,span:2,state:"plan",meta:"技术侧排期"},{name:"主域统一结构、语义 slug、Breadcrumb、Core Web Vitals、WebP/CDN、多语言 hreflang",pri:"P0",start:10,span:3,state:"plan",meta:"新站基础设施"}]},
+   {name:"做内容",note:"Will 方主导，COCO 补产品输入",tasks:[{name:"关键词研究、内容页模板、知外/言书案例页、Article/FAQ/Organization schema",pri:"P1",start:11,span:3,state:"plan",meta:"内容体系"}]},
+   {name:"持续运营",note:"上线后 3 个月监控迭代",tasks:[{name:"GSC 覆盖率、抓取报告、品牌词/非品牌词排名、异常处理",pri:"P1",start:13,span:3,state:"plan",meta:"持续监控"}]}
   ]},table:{cols:["指标","截至 6/17","截至 6/22","环比","数据解读"],rows:[
    ["总曝光次数","765","607","下降 20.65%","展示不稳定"],
    ["品牌词曝光","84","90","上升 7.14%","品牌搜索小幅增长"],
    ["总点击次数","30","18","下降 40.00%","点击下滑明显，排名承接仍需优化"],
    ["品牌词点击","13","9","下降 30.77%","品牌词点击下降"],
    ["高意向词点击","9","5","下降 44.44%","高意向词点击减少"]
-  ]},items:["COCO 侧：解决可抓取性、URL 与站点结构、性能与移动端、多语言和结构化数据。","Will 侧：关键词研究、内容页模板、案例页落地、持续内容产出、GSC 监控。","页面关键词样例包括 AI employee pricing、ai-code-reviewer、coco-agent-teams、deploy-ai-employees、ai-ad-copy-generation 等。"],media:[img("16-seo-week-progress.png","本周 SEO 进度截图"),img("17-seo-week-progress-large.png","本周 SEO 甘特大图"),img("18-seo-metrics.png","SEO 指标与关键词截图"),img("19-seo-keyword-bars.png","SEO 关键词柱状对比")],sources:["wb-20260626-seo-action"],links:[src("COCO_SEO_行动清单_v4.pdf","打开 COCO SEO 行动清单 v4")]},
+  ]},details:[{items:["定方向：先拍板新品牌名、新域名和核心关键词，不然 SEO 迁移会反复返工。","建地基：服务端渲染或静态输出要让 Google 首次抓取拿到完整标题和正文；URL、canonical、面包屑、站点层级、移动端体验要一次打好。","做内容：Will 侧负责关键词、内容页模板、案例页和持续发布；COCO 侧补产品能力与场景输入。","持续运营：上线后跟踪 GSC 覆盖率、抓取异常、品牌词/非品牌词排名，技术问题由 COCO 侧修复。"]}],items:["COCO 侧：解决可抓取性、URL 与站点结构、性能与移动端、多语言和结构化数据。","Will 侧：关键词研究、内容页模板、案例页落地、持续内容产出、GSC 监控。","页面关键词样例包括 AI employee pricing、ai-code-reviewer、coco-agent-teams、deploy-ai-employees、ai-ad-copy-generation 等。"],sources:["wb-20260626-seo-action"],links:[src("COCO_SEO_行动清单_v4.pdf","打开 COCO SEO 行动清单 v4")]},
   {topic:"【7】视频剪辑 / 知外文化脚本敲定",owner:"周星星 / 李阳阳",summary:"视频条线分两块：基础视频是和 Nik 的 podcast，目前已用 Charlie 单人素材切出 4 个视频；等待 Nik 提供两人同时出镜版本后重剪，预计切出 6 个切片、共 18 个视频，下周二全部切完。知外文化客户案例视频脚本需要先把“全在 COCO 上跑”这类不准确表述修掉。",gantt:{months:[{m:"6/26-6/30",w:5,labels:["6/26","6/27","6/28","6/29","6/30"]}],today:0,phases:[
    {name:"已完成",note:"基础视频先行产出",tasks:[{name:"Charlie 单人素材已切出 4 个视频",pri:"P0",start:0,span:1,state:"done",meta:"4 个视频"}]},
    {name:"进行中",note:"等待补素材后重剪",tasks:[{name:"等 Nik 提供两人同时出镜版本，重新剪辑",pri:"P0",start:0,span:3,state:"doing",meta:"重剪中"}]},
@@ -1962,8 +1997,8 @@ DB.peopleAvatars={
   kpis:[
    {l:"最新白板",v:"06/26",t:""},
    {l:"已补模块",v:"11",t:""},
-   {l:"数据截图",v:"10",t:""},
-   {l:"源文件",v:"11 PDF",t:""},
+   {l:"数据截图",v:"3",t:""},
+   {l:"源文件",v:"13 PDF",t:""},
    {l:"状态",v:"已重排",t:"good"}
   ],
   stage:{label:"20260626会议 · 标准白板",steps:[
@@ -1983,7 +2018,7 @@ DB.peopleAvatars={
 var psyMonth="all";
 var psyWeek="all";
 
-const NAV={ "工作台":["overview","board","videos","seoRoadmap","videoRoadmap","data","psychology","contacts","library","submit"], 过程:["meetings","sources","feed","requests","roster"] };
+const NAV={ "工作台":["overview","psychology","board","videos","seoRoadmap","videoRoadmap","data","contacts","library","submit"], 过程:["meetings","sources","feed","requests","roster"] };
 const VIEWS={ overview:"近期关注",board:"白板",psychology:"用户画像 / 心理变化",videos:"Demo/Use Case视频",library:"素材库",seoRoadmap:"SEO路线图",videoRoadmap:"视频路线图",data:"数据中心",contacts:"对接负责人",sources:"证据索引",feed:"工作动态流",requests:"确认事项",deliverables:"交付时间线",meetings:"会议",files:"物料",submit:"录入",roster:"团队名单" };
 
 function esc(s){return String(s??"").replace(/[<>&"]/g,m=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[m]))}
@@ -2106,11 +2141,24 @@ function renderCardTable(t){
   if(!t||!Array.isArray(t.cols)||!Array.isArray(t.rows)) return "";
   return `<div class="smatrix cfg"><table><thead><tr>${t.cols.map(c=>`<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map((cell,i)=>`<td class="${i===0?"pl":""}">${esc(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
 }
+function isPdfUrl(u){return /\.pdf(?:$|[?#])/i.test(String(u||""))}
+function fileIcon(url,type){
+  const t=String(type||url||"").toLowerCase();
+  return isPdfUrl(url)||t.includes("pdf")?`<span class="pdf-badge">PDF</span>`:"";
+}
+function openFileLabel(url,type){
+  const t=String(type||url||"").toLowerCase();
+  if(isPdfUrl(url)||t.includes("pdf"))return "打开 PDF";
+  if(t.includes("ppt"))return "打开 PPT";
+  if(t.includes("video")||/\.(mp4|mov|webm)(?:$|[?#])/i.test(String(url||"")))return "打开视频";
+  return "打开原文";
+}
 function renderCardLinks(links=[]){
   return links.filter(Boolean).map(l=>{
     const url=typeof l==="string"?l:l.url;
     const label=typeof l==="string"?l:(l.label||l.title||l.name||l.url||"打开链接");
-    return url?`<a class="source-pill" href="${esc(url)}" target="_blank">${esc(label)}</a>`:"";
+    const pdf=isPdfUrl(url)||/pdf/i.test(label);
+    return url?`<a class="source-pill ${pdf?"pdf-link":""}" href="${esc(url)}" target="_blank">${fileIcon(url,label)}<span>${esc(label)}</span></a>`:"";
   }).join("");
 }
 function renderMediaWall(media=[]){
@@ -2121,8 +2169,9 @@ function renderMediaWall(media=[]){
     const label=m.label||m.title||m.type||"素材";
     const type=m.type||((src||"").split(".").pop()||"文件");
     const isImage=!!m.src;
+    const isPdf=isPdfUrl(src)||String(type).toLowerCase().includes("pdf");
     const detail=m.detail||m.note||"点击“打开原文件”可查看完整文件；预览区已按完整比例缩放，不裁切截图内容。";
-    return `<article class="media-card"><div class="media-frame">${isImage?`<img src="${esc(src)}" alt="${esc(label)}">`:`<div class="media-doc">${esc(String(type).toUpperCase())}</div>`}</div><div class="media-cap">${esc(label)}</div><div class="media-sub">${esc(type)} · 完整比例缩放预览</div><details class="media-detail"><summary>查看详情</summary><div>${esc(detail)}</div></details><div class="source-actions" style="padding:0 11px 11px;margin-top:auto"><a class="source-pill" href="${esc(src)}" target="_blank">打开原文件</a></div></article>`;
+    return `<article class="media-card"><div class="media-frame">${isImage?`<img src="${esc(src)}" alt="${esc(label)}">`:`<div class="media-doc ${isPdf?"pdf-doc":""}">${fileIcon(src,type)}<span>${esc(isPdf?"PDF":String(type).toUpperCase())}</span></div>`}</div><div class="media-cap">${esc(label)}</div><div class="media-sub">${esc(type)} · 完整比例缩放预览</div><details class="media-detail"><summary>查看详情</summary><div>${esc(detail)}</div></details><div class="source-actions" style="padding:0 11px 11px;margin-top:auto"><a class="source-pill ${isPdf?"pdf-link":""}" href="${esc(src)}" target="_blank">${fileIcon(src,type)}<span>${esc(openFileLabel(src,type))}</span></a></div></article>`;
   }).join("")}</div>`;
 }
 function renderCardDetails(title,details=[]){
@@ -2214,13 +2263,12 @@ function sourceById(id){ return (DB.sourceIndex||[]).find(s=>s.id===id); }
 function sourceActions(ids=[]){
   return `<div class="source-actions">${ids.map(id=>{
     const s=sourceById(id); if(!s) return "";
-    const label=`${s.kind} · ${s.date}`;
-    const open=s.asset?`<a class="source-pill" href="${s.asset}" target="_blank">打开来源：${label}</a>`:"";
-    const detail=`<button class="source-button" onclick="toggleSource('${id}')">展开原文摘录</button>`;
+    const open=s.asset?`<a class="source-pill ${isPdfUrl(s.asset)?"pdf-link":""}" href="${s.asset}" target="_blank">${fileIcon(s.asset,s.kind)}<span>${esc(openFileLabel(s.asset,s.kind))}</span></a>`:"";
+    const detail=s.excerpt?`<button class="source-button" onclick="toggleSource('${id}')">查看摘录</button>`:"";
     return open+detail;
   }).join("")}</div>${ids.map(id=>{
     const s=sourceById(id); if(!s) return "";
-    return `<div id="source-${id}" class="source-detail" style="display:none">${escapeHtml(s.excerpt||"暂无摘录，请打开来源文件查看。")}</div>`;
+    return `<div id="source-${id}" class="source-detail" style="display:none">${escapeHtml(s.excerpt||"暂无摘录，请打开文件查看。")}</div>`;
   }).join("")}`;
 }
 function toggleSource(id){
@@ -2290,9 +2338,13 @@ function videoRoadmapView(){
 }
 
 function dataView(){
-  return `<section class="panel"><h1>数据中心</h1><p class="lead">数据中心只作为飞书社媒数据看板入口。具体周度结论会在每周白板的“社媒与内容方向”卡片里总结，这里先不重复放散数据。</p>
-  <div class="board-link-card"><h3>飞书社媒数据看板</h3><p>用于查看 COCO 各平台社媒数据、发布内容和周度表现。会前白板会从这里提炼最近一周的关键变化。</p><div class="source-actions"><a class="source-pill" href="${DB.dataCenterUpdate.feishu}" target="_blank">打开飞书社媒数据看板</a></div></div>
-  <div class="board-placeholder" style="margin-top:14px">最近一周社媒数据看板截图位<br>下次提供截图后，将在白板和数据中心同步显示。</div>
+  const d=DB.dataCenterUpdate||{};
+  const rows=(d.socialRows||[]).map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td>${esc(r[4])}</td></tr>`).join("");
+  return `<section class="panel"><h1>数据中心</h1><p class="lead">近两周社媒数据先放这里做总览；白板里只提炼关键判断，不再重复拆细节图。</p>
+  <div class="board-link-card"><h3>飞书社媒数据看板</h3><p>用于查看 COCO 各平台社媒数据、发布内容和周度表现。</p><div class="source-actions"><a class="source-pill" href="${d.feishu}" target="_blank">打开飞书社媒数据看板</a></div></div>
+  ${renderMediaWall(d.socialSnapshots||[])}
+  <h2 style="margin-top:18px">近两周核心变化</h2>
+  <table class="t"><thead><tr><th>平台/账号</th><th>指标</th><th>2026/06/17-24</th><th>2026/06/11-16</th><th>判断</th></tr></thead><tbody>${rows}</tbody></table>
   </section>`;
 }
 function personLine(name,role){
@@ -2336,16 +2388,16 @@ function videosView(){
 }
 function libraryView(){
   return `<section class="panel"><h1>素材库</h1><p class="lead">资料已经转成站内可打开的源文件；文本类可展开原文摘录，PDF/PPT可直接跳转打开。</p>
-  <div class="file-grid">${DB.materialLibrary.map(m=>`<article class="file-card"><div class="meta"><span>${m.type}</span><span>${m.date}</span><span>${m.owner}</span></div><h3>${m.title}</h3><ul>${m.outline.map(x=>`<li>${x}</li>`).join("")}</ul><div class="source-actions">${m.asset?`<a class="source-pill" href="${m.asset}" target="_blank">打开源文件</a>`:""}${m.asset2?`<a class="source-pill" href="${m.asset2}" target="_blank">打开源文件 2</a>`:""}</div>${sourceActions(m.sources)}</article>`).join("")}</div>
+  <div class="file-grid">${DB.materialLibrary.map(m=>`<article class="file-card"><div class="meta"><span>${m.type}</span><span>${m.date}</span><span>${m.owner}</span></div><div class="file-title">${fileIcon(m.asset,m.type)}<h3>${m.title}</h3></div><ul>${m.outline.map(x=>`<li>${x}</li>`).join("")}</ul><div class="source-actions">${m.asset?`<a class="source-pill ${isPdfUrl(m.asset)?"pdf-link":""}" href="${m.asset}" target="_blank">${fileIcon(m.asset,m.type)}<span>${esc(openFileLabel(m.asset,m.type))}</span></a>`:""}${m.asset2?`<a class="source-pill ${isPdfUrl(m.asset2)?"pdf-link":""}" href="${m.asset2}" target="_blank">${fileIcon(m.asset2,m.type)}<span>${esc(openFileLabel(m.asset2,m.type))} 2</span></a>`:""}</div>${sourceActions(m.sources)}</article>`).join("")}</div>
   </section>`;
 }
 
 function sourcesView(){
   const recent=DB.recentChatAssets||[];
-  const recentHtml=recent.length?`<div class="briefbox" style="margin-bottom:14px"><h3>6/19-6/24 最新聊天记录与材料包</h3><p class="lead">本次新上传的 coco.zip 已入库：聊天截图、SEO 行动清单、案例脚本、品牌改名清单、Deel 分析和 GA 复盘文档都在这里。</p><div class="recent-grid">${recent.map(a=>`<a class="recent-card" href="${esc(a.src)}" target="_blank">${a.isImage?`<img src="${esc(a.src)}" alt="${esc(a.label)}">`:`<div class="recent-doc">${esc((a.ext||"DOC").toUpperCase())}</div>`}<div class="rcap"><span>${esc(a.date)} · ${esc(a.kind)}</span>${esc(a.label)}</div></a>`).join("")}</div></div>`:"";
+  const recentHtml=recent.length?`<div class="briefbox" style="margin-bottom:14px"><h3>6/19-6/24 最新聊天记录与材料包</h3><p class="lead">本次新上传的 coco.zip 已入库：聊天截图、SEO 行动清单、案例脚本、品牌改名清单、Deel 分析和 GA 复盘文档都在这里。</p><div class="recent-grid">${recent.map(a=>`<a class="recent-card" href="${esc(a.src)}" target="_blank">${a.isImage?`<img src="${esc(a.src)}" alt="${esc(a.label)}">`:`<div class="recent-doc">${fileIcon(a.src,a.ext)}<span>${esc((a.ext||"DOC").toUpperCase())}</span></div>`}<div class="rcap"><span>${esc(a.date)} · ${esc(a.kind)}</span>${esc(a.label)}</div></a>`).join("")}</div></div>`:"";
   return `<section class="panel"><h1>证据索引</h1><p class="lead">所有判断优先回到这里：群聊按日期、会议文本、周度/月度信号卡、对方素材分别列出。</p>
   ${recentHtml}
-  <div class="file-grid">${DB.sourceIndex.map(s=>`<article class="file-card"><div class="meta"><span>${s.kind}</span><span>${s.date}</span></div><h3>${s.title}</h3><p>${s.excerpt?escapeHtml(s.excerpt).slice(0,180)+"...":"点击打开来源文件查看。"}</p><div class="source-actions">${s.asset?`<a class="source-pill" href="${s.asset}" target="_blank">打开来源文件</a>`:""}<button class="source-button" onclick="toggleSource('${s.id}')">展开原文摘录</button></div><div id="source-${s.id}" class="source-detail" style="display:none">${escapeHtml(s.excerpt||"暂无摘录，请打开来源文件查看。")}</div></article>`).join("")}</div>
+  <div class="file-grid">${DB.sourceIndex.map(s=>`<article class="file-card"><div class="meta"><span>${s.kind}</span><span>${s.date}</span></div><div class="file-title">${fileIcon(s.asset,s.kind)}<h3>${s.title}</h3></div><p>${s.excerpt?escapeHtml(s.excerpt).slice(0,180)+"...":"点击打开文件查看。"}</p><div class="source-actions">${s.asset?`<a class="source-pill ${isPdfUrl(s.asset)?"pdf-link":""}" href="${s.asset}" target="_blank">${fileIcon(s.asset,s.kind)}<span>${esc(openFileLabel(s.asset,s.kind))}</span></a>`:""}${s.excerpt?`<button class="source-button" onclick="toggleSource('${s.id}')">查看摘录</button>`:""}</div><div id="source-${s.id}" class="source-detail" style="display:none">${escapeHtml(s.excerpt||"暂无摘录，请打开文件查看。")}</div></article>`).join("")}</div>
   </section>`;
 }
 
