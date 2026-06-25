@@ -8,3 +8,19 @@
 - 飞书社媒看板：https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5
 - 成员录入：当前先保存到个人浏览器 localStorage，并支持导出/导入 JSON 录入包。
 - 下一版建议：接 GitHub 写回、飞书多维表或轻量数据库，让所有成员录入后实时共享。
+
+## 部署
+
+主线目录固定为 `D:\codex\coco-pages-fix-deploy`。部署脚本是：
+
+```powershell
+.\deploy-github-pages.ps1
+```
+
+第一次部署前先授权一次：
+
+```powershell
+.\setup-github-token.ps1
+```
+
+它会把 GitHub token 写到 `D:\codex\.secrets\github_token`。部署脚本会优先读取这个 token，否则使用 `D:\codex\.gh-config` 的 GitHub CLI 登录状态；GitHub Pages 发布源会设置为仓库根目录 `/`。
