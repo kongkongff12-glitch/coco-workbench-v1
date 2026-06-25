@@ -2015,6 +2015,68 @@ DB.peopleAvatars={
  }
 })();
 
+(function applyNotionMeetingExport(){
+ const exportBase="assets/sources/notion-meetings-export-20260626/";
+ const notionBase=exportBase+"part1/Private & Shared/";
+ const meetingFolder=notionBase+"Coco xyz团队同郎瀚威will会议记录/";
+ const allCsv=notionBase+"Coco xyz团队同郎瀚威will会议记录 319fc520994e81829064e0bd52bbcc2b_all.csv";
+ DB.sourceIndex=DB.sourceIndex||[];
+ const sourceEntries=[
+  {id:"notion-meetings-export-20260626-zip",title:"Notion会议记录导出包",kind:"Notion导出",date:"2026-06-26",asset:exportBase+"notion-meetings-export.zip",excerpt:"用户补充的会议记录 Notion 导出包，原始包保留在项目来源资料目录。"},
+  {id:"notion-meetings-export-20260626-all-csv",title:"Coco xyz团队同郎瀚威will会议记录 全量表",kind:"CSV",date:"2026-03-03 至 2026-06-18",asset:allCsv,excerpt:"全量会议记录表，共 19 行，其中 17 条包含有效会议总结；覆盖 2026/03/03 至 2026/06/18 的周会、任务清单和双方待办。"},
+  {id:"notion-meeting-20260611-md",title:"2026-06-11 Notion会议页",kind:"Markdown",date:"2026-06-11",asset:meetingFolder+"Untitled 37cfc520994e8068925eeabe1edfe463.md",excerpt:"6/11 周会的 Notion 页面，包含进度同步、SuperAI 流量复盘、湾区 ARR/算力折扣、Google Cloud PR、Charlie 对外叙事等内容。"},
+  {id:"notion-meeting-20260611-transcript",title:"2026-06-11 逐字稿文本",kind:"会议文本",date:"2026-06-11",asset:meetingFolder+"WillCOCO_MKT会议6月11日-逐字稿文本-1.txt",excerpt:"6/11 周会逐字稿，补充 SuperAI、Google Cloud、Anthropic 算力折扣和对外发言定位的原始上下文。"}
+ ];
+ sourceEntries.forEach(s=>{
+  const i=DB.sourceIndex.findIndex(x=>x.id===s.id);
+  if(i>=0)DB.sourceIndex[i]=Object.assign({},DB.sourceIndex[i],s);else DB.sourceIndex.unshift(s);
+ });
+ const baseSources=["notion-meetings-export-20260626-all-csv"];
+ DB.notionMeetings=[
+  {date:"2026-03-03",title:"产品演示与合作启动",summary:["Charlie 展示 HSA / Human and Agent 调度系统，核心是人定目标、多个 AI agent 分工协作、人最后把关。","COCO 当时仍在飞书 / Lark 部署，公开 demo 能力和案例素材都不完整。","Will 判断推广要先补 success story、视频、文章、用户社群和投流素材闭环。","双方敲定每周一次会议，前半小时看进展和竞品，后半小时讨论需求。"],actions:["建立从案例到社群再到投流素材的工作流。"],sourceIds:baseSources},
+  {date:"2026-03-04",title:"第一次正式工作会议：SEO、推特、案例生产",summary:["Will 直接给产品诊断和竞品案例演示，Charlie 与 Kevin 接受度高。","核心销售阻力是美国客户不用飞书、用户不会用多 agent 协作，Slack 集成被排到高优先级。","SEO 方向确定为内容站结构：每个场景单独页面，案例页统一结构并补一键复制配置。","推特方向确定为创始人信息流重构、Typefully 协作、真实 KOL 和 ToB 硅谷调性。"],actions:["Will 团队建社媒看板、发 Thread 案例、做 SEO 诊断；COCO 提供账号、案例站和 Slack 集成进度。"],sourceIds:baseSources},
+  {date:"2026-03-09",title:"Twitter 质量诊断与增长优先级",summary:["Will 现场指出 Evan 帖子的核心问题：YouTube 链接替代原生视频、视频质感差、缺少放大缩小。","增长优先级被排为 Twitter 第一、SEO 第二、网红第三，KOL 投流暂缓。","SEO 不是纯内容问题，存在爬虫屏蔽、结构化数据不可见、docs 域名未改等技术障碍。","品牌视觉第一次被拉到战略层：珊瑚礁、共生与繁荣这套品牌故事需要正式整理。"],actions:["清洗 Twitter 关注列表；整理 Thread 标杆；在 Notion 对已发帖子写评语；整理 KOL 分析报告。"],sourceIds:baseSources},
+  {date:"2026-03-16",title:"KOL 真假识别、视频质感和创始人长内容",summary:["Will 演示假 KOL 识别方法，强调不要把 agency 矩阵号和假受众误认为有效投放。","真人视频 agency 和老外播客被作为品牌调性的补充，不是立即获客主线。","Twitter 最大瓶颈被定义为视频质量：数字人声音、字体、音乐、整体硅谷感都需要重做。","Will 发现 COCO 没有回答“为什么做这个”，建议把 Charlie 和团队活动录音转成长内容。"],actions:["Charlie 给 KOL 候选清单；Will 对接素人视频 agency；持续每周迭代 2-3 条 Thread；接收语料做长内容。"],sourceIds:baseSources},
+  {date:"2026-03-23",title:"案例产出机制、渠道标准化和 Q2 目标",summary:["视频 agency 沟通慢，AI 搜 KOL 被否，正确做法是共享手动积累的推特案例库。","客户案例产出机制被定为“回访=产出”，先拿客户意愿，再收集文字、录音、录屏和采编素材。","内容分发标准化：长视频 YouTube，短视频 Shorts，文章 Twitter / LinkedIn，小红书每天至少 1-2 篇。","Q2 目标同步为付费用户从 100 多做到 1000 个稳定，靠 upsell、KOL、大学渠道、线下和 referral code。"],actions:["开 Notion 协作空间；共建素材进度表；搭建社媒数据看板；推进视频 agency 合同。"],sourceIds:baseSources},
+  {date:"2026-03-30",title:"香港战略收缩与大湾区付费企业",summary:["Charlie 判断香港不适合作为 AI GPT 主战场，数码港峰会后只做 PR 和家办。","重心转向大湾区付费企业，亚太和中国资源被看作更现实的商业进展。","4 月访美计划围绕 Stripe、SaaStr、AI Engineer Summit 展开，同时全面拥抱 AWS 生态。","客户心理从泛品牌曝光转向“哪里能有真实付费和渠道杠杆”。"],actions:["将香港定位为 PR / 家办窗口；把大湾区付费企业纳入核心 ICP 和渠道优先级。"],psychSignal:"从广撒网试探市场，开始主动收缩低效区域，把资源投向更可能成交的付费企业。",sourceIds:baseSources},
+  {date:"2026-04-08",title:"团队变动、案例自动更新系统和视频号复盘",summary:["运营岗空缺，Taylor 接手产品运营，团队需要更清晰的内容生产节奏。","Will 团队研发自动爬取全网案例、筛选适配 COCO、洗成 SEO 页面的系统。","视频号复盘发现网站相关内容最容易成为切入点，观点类内容能转发但需服务具体场景。","内容策略转向“针对不同 ICP 讲不同故事”。"],actions:["继续研发案例自动更新系统；用网站 / 场景主题带动视频号和 SEO 内容。"],sourceIds:baseSources},
+  {date:"2026-04-15",title:"SEO 落地启动：10 个样板页面",summary:["Will 完成 10 个 SEO 样板页面，结构为 before / after、setup、CTA、QA 和互链。","关键词方案被定为前置条件，不再“瞎弄”，要围绕竞争度和机会查词。","页面类型包括竞品截流、场景组合、角色页面、模板页等。","先用 10 个页面验证谷歌收录，再决定扩到 20-50 个。"],actions:["Will 出关键词方案；COCO 确认后批量做页面并部署验证。"],sourceIds:baseSources},
+  {date:"2026-04-20",title:"Twitter 视频适配与用户画像数据初步",summary:["Will 指出抖音竖屏直接搬到 Twitter 会出现黑边和平台不适配，应以 Twitter 横屏 / 方形逻辑重做。","视频号、LinkedIn 等一手受众数据开始进入讨论，客户画像开始从感觉转向数据。","Charlie 要求按平台分别做长宽高适配。","用户画像不再只是“谁可能买”，而是要看平台、人群、内容形式之间的匹配。"],actions:["按平台重新适配视频比例；继续补充社媒人群数据。"],sourceIds:baseSources},
+  {date:"2026-05-08",title:"X 内容策略升级：对标 A16z",summary:["Will 提出把 Charlie 高质量长视频按 A16z 标准剪成适合 Twitter 的横屏内容。","主战场重新排序为英文 Twitter、英文 LinkedIn、YouTube，视频号定位调整。","短视频要有克制的硅谷表达，不是把国内短视频逻辑搬过去。","Twitter 仍是流量主战场，YouTube 更像内容仓库。"],actions:["高质量长视频切片对标 A16z；LinkedIn 测试 hot take 原生视频。"],sourceIds:baseSources},
+  {date:"2026-05-09",title:"COCO SEO 讨论会：10 个钩子页面源码交付",summary:["方案确认：写 10 个 SEO 钩子页面，源码交给 COCO，部署到 COCO 自己服务器或独立子域。","Owen 关心内容控制权，Will 团队将方案调整为源码交付。","get start 按钮直接跳转 coco.xyz 首页，不做额外免费体验入口。","这次把 SEO 从建议变成了可交付的工程动作。"],actions:["Will 团队交付页面源码；COCO 负责部署和控制权确认。"],sourceIds:baseSources},
+  {date:"2026-05-15",title:"律所、游戏电商和 CRM/运营销售场景",summary:["两家美国头部律所已经对接，律所不只做卷宗投研，也可做 CRM、公司运营和销售场景。","LA 游戏电商赛道出现新客户，COCO 可以按公司运营场景独立成篇。","客户案例的价值不在单个行业，而在是否能证明企业级运营场景。","从“AI 工具”进一步转为“企业运营执行层”。"],actions:["按律所和游戏电商分别沉淀案例框架；补 CRM / 运营 / 销售场景素材。"],sourceIds:baseSources},
+  {date:"2026-05-22",title:"KA 客户进展与 ICP 画像调整",summary:["杜蕾斯大中华区总部正式合作，追觅一个 BU 在用，知外文化带来 50+ 客户、100+ agent。","ICP 明确调整：纯小 C 不做，买几十美金还嫌贵的不是目标客户。","重点转向有粉丝、运营自己 IP 的大 C，以及游戏、电商、MCN 这类小 B。","亚太是真正有进展的市场，美国先做品牌声量。"],actions:["用 KA / 小 B / 大 C 重新整理 ICP；案例视频和渠道要围绕可复制客户。"],psychSignal:"客户开始把“谁不是用户”说清楚，画像从泛用户收敛到能付费、能转介绍、能形成案例的高价值客户。",sourceIds:baseSources},
+  {date:"2026-05-29",title:"团队规模、AI 时代趋势与爆款方法论",summary:["Will 国内团队扩至 24 人，Charlie 将其称为 AI Growth 军团。","双方讨论 CLI / GUI 适配：CLI 更适合 CEO / 程序员，GUI 更适合需要框架的新员工。","爆款内容围绕 Anthropic 动态做时效性追踪。","客户对 Will 团队的期待从交付单点内容，升级为持续的增长军团。"],actions:["持续追踪 Anthropic 等高时效话题；把内容动作和团队能力规模化。"],sourceIds:baseSources},
+  {date:"2026-06-05",title:"Alex 加入、红人合作路线和组织协作",summary:["COCO 新市场负责人 Alex 首次参会，Will 表示会开放 Notion 权限让他查看历史进度。","红人合作路线在 TikTok 白号、UGC、MCN agency 之间重新评估。","Charlie 对低质 agency 表达强烈不满，宁可慢慢和 Tiger 打磨。","客户开始重视组织协作透明度，不喜欢私下拉会和顾问式黑盒。"],actions:["给 Alex 开 Notion 权限；继续筛选红人合作方式；避免私下拉会造成组织不透明。"],psychSignal:"客户对外部合作方的要求从“能不能帮我做”升级为“过程透明、质量达标、能被团队理解”。",sourceIds:baseSources},
+  {date:"2026-06-11",title:"SuperAI 流量密码、Google Cloud PR 和 Charlie 叙事",summary:["Demo 中英文版、Tiger 视频、SEO URL 索引等进度同步，未发现大卡点。","Charlie 借 SuperAI 话题的推文跑出 6000+ views，验证了大会热点可以进入目标人群信息流。","Google Cloud 想把 COCO 做成出海案例，Will 建议写简单直接的软文换转发和人脉。","Will 纠偏 Charlie 的大会表达：不要公开说“小展台公司会死”，改成正向大哥叙事。","Charlie 的个人号定位逐渐明确为：新加坡创业、中国资源、美国一线衔接、比本地创业者先看到未来。"],actions:["Will 写 Google Cloud 活动复盘软文和 YC ARR 调研；COCO 提供谷歌云来龙去脉、Owen 跟 SEO、Charlie 评估 Anthropic 算力折扣卖点。"],psychSignal:"客户从单次活动曝光，转向复用“大会热点 + 平台背书 + 创始人叙事”的组合打法。",sourceIds:baseSources.concat(["notion-meeting-20260611-md","notion-meeting-20260611-transcript"])},
+  {date:"2026-06-18",title:"Steve Nouri 投放复盘与转化链路重建",summary:["LinkedIn KOL 投放有 1000+ 赞和几十条评论，但点击、注册和购买转化很差。","核心结论不是换更好 KOL，而是整个流量承接和信任链路没搭起来。","美国发布方法论转向视频，要先用 COCO 自己的实习生和场景视频打样 50 条，再找 KOL 放大。","竞品看板要扩充 Deal 和 LinkedIn 广告维度，女性创业者文章需要重写标题和切入。","SEO 技术债被明确为当前最大卡点，需要 Kevin 介入。"],actions:["复盘 Steve 转化漏斗；扩充竞品看板和 LinkedIn 广告维度；重写女性创业者文章；整理 P0 评论回复；约 Eric 解决视频录制使用问题；推进 SEO 技术债。"],psychSignal:"客户承认“有流量但没转化”不是单个 KOL 问题，而是品牌信任、落地页、CTA、产品理解和 SEO 技术债共同造成。",sourceIds:baseSources.concat(["meeting-2026-06-18","internal-review-2026-06-18"])}
+ ];
+ if(DB.clientPsych){
+  DB.clientPsych.stages=DB.clientPsych.stages||[];
+  DB.clientPsych.evidence=DB.clientPsych.evidence||[];
+  DB.clientPsych.currentQuestions=DB.clientPsych.currentQuestions||[];
+  DB.clientPsych.meetingTactics=DB.clientPsych.meetingTactics||[];
+  const extraStages=[
+   {id:"notion-20260618-conversion",date:"06/18",title:"从 KOL 流量转向信任层和转化链路",source:["Notion会议记录 2026-06-18"],signal:"Steve Nouri 投放有赞和评论，但点击、注册、购买很弱；客户承认问题不是换 KOL，而是承接链路没有搭起来。",detail:"这解释了后续为什么白板里必须把社媒数据、竞品打法、SEO、视频脚本和评论回复放在同一套转化系统里。",response:"后续汇报要按“曝光 -> 信任 -> 点击 -> 注册 -> 试用/购买”拆，而不是只报互动数据。"},
+   {id:"notion-20260611-founder-narrative",date:"06/11",title:"创始人叙事从尖锐判断转为正向大哥位",source:["Notion会议记录 2026-06-11","2026-06-11 逐字稿"],signal:"Charlie 原本想讲 SuperAI 小展台公司会死，Will 纠偏为“新加坡 AI 生态起点、分享美国经验”的正向叙事。",detail:"客户不是缺观点，而是需要把观点包装成能持续被大会、平台和社群接受的表达。",response:"founder brand 模块应强调正向、高位、可复用论据库。"},
+   {id:"notion-20260522-icp",date:"05/22",title:"ICP 从泛小 C 收缩到 KA / 小 B / 大 C",source:["Notion会议记录 2026-05-22"],signal:"杜蕾斯、追觅、知外文化证明 KA 和渠道型客户价值；纯小 C 被明确排除。",detail:"这为后来的“知外文化 / 言书 / 200 个言书”主线提供更早的会议依据。",response:"画像页和白板都要优先讲可复制高价值客户，而不是把便宜试用用户当增长主线。"},
+   {id:"notion-20260330-market-focus",date:"03/30",title:"市场策略从香港泛曝光收缩到大湾区付费企业",source:["Notion会议记录 2026-03-30"],signal:"Charlie 判断香港只做 PR 和家办，重心转向大湾区付费企业。",detail:"客户很早就开始用“是否有真实付费和渠道杠杆”筛选市场，而不是只看活动热闹。",response:"会议中要把市场动作和付费结果挂钩，少做泛曝光叙述。"}
+  ];
+  const seen=new Set(DB.clientPsych.stages.map(s=>s.id||s.title));
+  DB.clientPsych.stages=extraStages.filter(s=>!seen.has(s.id)).concat(DB.clientPsych.stages);
+  DB.clientPsych.evidence.unshift({date:"2026/03/03-2026/06/18",type:"Notion会议记录导出",source:"Coco xyz团队同郎瀚威will会议记录",detail:"导出表覆盖 19 行会议记录，其中 17 条有效会议总结已同步到会议入口；6/11 另有 Markdown 页面和逐字稿。",meaning:"为 3 月到 6 月的客户心理、ICP 调整、SEO、社媒、视频和 founder brand 变化提供连续证据。"});
+  [
+   "哪些会议结论已经进入白板模板，哪些还只停留在会议记录里？",
+   "Alex 接入后，哪些历史 Notion 资料要变成新人可直接使用的行动手册？",
+   "从 3 月到 6 月，客户对 COCO 的核心要求已经从“帮我发内容”升级到“帮我搭增长系统”，后续交付是否都能对应这条升级？"
+  ].reverse().forEach(q=>{ if(!DB.clientPsych.currentQuestions.includes(q))DB.clientPsych.currentQuestions.unshift(q); });
+  [
+   "讲会议历史时不要堆日期，要按客户转折讲：产品不会用 -> 内容质量 -> ICP 收缩 -> KA 证据 -> 信任转化。",
+   "6/11 和 6/18 是最近两次关键拐点：一个证明热点与叙事打法，一个证明流量承接问题。"
+  ].reverse().forEach(t=>{ if(!DB.clientPsych.meetingTactics.includes(t))DB.clientPsych.meetingTactics.unshift(t); });
+ }
+})();
+
 var psyMonth="all";
 var psyWeek="all";
 
@@ -2046,7 +2108,23 @@ function bind(){document.querySelectorAll("[data-go]").forEach(e=>e.onclick=()=>
 function feedView(){return `<section class="panel"><h2>工作动态流</h2><p class="lead">按时间记录 COCO 项目中的群聊、会议、交付与客户反馈，后续作为证据索引和白板更新来源。</p></section>`}
 function requestsView(){return `<section class="panel"><h2>确认事项</h2><p class="lead">集中展示客户新提出的问题、我们给出的处理方式、负责人和状态。</p></section>`}
 function deliverablesView(){return `<section class="panel"><h2>交付时间线</h2><p class="lead">汇总内容、视频、SEO、数据等交付节点，用于周会前核对。</p></section>`}
-function meetingsView(){return `<section class="panel"><h2>会议</h2><p class="lead">沉淀每次周会日程、会议文本、上周回顾和双方待办。</p></section>`}
+function meetingsView(){
+ const meetings=(DB.notionMeetings||[]).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+ const sourceIds=["notion-meetings-export-20260626-all-csv","notion-meeting-20260611-md","notion-meeting-20260611-transcript","notion-meetings-export-20260626-zip"];
+ const keyDates=["2026-06-18","2026-06-11","2026-05-22","2026-03-30"];
+ const key=meetings.filter(m=>keyDates.includes(m.date));
+ const card=m=>`<article class="file-card"><div class="meta"><span>${esc(m.date)}</span><span>Notion会议记录</span></div><h3>${esc(m.title)}</h3><ul>${(m.summary||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ul>${m.psychSignal?`<div class="quote-row"><b>心理信号：</b>${esc(m.psychSignal)}</div>`:""}${(m.actions||[]).length?`<details class="source-note"><summary>双方待办 / 后续动作</summary><ul>${m.actions.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:""}${sourceActions(m.sourceIds||[])}</article>`;
+ return `<section class="panel"><h1>会议</h1><p class="lead">来自用户补充的 Notion 会议记录导出，覆盖 2026/03/03 至 2026/06/18。原表 19 行，已同步 17 条有效会议；空白占位行不展示。</p>
+  <div class="kpirow">
+   <div class="kpi"><b>${meetings.length}</b><span>有效会议</span></div>
+   <div class="kpi"><b>03/03-06/18</b><span>时间范围</span></div>
+   <div class="kpi"><b>6/11</b><span>含页面与逐字稿</span></div>
+  </div>
+  ${sourceActions(sourceIds)}
+  <section class="sec"><div class="shead"><h3>关键转折</h3><span class="hint">已同步到用户画像 / 心理变化</span></div><div class="issue-grid">${key.map(card).join("")}</div></section>
+  <section class="sec"><div class="shead"><h3>全部会议记录</h3><span class="hint">按最新日期倒序</span></div><div class="file-grid">${meetings.map(card).join("")}</div></section>
+ </section>`;
+}
 function filesView(){return `<section class="panel"><h2>物料</h2><p class="lead">集中放置客户提供素材、会议文本、PDF、视频与截图证据。</p></section>`}
 function render(){
  renderSide();
