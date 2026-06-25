@@ -210,6 +210,10 @@ table.t tr:hover td{background:#FBF9F4}
 .g-wk{font-size:11px;color:var(--sub);font-weight:700;text-align:center;border-left:1px solid var(--line);padding:6px 0;background:#FBF9F4}
 .g-phase .pl{grid-column:1 / -1;background:var(--blue-bg);color:var(--blue);padding:9px 12px;font-family:var(--sans);font-size:15px;font-weight:900;border-top:2px solid var(--ink)}
 .g-phase .pl .pnote{font-family:var(--sans);font-size:12px;color:var(--sub);font-weight:700;margin-left:8px}
+.g-current{border-top:1px solid var(--line)}
+.g-current .lab{font-size:11px;color:var(--faint);font-weight:900;text-align:right;background:#FBF9F4}
+.g-current .g-now{font-size:10px;color:var(--sub);font-weight:800;text-align:center;border-left:1px solid var(--line);padding:4px 0;background:#FFFEFB}
+.g-current .g-now.on{background:#FCE5D8;color:var(--red);box-shadow:inset 0 0 0 1px var(--red)}
 .g-task{display:grid;border-top:1px solid var(--line)}
 .g-task .lab{font-size:13.5px;font-weight:800;line-height:1.35;border-right:1px solid var(--line);background:#FFFEFB}
 .g-task .lab .meta{display:block;font-size:12px;color:var(--sub);font-weight:700;margin-top:4px}
@@ -1740,6 +1744,55 @@ DB.peopleAvatars={
  };
 })();
 
+(function applyOriginalProgressGantts(){
+ const wk=(DB.weeks||[]).find(w=>w.date==="2026-06-26");
+ if(!wk||!Array.isArray(wk.cards))return;
+ const findCard=key=>wk.cards.find(c=>String(c.topic||"").includes(key));
+ const seo=findCard("本周SEO进度");
+ if(seo&&!seo.gantt)seo.gantt={
+  months:[
+   {m:"6月",w:2,labels:["6/26","方向确认"]},
+   {m:"7月",w:4,labels:["建地基","页面结构","内容模板","发布节奏"]},
+   {m:"8月",w:4,labels:["品牌词","非品牌词","技术补齐","监控"]},
+   {m:"9月",w:4,labels:["监控1","监控2","监控3","复盘"]}
+  ],
+  today:0,
+  phases:[
+   {name:"定方向",note:"新品牌名 / 新域名 / 核心关键词方向",tasks:[
+    {name:"确认 OpenMax 品牌名、新域名、核心关键词方向",pri:"P0",start:0,span:2,state:"doing",meta:"完成度待确认"}
+   ]},
+   {name:"建地基",note:"可抓取、可理解、可排名",tasks:[
+    {name:"标题 / 正文 / URL / 内链 / 移动端 / 多语言结构",pri:"P0",start:2,span:3,state:"plan",meta:"待技术侧配合"}
+   ]},
+   {name:"做内容",note:"Will 方主导",tasks:[
+    {name:"关键词 / 案例页 / 内容模板 / 发布节奏",pri:"P1",start:3,span:5,state:"plan",meta:"完成度待确认"}
+   ]},
+   {name:"持续运营",note:"迁移后 3 个月持续监控",tasks:[
+    {name:"品牌词重建 / 非品牌词排名保全",pri:"P0",start:6,span:6,state:"plan",meta:"完成度待确认"},
+    {name:"全站 301 迁移 / 页面元信息重写 / 结构化数据补齐",pri:"P0",start:4,span:4,state:"blocked",meta:"待技术侧配合"}
+   ]}
+  ]
+ };
+ const video=findCard("视频剪辑");
+ if(video&&!video.gantt)video.gantt={
+  months:[{m:"6/26-6/30",w:5,labels:["6/26 周五","6/27","6/28","6/29","6/30 下周二"]}],
+  today:0,
+  phases:[
+   {name:"已完成",note:"视频与文本宣发",tasks:[
+    {name:"知外文化客户案例视频1（呈现多agent协作卖点）",pri:"P0",start:0,span:1,state:"done",meta:"各平台已发"},
+    {name:"崔牛会活动",pri:"P1",start:0,span:1,state:"done",meta:"推特已发"}
+   ]},
+   {name:"进行中",note:"基础视频：和Nik的podcast",tasks:[
+    {name:"Nik podcast 切片：6个切片 / 共18个视频",pri:"P0",start:0,span:4,state:"doing",meta:"本周预计3-4条切片 / 9-12个视频"}
+   ]},
+   {name:"下一交付",note:"原白板给出的交付口径",tasks:[
+    {name:"知外文化客户案例视频：脚本确定后录制剪辑",pri:"P0",start:0,span:1,state:"plan",meta:"预计周五交付"},
+    {name:"Nik podcast 全部切完",pri:"P1",start:1,span:4,state:"plan",meta:"下周二全部切完"}
+   ]}
+  ]
+ };
+})();
+
 var psyMonth="all";
 var psyWeek="all";
 
@@ -1905,6 +1958,7 @@ function renderCardGantt(g){
   const labels=months.flatMap(m=>Array.isArray(m.labels)&&m.labels.length?m.labels:Array.from({length:Number(m.w)||1},(_,i)=>`W${i+1}`));
   const today=Number(g.today);
   const todayLine=Number.isFinite(today)?`<div class="todayline" style="left:${Math.max(0,Math.min(100,(today/total)*100))}%"></div>`:"";
+  const currentRow=Number.isFinite(today)?`<div class="g-current gridrow" style="grid-template-columns:${headerCols};min-width:${minWidth}px"><div class="lab">当前</div>${labels.map((l,i)=>`<div class="g-now ${i===Math.max(0,Math.min(total-1,Math.round(today)))?"on":""}">${i===Math.max(0,Math.min(total-1,Math.round(today)))?"当前":""}</div>`).join("")}</div>`:"";
   const phaseHtml=g.phases.map(p=>{
     const tasks=Array.isArray(p.tasks)?p.tasks:[];
     const taskHtml=tasks.map(t=>{
@@ -1917,7 +1971,7 @@ function renderCardGantt(g){
     }).join("");
     return `<div class="g-phase gridrow" style="grid-template-columns:${headerCols};min-width:${minWidth}px"><div class="pl">${esc(p.name||"阶段")}${p.note?`<span class="pnote">${esc(p.note)}</span>`:""}</div></div>${taskHtml}`;
   }).join("");
-  return `<div class="glegend"><span><i style="background:#2E7D5B"></i>已完成</span><span><i style="background:#D85C32"></i>进行中</span><span><i style="background:#3E6EA8"></i>计划中</span><span><i style="background:#B5432E"></i>卡点</span></div><div class="gantt"><div class="gridrow" style="grid-template-columns:${headerCols};min-width:${minWidth}px"><div class="lab"></div>${months.map(m=>`<div class="g-month" style="grid-column:span ${Number(m.w)||1}">${esc(m.m||"")}</div>`).join("")}</div><div class="gridrow" style="grid-template-columns:${headerCols};min-width:${minWidth}px"><div class="lab"></div>${labels.map(l=>`<div class="g-wk">${esc(l)}</div>`).join("")}</div>${phaseHtml}</div>`;
+  return `<div class="glegend"><span><i style="background:#2E7D5B"></i>已完成</span><span><i style="background:#D85C32"></i>进行中</span><span><i style="background:#3E6EA8"></i>计划中</span><span><i style="background:#B5432E"></i>卡点</span></div><div class="gantt"><div class="gridrow" style="grid-template-columns:${headerCols};min-width:${minWidth}px"><div class="lab"></div>${months.map(m=>`<div class="g-month" style="grid-column:span ${Number(m.w)||1}">${esc(m.m||"")}</div>`).join("")}</div><div class="gridrow" style="grid-template-columns:${headerCols};min-width:${minWidth}px"><div class="lab"></div>${labels.map(l=>`<div class="g-wk">${esc(l)}</div>`).join("")}</div>${currentRow}${phaseHtml}</div>`;
 }
 function renderWorkSections(sections=[]){
   sections=(Array.isArray(sections)?sections:[]).filter(Boolean);
