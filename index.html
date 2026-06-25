@@ -2108,21 +2108,127 @@ function bind(){document.querySelectorAll("[data-go]").forEach(e=>e.onclick=()=>
 function feedView(){return `<section class="panel"><h2>工作动态流</h2><p class="lead">按时间记录 COCO 项目中的群聊、会议、交付与客户反馈，后续作为证据索引和白板更新来源。</p></section>`}
 function requestsView(){return `<section class="panel"><h2>确认事项</h2><p class="lead">集中展示客户新提出的问题、我们给出的处理方式、负责人和状态。</p></section>`}
 function deliverablesView(){return `<section class="panel"><h2>交付时间线</h2><p class="lead">汇总内容、视频、SEO、数据等交付节点，用于周会前核对。</p></section>`}
+function cleanNotionText(s){return String(s||"").replace(/\r/g,"").replace(/\u00a0/g," ").trim()}
+function normalizeMeetingDate(d){return cleanNotionText(d).replace(/\//g,"-")}
+function splitNotionBlocks(text,fallback="段落"){
+ const src=cleanNotionText(text).replace(/^会议总结\s*/,"").trim();
+ if(!src)return [];
+ const re=/(^|\n)\s*((?:【)?(?:任务)?\d+[、.：:）)]\s*[^\n]*(?:】)?)/g;
+ const ms=[];let m;
+ while((m=re.exec(src)))ms.push({idx:m.index+(m[1]||"").length,head:cleanNotionText(m[2])});
+ if(ms.length){
+  return ms.map((x,i)=>{
+   const bodyStart=x.idx+x.head.length;
+   const end=i<ms.length-1?ms[i+1].idx:src.length;
+   const title=x.head.replace(/^【/,"").replace(/】$/,"").replace(/\s+/g," ");
+   return {title:title||`${fallback}${i+1}`,body:cleanNotionText(src.slice(bodyStart,end))};
+  }).filter(b=>b.title||b.body);
+ }
+ return src.split(/\n{2,}/).map(x=>cleanNotionText(x)).filter(Boolean).map((body,i)=>({title:`${fallback}${i+1}`,body}));
+}
+function parseCsvRows(text){
+ const rows=[];let row=[],cell="",q=false;
+ for(let i=0;i<String(text||"").length;i++){
+  const ch=text[i],n=text[i+1];
+  if(q&&ch==='"'&&n==='"'){cell+='"';i++;continue}
+  if(ch==='"'){q=!q;continue}
+  if(!q&&ch===","){row.push(cell);cell="";continue}
+  if(!q&&(ch==="\n"||ch==="\r")){
+   if(ch==="\r"&&n==="\n")i++;
+   row.push(cell);cell="";
+   if(row.some(v=>String(v).trim()!==""))rows.push(row);
+   row=[];continue
+  }
+  cell+=ch;
+ }
+ row.push(cell);if(row.some(v=>String(v).trim()!==""))rows.push(row);
+ const head=rows.shift()||[];
+ return rows.map(r=>Object.fromEntries(head.map((h,i)=>[cleanNotionText(h),r[i]||""])));
+}
+function taskSideBlocks(taskText,willText){
+ const allTask=cleanNotionText(taskText), willRaw=cleanNotionText(willText);
+ const willHead=/(^|\n)\s*(?:郎瀚威团队待做|郎瀚威团队待办|Will\s*团队(?:本周)?任务|Will\s*团队待做|郎已布置任务)[:：]?/i;
+ const cocoHead=/(^|\n)\s*(?:COCO\s*团队待做|COCO\s*团队待办|Coco\s*团队(?:本周)?任务|客户(?:团队)?待做|对方(?:团队)?待做)[:：]?/i;
+ const findPart=(labelRe,nextRe)=>{
+  const m=labelRe.exec(allTask);
+  if(!m)return "";
+  const start=m.index+(m[1]==="\n"?1:0);
+  const rest=allTask.slice(start);
+  const tail=rest.slice(m[0].length);
+  const n=tail.search(nextRe);
+  return n>=0?rest.slice(0,m[0].length+n):rest;
+ };
+ let will=splitNotionBlocks(willRaw||findPart(willHead,cocoHead),"我方待办");
+ let coco=splitNotionBlocks(findPart(cocoHead,willHead),"COCO待办");
+ const all=splitNotionBlocks(allTask,"待办");
+ if(!will.length&&all.length)will=all.filter(b=>/Will|郎瀚威|will团队/i.test(b.title+b.body));
+ if(!coco.length&&all.length)coco=all.filter(b=>/COCO|Coco|Charlie|Kevin|Owen|Alex|Eric|Evan|客户|对方/i.test(b.title+b.body));
+ if(!will.length&&!coco.length&&all.length)coco=all;
+ return {will,coco,all};
+}
+function buildNotionMeeting(row){
+ const date=normalizeMeetingDate(row["会议日期"]);
+ const summaryText=cleanNotionText(row["会议总结"]);
+ if(!date||!summaryText)return null;
+ const fallback=(DB.notionMeetings||[]).find(m=>m.date===date)||{};
+ const summaryBlocks=splitNotionBlocks(summaryText,"重点");
+ const taskSides=taskSideBlocks(row["任务清单"],row["郎已布置任务"]);
+ const title=fallback.title||(summaryBlocks[0]&&summaryBlocks[0].title.replace(/^\d+[、.：:]?/,""))||`${date} 会议`;
+ const sources=["notion-meetings-export-20260626-all-csv"];
+ if(date==="2026-06-11")sources.push("notion-meeting-20260611-md","notion-meeting-20260611-transcript");
+ if(date==="2026-06-18")sources.push("meeting-2026-06-18","internal-review-2026-06-18");
+ return {date,title,summaryBlocks,taskSides,fullSummary:summaryText,taskText:cleanNotionText(row["任务清单"]),willTaskText:cleanNotionText(row["郎已布置任务"]),transcript:cleanNotionText(row["转录文本原文"]),note:cleanNotionText(row["备注"]),sourceIds:sources};
+}
+function ensureNotionMeetingDetails(){
+ if(DB.notionMeetingDetails||DB.notionMeetingLoading)return;
+ if(typeof fetch!=="function"||typeof document==="undefined"||!document.body)return;
+ DB.notionMeetingLoading=true;
+ const url=encodeURI("assets/sources/notion-meetings-export-20260626/part1/Private & Shared/Coco xyz团队同郎瀚威will会议记录 319fc520994e81829064e0bd52bbcc2b_all.csv");
+ fetch(url).then(r=>r.text()).then(txt=>{
+  DB.notionMeetingDetails=parseCsvRows(txt).map(buildNotionMeeting).filter(Boolean).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  DB.notionMeetingLoading=false;
+  if(route==="meetings")render();
+ }).catch(err=>{console.warn("Notion meeting CSV load failed",err);DB.notionMeetingLoading=false;DB.notionMeetingError=true;if(route==="meetings")render();});
+}
+function fallbackMeetingDetails(){
+ return (DB.notionMeetings||[]).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(m=>({date:m.date,title:m.title,summaryBlocks:(m.summary||[]).map((body,i)=>({title:`重点${i+1}`,body})),taskSides:{will:[],coco:(m.actions||[]).map((body,i)=>({title:`待办${i+1}`,body})),all:[]},fullSummary:(m.summary||[]).join("\n\n"),taskText:(m.actions||[]).join("\n\n"),willTaskText:"",transcript:"",sourceIds:m.sourceIds||["notion-meetings-export-20260626-all-csv"]}));
+}
+function blockListHtml(blocks=[],limit=0){
+ const arr=limit?blocks.slice(0,limit):blocks;
+ return arr.length?`<ol class="agd">${arr.map(b=>`<li><span><b>${esc(b.title)}</b>${b.body?`<br><span class="muted">${esc(b.body)}</span>`:""}</span></li>`).join("")}</ol>`:`<p class="muted">暂无明确条目。</p>`;
+}
+function fullBlocksHtml(blocks=[]){
+ return blocks.map(b=>`<div class="minddetail"><div class="dl">${esc(b.title)}</div><div class="dv">${esc(b.body||"")}</div></div>`).join("");
+}
+function rawTextBox(text){return text?`<pre style="white-space:pre-wrap;line-height:1.65;margin:10px 0 0;color:var(--ink)">${esc(text)}</pre>`:`<p class="muted">当前导出未提供逐字稿文本；请打开原始会议表查看。</p>`}
+function meetingRecordCard(m){
+ const will=m.taskSides&&m.taskSides.will||[], coco=m.taskSides&&m.taskSides.coco||[], all=m.taskSides&&m.taskSides.all||[];
+ return `<article class="wcard"><div class="wcard-h"><div class="ct">${esc(m.date)} · ${esc(m.title)}</div><div class="co">Notion会议记录</div></div>
+  <div class="wblock"><div class="wlabel">会议重点</div>${blockListHtml(m.summaryBlocks||[],4)}</div>
+  <div class="mindgrid">
+   <div class="mindbox"><h3>Will团队待办</h3>${blockListHtml(will,4)}</div>
+   <div class="mindbox"><h3>COCO团队待办 / 其他待办</h3>${blockListHtml(coco.length?coco:all,4)}</div>
+  </div>
+  <details class="detailbox"><summary>展开全文：会议总结</summary><div class="detailbody">${fullBlocksHtml(m.summaryBlocks||[])||rawTextBox(m.fullSummary)}</div></details>
+  <details class="detailbox"><summary>展开双方待办全文</summary><div class="detailbody">${m.willTaskText?`<div class="minddetail"><div class="dl">郎已布置任务</div><div class="dv">${esc(m.willTaskText)}</div></div>`:""}${m.taskText?`<div class="minddetail"><div class="dl">任务清单</div><div class="dv">${esc(m.taskText)}</div></div>`:""}</div></details>
+  <details class="detailbox"><summary>原会议原文 / 逐字稿</summary><div class="detailbody">${m.note?`<div class="minddetail"><div class="dl">原始备注</div><div class="dv">${esc(m.note)}</div></div>`:""}${rawTextBox(m.transcript)}</div></details>
+  ${sourceActions(m.sourceIds||[])}
+ </article>`;
+}
 function meetingsView(){
- const meetings=(DB.notionMeetings||[]).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+ ensureNotionMeetingDetails();
+ const meetings=(DB.notionMeetingDetails||fallbackMeetingDetails()).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
  const sourceIds=["notion-meetings-export-20260626-all-csv","notion-meeting-20260611-md","notion-meeting-20260611-transcript","notion-meetings-export-20260626-zip"];
- const keyDates=["2026-06-18","2026-06-11","2026-05-22","2026-03-30"];
- const key=meetings.filter(m=>keyDates.includes(m.date));
- const card=m=>`<article class="file-card"><div class="meta"><span>${esc(m.date)}</span><span>Notion会议记录</span></div><h3>${esc(m.title)}</h3><ul>${(m.summary||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ul>${m.psychSignal?`<div class="quote-row"><b>心理信号：</b>${esc(m.psychSignal)}</div>`:""}${(m.actions||[]).length?`<details class="source-note"><summary>双方待办 / 后续动作</summary><ul>${m.actions.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>`:""}${sourceActions(m.sourceIds||[])}</article>`;
- return `<section class="panel"><h1>会议</h1><p class="lead">来自用户补充的 Notion 会议记录导出，覆盖 2026/03/03 至 2026/06/18。原表 19 行，已同步 17 条有效会议；空白占位行不展示。</p>
+ return `<section class="panel"><h1>会议</h1><p class="lead">按 Notion 会议记录格式呈现：每次会议先看会议重点和双方待办，再展开完整会议总结，最后查看原会议原文 / 逐字稿来源。</p>
   <div class="kpirow">
    <div class="kpi"><b>${meetings.length}</b><span>有效会议</span></div>
    <div class="kpi"><b>03/03-06/18</b><span>时间范围</span></div>
    <div class="kpi"><b>6/11</b><span>含页面与逐字稿</span></div>
   </div>
   ${sourceActions(sourceIds)}
-  <section class="sec"><div class="shead"><h3>关键转折</h3><span class="hint">已同步到用户画像 / 心理变化</span></div><div class="issue-grid">${key.map(card).join("")}</div></section>
-  <section class="sec"><div class="shead"><h3>全部会议记录</h3><span class="hint">按最新日期倒序</span></div><div class="file-grid">${meetings.map(card).join("")}</div></section>
+  ${DB.notionMeetingLoading?`<div class="source-note">正在读取 Notion 原始导出，稍后自动切换为完整会议记录。</div>`:""}
+  ${DB.notionMeetingError?`<div class="source-note">Notion 原始导出读取失败，当前展示兜底摘要；可打开全量 CSV 查看原文。</div>`:""}
+  <section class="sec"><div class="shead"><h3>全部会议记录</h3><span class="hint">重点 / 双方待办 / 展开全文 / 原文</span></div><div class="mindtimeline">${meetings.map(meetingRecordCard).join("")}</div></section>
  </section>`;
 }
 function filesView(){return `<section class="panel"><h2>物料</h2><p class="lead">集中放置客户提供素材、会议文本、PDF、视频与截图证据。</p></section>`}
