@@ -1883,22 +1883,22 @@ DB.peopleAvatars={
   ]
  });
  const agendaItems=[
-  {n:"品牌升级与 ICP 调整",t:"15min"},
-  {n:"竞品 Deel 讨论",t:""},
-  {n:"剪辑工具 -> agent 产品化",t:""},
-  {n:"founder 品牌建设与 Zylos 的顶级 agent 框架打造",t:""},
+  {n:"品牌升级与 ICP 调整",t:"12min"},
+  {n:"竞品 Deel 讨论",t:"10min"},
+  {n:"剪辑工具 -> agent 产品化",t:"5min"},
+  {n:"founder 品牌建设与 Zylos 的顶级 agent 框架打造",t:"7min"},
   {n:"社媒数据看板复盘",t:"5min"},
-  {n:"SEO",t:""},
-  {n:"视频剪辑（知外文化脚本敲定）",t:""},
+  {n:"SEO",t:"8min"},
+  {n:"视频剪辑（知外文化脚本敲定）",t:"5min"},
   {n:"视频与文本发布情况",t:"5min"},
-  {n:"其他问题解疑",t:"10min"}
+  {n:"其他问题解疑",t:"3min"}
  ];
  wk.title="6/26 会议白板";
  wk.badge="已按标准重排";
  wk.stub=false;
  wk.brief={focus:"品牌升级 / SEO 新站 / 社媒复盘 / 视频销售语料 / Deel 竞品打法",agenda:agendaItems,summary:"本次按原先周会白板标准重排：先议程，再按业务模块承接截图和源文件；截图内容不丢，但不照截图顺序硬排。"};
  wk.cards=[
-  {topic:"本次会议议程",owner:"侯明真",type:"agenda",summary:"20260626 会议按 9 个议题推进。这里使用用户最新白板议程原文，并作为后续模块顺序的总索引。",items:agendaItems.map((a,i)=>({k:"【"+(i+1)+"】"+a.t,v:a.n})),sources:["wb-20260626-excalidraw"]},
+  {topic:"本次会议议程",owner:"侯明真",type:"agenda",summary:"20260626 会议按 9 个议题推进，按 60 分钟排布。这里使用用户最新白板议程原文，并把未写分钟的议题补齐为可执行时间。",items:agendaItems.map((a,i)=>({k:"【"+(i+1)+"】"+a.t,v:a.n})),sources:["wb-20260626-excalidraw"]},
   {topic:"【1】品牌升级与 ICP 调整",owner:"侯明真 / Will",summary:"品牌方向从 COCO 过渡到 OpenMax；外部暂时仍以 COCO 发布，待 logo 和各类资质申请完成后正式过渡。ICP 收到“女性企业家 / 一线城市 / 独立 / 高阶女性用户”这条主线，COCO 的表达要变成女性企业家的工作伙伴。",highlights:[
    {k:"品牌名",v:"COCO -> OpenMax；需要过渡期，暂时仍是 COCO。"},
    {k:"ICP",v:"女性企业家，类似知外文化言书，一线城市、独立、高阶女性用户。"},
@@ -2217,7 +2217,15 @@ function weekPanel(w){
 
 function renderCardTable(t){
   if(!t||!Array.isArray(t.cols)||!Array.isArray(t.rows)) return "";
-  return `<div class="smatrix cfg"><table><thead><tr>${t.cols.map(c=>`<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map((cell,i)=>`<td class="${i===0?"pl":""}">${esc(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+  const cellHtml=(cell,col)=>{
+    const text=String(cell??"").trim();
+    if(/^https?:\/\/\S+$/i.test(text)){
+      const label=/x\.com|twitter\.com/i.test(text)?"打开原帖 ↗":(/链接|url|原帖/i.test(String(col||""))?"打开链接 ↗":text);
+      return `<a class="linkchip" href="${esc(text)}" target="_blank">${esc(label)}</a>`;
+    }
+    return esc(cell);
+  };
+  return `<div class="smatrix cfg"><table><thead><tr>${t.cols.map(c=>`<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map((cell,i)=>`<td class="${i===0?"pl":""}">${cellHtml(cell,t.cols[i])}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
 }
 function isPdfUrl(u){return /\.pdf(?:$|[?#])/i.test(String(u||""))}
 function fileIcon(url,type){
@@ -2232,12 +2240,23 @@ function openFileLabel(url,type){
   return "打开原文";
 }
 function renderCardLinks(links=[]){
-  return links.filter(Boolean).map(l=>{
+  const seen=new Set();
+  return links.filter(Boolean).filter(l=>{
+    const url=typeof l==="string"?l:l.url;
+    if(!url)return true;
+    const key=normalizeAssetUrl(url);
+    if(seen.has(key))return false;
+    seen.add(key);
+    return true;
+  }).map(l=>{
     const url=typeof l==="string"?l:l.url;
     const label=typeof l==="string"?l:(l.label||l.title||l.name||l.url||"打开链接");
     const pdf=isPdfUrl(url)||/pdf/i.test(label);
     return url?`<a class="source-pill ${pdf?"pdf-link":""}" href="${esc(url)}" target="_blank">${fileIcon(url,label)}<span>${esc(label)}</span></a>`:"";
   }).join("");
+}
+function normalizeAssetUrl(url){
+  return String(url||"").split("#")[0].split("?")[0].replace(/\\/g,"/").trim();
 }
 function renderMediaWall(media=[]){
   media=(Array.isArray(media)?media:[]).filter(Boolean);
@@ -2300,7 +2319,12 @@ function wcard(c){
   const owner=first(c.owner,c.lead,c.responsible,c.team,c.role);
   const status=first(c.status,c.stage,c.tag,c.state);
   const summary=first(c.summary,c.desc,c.description,c.text,c.conclusion,c.note);
-  const sources=asList(first(c.sources,c.sourceIds,c.evidenceIds,c.evidence,[])).filter(Boolean);
+  const rawLinks=asList(c.links);
+  const linkAssets=new Set(rawLinks.map(l=>typeof l==="string"?l:l&&l.url).filter(Boolean).map(normalizeAssetUrl));
+  const sources=asList(first(c.sources,c.sourceIds,c.evidenceIds,c.evidence,[])).filter(Boolean).filter(id=>{
+    const s=sourceById(id);
+    return !s||!s.asset||!linkAssets.has(normalizeAssetUrl(s.asset));
+  });
   const itemText=v=>{
     if(v===undefined||v===null) return "";
     if(typeof v==="string"||typeof v==="number") return esc(v);
@@ -2319,7 +2343,7 @@ function wcard(c){
     const value=first(m.value,m.v,m.cur,m.text);
     return `<span class="tag">${esc(name)}${value?`：${esc(value)}`:""}</span>`;
   }).join("");
-  const links=renderCardLinks(asList(c.links));
+  const links=renderCardLinks(rawLinks);
   return `<section class="wcard">
     <div class="wcard-h"><div class="ct">${esc(title)}</div><div class="co">${owner?`<b>${esc(owner)}</b>`:""}${status?` · ${esc(status)}`:""}</div></div>
     ${summary?`<p>${esc(summary)}</p>`:""}
