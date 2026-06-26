@@ -1813,48 +1813,63 @@ DB.textPublishNotion=[
   {title:"COCO Talk 第三期 / 安全与 Agent 协作",date:"2026-06",platform:"LinkedIn / Twitter",status:"已发布",topic:"内容分享类",url:""},
   {title:"知外文化客户使用案例",date:"2026-06",platform:"LinkedIn / Twitter",status:"待审核",topic:"客户案例",url:""}
 ];
-DB.videoImportedGantt={
-  months:[{m:"5月",w:2,labels:["W4","W5"]},{m:"6月",w:5,labels:["W1","W2","W3","W4","W5"]}],
-  today:6,
-  phases:[
-    {name:"Demo / 产品介绍",note:"产品入口素材",tasks:[
-      {name:"COCO界面展示 / 对Lark操作",pri:"P1",start:0,span:2,state:"done",meta:"已完成"},
-      {name:"产品介绍片中英文版",pri:"P1",start:3,span:1.4,state:"done",meta:"已完成"}
-    ]},
-    {name:"客户案例 / Use Case",note:"案例资产",tasks:[
-      {name:"Josh使用感受",pri:"P2",start:0,span:1,state:"done",meta:"已完成"},
-      {name:"Tiger视频2 / 3",pri:"P1",start:3,span:2,state:"done",meta:"已完成"},
-      {name:"知外文化客户案例1",pri:"P1",start:4,span:1,state:"done",meta:"已完成"},
-      {name:"知外文化客户案例2",pri:"P1",start:4,span:2.4,state:"doing",meta:"剪辑中"},
-      {name:"电商 / 物流 / 快消 / 制造业 / MCN",pri:"P5",start:1,span:5,state:"blocked",meta:"待语料"}
-    ]},
-    {name:"基础视频 / 活动",note:"持续发布素材",tasks:[
-      {name:"VIP dinner / Alex广州活动",pri:"P2",start:3,span:2,state:"done",meta:"已完成"},
-      {name:"Paolo直播切片",pri:"P1",start:4,span:1.2,state:"done",meta:"已完成"},
-      {name:"和Nik的podcast",pri:"P2",start:5,span:2,state:"doing",meta:"剪辑中"}
-    ]},
-    {name:"计划 / 待补",note:"需要COCO补资料",tasks:[
-      {name:"AI员工日常 / 新场景新玩法",pri:"P5",start:1,span:5,state:"plan",meta:"未开始"},
-      {name:"创始人团队介绍 / 安全隐私",pri:"P5",start:1,span:5,state:"blocked",meta:"待语料"}
-    ]}
-  ]
-};
+DB.videoImportedGantt=(function(){
+  const months=[{m:"5月",w:2,labels:["W4","W5"]},{m:"6月",w:5,labels:["W1","W2","W3","W4","W5"]}];
+  const idx=d=>{
+    d=String(d||"");
+    if(/05-(2[0-5])/.test(d))return 0;
+    if(/05-(2[6-9]|30|31)|06-01/.test(d))return 1;
+    if(/06-0[2-8]/.test(d))return 2;
+    if(/06-(09|1[0-5])/.test(d))return 3;
+    if(/06-(1[6-9]|2[0-2])/.test(d))return 4;
+    if(/06-(2[3-9])/.test(d))return 5;
+    return 6;
+  };
+  const state=s=>/完成/.test(s)?"done":/剪辑中|进行中/.test(s)?"doing":/未开始/.test(s)?"plan":"blocked";
+  const task=v=>{
+    const start=idx(v.start||v.due||v.end);
+    const end=idx(v.end||v.due||v.start);
+    return {name:v.title,pri:v.pri||"",start,span:Math.max(1,Math.min(3,end-start+1)),state:state(v.status),meta:v.status||""};
+  };
+  const groups=[
+    {name:"Demo / 产品介绍",note:"3条",match:v=>/功能展示|产品介绍/.test(v.cat||"")},
+    {name:"客户案例 / Use Case",note:"12条",match:v=>/案例展示|白人使用感受/.test(v.cat||"")},
+    {name:"基础视频 / 活动",note:"5条",match:v=>/基础视频/.test(v.cat||"")},
+    {name:"品牌 / 安全补充素材",note:"2条",match:v=>/创始团队|安全与隐私/.test(v.cat||"")}
+  ];
+  return {months,today:5,phases:groups.map(g=>({name:g.name,note:g.note,tasks:(DB.videoScheduleNotion||[]).filter(g.match).map(task)}))};
+})();
+DB.seoHistoryNotion=[
+  {date:"2026-05-08 / 05-09",stage:"SEO/GEO 方向与 10 个钩子页",result:"5月初白板已有 SEO/GEO、关键词数据和页面落地；5月9日 SEO 讨论会明确交付 10 个钩子页源码，由 COCO 控制部署。",metric:"方向确认 / 源码交付",source:"5月白板 + Notion会议记录"},
+  {date:"2026-05-22",stage:"icoco.ai 新域名上线",result:"新域名上线并启动 SEO 部署，4 名全职待命；页面部署数从 0 推进到 12。",metric:"已部署 SEO 页面 0 → 12",source:"5月22日白板 / 周度信号"},
+  {date:"2026-05-29",stage:"老页面切换与部署上线",result:"老页面 coco.xyz → icoco.ai 切换并部署上线，SEO 页面数从 12 推进到 18。",metric:"已部署 SEO 页面 12 → 18",source:"5月29日白板 / 周度信号"},
+  {date:"2026-06-05",stage:"页面扩展与三大问题修复",result:"上周三大 SEO 问题（指向 / 渲染 / 换域名）已解决并建立每周进展同步；已交付 20+ 页面，另有 10 页待交付。",metric:"20+ 页面 / 10页待交付",source:"6月5日白板"},
+  {date:"2026-06-11",stage:"索引验证与数据观察",result:"SEO 页面工期正常，Google 已索引 1 个页面，曝光和点击均较上周提升；继续每日手动提交索引。",metric:"已索引 1 页",source:"6月11日白板 / GSC"},
+  {date:"2026-06-16 / 06-18",stage:"官网架构技术债拆解",result:"6月16日 SEO 讨论会形成 About / canonical / CSR-SSG / docs / 404 修复清单；6月18日会议确认 SEO 技术债是当前主卡点。",metric:"5项修复清单",source:"6月16日SEO会 + 6月18日会议"}
+];
 DB.seoImportedGantt={
-  months:[{m:"6月",w:5,labels:["W1","W2","W3","W4","W5"]}],
-  today:4,
+  months:[{m:"5月",w:4,labels:["W2","W3","W4","W5"]},{m:"6月",w:5,labels:["W1","W2","W3","W4","W5"]}],
+  today:7,
   phases:[
-    {name:"已完成基础修复",note:"权重与元信息",tasks:[
-      {name:"canonical / sitemap 修正",pri:"P0",start:0,span:1.4,state:"done",meta:"6/4完成"},
-      {name:"首页语言元数据 / docs承接",pri:"P0",start:0,span:1.4,state:"done",meta:"6/4完成"},
-      {name:"新旧域名 301 合并",pri:"P0",start:1,span:2,state:"done",meta:"已完成"}
+    {name:"5月：SEO/GEO 与页面基建",note:"不能丢",tasks:[
+      {name:"SEO/GEO方向 + 关键词数据进白板",pri:"P0",start:0,span:1,state:"done",meta:"5/08"},
+      {name:"10个SEO钩子页源码交付",pri:"P0",start:0,span:1,state:"done",meta:"5/09"},
+      {name:"icoco.ai新域名上线 / 4名全职待命",pri:"P0",start:2,span:1,state:"done",meta:"5/22"},
+      {name:"coco.xyz -> icoco.ai 切换部署",pri:"P0",start:3,span:1,state:"done",meta:"5/29"},
+      {name:"已部署SEO页面 0 -> 12 -> 18",pri:"P0",start:2,span:2,state:"done",meta:"5月数据"}
     ]},
-    {name:"进行中技术 SEO",note:"Google可抓取",tasks:[
-      {name:"CSR渲染导致首屏HTML不友好",pri:"P0",start:2,span:2.6,state:"doing",meta:"目标6/25"},
-      {name:"/about canonical 与 title",pri:"P0",start:2,span:2.6,state:"doing",meta:"目标6/25"}
+    {name:"6月：页面扩展与索引验证",note:"从页面数到数据",tasks:[
+      {name:"三大问题修复 + 20+页面",pri:"P0",start:4,span:1,state:"done",meta:"6/05"},
+      {name:"Google已索引1页，曝光点击提升",pri:"P0",start:5,span:1,state:"done",meta:"6/11"},
+      {name:"About / Canonical / CSR / Docs / 404清单",pri:"P0",start:6,span:1,state:"done",meta:"6/16"}
     ]},
-    {name:"索引与规范问题",note:"收录质量",tasks:[
-      {name:"404 与重复规范网址",pri:"P1",start:2,span:2,state:"doing",meta:"进行中"},
-      {name:"中英双语 hreflang",pri:"P1",start:3,span:2,state:"doing",meta:"目标6/30"}
+    {name:"6月：技术问题修复",note:"Notion问题表",tasks:[
+      {name:"canonical / sitemap / 首页元数据 / docs承接",pri:"P0",start:4,span:1,state:"done",meta:"6/4完成"},
+      {name:"新旧域名 301 合并",pri:"P0",start:5,span:1.5,state:"done",meta:"已完成"},
+      {name:"CSR渲染导致首屏HTML不友好",pri:"P0",start:6,span:2,state:"doing",meta:"目标6/25"},
+      {name:"/about canonical 与 title",pri:"P0",start:6,span:2,state:"doing",meta:"目标6/25"},
+      {name:"404 / 重复规范网址",pri:"P1",start:6,span:1.5,state:"doing",meta:"进行中"},
+      {name:"中英双语 hreflang",pri:"P1",start:7,span:2,state:"doing",meta:"目标6/30"}
     ]}
   ]
 };
@@ -2784,6 +2799,10 @@ function seoIssueDetails(){
   const rows=(DB.seoIssuesNotion||[]).map(x=>`<tr><td><b>${esc(x.issue)}</b></td><td>${esc(x.owner||"")}</td><td>${statusBadge(x.status)}</td><td>${esc(x.target||"")}</td><td>${esc(x.done||"待补")}</td></tr>`).join("");
   return `<div class="notion-section"><h2>SEO 技术问题明细</h2><p class="lead">这里保留 Notion 技术问题表的执行口径：哪些已经处理，哪些还在推进，目标时间是什么。</p>${sourceActions(["notion-seo-issues-20260626-csv"])}<div class="table-scroll"><table class="t"><thead><tr><th>问题</th><th>负责人</th><th>状态</th><th>目标完成</th><th>实际完成</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
 }
+function seoHistoryDetails(){
+  const rows=(DB.seoHistoryNotion||[]).map(x=>`<tr><td>${esc(x.date)}</td><td><b>${esc(x.stage)}</b><div class="small muted">${esc(x.result)}</div></td><td>${esc(x.metric||"")}</td><td>${esc(x.source||"")}</td></tr>`).join("");
+  return `<div class="notion-section"><h2>SEO 5月-6月连续进展</h2><p class="lead">把 5 月的 SEO/GEO、钩子页、新域名、页面部署数和 6 月的索引 / 技术修复接成一条线，避免只看 6 月技术问题表。</p><div class="table-scroll"><table class="t"><thead><tr><th>日期</th><th>阶段</th><th>数据 / 结果</th><th>来源</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+}
 function publishOverview(){
   const s=DB.publishNotionSummary||{};
   const videoRows=(DB.videoPublishNotion||[]).map(v=>`<tr><td><b>${esc(v.name)}</b></td><td>${esc(v.date||"")}</td><td>${esc(v.type||"")}</td><td>${statusBadge(v.status)}</td><td>${platformBadges(v.platforms)}</td></tr>`).join("");
@@ -2795,7 +2814,7 @@ function seoRoadmapView(){
   const gantt=DB.seoImportedGantt||(card&&card.gantt)||roadmapRowsToGantt(DB.seoRoadmap||[],"SEO");
   const done=(DB.seoIssuesNotion||[]).filter(x=>/完成/.test(x.status)).length;
   const doing=(DB.seoIssuesNotion||[]).filter(x=>/进行中/.test(x.status)).length;
-  return `<section class="panel"><h1>SEO路线图</h1><p class="lead">按 Notion SEO 技术问题表重建：先看甘特图判断推进阶段，再下钻到每个问题的负责人、目标时间和来源表。</p>${renderCardGantt(gantt)}${notionKpis([{v:done,l:"已完成技术问题"},{v:doing,l:"进行中问题"},{v:"6/25",l:"核心抓取问题目标"},{v:"6/30",l:"hreflang目标"}])}${card?renderCardDetails(card.detailTitle,card.details):""}<div class="source-actions"><a class="source-pill" href="${DB.seoNotionLinks.pages}" target="_blank">SEO页面情况全过程追踪</a><a class="source-pill" href="${DB.seoNotionLinks.tech}" target="_blank">SEO 技术问题跟进表</a></div>${seoIssueDetails()}<div class="issue-grid" style="margin-top:14px">${roadmapSourceList(DB.seoRoadmap||[])}</div></section>`;
+  return `<section class="panel"><h1>SEO路线图</h1><p class="lead">按 5月-6月连续进展重建：5月的 SEO/GEO、10 个钩子页、新域名上线、页面部署数先放回路线图，再接 6月索引验证和技术问题表。</p>${renderCardGantt(gantt)}${notionKpis([{v:"5月",l:"SEO/GEO与页面基建已恢复"},{v:"0→12→18",l:"5月已部署SEO页面"},{v:done,l:"已完成技术问题"},{v:doing,l:"进行中问题"}])}${card?renderCardDetails(card.detailTitle,card.details):""}<div class="source-actions"><a class="source-pill" href="${DB.seoNotionLinks.pages}" target="_blank">SEO页面情况全过程追踪</a><a class="source-pill" href="${DB.seoNotionLinks.tech}" target="_blank">SEO 技术问题跟进表</a></div>${seoHistoryDetails()}${seoIssueDetails()}<div class="issue-grid" style="margin-top:14px">${roadmapSourceList(DB.seoRoadmap||[])}</div></section>`;
 }
 
 function ganttView(){return videoRoadmapView()}
@@ -2806,7 +2825,8 @@ function videoRoadmapView(){
   const done=rows.filter(x=>/完成/.test(x.status)).length;
   const doing=rows.filter(x=>/剪辑中/.test(x.status)).length;
   const waiting=rows.filter(x=>/待COCO/.test(x.status)).length;
-  return `<section class="panel"><h1>视频路线图</h1><p class="lead">按 Notion 视频排期重建：甘特图看整体节奏，明细表看每条素材的品类、优先级、状态、交付和发布平台。</p>${renderCardGantt(gantt)}${notionKpis([{v:rows.length,l:"排期素材"},{v:done,l:"已完成"},{v:doing,l:"剪辑中"},{v:waiting,l:"待COCO语料"}])}${card?renderCardDetails(card.detailTitle,card.details):""}<div class="source-actions"><button class="source-button" data-go="videos" onclick="go('videos')">打开Demo/Use Case视频库</button></div>${videoScheduleDetails()}<div class="issue-grid" style="margin-top:14px">${roadmapSourceList(DB.videoRoadmap||[])}</div></section>`;
+  const ganttTasks=(gantt.phases||[]).reduce((sum,p)=>sum+((p.tasks||[]).length),0);
+  return `<section class="panel"><h1>视频路线图</h1><p class="lead">按 Notion 视频排期重建：甘特图现在逐条对应明细表，不再把多个视频合并成一条概括任务。</p>${renderCardGantt(gantt)}${notionKpis([{v:`${rows.length}/${ganttTasks}`,l:"明细 / 甘特任务"},{v:done,l:"已完成"},{v:doing,l:"剪辑中"},{v:waiting,l:"待COCO语料"}])}${card?renderCardDetails(card.detailTitle,card.details):""}<div class="source-actions"><button class="source-button" data-go="videos" onclick="go('videos')">打开Demo/Use Case视频库</button></div>${videoScheduleDetails()}<div class="issue-grid" style="margin-top:14px">${roadmapSourceList(DB.videoRoadmap||[])}</div></section>`;
 }
 
 function dataView(){
