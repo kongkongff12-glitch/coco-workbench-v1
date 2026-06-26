@@ -356,6 +356,25 @@ table.t tr:hover td{background:#FBF9F4}
 .issue-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
 .issue-card{border:1px solid var(--line);background:#fff;padding:14px;border-radius:8px}
 .issue-card b{color:var(--accent)}
+.notion-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:14px 0}
+.notion-kpi{border:1px solid var(--line);background:#fff;border-radius:8px;padding:13px 14px}
+.notion-kpi b{display:block;font-family:var(--serif);font-size:24px;line-height:1.1}
+.notion-kpi span{display:block;margin-top:4px;font-size:12px;color:var(--sub)}
+.table-scroll{overflow:auto;border:1px solid var(--line);border-radius:8px;background:#fff;margin-top:12px}
+.table-scroll table.t{border:0}
+.status-badge{display:inline-flex;align-items:center;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:700;background:var(--gray-bg);color:var(--sub);white-space:nowrap}
+.status-badge.done{background:var(--green-bg);color:var(--green)}
+.status-badge.doing{background:var(--blue-bg);color:var(--blue)}
+.status-badge.blocked{background:var(--red-bg);color:var(--red)}
+.status-badge.plan{background:var(--amber-bg);color:var(--amber)}
+.platform-badges{display:flex;gap:5px;flex-wrap:wrap}
+.platform-badge{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:10px;font-weight:800;color:var(--ink)}
+.platform-badge.x{background:#111;color:#fff;border-color:#111}
+.platform-badge.yt{background:#fff3f0;color:#c53322;border-color:#f0bbb1}
+.platform-badge.wx{background:#eef8ee;color:#247044;border-color:#c8e6c9}
+.platform-badge.xhs{background:#fff1f1;color:#c71f2d;border-color:#f4b4b9}
+.platform-badge.in{background:#eef5ff;color:#1d5f9f;border-color:#bcd3ee}
+.notion-section{margin-top:18px}
 .video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:stretch}.video-group{margin-top:16px}.video-group .shead{margin-bottom:10px}
 .video-card{padding:0;overflow:hidden;display:flex;flex-direction:column;height:100%;min-height:655px}
 .video-card-top{padding:16px 16px 0;min-height:148px;display:flex;flex-direction:column}
@@ -412,7 +431,7 @@ table.t tr:hover td{background:#FBF9F4}
 .contact-card{border:1px solid var(--line);background:#f7f2e9;padding:16px;min-height:250px}
 .person-row{display:flex;gap:10px;align-items:center;margin:10px 0}
 .avatar-img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid #fff;background:#e8dfd0}
-@media (max-width: 980px){.signal-grid,.issue-grid,.file-grid,.contact-grid,.metric-grid,.video-grid,.media-wall{grid-template-columns:1fr}.roadmap-row{grid-template-columns:1fr}.roadmap-row .owner{border-top:1px solid var(--line)}}
+@media (max-width: 980px){.signal-grid,.issue-grid,.file-grid,.contact-grid,.metric-grid,.video-grid,.media-wall,.notion-kpis{grid-template-columns:1fr}.roadmap-row{grid-template-columns:1fr}.roadmap-row .owner{border-top:1px solid var(--line)}}
 @media (max-width: 980px){.video-card{min-height:auto}.video-card-top{min-height:auto}.video-card h3{min-height:auto}.video-summary{min-height:auto}.video-frame{height:220px}.video-note-list{margin:12px 16px 16px}.video-note-list li{min-height:auto}}
 
 .auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:24px}
@@ -1719,6 +1738,140 @@ DB.videoRoadmap=[
   {phase:"下一步",tone:"next",task:"视频库已入库 9 条源文件、缺 1 条中文版企业级记忆视频；每条继续补发布状态、用途和客户口径。",owner:"侯明真统筹",source:["whiteboard-logic"]}
 ];
 
+DB.notionImportSources={
+  base:"assets/sources/notion-exports-20260626/",
+  videoSchedule:"assets/sources/notion-exports-20260626/video-schedule.csv",
+  seoIssues:"assets/sources/notion-exports-20260626/seo-technical-issues.csv",
+  videoPublish:"assets/sources/notion-exports-20260626/video-publish-status.csv",
+  textPublish:"assets/sources/notion-exports-20260626/social-text-publish-status.csv"
+};
+DB.videoScheduleNotion=[
+  {title:"COCO界面展示",cat:"功能展示",pri:"P1",status:"已完成",start:"2026-05-25",due:"2026-05-30",end:"2026-06-02",platforms:"LinkedIn / X / YouTube / 小红书 / 视频号",note:"展示 COCO 聊天窗口、任务协作和日常操作，作为最基础的产品入口素材。"},
+  {title:"COCO对Lark进行操作",cat:"案例展示",pri:"P2",status:"已完成",start:"2026-05-26",due:"2026-05-30",end:"2026-06-02",platforms:"LinkedIn / X / YouTube / 小红书 / 视频号",note:"展示 Lark 每日推送、汇报和操作流程。"},
+  {title:"Josh亲身讲述COCO使用感受",cat:"白人使用感受",pri:"P2",status:"已完成",start:"2026-05-27",due:"2026-05-29",end:"2026-05-29",platforms:"小红书 / 视频号",note:"Josh 反馈：团队三个月工作量，COCO 一周完成。"},
+  {title:"产品介绍片（2-3分钟）英文版",cat:"产品介绍",pri:"P1",status:"已完成",start:"",due:"2026-06-11",end:"",platforms:"",note:"英文产品介绍：痛点、COCO 是什么、和 ChatGPT 的差别、典型案例与结尾 CTA。"},
+  {title:"电商公司客户使用场景",cat:"案例展示",pri:"P5",status:"待COCO团队提供案例语料",start:"",due:"2026-06-01",end:"",platforms:"",note:"等待 COCO 补客户语料后进入脚本和录制。"},
+  {title:"物流客户使用场景",cat:"案例展示",pri:"P5",status:"待COCO团队提供案例语料",start:"",due:"2026-06-01",end:"",platforms:"",note:"等待 COCO 补客户语料后进入脚本和录制。"},
+  {title:"快消客户使用场景",cat:"案例展示",pri:"P5",status:"待COCO团队提供案例语料",start:"",due:"2026-06-01",end:"",platforms:"",note:"等待 COCO 补客户语料后进入脚本和录制。"},
+  {title:"制造业客户使用场景",cat:"案例展示",pri:"P5",status:"待COCO团队提供案例语料",start:"",due:"2026-06-01",end:"",platforms:"",note:"等待 COCO 补客户语料后进入脚本和录制。"},
+  {title:"MCN客户使用场景",cat:"案例展示",pri:"P5",status:"待COCO团队提供案例语料",start:"",due:"2026-06-01",end:"",platforms:"",note:"等待 COCO 补客户语料后进入脚本和录制。"},
+  {title:"AI员工日常",cat:"案例展示",pri:"P5",status:"未开始",start:"",due:"2026-06-01",end:"",platforms:"",note:"方向：今天公司两个部门的 AI agent 互相对接了什么。"},
+  {title:"新场景 / 新玩法",cat:"案例展示",pri:"P5",status:"未开始",start:"",due:"2026-06-01",end:"",platforms:"",note:"等待场景确认。"},
+  {title:"创始人 / 团队介绍",cat:"创始团队介绍",pri:"P5",status:"待COCO团队提供案例语料",start:"",due:"2026-06-01",end:"",platforms:"",note:"等待创始团队和品牌人设素材。"},
+  {title:"安全与隐私说明",cat:"安全与隐私说明",pri:"P5",status:"待COCO团队提供案例语料",start:"",due:"2026-06-01",end:"",platforms:"",note:"等待 COCO 补安全和隐私相关材料。"},
+  {title:"Tiger视频2",cat:"案例展示",pri:"P1",status:"已完成",start:"",due:"2026-06-10",end:"",platforms:"",note:"Tiger 提供视频素材后二次处理，含中英文两个版本。"},
+  {title:"和Paolo的直播视频切片",cat:"基础视频",pri:"P1",status:"已完成",start:"",due:"2026-06-15",end:"",platforms:"",note:"直播内容切片，用于持续发布。"},
+  {title:"Tiger视频3",cat:"基础视频",pri:"P2",status:"已完成",start:"",due:"2026-06-15",end:"",platforms:"",note:"Tiger 第三条基础视频。"},
+  {title:"产品介绍片（2-3分钟）中文版",cat:"产品介绍",pri:"P1",status:"已完成",start:"",due:"2026-06-12",end:"",platforms:"",note:"中文版产品介绍，用于中文客户和内部会议。"},
+  {title:"VIP dinner",cat:"基础视频",pri:"P2",status:"已完成",start:"",due:"2026-06-11",end:"",platforms:"",note:"VIP dinner 活动素材。"},
+  {title:"Alex广州活动",cat:"基础视频",pri:"P2",status:"已完成",start:"",due:"2026-06-15",end:"",platforms:"",note:"Alex 广州活动素材。"},
+  {title:"知外文化客户使用案例1",cat:"案例展示",pri:"P1",status:"已完成",start:"",due:"2026-06-17",end:"",platforms:"",note:"围绕 multi-agent 协作卖点的知外文化客户案例。"},
+  {title:"知外文化客户使用案例2",cat:"案例展示",pri:"P1",status:"剪辑中",start:"",due:"2026-06-01",end:"",platforms:"",note:"一个人 + 26 个会自己协作的 AI 员工，仍在剪辑中。"},
+  {title:"和Nik的podcast",cat:"基础视频",pri:"P2",status:"剪辑中",start:"",due:"2026-06-26",end:"",platforms:"",note:"用于打造创始人 IP 的 podcast 素材。"}
+];
+DB.seoIssuesNotion=[
+  {issue:"icoco.ai 的 canonical 指向 coco.xyz，主域名权重被送走",owner:"COCO技术人员 / 李家乐",status:"完成",target:"2026-06-09",done:"2026-06-04"},
+  {issue:"icoco.ai 的 sitemap 仍提交 coco.xyz URL",owner:"COCO技术人员 / 李家乐",status:"完成",target:"2026-06-09",done:"2026-06-04"},
+  {issue:"新旧域名重复在线，没有完成 301 合并",owner:"COCO技术人员 / 李家乐",status:"完成",target:"2026-06-17",done:""},
+  {issue:"首页语言与元数据不一致",owner:"COCO技术人员 / 李家乐",status:"完成",target:"2026-06-09",done:"2026-06-04"},
+  {issue:"docs 内容资产没有被主站有效承接",owner:"COCO技术人员 / 李家乐",status:"完成",target:"2026-06-09",done:"2026-06-04"},
+  {issue:"核心内容依赖客户端渲染，首屏 HTML 对低权重站不够友好",owner:"COCO技术人员",status:"进行中",target:"2026-06-25",done:""},
+  {issue:"/about canonical 指向首页而非自身，Google 不会独立索引 /about",owner:"COCO技术人员",status:"进行中",target:"2026-06-25",done:""},
+  {issue:"/about 与首页共用同一个 title",owner:"COCO技术人员",status:"进行中",target:"2026-06-25",done:""},
+  {issue:"中英双语但缺少 hreflang 标签",owner:"COCO技术人员",status:"进行中",target:"2026-06-30",done:""},
+  {issue:"未找到 404",owner:"COCO技术人员",status:"进行中",target:"2026-06-21",done:""},
+  {issue:"重复：Google 选择的规范网址与用户选择的规范网址不同",owner:"COCO技术人员",status:"进行中",target:"2026-06-21",done:""}
+];
+DB.publishNotionSummary={
+  video:{total:102,done:89,partial:1,blank:12,types:"视频切片 64 / 长视频 17 / demo 4 / UGC 2 / use case 1"},
+  text:{total:109,published:107,review:2,platforms:"Twitter 55 / LinkedIn 38 / 公众号 13"}
+};
+DB.videoPublishNotion=[
+  {name:"demo视频1",date:"2026-06-01",type:"demo演示视频",status:"已完成",platforms:"LinkedIn / X / YouTube / 小红书 / 视频号"},
+  {name:"SuperAI大会预热视频",date:"2026-06-02",type:"单独视频",status:"已完成",platforms:"LinkedIn / X / YouTube / 小红书 / 视频号"},
+  {name:"COCO Talk EP4",date:"2026-06-02",type:"长视频",status:"已完成",platforms:"小宇宙"},
+  {name:"demo视频2",date:"2026-06-03",type:"demo演示视频",status:"已完成",platforms:"LinkedIn / X / YouTube / 小红书 / 视频号"},
+  {name:"COCO Talk EP4切片3",date:"2026-06-03",type:"视频切片",status:"已完成",platforms:"LinkedIn / X / YouTube / 小红书 / 视频号"},
+  {name:"Tiger视频2英文版",date:"2026-06-11",type:"UGC",status:"已完成",platforms:"LinkedIn / X / YouTube"},
+  {name:"demo视频3英文版",date:"2026-06-11",type:"demo演示视频",status:"已完成",platforms:"LinkedIn / X / YouTube"},
+  {name:"VIP dinner",date:"2026-06-11",type:"单独视频",status:"已完成",platforms:"LinkedIn / X / YouTube / 小红书 / 视频号"},
+  {name:"和Paolo直播切片1",date:"2026-06-12",type:"视频切片",status:"已完成",platforms:"小红书 / 视频号"},
+  {name:"demo视频3中文版",date:"2026-06-13",type:"demo演示视频",status:"已完成",platforms:"小红书 / 视频号"},
+  {name:"和Paolo直播切片2-6",date:"2026-06-13 至 2026-06-15",type:"视频切片",status:"已完成",platforms:"小红书 / 视频号"},
+  {name:"Tiger视频3",date:"2026-06-16",type:"UGC",status:"已完成",platforms:"LinkedIn / X / YouTube / 小红书 / 视频号"},
+  {name:"知外文化客户案例1",date:"2026-06-19",type:"usecase视频",status:"已完成",platforms:"LinkedIn / X / YouTube / 小红书 / 视频号"}
+];
+DB.textPublishNotion=[
+  {title:"80人砍到40人，公司居然“无感”",date:"2026-06-01",platform:"公众号",status:"已发布",topic:"内容分享类",url:"https://mp.weixin.qq.com/s/jAochs008bXs49UPHZm5Xg"},
+  {title:"COCO Talk Episode 4 wrapped",date:"2026-06-01",platform:"Twitter",status:"已发布",topic:"COCO Talk",url:"https://x.com/CocoAIxyz/status/2062105654899192172"},
+  {title:"You hired AI tools. Your team still works overtime.",date:"2026-06-01",platform:"Twitter",status:"已发布",topic:"COCO推广",url:"https://x.com/CocoAIxyz/status/2062104503948886380"},
+  {title:"Event live video",date:"2026-06-02",platform:"Twitter",status:"已发布",topic:"活动回顾类",url:"https://x.com/CocoAIxyz/status/2062065482430328968"},
+  {title:"Full conversation on YouTube",date:"2026-06-02",platform:"Twitter",status:"已发布",topic:"COCO Talk",url:""},
+  {title:"Chatbots were the warm-up",date:"2026-06-07",platform:"Twitter",status:"已发布",topic:"内容分享类",url:"https://x.com/CocoAIxyz/status/2063531079827599636"},
+  {title:"Everyone is flying to Singapore this week",date:"2026-06-07",platform:"Twitter",status:"已发布",topic:"活动预热类",url:""},
+  {title:"COCO AI is live from the 2026 Shenzhen AI Go-Global",date:"2026-06",platform:"Twitter",status:"已发布",topic:"活动回顾类",url:""},
+  {title:"COCO Talk 第三期 / 安全与 Agent 协作",date:"2026-06",platform:"LinkedIn / Twitter",status:"已发布",topic:"内容分享类",url:""},
+  {title:"知外文化客户使用案例",date:"2026-06",platform:"LinkedIn / Twitter",status:"待审核",topic:"客户案例",url:""}
+];
+DB.videoImportedGantt={
+  months:[{m:"5月",w:2,labels:["W4","W5"]},{m:"6月",w:5,labels:["W1","W2","W3","W4","W5"]}],
+  today:6,
+  phases:[
+    {name:"Demo / 产品介绍",note:"产品入口素材",tasks:[
+      {name:"COCO界面展示 / 对Lark操作",pri:"P1",start:0,span:2,state:"done",meta:"已完成"},
+      {name:"产品介绍片中英文版",pri:"P1",start:3,span:1.4,state:"done",meta:"已完成"}
+    ]},
+    {name:"客户案例 / Use Case",note:"案例资产",tasks:[
+      {name:"Josh使用感受",pri:"P2",start:0,span:1,state:"done",meta:"已完成"},
+      {name:"Tiger视频2 / 3",pri:"P1",start:3,span:2,state:"done",meta:"已完成"},
+      {name:"知外文化客户案例1",pri:"P1",start:4,span:1,state:"done",meta:"已完成"},
+      {name:"知外文化客户案例2",pri:"P1",start:4,span:2.4,state:"doing",meta:"剪辑中"},
+      {name:"电商 / 物流 / 快消 / 制造业 / MCN",pri:"P5",start:1,span:5,state:"blocked",meta:"待语料"}
+    ]},
+    {name:"基础视频 / 活动",note:"持续发布素材",tasks:[
+      {name:"VIP dinner / Alex广州活动",pri:"P2",start:3,span:2,state:"done",meta:"已完成"},
+      {name:"Paolo直播切片",pri:"P1",start:4,span:1.2,state:"done",meta:"已完成"},
+      {name:"和Nik的podcast",pri:"P2",start:5,span:2,state:"doing",meta:"剪辑中"}
+    ]},
+    {name:"计划 / 待补",note:"需要COCO补资料",tasks:[
+      {name:"AI员工日常 / 新场景新玩法",pri:"P5",start:1,span:5,state:"plan",meta:"未开始"},
+      {name:"创始人团队介绍 / 安全隐私",pri:"P5",start:1,span:5,state:"blocked",meta:"待语料"}
+    ]}
+  ]
+};
+DB.seoImportedGantt={
+  months:[{m:"6月",w:5,labels:["W1","W2","W3","W4","W5"]}],
+  today:4,
+  phases:[
+    {name:"已完成基础修复",note:"权重与元信息",tasks:[
+      {name:"canonical / sitemap 修正",pri:"P0",start:0,span:1.4,state:"done",meta:"6/4完成"},
+      {name:"首页语言元数据 / docs承接",pri:"P0",start:0,span:1.4,state:"done",meta:"6/4完成"},
+      {name:"新旧域名 301 合并",pri:"P0",start:1,span:2,state:"done",meta:"已完成"}
+    ]},
+    {name:"进行中技术 SEO",note:"Google可抓取",tasks:[
+      {name:"CSR渲染导致首屏HTML不友好",pri:"P0",start:2,span:2.6,state:"doing",meta:"目标6/25"},
+      {name:"/about canonical 与 title",pri:"P0",start:2,span:2.6,state:"doing",meta:"目标6/25"}
+    ]},
+    {name:"索引与规范问题",note:"收录质量",tasks:[
+      {name:"404 与重复规范网址",pri:"P1",start:2,span:2,state:"doing",meta:"进行中"},
+      {name:"中英双语 hreflang",pri:"P1",start:3,span:2,state:"doing",meta:"目标6/30"}
+    ]}
+  ]
+};
+(function(){
+  DB.sourceIndex=DB.sourceIndex||[];
+  const imported=[
+    {id:"notion-video-schedule-20260626-csv",title:"Notion导出：COCO Demo / Use Case / 基础视频剪辑",kind:"CSV",date:"2026-06-26",asset:DB.notionImportSources.videoSchedule,excerpt:"视频排期表，共 22 条：11 条已完成、2 条剪辑中、2 条未开始、7 条待 COCO 团队提供案例语料。字段含优先级、品类、开始日期、预计交付日期、成片状态和发布平台。"},
+    {id:"notion-seo-issues-20260626-csv",title:"Notion导出：COCO SEO 技术问题跟进表",kind:"CSV",date:"2026-06-26",asset:DB.notionImportSources.seoIssues,excerpt:"SEO 技术问题跟进表，共 11 条：5 条完成、6 条进行中。重点包括 canonical、sitemap、301、CSR渲染、about页面、404、重复规范网址和 hreflang。"},
+    {id:"notion-video-publish-20260626-csv",title:"Notion导出：COCO 社媒视频发布情况",kind:"CSV",date:"2026-06-26",asset:DB.notionImportSources.videoPublish,excerpt:"视频发布表，共 102 条：89 条已完成、1 条部分完成、12 条待补状态。覆盖 YouTube、小红书、视频号、LinkedIn、X 等平台。"},
+    {id:"notion-text-publish-20260626-csv",title:"Notion导出：COCO 社媒文本发布情况",kind:"CSV",date:"2026-06-26",asset:DB.notionImportSources.textPublish,excerpt:"社媒文本发布表，共 109 条：107 条已发布、2 条待审核。平台分布：Twitter 55、LinkedIn 38、公众号 13。"}
+  ];
+  imported.forEach(s=>{
+    const i=DB.sourceIndex.findIndex(x=>x.id===s.id);
+    if(i>=0)DB.sourceIndex[i]=Object.assign({},DB.sourceIndex[i],s);else DB.sourceIndex.unshift(s);
+  });
+})();
+
 DB.seoNotionLinks={
   pages:"https://app.notion.com/p/373fc520994e80c69886c61145ab7103?v=373fc520994e80fbbf6d000cead57d50&source=copy_link",
   tech:"https://app.notion.com/p/375fc520994e80ec905ec2ce89720938?v=f79fc520994e8229ab7008d2b911b7ee"
@@ -2591,17 +2744,69 @@ function roadmapRowsToGantt(rows=[],label="路线图"){
 function roadmapSourceList(rows=[]){
   return rows.map(r=>`<div class="issue-card"><h3>${esc(r.phase||"")}</h3><p>${esc(r.task||"")}</p><div class="small muted">负责人：${esc(r.owner||"待定")}</div>${sourceActions(r.source||[])}</div>`).join("");
 }
+function notionStatusClass(s){
+  s=String(s||"");
+  if(/部分/.test(s)) return "doing";
+  if(/完成|已发布/.test(s)) return "done";
+  if(/剪辑中|进行中/.test(s)) return "doing";
+  if(/未开始/.test(s)) return "plan";
+  if(/待|缺|卡/.test(s)) return "blocked";
+  return "plan";
+}
+function statusBadge(s){return `<span class="status-badge ${notionStatusClass(s)}">${esc(s||"待补")}</span>`}
+function platformBadges(text){
+  text=String(text||"").trim();
+  if(!text) return `<span class="muted small">待补</span>`;
+  const defs=[
+    {key:"x",label:"X",re:/\bX\b|Twitter|推特/i},
+    {key:"yt",label:"YT",re:/YouTube|Youtube|油管/i},
+    {key:"wx",label:"视",re:/视频号|微信视频号/i},
+    {key:"xhs",label:"红",re:/小红书|XHS|Rednote/i},
+    {key:"in",label:"in",re:/LinkedIn|领英/i},
+    {key:"xx",label:"小",re:/小宇宙/i}
+  ];
+  const hits=defs.filter(d=>d.re.test(text));
+  const badges=hits.length?hits.map(d=>`<span class="platform-badge ${d.key}">${d.label}</span>`).join(""):`<span class="platform-badge">${esc(text.slice(0,2))}</span>`;
+  return `<div class="platform-badges">${badges}</div><div class="small muted">${esc(text)}</div>`;
+}
+function notionKpis(items=[]){
+  return `<div class="notion-kpis">${items.map(i=>`<div class="notion-kpi"><b>${esc(i.v)}</b><span>${esc(i.l)}</span></div>`).join("")}</div>`;
+}
+function externalLink(url,label="打开链接"){
+  url=String(url||"").trim();
+  return url?`<a class="source-pill" href="${esc(url)}" target="_blank">${esc(label)}</a>`:`<span class="muted small">待补链接</span>`;
+}
+function videoScheduleDetails(){
+  const rows=(DB.videoScheduleNotion||[]).map(v=>`<tr><td><b>${esc(v.title)}</b><div class="small muted">${esc(v.note||"")}</div></td><td>${esc(v.cat||"")}</td><td>${esc(v.pri||"")}</td><td>${statusBadge(v.status)}</td><td>${esc(v.due||"待补")}${v.end?`<div class="small muted">完成：${esc(v.end)}</div>`:""}</td><td>${platformBadges(v.platforms)}</td></tr>`).join("");
+  return `<div class="notion-section"><h2>视频排期明细</h2><p class="lead">来自 Notion 视频排期导出表，按“状态 + 预计交付 + 发布平台”展示，方便和上方甘特互相核对。</p>${sourceActions(["notion-video-schedule-20260626-csv"])}<div class="table-scroll"><table class="t"><thead><tr><th>素材</th><th>品类</th><th>优先级</th><th>状态</th><th>交付</th><th>发布平台</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+}
+function seoIssueDetails(){
+  const rows=(DB.seoIssuesNotion||[]).map(x=>`<tr><td><b>${esc(x.issue)}</b></td><td>${esc(x.owner||"")}</td><td>${statusBadge(x.status)}</td><td>${esc(x.target||"")}</td><td>${esc(x.done||"待补")}</td></tr>`).join("");
+  return `<div class="notion-section"><h2>SEO 技术问题明细</h2><p class="lead">这里保留 Notion 技术问题表的执行口径：哪些已经处理，哪些还在推进，目标时间是什么。</p>${sourceActions(["notion-seo-issues-20260626-csv"])}<div class="table-scroll"><table class="t"><thead><tr><th>问题</th><th>负责人</th><th>状态</th><th>目标完成</th><th>实际完成</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+}
+function publishOverview(){
+  const s=DB.publishNotionSummary||{};
+  const videoRows=(DB.videoPublishNotion||[]).map(v=>`<tr><td><b>${esc(v.name)}</b></td><td>${esc(v.date||"")}</td><td>${esc(v.type||"")}</td><td>${statusBadge(v.status)}</td><td>${platformBadges(v.platforms)}</td></tr>`).join("");
+  const textRows=(DB.textPublishNotion||[]).map(v=>`<tr><td><b>${esc(v.title)}</b><div class="small muted">${esc(v.topic||"")}</div></td><td>${esc(v.date||"")}</td><td>${platformBadges(v.platform||"")}</td><td>${statusBadge(v.status)}</td><td>${externalLink(v.url,"原贴")}</td></tr>`).join("");
+  return `<div class="notion-section"><h2>Notion 发布情况总览</h2>${notionKpis([{v:s.video?.total||0,l:"视频发布记录"},{v:s.video?.done||0,l:"视频已完成"},{v:s.text?.total||0,l:"文本发布记录"},{v:s.text?.published||0,l:"文本已发布"}])}<div class="issue-grid"><div class="issue-card"><h3>视频发布分布</h3><p>${esc(s.video?.types||"")}</p>${sourceActions(["notion-video-publish-20260626-csv"])}</div><div class="issue-card"><h3>文本发布分布</h3><p>${esc(s.text?.platforms||"")}</p>${sourceActions(["notion-text-publish-20260626-csv"])}</div></div><h3 style="margin-top:16px">视频发布明细（6月重点）</h3><div class="table-scroll"><table class="t"><thead><tr><th>素材</th><th>日期</th><th>类型</th><th>状态</th><th>平台</th></tr></thead><tbody>${videoRows}</tbody></table></div><h3 style="margin-top:16px">社媒文本发布明细（近期重点）</h3><div class="table-scroll"><table class="t"><thead><tr><th>标题</th><th>日期</th><th>平台</th><th>状态</th><th>链接</th></tr></thead><tbody>${textRows}</tbody></table></div></div>`;
+}
 function seoRoadmapView(){
   const card=boardCardByTopic("SEO");
-  const gantt=(card&&card.gantt)||roadmapRowsToGantt(DB.seoRoadmap||[],"SEO");
-  return `<section class="panel"><h1>SEO路线图</h1><p class="lead">已切换成白板同款彩色甘特图：阶段、任务、状态和当前线一屏展示，下面保留来源追溯。</p>${renderCardGantt(gantt)}${card?renderCardDetails(card.detailTitle,card.details):""}<div class="source-actions"><a class="source-pill" href="${DB.seoNotionLinks.pages}" target="_blank">SEO页面情况全过程追踪</a><a class="source-pill" href="${DB.seoNotionLinks.tech}" target="_blank">SEO 技术问题跟进表</a></div><div class="issue-grid" style="margin-top:14px">${roadmapSourceList(DB.seoRoadmap||[])}</div></section>`;
+  const gantt=DB.seoImportedGantt||(card&&card.gantt)||roadmapRowsToGantt(DB.seoRoadmap||[],"SEO");
+  const done=(DB.seoIssuesNotion||[]).filter(x=>/完成/.test(x.status)).length;
+  const doing=(DB.seoIssuesNotion||[]).filter(x=>/进行中/.test(x.status)).length;
+  return `<section class="panel"><h1>SEO路线图</h1><p class="lead">按 Notion SEO 技术问题表重建：先看甘特图判断推进阶段，再下钻到每个问题的负责人、目标时间和来源表。</p>${renderCardGantt(gantt)}${notionKpis([{v:done,l:"已完成技术问题"},{v:doing,l:"进行中问题"},{v:"6/25",l:"核心抓取问题目标"},{v:"6/30",l:"hreflang目标"}])}${card?renderCardDetails(card.detailTitle,card.details):""}<div class="source-actions"><a class="source-pill" href="${DB.seoNotionLinks.pages}" target="_blank">SEO页面情况全过程追踪</a><a class="source-pill" href="${DB.seoNotionLinks.tech}" target="_blank">SEO 技术问题跟进表</a></div>${seoIssueDetails()}<div class="issue-grid" style="margin-top:14px">${roadmapSourceList(DB.seoRoadmap||[])}</div></section>`;
 }
 
 function ganttView(){return videoRoadmapView()}
 function videoRoadmapView(){
   const card=boardCardByTopic("视频");
-  const gantt=(card&&card.gantt)||roadmapRowsToGantt(DB.videoRoadmap||[],"视频");
-  return `<section class="panel"><h1>视频路线图</h1><p class="lead">已切换成白板同款彩色甘特图：完成、进行中、计划和卡点按时间轴展示，并和视频库互相对应。</p>${renderCardGantt(gantt)}${card?renderCardDetails(card.detailTitle,card.details):""}<div class="source-actions"><button class="source-button" data-go="videos" onclick="go('videos')">打开Demo/Use Case视频库</button></div><div class="issue-grid" style="margin-top:14px">${roadmapSourceList(DB.videoRoadmap||[])}</div></section>`;
+  const gantt=DB.videoImportedGantt||(card&&card.gantt)||roadmapRowsToGantt(DB.videoRoadmap||[],"视频");
+  const rows=DB.videoScheduleNotion||[];
+  const done=rows.filter(x=>/完成/.test(x.status)).length;
+  const doing=rows.filter(x=>/剪辑中/.test(x.status)).length;
+  const waiting=rows.filter(x=>/待COCO/.test(x.status)).length;
+  return `<section class="panel"><h1>视频路线图</h1><p class="lead">按 Notion 视频排期重建：甘特图看整体节奏，明细表看每条素材的品类、优先级、状态、交付和发布平台。</p>${renderCardGantt(gantt)}${notionKpis([{v:rows.length,l:"排期素材"},{v:done,l:"已完成"},{v:doing,l:"剪辑中"},{v:waiting,l:"待COCO语料"}])}${card?renderCardDetails(card.detailTitle,card.details):""}<div class="source-actions"><button class="source-button" data-go="videos" onclick="go('videos')">打开Demo/Use Case视频库</button></div>${videoScheduleDetails()}<div class="issue-grid" style="margin-top:14px">${roadmapSourceList(DB.videoRoadmap||[])}</div></section>`;
 }
 
 function dataView(){
@@ -2612,6 +2817,7 @@ function dataView(){
   ${renderMediaWall(d.socialSnapshots||[])}
   <h2 style="margin-top:18px">近两周核心变化</h2>
   <table class="t"><thead><tr><th>平台/账号</th><th>指标</th><th>2026/06/17-24</th><th>2026/06/11-16</th><th>判断</th></tr></thead><tbody>${rows}</tbody></table>
+  ${publishOverview()}
   </section>`;
 }
 function personLine(name,role){
