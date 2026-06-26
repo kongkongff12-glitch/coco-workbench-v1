@@ -461,7 +461,7 @@ table.t tr:hover td{background:#FBF9F4}
    下方含 Coco.excalidraw 全量白板时间线；最新会议列为 2026-06-11。
 ================================================================ */
 const DB={
-meta:{ version:"客户工作OS版 v5", updated:"2026-06-24", client:"COCO" },
+meta:{ version:"客户工作OS版 v5", updated:"2026-06-26", client:"COCO" },
 team:{ 侯明真:"#2E5E4E",周星星:"#3E5A7E",李阳阳:"#9A6B1F",李家乐:"#B5432E",田长举:"#8A8276",吕教东:"#5b6b4e",孔维彤:"#211C15",代逸如:"#7A7163",查理:"#46506b" },
 
 /* 全客户总览（团队首页） */
@@ -2296,6 +2296,127 @@ DB.contactMatrix=[
  }
 })();
 
+(function applyMeeting20260626OpenMaxUpdate(){
+ DB.sourceIndex=DB.sourceIndex||[];
+ const meetingSources=[
+  {id:"meeting-20260626-openmax-transcript",title:"2026-06-26 Will x OpenMax MKT 逐字稿",kind:"会议文本",date:"2026-06-26",asset:"assets/sources/meeting-20260626/meeting-20260626-openmax-transcript.txt",excerpt:"6/26 客户会议逐字稿，覆盖 OpenMax 品牌升级、双品牌过渡、品牌发布节奏、品牌视频、SEO owner 切换、programmatic SEO、客户案例页重构、Deel 竞品研究和双方分工对接。"},
+  {id:"meeting-20260626-internal-review",title:"2026-06-26 COCO 内部版会议复盘",kind:"内部复盘",date:"2026-06-26",asset:"assets/sources/meeting-20260626/meeting-20260626-internal-review.txt",excerpt:"内部复盘强调：SEO 页面已交付但未部署必须在白板明确暴露；关键词质量、页面部署、收录和点击不能混写；后续系统需要把阻塞方、owner 和下一步拆成结构化状态。"},
+  {id:"meeting-20260626-structured-summary",title:"2026-06-26 会议结构化总结",kind:"会议总结",date:"2026-06-26",asset:"assets/sources/meeting-20260626/meeting-20260626-structured-summary.md",excerpt:"用户补充的 6/26 结构化会议总结，包含 Will 团队 6 项任务、COCO 团队 7 项任务、10 条会议结论和内部复盘应进入系统的规则。"}
+ ];
+ meetingSources.forEach(s=>{
+  const i=DB.sourceIndex.findIndex(x=>x.id===s.id);
+  if(i>=0)DB.sourceIndex[i]=Object.assign({},DB.sourceIndex[i],s);else DB.sourceIndex.unshift(s);
+ });
+
+ const sourceIds=["meeting-20260626-structured-summary","meeting-20260626-openmax-transcript","meeting-20260626-internal-review","wb-20260626-coco-deel-playbook","wb-20260626-charlie-founder-twitter","wb-20260626-brand-rename","wb-20260626-seo-action","wb-20260626-zhiwai-script"];
+ const willTasks=[
+  {title:"检索换名公司的案例视频",body:"为 OpenMax 更名 campaign 找可参考的换名视频、推特发布方式、新 feature 或视觉冲击打法，供脚本和视频参考。"},
+  {title:"向姚远同步 programmatic SEO 做法",body:"把程序化页面、工具承接、错位截流和 COCO 对标 Deel 公司打法同步给新 SEO owner。"},
+  {title:"李家乐产出 SEO 关键词挖掘报告",body:"重新挖掘龙虾 / COCO 赛道的高 ROI 关键词，尤其是团队、AI 平台、AI employee 相关词，下周发报告。"},
+  {title:"侯明真修改知外客户案例视频字幕",body:"按 MengYu 意见改副字幕，把“全在 COCO 上跑”等不准确表述改为“选用 COCO 完成”等更稳妥口径。"},
+  {title:"收集 10 个美国 TOB 客户案例并做成网站",body:"先从 5-10 个起步，整理 demo case 和案例关键词，交给 COCO 的 AI 辅助页面生成。"},
+  {title:"与 COCO 开分工对接小会",body:"按 SEO、视频、品牌内容分别对齐双方负责人，先从 SEO 开启。"}
+ ];
+ const cocoTasks=[
+  {title:"推进 logo 与品牌设计系统",body:"OpenMax 为本月 P0，COCO 完成设计稿、品牌故事和 visual identity 后同步 Will 团队。"},
+  {title:"MengYu 写更名视频脚本第一版",body:"脚本要讲清 COCO 为什么升级为 OpenMax，并面向老客户说明产品不变、只是品牌升级。"},
+  {title:"MengYu 对接郭老师制作产品演示视频",body:"产出 1-1.5 分钟 product demonstration，说明 OpenMax 是什么、agent 如何在 Lark / Slack 里协作。"},
+  {title:"搭建办公室影棚",body:"用于 demo / lunch 视频的露脸开头，郭老师落地灯光、单反、麦克风和基础布景。"},
+  {title:"姚远接手 SEO owner",body:"新域名 SEO 推倒重做，姚远统筹，Owen 技术配合，围绕关键词、承接页面、工具和模板矩阵推进。"},
+  {title:"Lydia 跟进客户案例落地",body:"把现有案例和 Alex 收集的语料格式化、标准化，并在大客户来新加坡时安排图片和视频拍摄。"},
+  {title:"重构官网客户案例页与 TOB landing",body:"P0 优先级；改为客户故事、人脸图片、核心话、量化数据、CTA、视频和统一 UI。"}
+ ];
+ const summaryBlocks=[
+  {title:"品牌升级为本月 P0",body:"COCO 将对外启用 OpenMax，新域名、新品牌、新 logo、新物料成套推进；Charlie 明确定调所有事都压在这件事上。"},
+  {title:"双品牌并行过渡",body:"不是一刀切改名，而是 COCO 与 OpenMax 保留一段迁移期，向老客户解释产品不变、品牌升级。"},
+  {title:"各平台改名清单与设计同步",body:"头像、名称、背景图、简介、handle、banner、tagline、视觉风格逐项推进，公众号和 LinkedIn 可能耗时最长。"},
+  {title:"品牌发布节奏与更名视频",body:"7/15 NUS、7/18 湾区等活动作为品牌发布节奏；MengYu 先写更名视频脚本，Will 找换名公司案例视频参考。"},
+  {title:"影棚与 demo 视频质感升级",body:"COCO 办公室搭影棚，用于 demo / lunch 视频开头；产品演示视频先定脚本和风格，再用生成工具落地。"},
+  {title:"SEO 重新开始",body:"过去三个月缺 owner，借新域名重做；姚远接手，Owen 技术配合，李家乐下周产出关键词挖掘报告。"},
+  {title:"SEO 升级到 programmatic SEO",body:"普通文章流量价值有限，后续要用工具矩阵、模板库、UGC 数据仓库、场景化 agent workflow 页面承接。"},
+  {title:"客户案例页与 TOB landing 重构",body:"案例页从 blog/documentation 改为客户故事、人脸、数据、CTA、视频和统一视觉，是 TOB 网站 P0。"},
+  {title:"Deel 竞品研究要内化",body:"从 Deel 的官网、合规术语库、视频工厂、KOL 和创始人打法里提炼 COCO 可执行动作，不照搬融资阶段公司打法。"},
+  {title:"本周重点与分工对接",body:"品牌 / 视频对 MengYu，案例对 Lydia，SEO 对姚远；Will 侧按侯明真、李家乐、周星星、李阳阳等拆分协作。"}
+ ];
+ DB.manualMeetingDetails=DB.manualMeetingDetails||[];
+ if(!DB.manualMeetingDetails.some(m=>m.date==="2026-06-26"&&/OpenMax/.test(m.title||""))){
+  DB.manualMeetingDetails.unshift({
+   date:"2026-06-26",
+   title:"OpenMax 品牌升级、SEO重启与案例页重构",
+   summaryBlocks,
+   taskSides:{will:willTasks,coco:cocoTasks,all:[]},
+   willTaskText:willTasks.map((t,i)=>`${i+1}. ${t.title}：${t.body}`).join("\n"),
+   taskText:cocoTasks.map((t,i)=>`${i+1}. ${t.title}：${t.body}`).join("\n"),
+   fullSummary:"本次会议把 OpenMax 品牌升级定为本月最高优先级，并把双品牌过渡、平台改名、品牌视频、产品演示视频、SEO owner 切换、programmatic SEO、客户案例页重构和双方分工全部拉到同一张工作台上。\n\n系统层面需要同步修正：会议入口记录双方待办；近期关注呈现当前 P0 和阻塞；SEO 路线图要明确姚远 owner、Owen 技术配合、李家乐关键词报告；视频路线图要体现更名视频、产品演示视频、影棚和知外字幕修改；工作动态流和确认事项要把已交付未部署这类风险暴露出来。",
+   note:"内部复盘口径：SEO 页面交付、COCO 技术部署、GSC 收录、关键词质量、点击数据必须分开写。以后白板要明确“Will 已交付 / COCO 待部署 / 技术阻塞 / 数据结果”，不能只写“SEO 在推进”。",
+   transcript:"完整逐字稿和内部复盘已挂在下方来源文件。页面中只展示结构化总结，避免把大段原文直接堆在会议卡片里。",
+   sourceIds
+  });
+ }
+
+ const addUnique=(arr,items,keyFn)=>{items.slice().reverse().forEach(item=>{const key=keyFn(item);if(!arr.some(x=>keyFn(x)===key))arr.unshift(item);});};
+ DB.whiteboardIssues=DB.whiteboardIssues||[];
+ addUnique(DB.whiteboardIssues,[
+  {title:"OpenMax 品牌升级成为本月 P0",problem:"COCO 将启用 OpenMax，新域名、新 logo、新物料和全平台改名会影响社媒、官网、SEO、视频和客户沟通。",handling:"白板首页把品牌升级放到第一优先级；社媒改名 checklist、品牌视频、客户更名沟通和设计同步都要按 owner 追踪。",sources:["meeting-20260626-structured-summary","meeting-20260626-openmax-transcript","wb-20260626-brand-rename"]},
+  {title:"SEO 重启：姚远接手 owner，关键词与页面要重做",problem:"过去 SEO 缺少 owner，关键词重复度高，employee 相关词挖掘不深；部分页面已交付但对方技术未部署。",handling:"SEO 路线图拆成 owner 切换、关键词报告、programmatic SEO 方法同步、页面部署状态和 GSC 数据，不再混成一句进展。",sources:["meeting-20260626-structured-summary","meeting-20260626-internal-review","wb-20260626-seo-action"]},
+  {title:"客户案例页与 TOB landing 要重构",problem:"现有 case study 偏 blog / documentation，缺真人、数据、CTA 和视频，不符合 ToB 网站最关键的转化要求。",handling:"Lydia 负责 COCO 侧案例语料，Will 收集 10 个美国 TOB 案例并做页面；案例内容、页面、视频分别进入素材库和路线图。",sources:["meeting-20260626-structured-summary","wb-20260626-coco-deel-playbook"]},
+  {title:"更名视频、产品演示视频和影棚进入视频体系",problem:"OpenMax 发布需要解释更名故事，也需要 1-1.5 分钟产品演示视频；现有知外视频副字幕还需修正。",handling:"视频路线图新增更名脚本、产品演示视频、影棚搭建、知外副字幕修改四类动作，并按中文/英文平台发布规则记录链接。",sources:["meeting-20260626-structured-summary","wb-20260626-zhiwai-script"]}
+ ],x=>x.title);
+
+ DB.feed=DB.feed||[];
+ addUnique(DB.feed,[
+  {date:"2026-06-26",type:"meeting",who:"Charlie / MengYu / Will团队",line:"OpenMax 品牌升级定为 P0",text:"6/26 会议确认 OpenMax 品牌升级、本月发布节奏、双品牌过渡和全平台改名是当前最高优先级。"},
+  {date:"2026-06-26",type:"meeting",who:"姚远 / Owen / 李家乐",line:"SEO owner 切换与重启",text:"姚远接手 SEO owner，Owen 技术配合；李家乐下周产出高 ROI 关键词挖掘报告，Will 向姚远同步 programmatic SEO 做法。"},
+  {date:"2026-06-26",type:"meeting",who:"MengYu / 郭老师 / 侯明真",line:"视频体系新增品牌与产品演示",text:"MengYu 写更名视频脚本第一版并对接郭老师做产品演示视频；侯明真修改知外客户案例副字幕。"},
+  {date:"2026-06-26",type:"meeting",who:"Lydia / 侯明真 / 李家乐",line:"客户案例页 P0 重构",text:"Lydia 跟进案例语料格式化和拍摄；Will 收集 10 个美国 TOB 案例并做成网站，用于案例关键词索引。"},
+  {date:"2026-06-26",type:"internal",who:"Will团队",line:"系统复盘：交付状态必须拆开",text:"内部复盘要求以后把“Will 已交付 / COCO 待部署 / 技术阻塞 / 数据结果”拆开写，避免 SEO 进展被模糊化。"}
+ ],x=>`${x.date}|${x.line}`);
+
+ DB.seoRoadmap=DB.seoRoadmap||[];
+ addUnique(DB.seoRoadmap,[
+  {phase:"6/26重启",tone:"risk",task:"OpenMax 新域名启用后，SEO 推倒重做；姚远接手 owner，Owen 技术配合，李家乐下周提交关键词挖掘报告。",owner:"姚远 / Owen / 李家乐",source:["meeting-20260626-structured-summary","meeting-20260626-internal-review"]},
+  {phase:"Programmatic SEO",tone:"doing",task:"从普通文章转向工具矩阵、模板库、案例页、场景化 agent workflow 与错位截流页面，Will 需向姚远同步具体打法。",owner:"Will团队 / 姚远",source:["meeting-20260626-structured-summary","wb-20260626-coco-deel-playbook"]}
+ ],x=>x.phase+"|"+x.task);
+ DB.seoHistoryNotion=DB.seoHistoryNotion||[];
+ addUnique(DB.seoHistoryNotion,[
+  {date:"2026-06-26",stage:"OpenMax 新域名 SEO 重启",result:"姚远接手 SEO owner，Owen 技术配合；关键词重复度和 employee 挖掘不足被明确指出，下周需出高 ROI 关键词报告。",metric:"owner 切换 / 关键词报告待交付",source:"6月26日会议 + 内部复盘"},
+  {date:"2026-06-26",stage:"Programmatic SEO 方法同步",result:"Will 需把程序化页面、工具承接、模板矩阵、错位截流和 Deel 对标打法同步给 COCO；SEO 不再只按普通文章推进。",metric:"打法同步待安排",source:"6月26日会议"}
+ ],x=>x.date+"|"+x.stage);
+ if(DB.seoImportedGantt&&DB.seoImportedGantt.phases&&!DB.seoImportedGantt.phases.some(p=>p.name==="6/26：OpenMax SEO 重启")){
+  DB.seoImportedGantt.phases.push({name:"6/26：OpenMax SEO 重启",note:"owner 切换 + programmatic SEO",tasks:[
+   {name:"姚远接手 SEO owner / Owen 技术配合",pri:"P0",start:7,span:1,state:"doing",meta:"6/26"},
+   {name:"李家乐下周输出高 ROI 关键词挖掘报告",pri:"P0",start:8,span:1,state:"plan",meta:"下周"},
+   {name:"Will 向姚远同步 programmatic SEO 页面做法",pri:"P0",start:7,span:1,state:"plan",meta:"待小会"}
+  ]});
+ }
+
+ DB.videoRoadmap=DB.videoRoadmap||[];
+ addUnique(DB.videoRoadmap,[
+  {phase:"OpenMax 更名视频",tone:"doing",task:"MengYu 写更名视频脚本第一版，Will 检索换名公司的案例视频，重点看换名是否伴随新 feature 或视觉冲击。",owner:"MengYu / 侯明真",source:["meeting-20260626-structured-summary","meeting-20260626-openmax-transcript"]},
+  {phase:"产品演示视频",tone:"next",task:"MengYu 对接郭老师制作 1-1.5 分钟 product demonstration，说明 OpenMax 是什么、agent 如何在 Lark / Slack 中协作。",owner:"MengYu / 郭老师",source:["meeting-20260626-structured-summary"]},
+  {phase:"知外案例修订",tone:"doing",task:"侯明真按 MengYu 意见修改副字幕，把口播与字幕对齐，避免“在客户上跑”等不准确表达。",owner:"侯明真",source:["meeting-20260626-structured-summary","wb-20260626-zhiwai-script"]}
+ ],x=>x.phase+"|"+x.task);
+
+ DB.systemReview20260626=[
+  {title:"交付状态必须拆开",body:"SEO、视频、案例页都要写清“已交付、待对方部署、阻塞方、数据结果”，避免内部知道有问题但白板看起来像正常推进。"},
+  {title:"会议导入要联动多个模块",body:"新会议进来后，会议入口、近期关注、确认事项、工作动态流、路线图、负责人和素材库都应自动被更新，而不是只新增一条会议记录。"},
+  {title:"SEO 需要独立 pipeline",body:"关键词池、页面模板、工具承接、部署状态、GSC 收录、点击数据要分层展示，尤其适合 OpenMax 新域名重启。"},
+  {title:"案例页也需要 pipeline",body:"案例语料、客户图片/视频、标准化故事、页面卡片、CTA、发布链接和效果数据应在系统里形成闭环。"},
+  {title:"内部复盘与对客白板要分层",body:"内部版会议用于发现系统和执行问题；对客白板只展示结论、动作、负责人、卡点和来源。"}
+ ];
+
+ if(DB.weeks&&DB.weeks[0]&&DB.weeks[0].date==="2026-06-26"){
+  DB.weeks[0].requests=DB.weeks[0].requests||[];
+  const reqs=[
+   {date:"2026-06-26",status:"待跟进",q:"李家乐下周输出新的 SEO 关键词挖掘报告，覆盖团队 / AI 平台 / AI employee 等高 ROI 关键词。",owner:"李家乐",resp:"进入 SEO 路线图，后续按报告、页面、部署、数据四层追踪。",source:"6/26 会议"},
+   {date:"2026-06-26",status:"待跟进",q:"Will 团队需向姚远同步 programmatic SEO 页面做法和 COCO 对标 Deel 公司打法。",owner:"李家乐",resp:"安排 SEO 对接小会，并挂到会议双方待办。",source:"6/26 会议"},
+   {date:"2026-06-26",status:"待跟进",q:"MengYu 输出 OpenMax 更名视频脚本第一版，Will 检索换名公司案例视频参考。",owner:"侯明真",resp:"进入视频路线图和工作动态流。",source:"6/26 会议"},
+   {date:"2026-06-26",status:"待跟进",q:"Lydia 跟进客户案例语料标准化；Will 收集 10 个美国 TOB 客户案例并做成网站。",owner:"侯明真",resp:"进入案例页 / 素材库 / 后续 TOB landing 重构。",source:"6/26 会议"}
+  ];
+  addUnique(DB.weeks[0].requests,reqs,x=>x.q);
+ }
+})();
+
 var psyMonth="all";
 var psyWeek="all";
 var meetingMonth="all";
@@ -2326,7 +2447,7 @@ function evidenceForDate(date,line){
 function go(v){route=v;render();window.scrollTo(0,0)}
 function pickWeek(i){selWeek=i;render()}
 function bind(){document.querySelectorAll("[data-go]").forEach(e=>e.onclick=()=>go(e.dataset.go));document.querySelectorAll("[data-wk]").forEach(e=>e.onclick=()=>pickWeek(+e.dataset.wk));document.querySelectorAll("[data-mmonth]").forEach(e=>e.onclick=()=>{meetingMonth=e.dataset.mmonth;render();})}
-function feedTypeLabel(t){return ({deliver:"交付",req:"客户问题",metric:"数据",whiteboard:"白板动作",request:"确认事项"}[t]||t||"动态")}
+function feedTypeLabel(t){return ({deliver:"交付",req:"客户问题",metric:"数据",whiteboard:"白板动作",request:"确认事项",meeting:"会议动作",internal:"内部复盘"}[t]||t||"动态")}
 function workFeedItems(){
  const w=DB.weeks&&DB.weeks[0]||{};
  const cardItems=(w.cards||[]).filter(c=>c.type!=="agenda").map(c=>({date:w.date,type:"whiteboard",who:c.owner||"",line:c.topic||"白板",text:c.summary||c.conclusion||c.topic||""}));
@@ -2466,14 +2587,21 @@ function meetingRecordCard(m){
 }
 function meetingsView(){
  ensureNotionMeetingDetails();
- const allMeetings=(DB.notionMeetingDetails||fallbackMeetingDetails()).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+ const loaded=(DB.notionMeetingDetails||fallbackMeetingDetails()).slice();
+ const seen=new Set();
+ const allMeetings=(DB.manualMeetingDetails||[]).concat(loaded).filter(m=>{
+  const key=[m.date,m.title].join("|");
+  if(seen.has(key))return false;
+  seen.add(key);
+  return true;
+ }).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
  const q=String(meetingQuery||"").trim().toLowerCase();
  const meetings=allMeetings.filter(m=>(meetingMonth==="all"||meetingMonthKey(m.date)===meetingMonth)&&(!q||meetingFilterText(m).toLowerCase().includes(q)));
- const sourceIds=["notion-meetings-export-20260626-all-csv","notion-meeting-20260611-md","notion-meeting-20260611-transcript","notion-meetings-export-20260626-zip"];
+ const sourceIds=["meeting-20260626-structured-summary","meeting-20260626-openmax-transcript","meeting-20260626-internal-review","notion-meetings-export-20260626-all-csv","notion-meeting-20260611-md","notion-meeting-20260611-transcript","notion-meetings-export-20260626-zip"];
  return `<section class="panel"><h1>会议</h1><p class="lead">按 Notion 会议记录格式呈现：每次会议先看会议重点和双方待办，再展开完整会议总结，最后查看原会议原文 / 逐字稿来源。</p>
   <div class="kpirow">
    <div class="kpi"><b>${allMeetings.length}</b><span>有效会议</span></div>
-   <div class="kpi"><b>03/03-06/18</b><span>时间范围</span></div>
+   <div class="kpi"><b>03/03-06/26</b><span>时间范围</span></div>
    <div class="kpi"><b>${meetings.length}</b><span>当前筛选</span></div>
   </div>
   ${sourceActions(sourceIds)}
@@ -2511,13 +2639,15 @@ function overviewView(){
  const focus=issues.slice(0,3);
  const handled=issues.slice(3,6);
  const issueStages=issues.map((i,idx)=>`<article class="mindstage"><div><div class="md">${String(idx+1).padStart(2,"0")}</div></div><div><div class="mt">${esc(i.title)}</div><div class="mindsource">${(i.sources||[]).map(x=>`<span>${esc(x)}</span>`).join("")}</div><div class="ms">${esc(i.problem)}</div><div class="mr">${esc(i.handling)}</div>${sourceActions(i.sources||[])}</div></article>`).join("");
+ const systemReview=(DB.systemReview20260626||[]).length?`<div class="sec" style="margin-top:18px"><div class="shead"><h3>6/26 系统复盘</h3><span class="hint">内部规则 / 后续优化</span></div><div class="mindgrid">${DB.systemReview20260626.map(r=>`<div class="mindbox"><h3>${esc(r.title)}</h3><p>${esc(r.body)}</p></div>`).join("")}</div>${sourceActions(["meeting-20260626-internal-review","meeting-20260626-structured-summary"])}</div>`:"";
  return topbar(`<b>COCO</b> · 近期关注`)+`
   <section class="panel"><h1>近期关注</h1><p class="lead">客户工作台首页：用和“用户画像 / 心理变化”一致的阅读层级，先看当前最重要的判断，再看问题、处理方式和证据来源。</p>
-    <div class="mindhero"><h3>当前总判断</h3><p>6/26 会前最重要的不是堆材料，而是把品牌升级、社媒数据、SEO 新站、视频脚本和会议确认事项串成同一张工作白板：客户要一眼看到进展、卡点、负责人和下一步。</p></div>
+    <div class="mindhero"><h3>当前总判断</h3><p>6/26 会后主线已经从“COCO 周会白板”升级成“OpenMax 发布战役”：品牌升级是 P0，SEO 重启、案例页重构、品牌/产品视频和双方分工都要围绕这条主线落到负责人、状态和下一步。</p></div>
     <div class="mindgrid">
       <div class="mindbox"><h3>客户现在最关心</h3><ul>${focus.map(i=>`<li>${esc(i.title)}</li>`).join("")}</ul></div>
       <div class="mindbox"><h3>我们当前处理方式</h3><ul>${handled.length?handled.map(i=>`<li>${esc(i.title)}</li>`).join(""):issues.slice(0,3).map(i=>`<li>${esc(i.handling)}</li>`).join("")}</ul></div>
     </div>
+    ${systemReview}
     <div class="sec" style="margin-top:18px"><div class="shead"><h3>关注事项明细</h3><span class="hint">客户问题 / 处理方式 / 来源</span></div><div class="mindtimeline">${issueStages}</div></div>
   </section>`;
 }
