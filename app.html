@@ -189,6 +189,24 @@ table.t tr:hover td{background:#FBF9F4}
 .hour-row:last-child{border-bottom:none}
 .hour-row .hl{padding:12px 16px;font-size:14px;font-weight:900;color:var(--ink)}
 .hour-row .hv{padding:12px 16px;font-size:14px;color:var(--sub);font-weight:700}
+.weekly-wrap{margin-top:18px;overflow-x:auto;border:1px solid var(--line-dark);background:#FFFDF8}
+.weekly-schedule{--rows:11;min-width:1120px;display:grid;grid-template-columns:140px repeat(5,minmax(178px,1fr));grid-template-rows:74px repeat(var(--rows),86px);position:relative}
+.schedule-head{border-left:1px solid var(--line);border-bottom:1px solid var(--line-dark);padding:14px 12px;background:#F8F3EA;font-size:15px;font-weight:900}
+.schedule-head.time{border-left:none;display:flex;align-items:center}
+.schedule-head span{display:block;color:var(--amber);font-size:12px;margin-top:2px}
+.schedule-time{grid-column:1;border-top:1px solid var(--line);padding:12px 12px;background:#F8F3EA;font-size:13px;font-weight:900;color:#005D9A;line-height:1.35}
+.schedule-time span{display:block;color:#8A4B12}
+.schedule-slot{border-left:1px solid var(--line);border-top:1px solid var(--line);background:#FFFEFB}
+.schedule-event{z-index:2;margin:6px;padding:9px 10px;border:2px solid var(--line-dark);background:var(--panel);overflow:hidden;font-size:12px;line-height:1.4}
+.schedule-event .etype{font-size:11px;font-weight:900;margin-bottom:3px}
+.schedule-event h3{font-size:15px;font-weight:900;line-height:1.25;margin-bottom:4px}
+.schedule-event p{font-size:11.5px;font-weight:700;color:var(--ink)}
+.schedule-event .note{font-size:11px;color:var(--sub);font-weight:700;margin-top:4px}
+.schedule-event.whole{background:#E3F3EB;border-color:#55A484}.schedule-event.whole .etype{color:#1B896A}
+.schedule-event.manage{background:#EFE8FF;border-color:#8E78E8}.schedule-event.manage .etype{color:#7256D4}
+.schedule-event.group{background:#E8F3FF;border-color:#55A1E6}.schedule-event.group .etype{color:#287FC1}
+.schedule-event.project{background:#FFF6CD;border-color:#E0B322}.schedule-event.project .etype{color:#9A6B1F}
+.schedule-event.client{background:#FFF0E5;border-color:#FF8A3D}.schedule-event.client .etype{color:#C65D1F}
 .route-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
 .route-node{position:relative;background:var(--panel);border:1px solid var(--line-dark);padding:16px 14px;min-height:112px}
 .route-node:not(:last-child)::after{content:"›";position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--faint);font-size:26px}
@@ -866,15 +884,63 @@ feed:[
  {date:"05-29 10:00",type:"req",who:"侯明真",text:"ICP 验证：币圈非目标客户，转电商出海",line:"内容"},
  {date:"05-22 15:00",type:"deliver",who:"李家乐",text:"icoco.ai 新域名上线，启动 SEO 部署",line:"SEO"}
 ],
-roster:{ lead:"侯明真", reviewer:"孔维彤",
- members:[
-  {name:"侯明真",role:"主负责人 · 内容 · 视频剪辑",group:"BD/剪辑组"},
-  {name:"吕教东",role:"内容",group:"SEO组"},
-  {name:"周星星",role:"视频剪辑（条线主负责）",group:"剪辑社媒组"},
-  {name:"李阳阳",role:"视频剪辑",group:"剪辑社媒组"},
-  {name:"李家乐",role:"SEO（条线主负责）",group:"SEO组"},
-  {name:"孔维彤",role:"把关 · 工具牵头",group:"BD组"} ],
- helpers:[{name:"代逸如",note:"天际主负责，空了帮 COCO 剪辑"}], left:[] },
+ roster:{ lead:"侯明真", reviewer:"孔维彤",
+  members:[
+   {name:"侯明真",role:"主负责人 · 内容 · 视频剪辑",group:"BD/剪辑组"},
+   {name:"吕教东",role:"内容",group:"SEO组"},
+   {name:"周星星",role:"视频剪辑（条线主负责）",group:"剪辑社媒组"},
+   {name:"李阳阳",role:"视频剪辑",group:"剪辑社媒组"},
+   {name:"李家乐",role:"SEO（条线主负责）",group:"SEO组"},
+   {name:"孔维彤",role:"把关 · 工具牵头",group:"BD组"} ],
+  helpers:[{name:"代逸如",note:"天际主负责，空了帮 COCO 剪辑"}], left:[],
+  schedule:{
+   week:"2026/06/22-06/26",
+   days:[{key:"mon",label:"周一",date:"06-22"},{key:"tue",label:"周二",date:"06-23"},{key:"wed",label:"周三",date:"06-24"},{key:"thu",label:"周四",date:"06-25"},{key:"fri",label:"周五",date:"06-26"}],
+   slots:[
+    {key:"08:00",bj:"8:00-8:30 北京",sv:"17:00-17:30 硅谷"},
+    {key:"08:30",bj:"8:30-9:00 北京",sv:"17:30-18:00 硅谷"},
+    {key:"09:00",bj:"9:00-9:20 北京",sv:"18:00-18:20 硅谷"},
+    {key:"09:20",bj:"9:20-9:40 北京",sv:"18:20-18:40 硅谷"},
+    {key:"09:40",bj:"9:40-10:00 北京",sv:"18:40-19:00 硅谷"},
+    {key:"10:00",bj:"10:00-10:20 北京",sv:"19:00-19:20 硅谷"},
+    {key:"10:20",bj:"10:20-10:40 北京",sv:"19:20-19:40 硅谷"},
+    {key:"10:40",bj:"10:40-11:00 北京",sv:"19:40-20:00 硅谷"},
+    {key:"11:00",bj:"11:00-11:20 北京",sv:"20:00-20:20 硅谷"},
+    {key:"11:20",bj:"11:20-11:40 北京",sv:"20:20-20:40 硅谷"},
+    {key:"11:40",bj:"11:40-12:00 北京",sv:"20:40-21:00 硅谷"}
+   ],
+   events:[
+    {day:"mon",start:"09:00",span:1,kind:"whole",type:"全员",title:"团队整体会议",people:"团队整体 · 全员"},
+    {day:"mon",start:"09:20",span:1,kind:"manage",type:"管理",title:"管理会议",people:"管理 · Will、孔维彤、刘璐"},
+    {day:"mon",start:"09:40",span:1,kind:"group",type:"小组",title:"BD组内部会议",people:"BD组 · 孔维彤、侯明真、刘璐、kiki"},
+    {day:"mon",start:"10:00",span:1,kind:"manage",type:"管理",title:"组长会议",people:"组长 · Will、孔维彤、刘璐、各组组长"},
+    {day:"mon",start:"10:40",span:1,kind:"project",type:"项目",title:"无界方舟内部会议",people:"无界方舟 · 田长举、金薇丽、刘嘉燕、代逸如、马志昂"},
+    {day:"mon",start:"11:00",span:2,kind:"client",type:"客户",title:"客户会议-Qveris",people:"Qveris · 孔月、张志博、程果、李亚茹、马宁、鹿传坡、Will、王林夙、曲东奇",note:"会前确认本周内容素材已就绪。"},
+    {day:"tue",start:"09:00",span:1,kind:"whole",type:"全员",title:"团队整体会议",people:"团队整体 · 全员"},
+    {day:"tue",start:"09:20",span:1,kind:"group",type:"小组",title:"技术组内部会议（SEO）",people:"技术组（SEO）· 鹿传坡、马志昂、李家乐、马宁、马建新"},
+    {day:"tue",start:"10:00",span:1,kind:"group",type:"小组",title:"数据运营组",people:"数据运营组 · 吴志远、张文婷、刘嘉燕"},
+    {day:"tue",start:"10:20",span:1,kind:"project",type:"项目",title:"天际内部会议",people:"天际 · 代逸如、金薇丽、郝灿灿、刘嘉凝"},
+    {day:"tue",start:"10:40",span:1,kind:"project",type:"项目",title:"InfiniSynapse内部会议",people:"InfiniSynapse · 程果、张志博、孔月、李亚茹、鹿传坡"},
+    {day:"tue",start:"11:00",span:2,kind:"client",type:"客户",title:"客户会议-无界方舟",people:"无界方舟 · 田长举、金薇丽、刘嘉燕、代逸如、马志昂、Will、曾晓东、小乔"},
+    {day:"wed",start:"08:00",span:2,kind:"client",type:"客户",title:"客户会议-天际",people:"天际 · 代逸如、金薇丽、郝灿灿、刘嘉凝",note:"时间较早，按需参加。"},
+    {day:"wed",start:"09:00",span:1,kind:"whole",type:"全员",title:"团队整体会议",people:"团队整体 · 全员"},
+    {day:"wed",start:"09:20",span:1,kind:"group",type:"小组",title:"内容研究组",people:"内容研究组 · 孔月、郝灿灿"},
+    {day:"wed",start:"09:40",span:1,kind:"group",type:"小组",title:"报告组",people:"报告组 · 程果、张志博、金薇丽"},
+    {day:"wed",start:"10:00",span:1,kind:"project",type:"项目",title:"IOSG内部会议（两周一次）",people:"IOSG · 孔月、吴志远"},
+    {day:"wed",start:"10:20",span:1,kind:"project",type:"项目",title:"Buda内部会议",people:"Buda · 吴志远、张文婷、kiki、代逸如、张成烨"},
+    {day:"wed",start:"11:00",span:2,kind:"client",type:"客户",title:"客户会议-InfiniSynapse",people:"InfiniSynapse · 程果、张志博、孔月、李亚茹、鹿传坡、Will、蒋涛团队",note:"会前1小时备份所有交付链接。"},
+    {day:"thu",start:"09:00",span:1,kind:"whole",type:"全员",title:"团队整体会议",people:"团队整体 · 全员"},
+    {day:"thu",start:"09:20",span:1,kind:"project",type:"项目",title:"COCO内部会议",people:"COCO · 侯明真、田长举、吕教东、周星星、李阳阳、李家乐、孔德浩"},
+    {day:"thu",start:"10:00",span:2,kind:"client",type:"客户",title:"客户会议-IOSG（两周一次）",people:"IOSG · 孔月、吴志远、Will、Jocy"},
+    {day:"thu",start:"11:00",span:1,kind:"client",type:"客户",title:"客户会议-Buda",people:"Buda · 吴志远、张文婷、kiki、代逸如、张成烨、Will、Kelly"},
+    {day:"fri",start:"09:00",span:1,kind:"whole",type:"全员",title:"团队整体会议",people:"团队整体 · 全员",note:"周中同步、客户问题预警。"},
+    {day:"fri",start:"09:20",span:1,kind:"group",type:"小组",title:"剪辑社媒组内部会议",people:"剪辑社媒组 · 代逸如、侯明真、周星星、李亚茹、李阳阳、张成烨"},
+    {day:"fri",start:"09:40",span:1,kind:"group",type:"小组",title:"报告组",people:"报告组 · 程果、张志博、金薇丽"},
+    {day:"fri",start:"10:00",span:2,kind:"client",type:"客户",title:"客户会议-COCO",people:"COCO · 侯明真、田长举、吕教东、周星星、李阳阳、李家乐、孔德浩、Will、Charlie",note:"会前1小时备份所有交付链接。"},
+    {day:"fri",start:"11:00",span:1,kind:"client",type:"客户 / BD",title:"客户会议-VOCCI",people:"VOCCI · 贾杰阳 JR、邓旭东、Domingo、顾俊伟 Ian、Grace、Will",note:"按最新要求只保留 20 分钟。"},
+    {day:"fri",start:"11:20",span:1,kind:"project",type:"项目",title:"Qveris内部会议",people:"Qveris · 孔月、张志博、程果、李亚茹、马宁、鹿传坡、Will",note:"放在 VOCCI 后 20 分钟，内部对齐客户问题和本周素材。"}
+   ]
+  } },
 files:[
  {date:"06-05",kind:"会议转录",title:"Will × COCO MKT 6/5 转录",vis:"内部"},
  {date:"06-05",kind:"聊天记录",title:"COCO 群 6/5 聊天记录（抽出 3 条事项）",vis:"内部"},
@@ -907,13 +973,14 @@ files:[
 
  if(arr(raw.team).length){
    DB.roster={
-    lead:raw.meta.lead||DB.roster.lead,
-    reviewer:raw.meta.reviewer||DB.roster.reviewer,
-    members:arr(raw.team).map(p=>({name:p.name,role:arr(p.roles).join(" · ")||"成员",group:p.group||""})),
-    helpers:arr(DB.roster.helpers),
-    left:arr(DB.roster.left)
-   };
- }
+     lead:raw.meta.lead||DB.roster.lead,
+     reviewer:raw.meta.reviewer||DB.roster.reviewer,
+     members:arr(raw.team).map(p=>({name:p.name,role:arr(p.roles).join(" · ")||"成员",group:p.group||""})),
+     helpers:arr(DB.roster.helpers),
+     left:arr(DB.roster.left),
+     schedule:DB.roster.schedule
+    };
+  }
 
  const toMetric=m=>{
    const series=arr(m.series).map(Number).filter(Number.isFinite);
@@ -2710,7 +2777,23 @@ function submitView(){return topbar(`<b>COCO</b> · 每日信息录入`)+`<h2 cl
   <div class="fr"><label>原帖 / 来源链接（选填）</label><input id="manualUrl" placeholder="https://"></div>
   <button class="submitbtn" type="button" onclick="return saveSubmissionDraft()">提交</button><div id="manualResult" class="submit-live-result" style="display:none;margin-top:10px;border:1px solid var(--line);background:#FBF9F4;padding:10px 12px;border-radius:6px;font-size:12px;line-height:1.55;color:var(--ink)"></div></div>`}
 
-function rosterView(){const rows=DB.roster.members.map(m=>`<tr><td>${who(m.name)}</td><td>${esc(m.role)}</td><td class="small">${esc(m.group)}</td></tr>`).join("");const hp=DB.roster.helpers.map(h=>`<tr><td>${who(h.name)}</td><td><span class="tag fresh">帮忙</span></td><td class="small">${esc(h.note)}</td></tr>`).join("");return topbar(`<b>COCO</b> · 团队名单`)+`<h2 class="pagetitle">团队名单</h2><div class="pagedesc">本客户核心成员引用全公司全员名单（/team.yaml）。负责人 ${esc(DB.roster.lead)} · 把关 ${esc(DB.roster.reviewer)}。增删人改一处、全站联动。</div><table class="t"><thead><tr><th>成员</th><th>本客户角色</th><th>所属组</th></tr></thead><tbody>${rows}${hp}</tbody></table>`}
+function rosterScheduleView(){
+  const schedule=DB.roster.schedule||{};
+  const days=schedule.days||[], slots=schedule.slots||[], events=schedule.events||[];
+  if(!days.length||!slots.length)return "";
+  const heads=`<div class="schedule-head time" style="grid-column:1;grid-row:1">时间</div>`+days.map((d,i)=>`<div class="schedule-head" style="grid-column:${i+2};grid-row:1">${esc(d.label)}<span>${esc(d.date)}</span></div>`).join("");
+  const timeCells=slots.map((s,i)=>`<div class="schedule-time" style="grid-row:${i+2}">${esc(s.bj)}<span>${esc(s.sv)}</span></div>`).join("");
+  const slotCells=slots.map((s,si)=>days.map((d,di)=>`<div class="schedule-slot" style="grid-column:${di+2};grid-row:${si+2}"></div>`).join("")).join("");
+  const eventCells=events.map(e=>{
+    const di=days.findIndex(d=>d.key===e.day), si=slots.findIndex(s=>s.key===e.start);
+    if(di<0||si<0)return "";
+    const span=Math.max(1,Number(e.span)||1);
+    const kind=String(e.kind||"project").replace(/[^\w-]/g,"");
+    return `<article class="schedule-event ${kind}" style="grid-column:${di+2};grid-row:${si+2} / span ${span}"><div class="etype">■ ${esc(e.type||"会议")}</div><h3>${esc(e.title)}</h3><p>${esc(e.people||"")}</p>${e.note?`<div class="note">${esc(e.note)}</div>`:""}</article>`;
+  }).join("");
+  return `<section class="sec"><div class="shead"><h3>本周会议排期</h3><span class="hint">${esc(schedule.week||"")}</span></div><p class="lead">按本周会议表整理：周五 VOCCI 已改为 20 分钟，后 20 分钟补入 Qveris 内部会议。</p><div class="weekly-wrap"><div class="weekly-schedule" style="--rows:${slots.length}">${heads}${timeCells}${slotCells}${eventCells}</div></div></section>`;
+}
+function rosterView(){const rows=DB.roster.members.map(m=>`<tr><td>${who(m.name)}</td><td>${esc(m.role)}</td><td class="small">${esc(m.group)}</td></tr>`).join("");const hp=DB.roster.helpers.map(h=>`<tr><td>${who(h.name)}</td><td><span class="tag fresh">帮忙</span></td><td class="small">${esc(h.note)}</td></tr>`).join("");return topbar(`<b>COCO</b> · 团队名单`)+`<h2 class="pagetitle">团队名单</h2><div class="pagedesc">本客户核心成员引用全公司全员名单（/team.yaml）。负责人 ${esc(DB.roster.lead)} · 把关 ${esc(DB.roster.reviewer)}。增删人改一处、全站联动。</div>${rosterScheduleView()}<table class="t"><thead><tr><th>成员</th><th>本客户角色</th><th>所属组</th></tr></thead><tbody>${rows}${hp}</tbody></table>`}
 bootWithAuth();
 </script>
 </body>
