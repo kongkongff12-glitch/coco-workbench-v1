@@ -133,6 +133,9 @@ table.t tr:hover td{background:#FBF9F4}
 .source-note{margin:-4px 0 14px;border:1px solid var(--line);background:#FBF9F4;border-radius:6px;padding:8px 11px;font-size:12px;color:var(--sub)}
 .source-note summary{cursor:pointer;color:var(--amber);font-weight:600}
 .source-note div{margin-top:6px;line-height:1.6}
+.source-note .row2{display:grid;grid-template-columns:1fr 1.4fr;gap:12px;margin-top:0}
+.source-note label{display:block;font-size:12px;color:var(--sub);font-weight:900;margin-bottom:5px}
+.source-note select,.source-note input{width:100%;border:1px solid var(--line-dark);background:#fff;border-radius:6px;padding:8px 10px;color:var(--ink);font-family:var(--sans)}
 .linegroup{margin-bottom:14px}
 .linegroup .lh{font-family:var(--serif);font-size:13.5px;font-weight:700;padding:5px 0;display:flex;gap:8px;align-items:center}
 .linegroup .lh .pri{font-size:11px;color:var(--faint);font-weight:400}
@@ -2452,10 +2455,25 @@ DB.contactMatrix=[
  }
 })();
 
+(function applySocialWorkbookSource(){
+ DB.socialWorkbookUrl="assets/data/coco-social-workbook-20260627.json";
+ DB.sourceIndex=DB.sourceIndex||[];
+ const sources=[
+  {id:"social-workbook-20260627-xlsx",title:"COCO社媒数据看板 Excel 原表",kind:"XLSX",date:"2026-06-27",asset:"assets/sources/social-dashboard/COCO社媒数据看板.xlsx",excerpt:"用户导出的完整社媒数据看板，包含总览、平台定位、复盘报告、数据复盘、推特/领英/YouTube/视频号/公众号/小红书等 20 个 sheet。"},
+  {id:"social-workbook-20260627-json",title:"COCO社媒数据看板 结构化数据",kind:"JSON",date:"2026-06-27",asset:"assets/data/coco-social-workbook-20260627.json",excerpt:"由 Excel 原表解析出的站内结构化数据：16 个周期、14 个总览账号、16 个平台明细表、541 条内容明细。"}
+ ];
+ sources.forEach(s=>{
+  const i=DB.sourceIndex.findIndex(x=>x.id===s.id);
+  if(i>=0)DB.sourceIndex[i]=Object.assign({},DB.sourceIndex[i],s);else DB.sourceIndex.unshift(s);
+ });
+})();
+
 var psyMonth="all";
 var psyWeek="all";
 var meetingMonth="all";
 var meetingQuery="";
+var socialSheetFilter="all";
+var socialQuery="";
 
 const NAV={ "工作台":["overview","psychology","board","videos","seoRoadmap","videoRoadmap","data","contacts","library","submit"], 过程:["meetings","sources","feed","requests","roster"] };
 const VIEWS={ overview:"近期关注",board:"白板",psychology:"用户画像 / 心理变化",videos:"Demo/Use Case视频",library:"素材库",seoRoadmap:"SEO路线图",videoRoadmap:"视频路线图",data:"数据中心",contacts:"对接负责人",sources:"证据索引",feed:"工作动态流",requests:"确认事项",deliverables:"交付时间线",meetings:"会议",files:"物料",submit:"每日信息录入",roster:"团队名单" };
@@ -3028,51 +3046,98 @@ function videoRoadmapView(){
   return `<section class="panel"><h1>视频路线图</h1><p class="lead">按 Notion 视频排期重建：甘特图现在逐条对应明细表，不再把多个视频合并成一条概括任务。</p>${renderCardGantt(gantt)}${notionKpis([{v:`${rows.length}/${ganttTasks}`,l:"明细 / 甘特任务"},{v:done,l:"已完成"},{v:doing,l:"剪辑中"},{v:waiting,l:"待COCO语料"}])}${card?renderCardDetails(card.detailTitle,card.details):""}<div class="source-actions"><button class="source-button" data-go="videos" onclick="go('videos')">打开Demo/Use Case视频库</button></div>${videoScheduleDetails()}<div class="issue-grid" style="margin-top:14px">${roadmapSourceList(DB.videoRoadmap||[])}</div></section>`;
 }
 
-function socialValue(v,suffix){
- if(v===null||v===undefined||v==="")return "-";
- return Number.isFinite(Number(v))?Number(v).toLocaleString()+esc(suffix||""):esc(v)+esc(suffix||"");
+function ensureSocialWorkbookData(){
+ if(DB.socialWorkbookData||DB.socialWorkbookLoading||!DB.socialWorkbookUrl)return;
+ DB.socialWorkbookLoading=true;
+ fetch(DB.socialWorkbookUrl).then(r=>r.json()).then(j=>{DB.socialWorkbookData=j;DB.socialWorkbookLoading=false;if(route==="data")render();}).catch(err=>{DB.socialWorkbookError=String(err&&err.message||err);DB.socialWorkbookLoading=false;if(route==="data")render();});
 }
-function socialDelta(now,prev,suffix){
- if(now===null||prev===null||now===undefined||prev===undefined||prev==="")return {text:"-",cls:"flat"};
+function socialValue(v,suffix,metric){
+ if(v===null||v===undefined||v==="")return "-";
+ if(String(v)==="-")return "-";
+ const n=Number(v);
+ if(Number.isFinite(n)&&/率|完成率|完播率/i.test(String(metric||""))&&Math.abs(n)<=1)return (n*100).toFixed(1).replace(/\.0$/,"")+"%";
+ return Number.isFinite(n)?n.toLocaleString()+esc(suffix||""):esc(v)+esc(suffix||"");
+}
+function socialDelta(now,prev){
+ if(now===null||prev===null||now===undefined||prev===undefined||prev===""||String(now)==="-"||String(prev)==="-")return {text:"-",cls:"flat"};
  const n=Number(now),p=Number(prev);
  if(!Number.isFinite(n)||!Number.isFinite(p)||!p)return {text:n===p?"0":"新增",cls:n>=p?"up":"down"};
  const d=(n-p)/p*100;
  return {text:(d>0?"+":"")+d.toFixed(Math.abs(d)>=10?0:1)+"%",cls:d>0?"up":(d<0?"down":"flat")};
 }
+function socialMetricValue(metric,idx){return (metric.values||[])[idx]&&(metric.values||[])[idx].value}
+function socialAccountTone(account){const s=String(account||"");if(/视频号|公众号|小红书/.test(s))return "green";if(/LinkedIn|Linkedin|YouTube/.test(s))return "blue";return "yellow"}
 function socialBar(now,prev){
  const n=Number(now)||0,p=Number(prev)||0,max=Math.max(n,p,1);
  const nw=Math.max(2,Math.round(n/max*100)),pw=Math.max(2,Math.round(p/max*100));
- return `<div class="social-bar-bg" title="本周 ${n} / 上周 ${p}"><div class="social-bar-now" style="width:${nw}%"></div><div class="social-bar-prev" style="width:${pw}%"></div></div>`;
+ return `<div class="social-bar-bg" title="本期 ${n} / 上期 ${p}"><div class="social-bar-now" style="width:${nw}%"></div><div class="social-bar-prev" style="width:${pw}%"></div></div>`;
 }
-function socialBoardHtml(rows=[]){
+function socialBoardHtml(rows=[],periods=[]){
  const body=[];
  rows.forEach(r=>{
-  (r.metrics||[]).forEach((m,i)=>{
-   const delta=socialDelta(m[1],m[2],m[3]);
+  const metrics=r.metrics||[];
+  metrics.forEach((m,i)=>{
+   const now=socialMetricValue(m,0),prev=socialMetricValue(m,1),delta=socialDelta(now,prev);
    body.push(`<tr class="${i===0?"account-start":""}">
-    ${i===0?`<td class="social-account ${esc(r.tone||"")} " rowspan="${(r.metrics||[]).length}">${esc(r.account)}<small>负责人：${esc(r.owner||"")} / 复盘：${esc(r.reviewer||"")}</small>${r.link?`<small><a href="${esc(r.link)}" target="_blank">打开账号 ↗</a></small>`:""}</td>`:""}
-    <td class="social-metric">${esc(m[0])}</td>
-    <td class="social-num">${socialValue(m[1],m[3])}</td>
-    <td class="social-num">${socialValue(m[2],m[3])}</td>
+    ${i===0?`<td class="social-account ${esc(r.tone||socialAccountTone(r.account))}" rowspan="${metrics.length}">${esc(r.account)}<small>${r.owner||r.reviewer?`负责人：${esc(r.owner||"-")} / 复盘：${esc(r.reviewer||"-")}`:""}</small>${r.link?`<small><a href="${esc(r.link)}" target="_blank">打开账号 ↗</a></small>`:""}</td>`:""}
+    <td class="social-metric">${esc(m.metric)}</td>
+    <td class="social-num">${socialValue(now,"",m.metric)}</td>
+    <td class="social-num">${socialValue(prev,"",m.metric)}</td>
     <td class="social-delta ${delta.cls}">${esc(delta.text)}</td>
-    <td class="social-barcell">${socialBar(m[1],m[2])}</td>
-    ${i===0?`<td class="social-note" rowspan="${(r.metrics||[]).length}">${esc(r.note||"")}</td>`:""}
+    <td class="social-barcell">${socialBar(now,prev)}</td>
+    ${i===0?`<td class="social-note" rowspan="${metrics.length}">${esc(r.note||"")}</td>`:""}
    </tr>`);
   });
  });
- return `<div class="social-board"><div class="social-board-head"><div class="social-board-title">近两周社媒数据看板<span>重绘版：直接呈现表格，不再依赖缩略截图辨认</span></div><div class="social-board-link">${esc((DB.dataCenterUpdate||{}).feishu||"")}</div></div><div class="social-board-wrap"><table class="social-table"><thead><tr><th>平台 / 负责人</th><th>细则</th><th>2026/06/17-24</th><th>2026/06/11-16</th><th>环比</th><th>对比条</th><th>数据解读</th></tr></thead><tbody>${body.join("")}</tbody></table></div></div>`;
+ const p0=periods[0]||"最新周期",p1=periods[1]||"上一周期";
+ return `<div class="social-board"><div class="social-board-head"><div class="social-board-title">全渠道社媒数据总览<span>来自 Excel 原表，完整重绘账号矩阵，默认展示最新两期对比</span></div><div class="social-board-link">${esc((DB.dataCenterUpdate||{}).feishu||"")}</div></div><div class="social-board-wrap"><table class="social-table"><thead><tr><th>平台 / 负责人</th><th>细则</th><th>${esc(p0)}</th><th>${esc(p1)}</th><th>环比</th><th>对比条</th><th>数据解读</th></tr></thead><tbody>${body.join("")}</tbody></table></div></div>`;
+}
+function socialWorkbookKpis(w){
+ const active=w.overviewGroups.filter(g=>(g.metrics||[]).some(m=>String(socialMetricValue(m,0)||"").trim()&&!["-",""].includes(String(socialMetricValue(m,0)).trim()))).length;
+ return notionKpis([{v:w.source.sheetCount,l:"Excel sheets"},{v:w.periods.length,l:"周度周期"},{v:w.overviewGroups.length,l:"总览账号"},{v:w.source.detailRows,l:"平台明细"}])+sourceActions(["social-workbook-20260627-xlsx","social-workbook-20260627-json"]);
+}
+function socialStrategyHtml(w){
+ const pos=(w.positioning||[]).map(x=>`<article class="issue-card"><div class="meta"><span>${esc(x.负责人||"-")}</span><span>${statusBadge(x.优先级||"")}</span></div><h3>${esc(x.平台||"")}</h3><p>${esc(x.一句话todo||"")}</p><div class="small muted">复盘：${esc(x.复盘||"-")} · 审核：${esc(x.审核||"-")}</div></article>`).join("");
+ return `<div class="notion-section"><div class="shead"><h3>平台定位与当前 Todo</h3><span class="hint">来自“平台定位” sheet</span></div><div class="issue-grid">${pos}</div></div>`;
+}
+function socialReviewHtml(w){
+ const dataRows=(w.dataReview||[]).filter(x=>x.平台).map(x=>`<tr><td><b>${esc(x.平台)}</b></td><td>${esc(x["TO DO"]||"")}</td></tr>`).join("");
+ const reportRows=(w.reviewReport||[]).filter(x=>x.渠道).map(x=>`<tr><td><b>${esc(x.渠道)}</b></td><td>${esc(x["To do"]||"")}</td><td>${esc(x.报告链接||"")}</td></tr>`).join("");
+ return `<div class="notion-section"><div class="shead"><h3>数据复盘与历史报告</h3><span class="hint">${esc(w.reviewPeriod||"")}</span></div><div class="table-scroll"><table class="t"><thead><tr><th>平台</th><th>当前 TO DO</th></tr></thead><tbody>${dataRows}</tbody></table></div><h3 style="margin-top:16px">历史复盘报告</h3><div class="table-scroll"><table class="t"><thead><tr><th>渠道</th><th>To do</th><th>报告链接</th></tr></thead><tbody>${reportRows}</tbody></table></div></div>`;
+}
+function socialDetailSheetsHtml(w){
+ const sheets=w.details||[],names=sheets.map(s=>s.name),selected=socialSheetFilter==="all"?sheets:sheets.filter(s=>s.name===socialSheetFilter),q=String(socialQuery||"").trim().toLowerCase();
+ const options=[`<option value="all" ${socialSheetFilter==="all"?"selected":""}>全部平台明细</option>`].concat(names.map(n=>`<option value="${esc(n)}" ${socialSheetFilter===n?"selected":""}>${esc(n)}</option>`)).join("");
+ const cards=selected.map(s=>{
+  const rows=q?s.rows.filter(r=>r.map(x=>String(x||"").toLowerCase()).join(" ").includes(q)):s.rows;
+  const body=rows.map(r=>`<tr>${s.columns.map((c,i)=>`<td>${esc(r[i]===null||r[i]===undefined?"":r[i])}</td>`).join("")}</tr>`).join("");
+  return `<details class="detailbox" ${selected.length===1?"open":""}><summary>${esc(s.title||s.name)} · ${rows.length}/${s.rowCount} 条</summary><div class="detailbody">${(s.notes||[]).map(n=>`<div class="source-note">${esc(n)}</div>`).join("")}<div class="table-scroll"><table class="t social-detail-table"><thead><tr>${s.columns.map(c=>`<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${body}</tbody></table></div></div></details>`;
+ }).join("");
+ return `<div class="notion-section"><div class="shead"><h3>平台内容明细</h3><span class="hint">16 个 sheet / 541 条记录</span></div><div class="source-note"><div class="row2"><div class="fr"><label>平台</label><select onchange="socialSheetFilter=this.value;render()">${options}</select></div><div class="fr"><label>关键词</label><input id="socialSearch" value="${esc(socialQuery)}" placeholder="搜标题、URL、内容、类型..." onkeydown="if(event.key==='Enter'){socialQuery=this.value.trim();render()}"></div></div><div style="margin-top:10px"><button class="submitbtn" type="button" onclick="socialQuery=(document.getElementById('socialSearch')||{}).value||'';render()">搜索</button><button class="source-button" type="button" onclick="socialQuery='';socialSheetFilter='all';render()" style="margin-left:8px">清空</button></div></div>${cards}</div>`;
 }
 const SOCIAL_LOCAL_KEY="coco-social-dashboard-local";
 function localSocialEntries(){try{return JSON.parse(localStorage.getItem(SOCIAL_LOCAL_KEY)||"[]")}catch(e){return []}}
 function renderLocalSocialEntries(){
  const items=localSocialEntries();
  if(!items.length)return "";
- return `<div class="notion-section"><h2>本机录入的飞书社媒看板截图</h2><p class="lead">这里展示通过“每日信息录入”粘贴/上传的社媒看板截图，最新在前。截图用于证据留存；上面的重绘表负责正式展示。</p><div class="local-social-list">${items.map((x,i)=>`<article class="local-social-card"><h3>${esc(x.date||"未填日期")} · ${esc(x.note||"飞书社媒看板截图")}</h3>${x.src?`<img src="${x.src}" alt="${esc(x.note||"社媒看板截图")}">`:""}${x.rawText?`<details class="media-detail" open><summary>粘贴的表格文本</summary><div>${esc(x.rawText)}</div></details>`:""}${x.url?`<div class="source-actions"><a class="source-pill" href="${esc(x.url)}" target="_blank">打开来源链接</a></div>`:""}</article>`).join("")}</div></div>`;
+ return `<div class="notion-section"><h2>本机录入的飞书社媒看板截图</h2><p class="lead">这里展示通过“每日信息录入”粘贴/上传的社媒看板截图，最新在前。截图用于证据留存；上面的 Excel 重绘表负责正式展示。</p><div class="local-social-list">${items.map((x,i)=>`<article class="local-social-card"><h3>${esc(x.date||"未填日期")} · ${esc(x.note||"飞书社媒看板截图")}</h3>${x.src?`<img src="${x.src}" alt="${esc(x.note||"社媒看板截图")}">`:""}${x.rawText?`<details class="media-detail" open><summary>粘贴的表格文本</summary><div>${esc(x.rawText)}</div></details>`:""}${x.url?`<div class="source-actions"><a class="source-pill" href="${esc(x.url)}" target="_blank">打开来源链接</a></div>`:""}</article>`).join("")}</div></div>`;
 }
 function dataView(){
-  const d=DB.dataCenterUpdate||{};
+  ensureSocialWorkbookData();
+  const d=DB.dataCenterUpdate||{},wb=DB.socialWorkbookData;
+  if(wb)return `<section class="panel"><h1>数据中心</h1><p class="lead">已接入用户导出的完整 Excel 社媒数据看板：总览、平台定位、复盘报告、数据复盘和各平台明细都在这里。</p>
+  <div class="board-link-card"><h3>飞书社媒数据看板</h3><p>Excel 原表已同步为站内数据；需要核对时可打开原始 xlsx 或飞书源表。</p><div class="source-actions"><a class="source-pill" href="${d.feishu}" target="_blank">打开飞书社媒数据看板</a></div></div>
+  ${socialWorkbookKpis(wb)}
+  ${socialBoardHtml(wb.overviewGroups||[],wb.periods||[])}
+  ${socialStrategyHtml(wb)}
+  ${socialReviewHtml(wb)}
+  ${renderLocalSocialEntries()}
+  ${socialDetailSheetsHtml(wb)}
+  <details class="source-note"><summary>查看截图证据原图</summary><div>${renderMediaWall(d.socialSnapshots||[])}</div></details>
+  ${publishOverview()}
+  </section>`;
   const rows=(d.socialRows||[]).map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td>${esc(r[4])}</td></tr>`).join("");
-  return `<section class="panel"><h1>数据中心</h1><p class="lead">近两周社媒数据改为重绘看板：默认完整呈现数据和判断，截图只作为证据原图保留。</p>
+  return `<section class="panel"><h1>数据中心</h1><p class="lead">近两周社媒数据改为重绘看板：默认完整呈现数据和判断，截图只作为证据原图保留。</p>${DB.socialWorkbookLoading?`<div class="source-note">正在读取 Excel 结构化数据...</div>`:""}${DB.socialWorkbookError?`<div class="source-note">Excel 结构化数据读取失败：${esc(DB.socialWorkbookError)}</div>`:""}
   <div class="board-link-card"><h3>飞书社媒数据看板</h3><p>用于查看 COCO 各平台社媒数据、发布内容和周度表现。</p><div class="source-actions"><a class="source-pill" href="${d.feishu}" target="_blank">打开飞书社媒数据看板</a></div></div>
   ${socialBoardHtml(d.socialBoardRows||[])}
   ${renderLocalSocialEntries()}
