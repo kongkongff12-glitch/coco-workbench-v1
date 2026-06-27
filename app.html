@@ -202,6 +202,30 @@ table.t tr:hover td{background:#FBF9F4}
 .platcard .pstats{display:flex;gap:16px;margin-bottom:7px}
 .platcard .num{font-family:var(--serif);font-size:18px;font-weight:700}.platcard .lab{font-size:10px;color:var(--faint)}
 .platlinks{display:flex;gap:6px;margin-top:7px}
+.social-board{border:2px solid var(--ink);border-radius:14px;background:#fff;overflow:hidden;margin:16px 0 20px;box-shadow:0 1px 0 rgba(33,28,21,.05)}
+.social-board-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;background:#F6F1E7;border-bottom:2px solid var(--ink);padding:16px 18px}
+.social-board-title{font-size:22px;font-weight:900;font-family:var(--serif);line-height:1.25}
+.social-board-title span{display:block;font-family:var(--sans);font-size:12px;color:var(--sub);font-weight:800;margin-top:4px}
+.social-board-link{font-size:12px;color:var(--blue);font-weight:900;word-break:break-all;text-align:right}
+.social-board-wrap{overflow-x:auto}
+.social-table{width:100%;min-width:1040px;border-collapse:collapse}
+.social-table th{background:#DDE7FF;color:#1F3558;font-size:12px;font-weight:900;text-align:left;padding:10px 12px;border-bottom:1px solid #B8C6E4;border-right:1px solid #B8C6E4;white-space:nowrap}
+.social-table td{padding:9px 12px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);vertical-align:middle;font-size:13px}
+.social-table tr.account-start td{border-top:2px solid var(--line-dark)}
+.social-account{font-weight:900;line-height:1.35}
+.social-account small{display:block;color:var(--sub);font-size:11px;font-weight:800;margin-top:3px}
+.social-account.yellow{background:#FFF36B}.social-account.green{background:#BFE7AF}.social-account.blue{background:#DDE9FF}
+.social-metric{font-weight:900;color:var(--red)}
+.social-num{font-weight:900;font-variant-numeric:tabular-nums;white-space:nowrap}
+.social-delta{font-size:12px;font-weight:900;white-space:nowrap}.social-delta.up{color:var(--green)}.social-delta.down{color:var(--red)}.social-delta.flat{color:var(--sub)}
+.social-barcell{min-width:180px}.social-bar-bg{height:16px;background:#EEF1F8;border-radius:3px;overflow:hidden;display:flex}.social-bar-now{background:#7E97EA}.social-bar-prev{background:#B9C5F8}
+.social-note{font-size:12px;color:var(--sub);line-height:1.45;min-width:220px}
+.local-social-list{display:grid;gap:14px;margin:14px 0}
+.local-social-card{border:1px solid var(--line);border-radius:10px;background:#fff;padding:12px}
+.local-social-card h3{font-size:16px;margin-bottom:8px}.local-social-card img{width:100%;max-height:720px;object-fit:contain;background:#F6F1E7;border:1px solid var(--line);border-radius:8px;display:block}
+.social-paste-zone{border:2px dashed var(--line-dark);border-radius:10px;background:#FBF9F4;padding:16px;min-height:96px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--sub);font-size:13px;line-height:1.6;outline:none}
+.social-paste-zone:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-bg)}
+.social-preview img{width:100%;max-height:380px;object-fit:contain;background:#F6F1E7;border:1px solid var(--line);border-radius:8px;margin-top:10px}
 
 /* 甘特 */
 .gantt{border:2px solid var(--ink);border-radius:12px;background:var(--panel);overflow-x:auto}
@@ -237,6 +261,7 @@ table.t tr:hover td{background:#FBF9F4}
 
 /* 录入 */
 .form{background:var(--panel);border:1px solid var(--line);padding:20px 22px;max-width:600px}
+.form.social-form{max-width:920px;margin-bottom:16px}
 .form .fr{margin-bottom:13px}.form label{display:block;font-size:12px;color:var(--sub);margin-bottom:5px}
 .form select,.form input,.form textarea{width:100%;border:1px solid var(--line-dark);background:var(--bg);padding:9px 11px;font-family:var(--sans);font-size:13px;border-radius:5px;color:var(--ink)}
 .form textarea{min-height:64px;resize:vertical}.form .row2{display:flex;gap:12px}.form .row2>*{flex:1}
@@ -2099,6 +2124,16 @@ DB.contactMatrix=[
    ["Charlie 视频号","播放量","1,489","5,928","视频号上周活动/案例红利明显，本周需找可复制原因。"],
    ["公众号 官方号","阅读量","-","695","公众号仍是中文内容阵地。"],
    ["小红书 官方","浏览量","38","295","需要继续匹配女性企业家场景。"]
+  ],
+  socialBoardRows:[
+   {account:"X个人号 Charlie",tone:"yellow",owner:"侯明真",reviewer:"侯明真",link:"https://x.com/CharliehuAI",metrics:[["发文数",4,12],["浏览量",1237,3673],["点赞",4,38],["转发",0,1]],note:"活动红利退去后，个人号浏览量回落，需要看内容选题和发布时间。"},
+   {account:"LinkedIn企业号 COCO",tone:"yellow",owner:"田长举",reviewer:"侯明真",link:"https://www.linkedin.com/company/1109",metrics:[["发文数",3,5],["点赞",5,14],["转发数",1,5]],note:"企业号互动下滑，后续需要和客户案例、品牌升级内容绑定。"},
+   {account:"YouTube 官方号",tone:"yellow",owner:"侯明真",reviewer:"侯明真",link:"https://www.youtube.com/channel/",metrics:[["发布数",1,4],["浏览量",2,89]],note:"本周 YouTube 浏览很低，需要核对视频是否公开、标题和分发入口。"},
+   {account:"LinkedIn个人号 Charlie",tone:"yellow",owner:"未授权",reviewer:"-",link:"https://www.linkedin.com/in/charlieyechuan",metrics:[["发文数",null,null],["点赞",null,null],["转发数",null,null]],note:"账号未授权，本周暂无可用数据。"},
+   {account:"X企业号 COCO",tone:"yellow",owner:"田长举",reviewer:"侯明真",link:"https://x.com/CocoAIxyz",metrics:[["发文数",4,8],["浏览量",1456,2735],["点赞",5,25],["转发",5,5]],note:"官方号浏览和点赞下降，转发持平；需要二次转推和合作账号放大。"},
+   {account:"Charlie视频号",tone:"green",owner:"侯明真",reviewer:"侯明真",link:"",metrics:[["发布数",2,10],["播放量",1489,5928],["平均完播率",13,12,"%"]],note:"发布量下降但完播率略升，说明内容质量不差，主要缺稳定发布。"},
+   {account:"公众号 官方号",tone:"green",owner:"侯明真",reviewer:"侯明真",link:"https://mp.weixin.qq.com/cgi-bin/home?t=home/",metrics:[["发文数",null,1],["阅读量",null,695],["平均阅读完成率",null,36,"%"]],note:"公众号是品牌迁移和中文内容沉淀阵地，需承接 OpenMax 过渡叙事。"},
+   {account:"小红书 官方",tone:"green",owner:"侯明真",reviewer:"侯明真",link:"https://www.rednote.com/user/profile/578b92a",metrics:[["发布数",null,11],["浏览量",38,295],["点赞",1,8]],note:"小红书仍需匹配女性企业家场景，单条数据要和案例/干货绑定。"}
   ]
  });
  const agendaItems=[
@@ -2993,13 +3028,56 @@ function videoRoadmapView(){
   return `<section class="panel"><h1>视频路线图</h1><p class="lead">按 Notion 视频排期重建：甘特图现在逐条对应明细表，不再把多个视频合并成一条概括任务。</p>${renderCardGantt(gantt)}${notionKpis([{v:`${rows.length}/${ganttTasks}`,l:"明细 / 甘特任务"},{v:done,l:"已完成"},{v:doing,l:"剪辑中"},{v:waiting,l:"待COCO语料"}])}${card?renderCardDetails(card.detailTitle,card.details):""}<div class="source-actions"><button class="source-button" data-go="videos" onclick="go('videos')">打开Demo/Use Case视频库</button></div>${videoScheduleDetails()}<div class="issue-grid" style="margin-top:14px">${roadmapSourceList(DB.videoRoadmap||[])}</div></section>`;
 }
 
+function socialValue(v,suffix){
+ if(v===null||v===undefined||v==="")return "-";
+ return Number.isFinite(Number(v))?Number(v).toLocaleString()+esc(suffix||""):esc(v)+esc(suffix||"");
+}
+function socialDelta(now,prev,suffix){
+ if(now===null||prev===null||now===undefined||prev===undefined||prev==="")return {text:"-",cls:"flat"};
+ const n=Number(now),p=Number(prev);
+ if(!Number.isFinite(n)||!Number.isFinite(p)||!p)return {text:n===p?"0":"新增",cls:n>=p?"up":"down"};
+ const d=(n-p)/p*100;
+ return {text:(d>0?"+":"")+d.toFixed(Math.abs(d)>=10?0:1)+"%",cls:d>0?"up":(d<0?"down":"flat")};
+}
+function socialBar(now,prev){
+ const n=Number(now)||0,p=Number(prev)||0,max=Math.max(n,p,1);
+ const nw=Math.max(2,Math.round(n/max*100)),pw=Math.max(2,Math.round(p/max*100));
+ return `<div class="social-bar-bg" title="本周 ${n} / 上周 ${p}"><div class="social-bar-now" style="width:${nw}%"></div><div class="social-bar-prev" style="width:${pw}%"></div></div>`;
+}
+function socialBoardHtml(rows=[]){
+ const body=[];
+ rows.forEach(r=>{
+  (r.metrics||[]).forEach((m,i)=>{
+   const delta=socialDelta(m[1],m[2],m[3]);
+   body.push(`<tr class="${i===0?"account-start":""}">
+    ${i===0?`<td class="social-account ${esc(r.tone||"")} " rowspan="${(r.metrics||[]).length}">${esc(r.account)}<small>负责人：${esc(r.owner||"")} / 复盘：${esc(r.reviewer||"")}</small>${r.link?`<small><a href="${esc(r.link)}" target="_blank">打开账号 ↗</a></small>`:""}</td>`:""}
+    <td class="social-metric">${esc(m[0])}</td>
+    <td class="social-num">${socialValue(m[1],m[3])}</td>
+    <td class="social-num">${socialValue(m[2],m[3])}</td>
+    <td class="social-delta ${delta.cls}">${esc(delta.text)}</td>
+    <td class="social-barcell">${socialBar(m[1],m[2])}</td>
+    ${i===0?`<td class="social-note" rowspan="${(r.metrics||[]).length}">${esc(r.note||"")}</td>`:""}
+   </tr>`);
+  });
+ });
+ return `<div class="social-board"><div class="social-board-head"><div class="social-board-title">近两周社媒数据看板<span>重绘版：直接呈现表格，不再依赖缩略截图辨认</span></div><div class="social-board-link">${esc((DB.dataCenterUpdate||{}).feishu||"")}</div></div><div class="social-board-wrap"><table class="social-table"><thead><tr><th>平台 / 负责人</th><th>细则</th><th>2026/06/17-24</th><th>2026/06/11-16</th><th>环比</th><th>对比条</th><th>数据解读</th></tr></thead><tbody>${body.join("")}</tbody></table></div></div>`;
+}
+const SOCIAL_LOCAL_KEY="coco-social-dashboard-local";
+function localSocialEntries(){try{return JSON.parse(localStorage.getItem(SOCIAL_LOCAL_KEY)||"[]")}catch(e){return []}}
+function renderLocalSocialEntries(){
+ const items=localSocialEntries();
+ if(!items.length)return "";
+ return `<div class="notion-section"><h2>本机录入的飞书社媒看板截图</h2><p class="lead">这里展示通过“每日信息录入”粘贴/上传的社媒看板截图，最新在前。截图用于证据留存；上面的重绘表负责正式展示。</p><div class="local-social-list">${items.map((x,i)=>`<article class="local-social-card"><h3>${esc(x.date||"未填日期")} · ${esc(x.note||"飞书社媒看板截图")}</h3>${x.src?`<img src="${x.src}" alt="${esc(x.note||"社媒看板截图")}">`:""}${x.rawText?`<details class="media-detail" open><summary>粘贴的表格文本</summary><div>${esc(x.rawText)}</div></details>`:""}${x.url?`<div class="source-actions"><a class="source-pill" href="${esc(x.url)}" target="_blank">打开来源链接</a></div>`:""}</article>`).join("")}</div></div>`;
+}
 function dataView(){
   const d=DB.dataCenterUpdate||{};
   const rows=(d.socialRows||[]).map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td>${esc(r[4])}</td></tr>`).join("");
-  return `<section class="panel"><h1>数据中心</h1><p class="lead">近两周社媒数据先放这里做总览；白板里只提炼关键判断，不再重复拆细节图。</p>
+  return `<section class="panel"><h1>数据中心</h1><p class="lead">近两周社媒数据改为重绘看板：默认完整呈现数据和判断，截图只作为证据原图保留。</p>
   <div class="board-link-card"><h3>飞书社媒数据看板</h3><p>用于查看 COCO 各平台社媒数据、发布内容和周度表现。</p><div class="source-actions"><a class="source-pill" href="${d.feishu}" target="_blank">打开飞书社媒数据看板</a></div></div>
-  ${renderMediaWall(d.socialSnapshots||[])}
-  <h2 style="margin-top:18px">近两周核心变化</h2>
+  ${socialBoardHtml(d.socialBoardRows||[])}
+  ${renderLocalSocialEntries()}
+  <details class="source-note"><summary>查看证据原图</summary><div>${renderMediaWall(d.socialSnapshots||[])}</div></details>
+  <h2 style="margin-top:18px">近两周核心变化摘要</h2>
   <table class="t"><thead><tr><th>平台/账号</th><th>指标</th><th>2026/06/17-24</th><th>2026/06/11-16</th><th>判断</th></tr></thead><tbody>${rows}</tbody></table>
   ${publishOverview()}
   </section>`;
@@ -3154,8 +3232,49 @@ function saveSubmissionDraft(){
  submitNotice("manualResult","<b style='color:#b83a26'>已保存为本机草稿。</b><br>类型："+esc(entry.type)+"<br>负责人："+esc(entry.owner)+"<br>日期："+esc(entry.date)+"<br>文件："+(entry.files.length?esc(entry.files.map(function(f){return f.name}).join("、")):"未上传文件")+"<br><br>当前是静态站：会先记录所有文件名；真正入库时再把文件放进 assets 并更新素材库 / 证据索引。");
  return false;
 }
+var pendingSocialImage=null;
+function setSocialPreview(src,name){
+ pendingSocialImage=src?{src:src,name:name||"飞书社媒看板截图"}:null;
+ var box=document.getElementById("socialShotPreview");if(!box)return;
+ box.innerHTML=src?`<div class="social-preview"><img src="${src}" alt="${esc(name||"社媒看板截图")}"><div class="aihint">已读取：${esc(name||"截图")}，提交后会自动显示到数据中心。</div></div>`:"";
+}
+function readSocialImageFile(file){
+ if(!file||!/^image\//.test(file.type||"")){submitNotice("socialDashResult","请选择或粘贴图片文件。");return;}
+ var reader=new FileReader();
+ reader.onload=function(){setSocialPreview(reader.result,file.name||"粘贴截图")};
+ reader.readAsDataURL(file);
+}
+function previewSocialDashboardFile(input){
+ var file=input&&input.files&&input.files[0];readSocialImageFile(file);return false;
+}
+function handleSocialDashboardPaste(e){
+ var items=Array.prototype.slice.call(e.clipboardData&&e.clipboardData.items?e.clipboardData.items:[]);
+ var imgItem=items.find(function(x){return /^image\//.test(x.type||"")});
+ if(imgItem){e.preventDefault();readSocialImageFile(imgItem.getAsFile());return false;}
+ var text=e.clipboardData&&e.clipboardData.getData("text/plain");
+ if(text){var ta=document.getElementById("socialDashText");if(ta){ta.value=(ta.value?ta.value+"\n":"")+text;submitNotice("socialDashResult","已接收剪贴板里的表格文本；如果也有截图，可以继续粘贴或上传图片。");}}
+ return false;
+}
+function saveSocialDashboardEntry(){
+ var entry={date:(document.getElementById("socialDashDate")||{}).value||todayISO(),note:((document.getElementById("socialDashNote")||{}).value||"").trim()||"飞书社媒看板截图",url:((document.getElementById("socialDashUrl")||{}).value||"").trim(),rawText:((document.getElementById("socialDashText")||{}).value||"").trim(),src:pendingSocialImage&&pendingSocialImage.src||"",name:pendingSocialImage&&pendingSocialImage.name||"",savedAt:new Date().toLocaleString()};
+ if(!entry.src&&!entry.rawText){submitNotice("socialDashResult","还没有截图或表格文本。请上传图片、粘贴截图，或粘贴飞书表格文本。");return false;}
+ var old=localSocialEntries();old.unshift(entry);localStorage.setItem(SOCIAL_LOCAL_KEY,JSON.stringify(old.slice(0,20)));
+ setSocialPreview("","");
+ var input=document.getElementById("socialDashFile");if(input)input.value="";
+ submitNotice("socialDashResult","<b style='color:#b83a26'>已更新到数据中心。</b><br>日期："+esc(entry.date)+"<br>说明："+esc(entry.note)+"<br><br>打开左侧“数据中心”即可看到最新截图。截图会先进入本机预览；如果要让所有人线上都看到，需要把截图文件入库到 assets 后再发布。");
+ return false;
+}
 function submitView(){return topbar(`<b>COCO</b> · 每日信息录入`)+`<h2 class="pagetitle">每日信息录入</h2><div class="pagedesc">两种方式：①「随手记」一句话丢进去，AI 自动归类；② 上传文件/图片并补一句说明，后续归档进证据索引或白板素材。</div>
  <div class="quickbox"><div class="small" style="margin-bottom:6px">随手记（推荐）</div><textarea id="quickNote" placeholder="例：今天交付了 VC 文章抓取页，给 COCO 6 篇本周阅读列表 —— 或者直接粘一段群聊/会议片段"></textarea><div class="aihint">↳ AI 会判断这是交付 / 确认事项 / 数据点，自动归类填好，你确认即可。</div><div style="margin-top:10px"><button class="submitbtn" type="button" onclick="return prefillSubmission()">AI 归类并预填</button></div><div id="quickResult" class="submit-live-result" style="display:none;margin-top:10px;border:1px solid var(--line);background:#FBF9F4;padding:10px 12px;border-radius:6px;font-size:12px;line-height:1.55;color:var(--ink)"></div></div>
+ <div class="form social-form"><div class="small" style="margin-bottom:10px">飞书社媒看板录入</div>
+  <div class="row2"><div class="fr"><label>日期</label><input id="socialDashDate" value="${todayISO()}"></div><div class="fr"><label>来源链接（选填）</label><input id="socialDashUrl" value="${esc((DB.dataCenterUpdate||{}).feishu||"")}" placeholder="https://"></div></div>
+  <div class="fr"><label>截图说明</label><input id="socialDashNote" placeholder="例：6/27 飞书近两周社媒数据截图"></div>
+  <div class="uploadbox"><label>上传飞书截图</label><input id="socialDashFile" type="file" accept="image/*" onchange="previewSocialDashboardFile(this)"><div class="aihint">也可以点下面的粘贴框后直接 Ctrl+V 粘贴截图。</div></div>
+  <div id="socialPasteZone" class="social-paste-zone" tabindex="0" onpaste="return handleSocialDashboardPaste(event)">点击这里后粘贴飞书社媒看板截图<br>如果从飞书复制的是表格文本，也会进入下面文本框。</div>
+  <div id="socialShotPreview"></div>
+  <div class="fr" style="margin-top:12px"><label>飞书表格文本（选填，复制单元格时可粘贴）</label><textarea id="socialDashText" placeholder="可选：从飞书复制表格区域后粘贴到这里，后续可用于结构化重绘。"></textarea></div>
+  <button class="submitbtn" type="button" onclick="return saveSocialDashboardEntry()">更新到数据中心</button><div id="socialDashResult" class="submit-live-result" style="display:none;margin-top:10px;border:1px solid var(--line);background:#FBF9F4;padding:10px 12px;border-radius:6px;font-size:12px;line-height:1.55;color:var(--ink)"></div>
+ </div>
  <div class="form"><div class="small" style="margin-bottom:10px">或手动登记一条交付 / 素材</div>
   <div class="fr"><label>类型</label><select id="manualType"><option>社媒发布</option><option>视频</option><option>SEO页面</option><option>深度报告</option><option>图片截图</option><option>客户文件</option><option>个人IP内容</option><option>活动支持</option><option>方案文档</option></select></div>
   <div class="row2"><div class="fr"><label>负责人（本客户核心，可展开选全员）</label><select id="manualOwner"><option>侯明真</option><option>周星星</option><option>李阳阳</option><option>李家乐</option><option>吕教东</option><option>孔德浩</option><option>孔维彤</option><option>代逸如（帮忙）</option></select></div><div class="fr"><label>日期</label><input id="manualDate" value="${todayISO()}"></div></div>
