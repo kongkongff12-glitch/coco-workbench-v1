@@ -229,7 +229,8 @@ table.t tr:hover td{background:#FBF9F4}
 .social-all-periods th,.social-all-periods td{font-size:12px}
 .social-all-periods thead th{position:sticky;top:0;z-index:4}
 .social-all-periods .social-account-sticky{position:sticky;left:0;z-index:3;width:250px;min-width:250px;max-width:250px;box-shadow:1px 0 0 var(--line)}
-.social-all-periods .social-metric-sticky{position:sticky;left:250px;z-index:3;width:92px;min-width:92px;background:#fff;box-shadow:1px 0 0 var(--line)}
+.social-all-periods .social-metric-sticky{position:sticky;left:250px;z-index:3;width:92px;min-width:92px;background:#fff;box-shadow:1px 0 0 var(--line);color:var(--ink)}
+.social-all-periods .social-metric-sticky.is-bar{color:var(--red)}
 .social-all-periods th.social-account-sticky,.social-all-periods th.social-metric-sticky{background:#DDE7FF;z-index:6}
 .social-all-periods tr.account-start td{border-top:2px solid var(--line-dark)}
 .social-all-periods .account-title{display:block;font-weight:900;line-height:1.35;white-space:normal;word-break:break-word}
@@ -237,11 +238,13 @@ table.t tr:hover td{background:#FBF9F4}
 .social-all-periods .account-link{display:inline-block;color:#75521c;font-size:11px;font-weight:900;margin-top:4px}
 .social-all-periods .period-cell{position:relative;font-variant-numeric:tabular-nums;text-align:right;min-width:112px;height:34px;white-space:nowrap;overflow:hidden;background:#fff}
 .social-all-periods .period-cell.has-value{font-weight:900}
+.social-all-periods .period-cell.no-bar{font-weight:600;text-align:center}
+.social-all-periods .period-cell.no-bar .cellval{text-align:center;padding-right:0;text-shadow:none}
 .social-all-periods .period-cell.empty{color:var(--faint);background:#FBF9F4}
 .social-all-periods .period-cell.zero{color:var(--ink);background:#fff}
 .social-all-periods .cellbar{position:absolute;left:0;top:7px;bottom:7px;width:var(--w,0%);min-width:0;background:linear-gradient(90deg,#7EA2F8,#5F86EA);opacity:.9;border-radius:0 2px 2px 0}
 .social-all-periods .cellval{position:relative;z-index:1;display:block;text-align:right;padding-right:2px;text-shadow:0 1px 0 rgba(255,255,255,.55)}
-.social-all-periods .period-cell.zero .cellbar,.social-all-periods .period-cell.empty .cellbar{display:none}
+.social-all-periods .period-cell.zero .cellbar,.social-all-periods .period-cell.empty .cellbar,.social-all-periods .period-cell.no-bar .cellbar{display:none}
 .local-social-list{display:grid;gap:14px;margin:14px 0}
 .local-social-card{border:1px solid var(--line);border-radius:10px;background:#fff;padding:12px}
 .local-social-card h3{font-size:16px;margin-bottom:8px}.local-social-card img{width:100%;max-height:720px;object-fit:contain;background:#F6F1E7;border:1px solid var(--line);border-radius:8px;display:block}
@@ -3124,6 +3127,20 @@ function socialDelta(now,prev){
 }
 function socialMetricValue(metric,idx){return (metric.values||[])[idx]&&(metric.values||[])[idx].value}
 function socialAccountTone(account){const s=String(account||"");if(/视频号|公众号|小红书/.test(s))return "green";if(/LinkedIn|Linkedin|YouTube/.test(s))return "blue";return "yellow"}
+function socialMatrixHasBar(account,metric){
+ const a=String(account||"").toLowerCase(),m=String(metric||"");
+ const pairs=[
+  [/^x个人号 charlie$/i,"浏览量"],
+  [/^linkedin企业号 coco$/i,"点赞"],
+  [/^youtube 官方号$/i,"浏览量"],
+  [/^linkedin个人号 charlie 没有授权$/i,"点赞"],
+  [/^x企业号 coco$/i,"浏览量"],
+  [/^charlie视频号$/i,"播放量"],
+  [/^公众号 官方号$/i,"阅读量"],
+  [/^小红书 官方$/i,"浏览量"]
+ ];
+ return pairs.some(([re,metricName])=>re.test(a)&&m===metricName);
+}
 function socialBar(now,prev){
  const n=Number(now)||0,p=Number(prev)||0,max=Math.max(n,p,1);
  const nw=Math.max(2,Math.round(n/max*100)),pw=Math.max(2,Math.round(p/max*100));
@@ -3157,6 +3174,7 @@ function socialAllPeriodsHtml(w){
  rows.forEach(r=>{
   const metrics=Array.isArray(r.metrics)?r.metrics:[];
   metrics.forEach((m,i)=>{
+   const hasBar=socialMatrixHasBar(r.account,m.metric);
    const nums=periods.map((p,idx)=>{
     const v=socialMetricValue(m,idx),n=Number(v);
     return (v===null||v===undefined||v===""||String(v)==="-"||!Number.isFinite(n))?null:n;
@@ -3167,18 +3185,18 @@ function socialAllPeriodsHtml(w){
     const empty=v===null||v===undefined||v===""||String(v)==="-";
     const n=Number(v),zero=!empty&&Number.isFinite(n)&&n===0;
     const width=!empty&&Number.isFinite(n)&&max>0?Math.max(2,Math.min(100,(n/max)*100)):0;
-    return `<td class="period-cell ${empty?"empty":(zero?"zero":"has-value")}" title="${esc(m.metric)} · ${esc(p)} · ${socialValue(v,"",m.metric)}"><span class="cellbar" style="--w:${width}%"></span><span class="cellval">${socialValue(v,"",m.metric)}</span></td>`;
+    return `<td class="period-cell ${empty?"empty":(zero?"zero":(hasBar?"has-value":"no-bar"))}" title="${esc(m.metric)} · ${esc(p)} · ${socialValue(v,"",m.metric)}">${hasBar?`<span class="cellbar" style="--w:${width}%"></span>`:""}<span class="cellval">${socialValue(v,"",m.metric)}</span></td>`;
    }).join("");
    const link=String(r.link||"").trim();
    const linkHtml=link?(/^https?:\/\//i.test(link)?`<a class="account-link" href="${esc(link)}" target="_blank">打开账号 ↗</a>`:`<span class="account-link">${esc(link)}</span>`):"";
    body.push(`<tr class="${i===0?"account-start":""}">
     ${i===0?`<td class="social-account social-account-sticky ${esc(r.tone||socialAccountTone(r.account))}" rowspan="${Math.max(metrics.length,1)}"><span class="account-title">${esc(r.account)}</span>${r.owner||r.reviewer?`<span class="account-meta">负责人：${esc(r.owner||"-")}<br>复盘：${esc(r.reviewer||"-")}</span>`:""}${linkHtml}</td>`:""}
-    <td class="social-metric social-metric-sticky">${esc(m.metric)}</td>
+    <td class="social-metric social-metric-sticky ${hasBar?"is-bar":""}">${esc(m.metric)}</td>
     ${values}
    </tr>`);
   });
  });
- return `<div class="social-board social-all-periods"><div class="social-board-head"><div class="social-board-title">全周期社媒数据矩阵<span>每一行按本行最大值生成蓝色数据条，数值越大条越长，方便快速看峰值和占比</span></div><div class="social-board-link">横向滚动查看 3月-6月完整记录</div></div><div class="social-board-wrap"><table class="social-table"><thead><tr><th class="social-account-sticky">平台 / 负责人</th><th class="social-metric-sticky">细则</th>${periods.map(p=>`<th>${esc(p)}</th>`).join("")}</tr></thead><tbody>${body.join("")}</tbody></table></div></div>`;
+ return `<div class="social-board social-all-periods"><div class="social-board-head"><div class="social-board-title">全周期社媒数据矩阵<span>仅对截图标记的核心指标生成蓝色数据条，其余行保留纯数字</span></div><div class="social-board-link">横向滚动查看 3月-6月完整记录</div></div><div class="social-board-wrap"><table class="social-table"><thead><tr><th class="social-account-sticky">平台 / 负责人</th><th class="social-metric-sticky">细则</th>${periods.map(p=>`<th>${esc(p)}</th>`).join("")}</tr></thead><tbody>${body.join("")}</tbody></table></div></div>`;
 }
 function socialWorkbookKpis(w){
  const active=w.overviewGroups.filter(g=>(g.metrics||[]).some(m=>String(socialMetricValue(m,0)||"").trim()&&!["-",""].includes(String(socialMetricValue(m,0)).trim()))).length;
