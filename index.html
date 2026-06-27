@@ -2115,7 +2115,7 @@ DB.contactMatrix=[
   {id:"wb-20260626-excalidraw",title:"2026-06-26 Excalidraw 白板剪贴板",kind:"白板数据",date:"2026-06-26",asset:srcBase+"whiteboard-20260626-excalidraw-clipboard.txt",excerpt:"用户补充的 20260626 白板素材，用于核对议程与结构化内容；页面不直接展示参考版式截图。"},
   {id:"wb-20260626-brand-rename",title:"COCO品牌改名：各社媒平台信息修改清单",kind:"PDF",date:"2026-06-26",asset:srcBase+"COCO品牌改名_各社媒平台信息修改清单.pdf",excerpt:"8个平台改名清单：国内小红书、视频号个人IP、公众号；海外 X 官方号、Charlie X、YouTube、LinkedIn 公司页、Charlie LinkedIn。公众号认证约 300 元，LinkedIn 公司页可能最慢。"},
   {id:"wb-20260626-seo-action",title:"COCO SEO 行动清单 v4",kind:"PDF",date:"2026-06-21 / 2026-06-26 使用",asset:srcBase+"COCO_SEO_行动清单_v4.pdf",excerpt:"SEO 工作按“定方向 -> 建地基 -> 做内容 -> 持续运营”推进。COCO 侧负责技术 SEO 基础设施，Will 侧负责关键词、内容模板、案例页与发布运营。"},
-  {id:"wb-20260626-seo-page-data",title:"2026-06-16 至 2026-06-21 SEO 页面级浏览数据",kind:"结构化表格",date:"2026-06-21",asset:srcBase+"seo-page-data-20260621.md",excerpt:"用户补充的 SEO 页面数据截图已转写为结构化表格：21 个页面合计 16,705 impressions、17 clicks；页面不直接展示截图。"},
+  {id:"wb-20260626-seo-page-data",title:"COCO SEO 页面级浏览数据（截止 2026-06-22）",kind:"结构化表格",date:"2026-06-22",asset:srcBase+"seo-page-data-coco-20260622.md",excerpt:"COCO 白板中的 SEO 页面数据已按参考界面转写为结构化表格：展示 icoco.ai 页面、关键词、上周曝光、本周曝光、变化和点击数；页面不直接展示参考截图。"},
   {id:"wb-20260626-zhiwai-script",title:"COCO客户案例脚本：知外26个AI v0.77 客户版",kind:"PDF",date:"2026-06-26",asset:srcBase+"COCO客户案例脚本_知外26个AI_v0.77_客户版.pdf",excerpt:"知外文化客户案例脚本，白板中标注“全在 COCO 上跑”表述需要进一步校准，脚本确定后进入录制剪辑。"},
   {id:"wb-20260626-deel-allmedia",title:"Deel 全媒体流量投放深度分析",kind:"PDF",date:"2026-06-26",asset:srcBase+"Deel 全媒体流量投放深度分析(1).pdf",excerpt:"用于竞品 Deel 讨论：看全媒体投放、外部 KOL 合作和创始人打法如何形成稳定传播系统。"},
   {id:"wb-20260626-deel-kol",title:"Deel KOL 与创作者合作策略深度分析",kind:"PDF",date:"2026-06-26",asset:srcBase+"Deel KOL与创作者合作策略深度分析(1).pdf",excerpt:"用于拆解 Deel 如何借助外部 KOL 和创作者放大原创内容，而不是只靠官方账号发布。"},
@@ -2163,30 +2163,20 @@ DB.contactMatrix=[
  {n:"其他问题解疑",t:"3min"}
 ];
  const seoPageDataTable={
-  cols:["网页链接","关键词","印象数","点击数","增长率","页面新旧"],
+  cols:["网页链接","关键词","上周曝光","本周曝光","变化","点击数"],
   rows:[
-   ["https://infinisynapse.com/use-cases/best-data-analysis-software","best data analysis software","5,629","2","78%","老页面"],
-   ["https://infinisynapse.com/use-cases/best-ai-tools-for-data-analysis","best ai tools for data analysis","3,179","5","34%","老页面"],
-   ["https://infinisynapse.com/use-cases/sql-data-analysis-with-ai","sql-data-analysis-with-ai","1,515","7","17%","老页面"],
-   ["https://infinisynapse.com/use-cases/nl2sql","nl2sql","1,574","6","103%","老页面"],
-   ["https://infinisynapse.com/guides/power-bi-copilot-alternative","power bi copilot alternative","260","1","22%","老页面"],
-   ["https://infinisynapse.com/guides/breaking-data-silos","breaking data silos","246","1","19%","老页面"],
-   ["https://infinisynapse.com/guides/text-to-sql-alternative","text to sql alternative","315","4","55%","老页面"],
-   ["https://infinisynapse.com/guides/sql-data-analysis-with-ai","sql data analysis with ai","239","1","32%","老页面"],
-   ["https://infinisynapse.com/guides/rag-data-analysis","rag data analysis","729","0","58%","老页面"],
-   ["https://infinisynapse.com/use-cases/infinisynapse-vs-vanna-ai","infinisynapse vs vanna ai","884","0","99%","老页面"],
-   ["https://infinisynapse.com/guides/agentic-analytics-vs-traditional-bi","agentic analytics vs traditional BI","432","0","28%","老页面"],
-   ["https://infinisynapse.com/guides/thoughtspot-alternative","thoughtspot alternative","552","0","66%","老页面"],
-   ["https://infinisynapse.com/guides/looker-alternative","looker alternative","419","0","56%","老页面"],
-   ["https://infinisynapse.com/guides/nlp2sql-alternative","nlp2sql alternative","164","0","40%","老页面"],
-   ["https://infinisynapse.com/guides/tableau-ai-alternative","tableau ai alternative","135","0","30%","老页面"],
-   ["https://infinisynapse.com/guides/bi-chatbot-alternative","bi chatbot alternative","99","0","46%","老页面"],
-   ["https://infinisynapse.com/guides/chatbi-alternative","chatbi alternative","121","0","128%","老页面"],
-   ["https://infinisynapse.com/guides/what-is-agentic-data-analysis","what is agentic data analysis","73","0","83%","老页面"],
-   ["https://infinisynapse.com/guides/what-is-agentic-analytics","what is agentic analytics","37","0","185%","老页面"],
-   ["https://infinisynapse.com/guides/chatbi-vs-agentic-analytics","chatbi vs agentic analytics","102","0","2450%","老页面"],
-   ["https://infinisynapse.com/use-cases/best-nl2sql-tools-2026","best nl2sql tools 2026","1","0","58%","老页面"],
-   ["合计","-","16,705","17","-","-"]
+   ["https://icoco.ai/guides/coco-ai-pricing","AI employee pricing","105","70","-35","0"],
+   ["https://icoco.ai/use-cases/ai-code-reviewer","ai-code-reviewer","49","25","-24","0"],
+   ["https://icoco.ai/guides/coco-agent-teams","coco-agent-teams","35","34","-1","0"],
+   ["https://icoco.ai/guides/deploy-ai-employees","deploy-ai-employees","36","32","-4","0"],
+   ["https://icoco.ai/comparison/hire-ai-employee","hire-ai-employee","28","27","-1","0"],
+   ["https://icoco.ai/use-cases/ai-ad-copy-generation","ai-ad-copy-generation","26","26","0","0"],
+   ["https://icoco.ai/use-cases/ai-user-research-insights","ai-user-research-insights","25","24","-1","0"],
+   ["https://icoco.ai/use-cases/ai-resume-screener","ai-resume-screener","22","22","0","0"],
+   ["https://icoco.ai/guides/coco-ai-faq-guide","ai-faq-guide","28","42","+14","0"],
+   ["https://icoco.ai/guides/coco-enterprise-deployment-guide","coco-enterprise-deployment-guide","0","27","+27","0"],
+   ["https://icoco.ai/guides/build-ai-ticket-classifier","build-ai-ticket-classifier","0","16","+16","0"],
+   ["https://icoco.ai/use-cases/ai-financial-risk-simulator","ai-financial-risk-simulator","0","12","+12","0"]
   ]
  };
  const seoKpiTable={cols:["指标","截至 6/17","截至 6/22","环比","数据解读"],rows:[
@@ -2197,9 +2187,9 @@ DB.contactMatrix=[
   ["高意向词点击","9","5","下降 44.44%","高意向词点击减少"]
  ]};
  const seoWorkSections=[
-  {title:"页面曝光上涨但点击弱",wide:true,reason:"6/16-6/21 的 21 个页面合计 16,705 impressions、17 clicks；曝光集中在 best data analysis software、best ai tools for data analysis、nl2sql、sql-data-analysis-with-ai 等老页面，但多数页面点击为 0。",action:"优先优化高曝光低点击页面的 title、meta description、首屏 CTA 和相关内链，把能带点击的 sql-data-analysis-with-ai / nl2sql 做成页面样板。",claude:"按搜索意图区分 tool selection、alternative/comparison、concept explanation、use case 四类页面，每类首屏都要明确受众、问题、解决方案和下一步 CTA。",result:"下周回看 impressions、clicks、CTR 与排名变化；先盯 5 个高曝光页和 5 个高增长低点击页。"},
-  {title:"老页面承接新品牌迁移",reason:"当前有量页面全部标记为老页面，新品牌 OpenMax 启用后如果只改域名、不改信息架构，原有曝光会被迁移过程稀释。",action:"做 301 / canonical / breadcrumb / 内链迁移清单；把高曝光老页面映射到新站 use case、comparison、guide 三类模板。",claude:"迁移前先冻结一版 URL 对照表，避免内容、URL、canonical 同时大幅变动造成 Google 重估时间变长。",result:"形成“老页面 -> 新站模板 -> 目标关键词 -> CTA”的迁移表，进入 SEO 路线图。"},
-  {title:"每周 SEO 汇报口径固定",reason:"过去白板里 SEO 经常只有截图或泛描述，缺少每项工作的原因、措施、分析建议和结果。",action:"以后每次 SEO 汇报按四段写：具体原因、措施、Claude/内部分析建议、结果；截图只作为证据，不作为正式内容。",claude:"把问题拆到页面层，不只报总曝光；每个页面都要能回答“为什么涨/跌、改什么、下周验什么”。",result:"本次已把截图转成页面级表格和汇报项，后续可直接按这个模板续写。"}
+  {title:"COCO 页面曝光波动与点击不足",wide:true,reason:"截至 6/22，COCO SEO 总曝光从 765 降到 607，总点击从 30 降到 18；页面级看，AI employee pricing、ai-code-reviewer 等高意向页曝光回落，但 ai-faq-guide、coco-enterprise-deployment-guide、build-ai-ticket-classifier 等页面开始新增曝光。",action:"优先优化高意向但点击为 0 的页面：title、meta description、首屏 CTA、页面内链和 use case 承接；对新增曝光页补摘要、FAQ 与相关页面互链。",claude:"按 COCO 的关键词意图区分 pricing、code reviewer、agent teams、deploy employees、use case、FAQ 六类页面，每类都要补“适合谁、解决什么问题、下一步点哪里”。",result:"下周回看总曝光、总点击、品牌词点击和高意向词点击；重点盯 AI employee pricing、ai-code-reviewer、ai-faq-guide 三类页面是否提升点击。"},
+  {title:"icoco.ai 页面承接 OpenMax 迁移",reason:"COCO 现有 SEO 页面已经在 icoco.ai 上形成部分曝光，OpenMax 新品牌启用后不能把旧页面数据直接丢掉。",action:"建立 icoco.ai -> OpenMax 新站 URL 对照表，优先映射 pricing、comparison、use cases、guides 四类页面；同步规划 301、canonical、breadcrumb 和内链。",claude:"迁移前先冻结高意向页面清单，避免品牌名、URL、canonical、页面标题同时大幅变化导致 Google 重估周期变长。",result:"把页面级数据表接到 SEO 路线图：每个页面都有目标关键词、迁移目标、CTA 和下周验证指标。"},
+  {title:"每周 SEO 汇报口径固定",reason:"之前 SEO 汇报容易只放截图或只说总数，客户看不到具体页面为什么涨跌。",action:"以后每次 SEO 汇报按四段写：具体原因、措施、Claude/内部分析建议、结果；截图只作为识别来源，不作为正式内容。",claude:"把问题拆到页面层，不只报总曝光；每个页面都要能回答“为什么涨/跌、改什么、下周验什么”。",result:"本次已改为 COCO 自己的页面级表格和汇报项，后续可以直接按这个模板续写。"}
  ];
  wk.title="6/26 会议白板";
  wk.badge="已按标准重排";
@@ -2264,13 +2254,13 @@ DB.contactMatrix=[
    ["公众号阅读量","-","695","公众号作为中文阵地仍要保留"],
    ["小红书浏览量","38","295","需继续匹配女性企业家场景"]
   ]},items:["飞书看板链接已放入模块；完整数据以截图与飞书源表为准。","白板问题：数据需要复盘分析，尤其是 YouTube / YouTube Shorts，这么多 view 是怎么做到的。","本模块只放一张近两周社媒数据总图，不再拆细节图和全图。"],media:[img("social-dashboard-latest-two-weeks.png","近两周社媒数据看板")],links:[{label:"飞书社媒数据看板",url:"https://my.feishu.cn/wiki/KGJJwc6iOiFMeokvIJrcQM81n1d?sheet=1Jbfs5"}],sources:["wb-20260626-excalidraw"]},
-  {topic:"【6】SEO / OpenMax 新站行动清单",owner:"李家乐",summary:"SEO 不再直接摆截图，而是按行动清单转成可执行结构：先定品牌名、域名和关键词方向，再补技术地基，然后持续做内容和运营。这里已补入 6/16-6/21 页面级浏览数据，21 个页面合计 16,705 impressions、17 clicks；5 月的页面铺设与基础 SEO 进度继续保留在路线图里。",gantt:{months:[{m:"5月",w:4,labels:["W1","W2","W3","W4"]},{m:"6月",w:4,labels:["W1","W2","W3","W4"]},{m:"7月",w:4,labels:["W1","W2","W3","W4"]},{m:"8月",w:4,labels:["W1","W2","W3","W4"]}],today:7,phases:[
+  {topic:"【6】SEO / OpenMax 新站行动清单",owner:"李家乐",summary:"SEO 不再直接摆截图，而是按行动清单转成可执行结构：先定品牌名、域名和关键词方向，再补技术地基，然后持续做内容和运营。这里已按你给的参考界面，改成 COCO 自己的 icoco.ai 页面级浏览数据；5 月的页面铺设与基础 SEO 进度继续保留在路线图里。",gantt:{months:[{m:"5月",w:4,labels:["W1","W2","W3","W4"]},{m:"6月",w:4,labels:["W1","W2","W3","W4"]},{m:"7月",w:4,labels:["W1","W2","W3","W4"]},{m:"8月",w:4,labels:["W1","W2","W3","W4"]}],today:7,phases:[
    {name:"5月-6月基础铺设",note:"保留既有 SEO 路线，不丢 5 月",tasks:[{name:"关键词研究、首批页面模板、案例页/工具页铺设、GSC 基础监控",pri:"P0",start:0,span:7,state:"done",meta:"已进入数据复盘"}]},
    {name:"定方向",note:"品牌升级前置决策",tasks:[{name:"锁定 OpenMax 品牌名、新域名、核心关键词方向与迁移边界",pri:"P0",start:7,span:2,state:"doing",meta:"6/26 会上确认"}]},
    {name:"建地基",note:"COCO 方主导：技术 SEO 基础设施",tasks:[{name:"SSR/SSG 首屏完整 HTML、索引控制、200/301/404、canonical",pri:"P0",start:9,span:2,state:"plan",meta:"技术侧排期"},{name:"主域统一结构、语义 slug、Breadcrumb、Core Web Vitals、WebP/CDN、多语言 hreflang",pri:"P0",start:10,span:3,state:"plan",meta:"新站基础设施"}]},
    {name:"做内容",note:"Will 方主导，COCO 补产品输入",tasks:[{name:"关键词研究、内容页模板、知外/言书案例页、Article/FAQ/Organization schema",pri:"P1",start:11,span:3,state:"plan",meta:"内容体系"}]},
    {name:"持续运营",note:"上线后 3 个月监控迭代",tasks:[{name:"GSC 覆盖率、抓取报告、品牌词/非品牌词排名、异常处理",pri:"P1",start:13,span:3,state:"plan",meta:"持续监控"}]}
-  ]},metrics:[{name:"页面数据周期",value:"6/16-6/21"},{name:"页面数",value:"21"},{name:"总曝光",value:"16,705"},{name:"总点击",value:"17"}],table:seoPageDataTable,detailTitle:"查看 GSC 指标与执行清单",details:[{table:seoKpiTable},{items:["定方向：先拍板新品牌名、新域名和核心关键词，不然 SEO 迁移会反复返工。","建地基：服务端渲染或静态输出要让 Google 首次抓取拿到完整标题和正文；URL、canonical、面包屑、站点层级、移动端体验要一次打好。","做内容：Will 侧负责关键词、内容页模板、案例页和持续发布；COCO 侧补产品能力与场景输入。","持续运营：上线后跟踪 GSC 覆盖率、抓取异常、品牌词/非品牌词排名，技术问题由 COCO 侧修复。"]}],workSections:seoWorkSections,items:["COCO 侧：解决可抓取性、URL 与站点结构、性能与移动端、多语言和结构化数据。","Will 侧：关键词研究、内容页模板、案例页落地、持续内容产出、GSC 监控。","页面关键词样例包括 AI employee pricing、ai-code-reviewer、coco-agent-teams、deploy-ai-employees、ai-ad-copy-generation 等。"],sources:["wb-20260626-seo-action","wb-20260626-seo-page-data"],links:[src("COCO_SEO_行动清单_v4.pdf","打开 COCO SEO 行动清单 v4"),src("seo-page-data-20260621.md","打开页面级 SEO 数据")]},
+  ]},metrics:[{name:"数据口径",value:"COCO / icoco.ai"},{name:"总曝光",value:"607"},{name:"总点击",value:"18"},{name:"页面关键词",value:"12"}],table:seoPageDataTable,detailTitle:"查看 GSC 指标与执行清单",details:[{table:seoKpiTable},{items:["定方向：先拍板新品牌名、新域名和核心关键词，不然 SEO 迁移会反复返工。","建地基：服务端渲染或静态输出要让 Google 首次抓取拿到完整标题和正文；URL、canonical、面包屑、站点层级、移动端体验要一次打好。","做内容：Will 侧负责关键词、内容页模板、案例页和持续发布；COCO 侧补产品能力与场景输入。","持续运营：上线后跟踪 GSC 覆盖率、抓取异常、品牌词/非品牌词排名，技术问题由 COCO 侧修复。"]}],workSections:seoWorkSections,items:["COCO 侧：解决可抓取性、URL 与站点结构、性能与移动端、多语言和结构化数据。","Will 侧：关键词研究、内容页模板、案例页落地、持续内容产出、GSC 监控。","页面关键词样例包括 AI employee pricing、ai-code-reviewer、coco-agent-teams、deploy-ai-employees、ai-ad-copy-generation 等。"],sources:["wb-20260626-seo-action","wb-20260626-seo-page-data"],links:[src("COCO_SEO_行动清单_v4.pdf","打开 COCO SEO 行动清单 v4"),src("seo-page-data-coco-20260622.md","打开 COCO 页面级 SEO 数据")]},
   {topic:"【7】视频剪辑 / 知外文化脚本敲定",owner:"周星星 / 李阳阳",summary:"视频条线分两块：基础视频是和 Nik 的 podcast，目前已用 Charlie 单人素材切出 4 个视频；等待 Nik 提供两人同时出镜版本后重剪，预计切出 6 个切片、共 18 个视频，下周二全部切完。知外文化客户案例视频脚本需要先把“全在 COCO 上跑”这类不准确表述修掉。",gantt:{months:[{m:"6/26-6/30",w:5,labels:["6/26","6/27","6/28","6/29","6/30"]}],today:0,phases:[
    {name:"已完成",note:"基础视频先行产出",tasks:[{name:"Charlie 单人素材已切出 4 个视频",pri:"P0",start:0,span:1,state:"done",meta:"4 个视频"}]},
    {name:"进行中",note:"等待补素材后重剪",tasks:[{name:"等 Nik 提供两人同时出镜版本，重新剪辑",pri:"P0",start:0,span:3,state:"doing",meta:"重剪中"}]},
