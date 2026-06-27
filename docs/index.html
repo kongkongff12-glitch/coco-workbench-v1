@@ -330,6 +330,9 @@ table.t tr:hover td{background:#FBF9F4}
 .detailbox summary::after{content:"展开";float:right;color:var(--sub);font-weight:600}
 .detailbox[open] summary::after{content:"收起"}
 .detailbody{padding:0 12px 12px}
+.open-detail{padding-top:10px}
+.open-detail .open-detail-title{font-size:13px;font-weight:900;color:var(--ink);padding:0 12px 8px}
+.open-detail .detailbody{padding:0 12px 12px}
 .wsub{font-family:var(--serif);font-size:13.5px;font-weight:700;color:var(--red);margin:12px 0 6px}
 .agd{list-style:none}
 .agd li{padding:7px 0;font-size:15px;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:10px}
@@ -2268,7 +2271,7 @@ DB.contactMatrix=[
    {name:"建地基",note:"COCO 方主导：技术 SEO 基础设施",tasks:[{name:"SSR/SSG 首屏完整 HTML、索引控制、200/301/404、canonical",pri:"P0",start:9,span:2,state:"plan",meta:"技术侧排期"},{name:"主域统一结构、语义 slug、Breadcrumb、Core Web Vitals、WebP/CDN、多语言 hreflang",pri:"P0",start:10,span:3,state:"plan",meta:"新站基础设施"}]},
    {name:"做内容",note:"Will 方主导，COCO 补产品输入",tasks:[{name:"关键词研究、内容页模板、知外/言书案例页、Article/FAQ/Organization schema",pri:"P1",start:11,span:3,state:"plan",meta:"内容体系"}]},
    {name:"持续运营",note:"上线后 3 个月监控迭代",tasks:[{name:"GSC 覆盖率、抓取报告、品牌词/非品牌词排名、异常处理",pri:"P1",start:13,span:3,state:"plan",meta:"持续监控"}]}
-  ]},metrics:[{name:"数据口径",value:"COCO / icoco.ai"},{name:"总曝光",value:"607"},{name:"总点击",value:"18"},{name:"页面关键词",value:"12"}],table:seoPageDataTable,detailTitle:"查看 GSC 指标与执行清单",details:[{table:seoKpiTable},{items:["定方向：先拍板新品牌名、新域名和核心关键词，不然 SEO 迁移会反复返工。","建地基：服务端渲染或静态输出要让 Google 首次抓取拿到完整标题和正文；URL、canonical、面包屑、站点层级、移动端体验要一次打好。","做内容：Will 侧负责关键词、内容页模板、案例页和持续发布；COCO 侧补产品能力与场景输入。","持续运营：上线后跟踪 GSC 覆盖率、抓取异常、品牌词/非品牌词排名，技术问题由 COCO 侧修复。"]}],workSections:seoWorkSections,items:["COCO 侧：解决可抓取性、URL 与站点结构、性能与移动端、多语言和结构化数据。","Will 侧：关键词研究、内容页模板、案例页落地、持续内容产出、GSC 监控。","页面关键词样例包括 AI employee pricing、ai-code-reviewer、coco-agent-teams、deploy-ai-employees、ai-ad-copy-generation 等。"],sources:["wb-20260626-seo-action","wb-20260626-seo-page-data"],links:[src("COCO_SEO_行动清单_v4.pdf","打开 COCO SEO 行动清单 v4"),src("seo-page-data-coco-20260622.md","打开 COCO 页面级 SEO 数据")]},
+  ]},metrics:[{name:"数据口径",value:"COCO / icoco.ai"},{name:"总曝光",value:"607"},{name:"总点击",value:"18"},{name:"页面关键词",value:"12"}],table:seoPageDataTable,detailTitle:"GSC 指标与执行清单",detailsOpen:true,details:[{table:seoKpiTable},{items:["定方向：先拍板新品牌名、新域名和核心关键词，不然 SEO 迁移会反复返工。","建地基：服务端渲染或静态输出要让 Google 首次抓取拿到完整标题和正文；URL、canonical、面包屑、站点层级、移动端体验要一次打好。","做内容：Will 侧负责关键词、内容页模板、案例页和持续发布；COCO 侧补产品能力与场景输入。","持续运营：上线后跟踪 GSC 覆盖率、抓取异常、品牌词/非品牌词排名，技术问题由 COCO 侧修复。"]}],workSections:seoWorkSections,items:["COCO 侧：解决可抓取性、URL 与站点结构、性能与移动端、多语言和结构化数据。","Will 侧：关键词研究、内容页模板、案例页落地、持续内容产出、GSC 监控。","页面关键词样例包括 AI employee pricing、ai-code-reviewer、coco-agent-teams、deploy-ai-employees、ai-ad-copy-generation 等。"],sources:["wb-20260626-seo-action","wb-20260626-seo-page-data"],links:[src("COCO_SEO_行动清单_v4.pdf","打开 COCO SEO 行动清单 v4"),src("seo-page-data-coco-20260622.md","打开 COCO 页面级 SEO 数据")]},
   {topic:"【7】视频剪辑 / 知外文化脚本敲定",owner:"周星星 / 李阳阳",summary:"视频条线分两块：基础视频是和 Nik 的 podcast，目前已用 Charlie 单人素材切出 4 个视频；等待 Nik 提供两人同时出镜版本后重剪，预计切出 6 个切片、共 18 个视频，下周二全部切完。知外文化客户案例视频脚本需要先把“全在 COCO 上跑”这类不准确表述修掉。",gantt:{months:[{m:"6/26-6/30",w:5,labels:["6/26","6/27","6/28","6/29","6/30"]}],today:0,phases:[
    {name:"已完成",note:"基础视频先行产出",tasks:[{name:"Charlie 单人素材已切出 4 个视频",pri:"P0",start:0,span:1,state:"done",meta:"4 个视频"}]},
    {name:"进行中",note:"等待补素材后重剪",tasks:[{name:"等 Nik 提供两人同时出镜版本，重新剪辑",pri:"P0",start:0,span:3,state:"doing",meta:"重剪中"}]},
@@ -2875,6 +2878,17 @@ function renderCardDetails(title,details=[]){
   }).join("");
   return `<details class="detailbox"><summary>${esc(title||"查看明细")}</summary><div class="detailbody">${body}</div></details>`;
 }
+function renderCardDetailsOpen(title,details=[]){
+  details=(Array.isArray(details)?details:[]).filter(Boolean);
+  if(!details.length) return "";
+  const body=details.map(d=>{
+    if(d.table) return renderCardTable(d.table);
+    if(d.links) return `<div class="source-actions">${renderCardLinks(d.links)}</div>`;
+    if(d.items) return `<ul class="agd">${d.items.map((item,idx)=>`<li><span><span class="anum">${idx+1}</span>${esc(typeof item==="string"?item:(item.text||item.title||item.v||""))}</span></li>`).join("")}</ul>`;
+    return `<p>${esc(d.text||d.title||"")}</p>`;
+  }).join("");
+  return `<section class="detailbox open-detail"><div class="open-detail-title">${esc(title||"明细")}</div><div class="detailbody">${body}</div></section>`;
+}
 function renderCardGantt(g){
   if(!g||!Array.isArray(g.months)||!Array.isArray(g.phases)) return "";
   const months=g.months;
@@ -2947,7 +2961,7 @@ function wcard(c){
     ${renderMediaWall(c.media)}
     ${block("本周动作 / 进展",first(c.items,c.actions,c.outputs,c.progress,c.deliveries,[]))}
     ${block("问题与解决方式",first(c.solutions,c.issues,c.todo,c.todos,c.nexts,[]))}
-    ${renderCardDetails(c.detailTitle,c.details)}
+    ${c.detailsOpen?renderCardDetailsOpen(c.detailTitle,c.details):renderCardDetails(c.detailTitle,c.details)}
     ${renderWorkSections(c.workSections)}
     ${links?`<div class="source-actions">${links}</div>`:""}
     ${sources.length?sourceActions(sources):""}
